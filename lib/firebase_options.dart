@@ -59,8 +59,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '734804270503',
     projectId: 'audiotales-18ca4',
     storageBucket: 'audiotales-18ca4.appspot.com',
-    androidClientId: '734804270503-1vtivg178ooermr850fdtgao03ii9dmj.apps.googleusercontent.com',
-    iosClientId: '734804270503-30vo32n7i83dsj4b3j0kb0l72kptb984.apps.googleusercontent.com',
+    androidClientId:
+        '734804270503-1vtivg178ooermr850fdtgao03ii9dmj.apps.googleusercontent.com',
+    iosClientId:
+        '734804270503-30vo32n7i83dsj4b3j0kb0l72kptb984.apps.googleusercontent.com',
     iosBundleId: 'audiotale',
   );
 }
