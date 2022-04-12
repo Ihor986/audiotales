@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "734804270503",
+    "project_id": "audiotales-18ca4",
+    "storage_bucket": "audiotales-18ca4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734804270503:android:430467f7b49d98f96e2a82",
+        "android_client_info": {
+          "package_name": "com.example.audiotales"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734804270503-1vtivg178ooermr850fdtgao03ii9dmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.audiotales",
+            "certificate_hash": "6f382f3dd85010cf61814c1e10273f8bb0e5aa94"
+          }
+        },
+        {
+          "client_id": "734804270503-0t22vuf0g35hrkd1dohksbqp55p5dgpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyiMYOEf7mxoyaWRLwlBuGNo1F6ioEOWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734804270503-0t22vuf0g35hrkd1dohksbqp55p5dgpq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "734804270503-npv75mke67j0m86ah59u2oqcvcm9eckb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "audiotales"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
