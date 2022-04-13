@@ -42,11 +42,14 @@ class RegistrationPage extends StatelessWidget {
                 state is AuthBlockInitial
                     ? const ContinuePhone()
                     : const ContinueCode(),
+                state is AuthBlockInitial
+                    ? const ContinueButtonPhone()
+                    : const ContinueButtonCode(),
               ],
             ),
-            state is AuthBlockInitial
-                ? const ContinueButtonPhone()
-                : const ContinueButtonCode(),
+            // state is AuthBlockInitial
+            //     ? const ContinueButtonPhone()
+            //     : const ContinueButtonCode(),
           ],
         ),
       );
@@ -84,7 +87,7 @@ class ContinueCode extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: screenHeight / 20,
+          height: screenHeight / 40,
         ),
         const RegistrationText3(),
         SizedBox(

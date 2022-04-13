@@ -15,9 +15,9 @@ class ContinueButtonNewUser extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          SizedBox(
-            height: screenHeight * 0.5,
-          ),
+          // SizedBox(
+          //   height: screenHeight * 0.5,
+          // ),
           ElevatedButton(
             onPressed: () {
               // authBloc.add(ContinueButtonEvent());

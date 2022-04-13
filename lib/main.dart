@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNewUser = false;
+    bool isNewUser = true;
 
     return MultiBlocProvider(
       providers: [

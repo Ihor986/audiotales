@@ -17,20 +17,12 @@ class ContinueButtonPhone extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: screenHeight * 0.5,
+            height: screenHeight * 0.05,
           ),
           ElevatedButton(
             onPressed: () {
-              // authBloc.authService.phoneNumberForVerification =
-              //     '+380 68 248 7758';
               authBloc.authReposytory.verifyPhoneNumber();
               authBloc.add(ContinueButtonPhoneEvent());
-              // AuthService('+380663834494').verifyPhoneNumber();
-              // Navigator.of(context, rootNavigator: true)
-              //     .pushNamedAndRemoveUntil(
-              //   RegistrationPageCode.routeName,
-              //   (_) => false,
-              // );
             },
             child: Text(
               continueButtonText,
@@ -42,6 +34,7 @@ class ContinueButtonPhone extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50))),
           ),
+          SizedBox(height: screenHeight / 40),
           TextButton(
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)

@@ -32,9 +32,10 @@ class NewUserPage extends StatelessWidget {
                 ),
               ),
               const StartNewUserText(),
+              const ContinueButtonNewUser(),
             ],
           ),
-          const ContinueButtonNewUser(),
+          // const ContinueButtonNewUser(),
         ],
       ),
       // body: Column(

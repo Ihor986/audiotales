@@ -92,7 +92,7 @@ class RegistrationText4 extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: screenHeight / 40),
+        // SizedBox(height: screenHeight / 40),
         Text(
           later,
           style: const TextStyle(

@@ -35,7 +35,7 @@ class _RegistrationCodeInputState extends State<RegistrationCodeInput> {
         width: 309,
         height: 59,
         child: TextFormField(
-          autofocus: true,
+          // autofocus: true,
           onChanged: (value) {
             authBloc.authReposytory.smsCode = maskFormatter.getUnmaskedText();
           },
