@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/consts/colors.dart';
-import '../../widgets/buttons/continue_button.dart';
+import '../../widgets/buttons/continue_buttons/continue_button.dart';
 import '../../widgets/texts/memory_box_text.dart';
 import '../../widgets/texts/start_new_user_text.dart';
 import '../../widgets/uncategorized/custom_clipper_widget.dart';

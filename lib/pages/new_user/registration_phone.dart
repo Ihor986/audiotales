@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../utils/consts/colors.dart';
-import '../../widgets/buttons/continue_button_code.dart';
-import '../../widgets/buttons/continue_button_phone.dart';
+import '../../widgets/buttons/continue_buttons/continue_button_code.dart';
+import '../../widgets/buttons/continue_buttons/continue_button_phone.dart';
 import '../../widgets/inputs/registration_code_input.dart';
 import '../../widgets/inputs/registration_phone_input.dart';
 import '../../widgets/texts/registration_text.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../pages/test.dart';
-import '../../utils/consts/colors.dart';
-import '../texts/registration_text.dart';
+import '../../../bloc/auth_bloc/auth_block_bloc.dart';
+import '../../../pages/test.dart';
+import '../../../utils/consts/colors.dart';
+import '../../texts/registration_text.dart';
 
 class ContinueButtonCode extends StatelessWidget {
   const ContinueButtonCode({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class ContinueButtonCode extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               authBloc.authReposytory.sendCodeToFirebase(context);
-              print(authBloc.authReposytory.verificationCode);
+              // print(authBloc.authReposytory.verificationCode);
             },
             child: Text(
               continueButtonText,

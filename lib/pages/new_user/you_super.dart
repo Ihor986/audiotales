@@ -4,7 +4,7 @@ import '../../utils/consts/colors.dart';
 import '../../widgets/texts/start_regular_user_text.dart';
 import '../../widgets/texts/you_super_text.dart';
 import '../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../head_screen/head_screen.dart';
+import '../main_screen/main_screen.dart';
 
 class YouSuperPage extends StatefulWidget {
   const YouSuperPage({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _YouSuperPageState extends State<YouSuperPage> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-        HeadScreen.routeName,
+        MainScreen.routeName,
         (_) => false,
       );
     });

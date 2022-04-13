@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'bloc/auth_bloc/auth_block_bloc.dart';
 import 'firebase_options.dart';
-import 'pages/head_screen/head_screen.dart';
+import 'pages/main_screen/main_screen.dart';
 import 'pages/new_user/new_user.dart';
 import 'pages/new_user/registration_phone.dart';
 import 'pages/new_user/you_super.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNewUser = true;
+    bool isNewUser = false;
 
     return MultiBlocProvider(
       providers: [
@@ -40,13 +40,13 @@ class MyApp extends StatelessWidget {
           //   return
           MaterialApp(
         debugShowCheckedModeBanner: true,
-        // initialRoute: isNewUser ? Test.routeName : Test.routeName,
+        // initialRoute: isNewUser ? test.routeName : MainScreen.routeName,
         initialRoute:
             isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
         routes: {
           Test.routeName: (_) => const Test(),
           NewUserPage.routeName: (_) => const NewUserPage(),
-          HeadScreen.routeName: (_) => const HeadScreen(),
+          MainScreen.routeName: (_) => const MainScreen(),
           RegistrationPage.routeName: (_) => const RegistrationPage(),
           YouSuperPage.routeName: (_) => const YouSuperPage(),
           RegularUserPage.routeName: (_) => const RegularUserPage(),

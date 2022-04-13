@@ -4,7 +4,7 @@ import '../utils/consts/colors.dart';
 import '../widgets/texts/memory_box_text.dart';
 import '../widgets/texts/start_regular_user_text.dart';
 import '../widgets/uncategorized/custom_clipper_widget.dart';
-import 'head_screen/head_screen.dart';
+import 'main_screen/main_screen.dart';
 
 class RegularUserPage extends StatefulWidget {
   const RegularUserPage({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _RegularUserPageState extends State<RegularUserPage> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-        HeadScreen.routeName,
+        MainScreen.routeName,
         (_) => false,
       );
     });

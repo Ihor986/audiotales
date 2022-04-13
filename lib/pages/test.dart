@@ -13,7 +13,7 @@ class Test extends StatefulWidget {
 class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
+    // num screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -22,14 +22,14 @@ class _TestState extends State<Test> {
         elevation: 0,
       ),
       body: Stack(
-        children: [
-          Column(
-            children: [
-              const Text('test'),
-            ],
+          // children: [
+          // Column(
+          //   children: [
+          //     const Text('test'),
+          //   ],
+          // ),
+          // ],
           ),
-        ],
-      ),
     );
   }
 }

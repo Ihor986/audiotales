@@ -16,14 +16,14 @@ class AuthReposytory {
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) async {
           if (value.user != null) {
-            print('user logged in');
+            // print('user logged in');
           }
         });
       },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
-          print(phoneNumberForVerification);
-          print('The provided phone number is not valid.');
+          // print(phoneNumberForVerification);
+          // print('The provided phone number is not valid.');
         }
       },
       codeSent: (String verificationId, int? resendToken) async {
@@ -47,11 +47,11 @@ class AuthReposytory {
             YouSuperPage.routeName,
             (_) => false,
           );
-          print('user logged in');
+          // print('user logged in');
         });
       }
     } catch (_) {
-      print('wrong pass');
+      // print('wrong pass');
     }
 
     // .whenComplete(() {})
