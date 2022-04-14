@@ -1,7 +1,8 @@
+import 'package:audiotales/pages/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../../pages/test.dart';
+import '../../../pages/main_screen/main_screen.dart';
 import '../../../utils/consts/colors.dart';
 import '../../texts/registration_text.dart';
 
@@ -39,7 +40,7 @@ class ContinueButtonPhone extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .pushNamedAndRemoveUntil(
-                  Test.routeName,
+                  MainScreen.routeName,
                   (_) => false,
                 );
               },

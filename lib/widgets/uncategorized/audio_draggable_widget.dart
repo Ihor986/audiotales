@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../buttons/main_screen_buttons/selection_buttons_audio.dart';
+import '../texts/main_screen_text.dart';
 
 class AudioDraggableWidget extends StatefulWidget {
   const AudioDraggableWidget({Key? key}) : super(key: key);
@@ -32,9 +33,20 @@ class _AudioDraggableWidgetState extends State<AudioDraggableWidget> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
-                child: SingleChildScrollView(
-                  child: const SelectionButtonsAudio(),
-                  controller: scrollController,
+                child: Stack(
+                  children: const [
+                    SelectionButtonsAudio(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 50),
+                      child: SelectionText9(),
+
+                      //  ListView.builder(
+                      //     itemCount: 20,
+                      //     itemBuilder: (_, i) {
+                      //       return const ListTile(title: Text('data'));
+                      //     }),
+                    )
+                  ],
                 ),
               );
             }),

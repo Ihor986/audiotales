@@ -43,6 +43,7 @@ class AuthReposytory {
             verificationId: verificationCode, smsCode: smsCode);
 
         await auth.signInWithCredential(credential).then((value) {
+          print(value.toString());
           Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
             YouSuperPage.routeName,
             (_) => false,

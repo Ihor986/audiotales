@@ -10,7 +10,7 @@ import '../../widgets/uncategorized/tales_selection_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
-  static const routeName = '/head_screen.dart';
+  static const routeName = '/main_screen.dart';
 
   @override
   Widget build(BuildContext context) {

@@ -93,6 +93,16 @@ class SelectionText8 extends StatelessWidget {
   }
 }
 
+class SelectionText9 extends StatelessWidget {
+  const SelectionText9({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    return noTales(screenHeight);
+  }
+}
+
 Text selections() => const Text(
       'Подборки',
       style: TextStyle(
@@ -196,5 +206,38 @@ Text openAllAudio() => const Text(
         color: Color.fromRGBO(58, 58, 85, 1),
         fontStyle: FontStyle.normal,
         fontSize: 10,
+      ),
+    );
+Widget noTales(screenHeight) => Center(
+      child: Padding(
+        padding: EdgeInsets.only(top: screenHeight * 0.1),
+        child: Column(
+          children: [
+            const Text(
+              'Как только ты запишешь ',
+              style: TextStyle(
+                color: Color.fromRGBO(58, 58, 85, 0.5),
+                fontStyle: FontStyle.normal,
+                fontSize: 17,
+              ),
+            ),
+            const Text(
+              'аудио, она появится здесь.',
+              style: TextStyle(
+                color: Color.fromRGBO(58, 58, 85, 0.5),
+                fontStyle: FontStyle.normal,
+                fontSize: 17,
+              ),
+            ),
+            SizedBox(
+              height: screenHeight * 0.1,
+            ),
+            const ImageIcon(
+              AssetImage("assets/icons/arrow_down.png"),
+              size: 37,
+              color: Color.fromRGBO(58, 58, 85, 0.5),
+            ),
+          ],
+        ),
       ),
     );
