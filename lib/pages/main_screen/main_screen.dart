@@ -45,6 +45,94 @@ class MainScreen extends StatelessWidget {
       drawer: const CustomDrawer(),
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: const CustomBottomNavigationBar(),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Color.fromRGBO(241, 180, 136, 0),
+      //   onPressed: () {},
+      //   child: ImageIcon(
+      //     AssetImage("assets/icons/Frame 133.png"),
+      //     // size: 80,
+      //     color: Color.fromRGBO(241, 180, 136, 1),
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // bottomNavigationBar: SizedBox(
+      //   height: 90,
+      //   child: ClipRRect(
+      //     borderRadius: const BorderRadius.only(
+      //       topLeft: Radius.circular(20),
+      //       topRight: Radius.circular(20),
+      //     ),
+      //     child: BottomAppBar(
+      //       color: const Color.fromRGBO(255, 255, 255, 1),
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //         children: [
+      //           Column(
+      //             children: [
+      //               IconButton(
+      //                 onPressed: () {},
+      //                 icon: const ImageIcon(
+      //                   AssetImage("assets/icons/home.png"),
+      //                   size: 25,
+      //                   color: Color.fromRGBO(140, 132, 226, 1),
+      //                 ),
+      //               )
+      //             ],
+      //           ),
+      //           Column(
+      //             children: [
+      //               IconButton(
+      //                 onPressed: () {},
+      //                 icon: const ImageIcon(
+      //                   AssetImage("assets/icons/menu.png"),
+      //                   size: 25,
+      //                   color: Color.fromRGBO(140, 132, 226, 1),
+      //                 ),
+      //               )
+      //             ],
+      //           ),
+      //           Column(
+      //             children: [
+      //               IconButton(
+      //                 iconSize: 40,
+      //                 onPressed: () {},
+      //                 icon: const ImageIcon(
+      //                   AssetImage("assets/icons/Frame 133.png"),
+      //                   // size: 170,
+      //                   color: Color.fromRGBO(241, 180, 136, 1),
+      //                 ),
+      //               )
+      //             ],
+      //           ),
+      //           Column(
+      //             children: [
+      //               IconButton(
+      //                 onPressed: () {},
+      //                 icon: const ImageIcon(
+      //                   AssetImage("assets/icons/list.png"),
+      //                   size: 25,
+      //                   color: Color.fromRGBO(140, 132, 226, 1),
+      //                 ),
+      //               )
+      //             ],
+      //           ),
+      //           Column(
+      //             children: [
+      //               IconButton(
+      //                 onPressed: () {},
+      //                 icon: const ImageIcon(
+      //                   AssetImage("assets/icons/profile.png"),
+      //                   size: 25,
+      //                   color: Color.fromRGBO(140, 132, 226, 1),
+      //                 ),
+      //               )
+      //             ],
+      //           )
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
