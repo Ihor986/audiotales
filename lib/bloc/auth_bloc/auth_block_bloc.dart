@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../models/user.dart';
 import '../../repositorys/auth.dart';
 
 part 'auth_block_event.dart';
@@ -8,7 +9,8 @@ part 'auth_block_state.dart';
 
 class AuthBlockBloc extends Bloc<AuthBlockEvent, AuthBlockState> {
   final AuthReposytory authReposytory;
-  AuthBlockBloc(this.authReposytory) : super(AuthBlockInitial()) {
+  final User user;
+  AuthBlockBloc(this.authReposytory, this.user) : super(AuthBlockInitial()) {
     on<ContinueButtonEvent>((event, emit) async {
       emit(AuthBlockInitial());
     });

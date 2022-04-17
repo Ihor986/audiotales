@@ -1,9 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:audiotales/models/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'bloc/auth_bloc/auth_block_bloc.dart';
+import 'data_base/local_data_base.dart';
 import 'firebase_options.dart';
 import 'pages/main_screen/main_screen.dart';
 import 'pages/new_user/new_user.dart';
@@ -16,12 +18,13 @@ import 'repositorys/auth.dart';
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await LocalDB.instance.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
-  FlutterNativeSplash.remove();
+  // FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
@@ -29,22 +32,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FirebaseAuth.instance
-    bool isNewUser = false;
+    // bool isNewUser = true;
+    bool isNewUser = LocalDB.instance.getUser().isNewUser;
 
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBlockBloc>(
-            create: (context) => AuthBlockBloc(AuthReposytory(''))),
+            create: (context) => AuthBlockBloc(
+                AuthReposytory(''),
+                isNewUser
+                    ? User(isNewUser: false)
+                    : LocalDB.instance.getUser())),
       ],
-      child:
-          // Builder(builder: (context) {
-          //   return
-          MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: true,
-        initialRoute: isNewUser ? Test.routeName : MainScreen.routeName,
-        // initialRoute:
-        // isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
+        initialRoute:
+            isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
         routes: {
           Test.routeName: (_) => const Test(),
           NewUserPage.routeName: (_) => const NewUserPage(),
@@ -53,9 +56,7 @@ class MyApp extends StatelessWidget {
           YouSuperPage.routeName: (_) => const YouSuperPage(),
           RegularUserPage.routeName: (_) => const RegularUserPage(),
         },
-        // home: newUser ? RegistrationPageCode() : RegularUserPage(),
-      ), //;
-      // }),
+      ),
     );
   }
 }
