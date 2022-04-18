@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../data_base/local_data_base.dart';
-import '../../../models/user.dart';
 import '../../../pages/new_user/registration_phone.dart';
 import '../../../utils/consts/colors.dart';
 
@@ -12,14 +11,9 @@ class ContinueButtonNewUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
-    // num screenWidth = MediaQuery.of(context).size.width;
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Center(
       child: Column(
         children: [
-          // SizedBox(
-          //   height: screenHeight * 0.5,
-          // ),
           ElevatedButton(
             onPressed: () {
               LocalDB.instance.saveUser(authBloc.user);

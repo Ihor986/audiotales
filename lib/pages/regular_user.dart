@@ -18,7 +18,7 @@ class _RegularUserPageState extends State<RegularUserPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
         MainScreen.routeName,
         (_) => false,

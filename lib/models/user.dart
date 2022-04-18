@@ -18,6 +18,7 @@ class User {
     photo = '';
     name = '';
     phone = '';
+    id = '';
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -27,7 +28,7 @@ class User {
       phone: json['phone'],
       id: json['id'],
       isNewUser: json['isNewUser'],
-      // audio: [json['audio']],
+      // audio: json['audio'],
     );
   }
   Map<String, dynamic> toJson() => {
@@ -36,6 +37,6 @@ class User {
         'phone': phone,
         'id': id,
         'isNewUser': isNewUser,
-        // 'audio': audio.toString(),
+        // 'audio': audio,
       };
 }

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/auth_bloc/auth_block_bloc.dart';
 import 'data_base/local_data_base.dart';
 import 'firebase_options.dart';
+import 'pages/main_screen/head_screen.dart';
 import 'pages/main_screen/main_screen.dart';
 import 'pages/new_user/new_user.dart';
 import 'pages/new_user/registration_phone.dart';
@@ -16,15 +17,12 @@ import 'pages/test.dart';
 import 'repositorys/auth.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await LocalDB.instance.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
-  // FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +30,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // bool isNewUser = true;
     bool isNewUser = LocalDB.instance.getUser().isNewUser;
 
     return MultiBlocProvider(
@@ -43,6 +40,8 @@ class MyApp extends StatelessWidget {
                 isNewUser
                     ? User(isNewUser: false)
                     : LocalDB.instance.getUser())),
+        // BlocProvider<MainscreenBloc>(create: (context) => MainscreenBloc()),
+        // BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
@@ -51,6 +50,7 @@ class MyApp extends StatelessWidget {
         routes: {
           Test.routeName: (_) => const Test(),
           NewUserPage.routeName: (_) => const NewUserPage(),
+          HeadScreen.routeName: (_) => const HeadScreen(),
           MainScreen.routeName: (_) => const MainScreen(),
           RegistrationPage.routeName: (_) => const RegistrationPage(),
           YouSuperPage.routeName: (_) => const YouSuperPage(),

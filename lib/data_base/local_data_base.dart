@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 // import 'package:file_structure_flutter/models/users/user_model.dart';
 import 'package:audiotales/models/user.dart';
@@ -67,6 +66,11 @@ class LocalDB {
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(user.toJson()));
     print(User().toJson());
+  }
+
+  void deleteUser() async {
+    final Box<String> userBox = Hive.box(_userBox);
+    await userBox.delete('authUser');
   }
 
   User getUser() {
