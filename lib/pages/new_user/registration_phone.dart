@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
 import '../../widgets/buttons/continue_buttons/continue_button_code.dart';
 import '../../widgets/buttons/continue_buttons/continue_button_phone.dart';
 import '../../widgets/inputs/registration_code_input.dart';
@@ -24,7 +24,7 @@ class RegistrationPage extends StatelessWidget {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: blueSoso,
+          backgroundColor: CustomColors.blueSoso,
           elevation: 0,
         ),
         body: Stack(
@@ -35,7 +35,7 @@ class RegistrationPage extends StatelessWidget {
                   clipper: OvalBC(),
                   child: Container(
                     height: screenHeight / 4.5,
-                    color: blueSoso,
+                    color: CustomColors.blueSoso,
                     child: const RegistrationText(),
                   ),
                 ),

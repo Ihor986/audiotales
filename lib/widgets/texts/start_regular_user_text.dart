@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
+import '../../utils/consts/texts_consts.dart';
 
 class StartRegularUserText1 extends StatelessWidget {
   const StartRegularUserText1({Key? key}) : super(key: key);
@@ -15,10 +16,10 @@ class StartRegularUserText1 extends StatelessWidget {
         height: screenHeight / 15,
       ),
       Container(
-        child: Center(
+        child: const Center(
           child: Text(
-            hello,
-            style: const TextStyle(
+            TextsConst.hello,
+            style: TextStyle(
               fontSize: 20,
             ),
           ),
@@ -26,11 +27,11 @@ class StartRegularUserText1 extends StatelessWidget {
         height: screenHeight / 15,
         width: screenWidth * 0.7,
         decoration: BoxDecoration(
-          color: white,
-          boxShadow: [
+          color: CustomColors.white,
+          boxShadow: const [
             BoxShadow(
-              color: boxShadow,
-              offset: const Offset(0, 5),
+              color: CustomColors.boxShadow,
+              offset: Offset(0, 5),
               blurRadius: 6,
             ),
           ],
@@ -40,9 +41,9 @@ class StartRegularUserText1 extends StatelessWidget {
       SizedBox(
         height: screenHeight / 14,
       ),
-      Icon(
+      const Icon(
         Icons.favorite,
-        color: rose,
+        color: CustomColors.rose,
         size: 45,
       ),
       SizedBox(
@@ -62,16 +63,16 @@ class StartRegularUserText2 extends StatelessWidget {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Text(
-            textHello1,
-            style: const TextStyle(
+            TextsConst.textHello11,
+            style: TextStyle(
               fontSize: 14,
             ),
           ),
           Text(
-            textHello2,
-            style: const TextStyle(
+            TextsConst.textHello12,
+            style: TextStyle(
               fontSize: 14,
             ),
           ),
@@ -80,11 +81,11 @@ class StartRegularUserText2 extends StatelessWidget {
       height: screenHeight / 13,
       width: screenWidth * 0.7,
       decoration: BoxDecoration(
-        color: white,
-        boxShadow: [
+        color: CustomColors.white,
+        boxShadow: const [
           BoxShadow(
-            color: boxShadow,
-            offset: const Offset(0, 5),
+            color: CustomColors.boxShadow,
+            offset: Offset(0, 5),
             blurRadius: 6,
           ),
         ],
@@ -93,7 +94,3 @@ class StartRegularUserText2 extends StatelessWidget {
     );
   }
 }
-
-String hello = 'Мы рады тебя видеть';
-String textHello1 = 'Взрослые иногда нуждаются в';
-String textHello2 = 'сказке даже больше, чем дети';

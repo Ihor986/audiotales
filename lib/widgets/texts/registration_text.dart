@@ -1,6 +1,7 @@
+import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
 
 class RegistrationText extends StatelessWidget {
   const RegistrationText({Key? key}) : super(key: key);
@@ -30,22 +31,22 @@ class RegistrationText2 extends StatelessWidget {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Text(
-            textHello1,
-            style: const TextStyle(
+            TextsConst.textHello1,
+            style: TextStyle(
               fontSize: 14,
             ),
           ),
           Text(
-            textHello2,
-            style: const TextStyle(
+            TextsConst.textHello2,
+            style: TextStyle(
               fontSize: 14,
             ),
           ),
           Text(
-            textHello3,
-            style: const TextStyle(
+            TextsConst.textHello3,
+            style: TextStyle(
               fontSize: 14,
             ),
           ),
@@ -54,11 +55,11 @@ class RegistrationText2 extends StatelessWidget {
       height: screenHeight * 0.1,
       width: screenWidth * 0.7,
       decoration: BoxDecoration(
-        color: white,
-        boxShadow: [
+        color: CustomColors.white,
+        boxShadow: const [
           BoxShadow(
-            color: boxShadow,
-            offset: const Offset(0, 5),
+            color: CustomColors.boxShadow,
+            offset: Offset(0, 5),
             blurRadius: 6,
           ),
         ],
@@ -93,9 +94,9 @@ class RegistrationText4 extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // SizedBox(height: screenHeight / 40),
-        Text(
-          later,
-          style: const TextStyle(
+        const Text(
+          TextsConst.later,
+          style: TextStyle(
             color: Colors.black,
             fontSize: 20,
           ),
@@ -107,7 +108,7 @@ class RegistrationText4 extends StatelessWidget {
 }
 
 Text registration() => const Text(
-      'Регистрация',
+      TextsConst.registration,
       style: TextStyle(
         fontWeight: FontWeight.bold,
         color: Colors.white,
@@ -115,34 +116,30 @@ Text registration() => const Text(
         fontSize: 48,
       ),
     );
-Text registration1() => Text(
-      'Введи номер телефона',
+Text registration1() => const Text(
+      TextsConst.enterPhoneNumber,
       style: TextStyle(
         // fontWeight: FontWeight.bold,
-        color: black,
+        color: CustomColors.black,
         fontStyle: FontStyle.normal,
         fontSize: 16,
       ),
     );
-Text registration2() => Text(
-      'Введи код из смс, чтобы мы ',
+Text registration2() => const Text(
+      TextsConst.enterTheCodeFromTheSMS,
       style: TextStyle(
         // fontWeight: FontWeight.bold,
-        color: black,
+        color: CustomColors.black,
         fontStyle: FontStyle.normal,
         fontSize: 16,
       ),
     );
-Text registration3() => Text(
-      'тебя запомнили',
+Text registration3() => const Text(
+      TextsConst.enterTheCodeFromTheSMS2,
       style: TextStyle(
         // fontWeight: FontWeight.bold,
-        color: black,
+        color: CustomColors.black,
         fontStyle: FontStyle.normal,
         fontSize: 16,
       ),
     );
-String textHello1 = 'Регистрация привяжет твои сказки ';
-String textHello2 = 'к облаку, после чего они всегда ';
-String textHello3 = 'будут с тобой';
-String later = 'Позже';

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
 
 class RegistrationPhoneInput extends StatefulWidget {
   const RegistrationPhoneInput({Key? key}) : super(key: key);
@@ -23,11 +23,11 @@ class _RegistrationPhoneInputState extends State<RegistrationPhoneInput> {
     final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     return Container(
         decoration: BoxDecoration(
-          color: white,
-          boxShadow: [
+          color: CustomColors.white,
+          boxShadow: const [
             BoxShadow(
-              color: boxShadow,
-              offset: const Offset(0, 5),
+              color: CustomColors.boxShadow,
+              offset: Offset(0, 5),
               blurRadius: 6,
             ),
           ],

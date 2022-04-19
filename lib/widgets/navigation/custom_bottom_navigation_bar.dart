@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
+import '../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/texts_consts.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
@@ -25,8 +27,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
           image: DecorationImage(
             alignment: Alignment.center,
             image: state.currentIndex == 2
-                ? const AssetImage("assets/icons/mic-2.png")
-                : const AssetImage("assets/icons/mic.png"),
+                ? CustomIconsImg.mic3
+                : CustomIconsImg.mic,
             fit: BoxFit.fitHeight,
           ),
         ),
@@ -50,29 +52,29 @@ class CustomBottomNavigationBar extends StatelessWidget {
             items: const [
               BottomNavigationBarItem(
                   activeIcon: ImageIcon(
-                    AssetImage("assets/icons/home.png"),
+                    CustomIconsImg.home,
                     size: 25,
                     color: Color.fromRGBO(140, 132, 226, 1),
                   ),
                   icon: ImageIcon(
-                    AssetImage("assets/icons/home.png"),
+                    CustomIconsImg.home,
                     size: 25,
                     color: Color.fromRGBO(58, 58, 85, 0.8),
                   ),
-                  label: 'Главная '),
+                  label: TextsConst.head),
               BottomNavigationBarItem(
                   backgroundColor: Colors.green,
                   activeIcon: ImageIcon(
-                    AssetImage("assets/icons/menu.png"),
+                    CustomIconsImg.menu,
                     size: 25,
                     color: Color.fromRGBO(140, 132, 226, 1),
                   ),
                   icon: ImageIcon(
-                    AssetImage("assets/icons/menu.png"),
+                    CustomIconsImg.menu,
                     size: 25,
                     color: Color.fromRGBO(58, 58, 85, 0.8),
                   ),
-                  label: 'Подбoрки'),
+                  label: TextsConst.collections),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.mic,
@@ -82,34 +84,34 @@ class CustomBottomNavigationBar extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 activeIcon: ImageIcon(
-                  AssetImage("assets/icons/list.png"),
+                  CustomIconsImg.list,
                   size: 25,
                   color: Color.fromRGBO(140, 132, 226, 1),
                 ),
                 icon: ImageIcon(
-                  AssetImage("assets/icons/list.png"),
+                  CustomIconsImg.list,
                   size: 25,
                   color: Color.fromRGBO(58, 58, 85, 0.8),
                 ),
-                label: 'Аудиозаписи',
+                label: TextsConst.audiofiles,
               ),
               BottomNavigationBarItem(
                 activeIcon: ImageIcon(
-                  AssetImage("assets/icons/profile.png"),
+                  CustomIconsImg.profile,
                   size: 25,
                   color: Color.fromRGBO(140, 132, 226, 1),
                 ),
                 icon: ImageIcon(
-                  AssetImage("assets/icons/profile.png"),
+                  CustomIconsImg.profile,
                   size: 25,
                   color: Color.fromRGBO(58, 58, 85, 0.8),
                 ),
-                label: 'Профиль',
+                label: TextsConst.profile,
               ),
             ],
             currentIndex: state.currentIndex,
-            selectedItemColor: blueSoso,
-            unselectedItemColor: black,
+            selectedItemColor: CustomColors.blueSoso,
+            unselectedItemColor: CustomColors.black,
             showSelectedLabels: true,
             showUnselectedLabels: true,
             onTap: (int index) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../pages/main_screen/main_screen.dart';
-import '../../../utils/consts/colors.dart';
+import '../../../utils/consts/custom_colors.dart';
 import '../../texts/registration_text.dart';
 
 class ContinueButtonPhone extends StatelessWidget {
@@ -30,7 +30,7 @@ class ContinueButtonPhone extends StatelessWidget {
             ),
             style: ElevatedButton.styleFrom(
                 fixedSize: const Size(309, 59),
-                primary: rose,
+                primary: CustomColors.rose,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50))),
           ),

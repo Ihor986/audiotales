@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/consts/colors.dart';
+import '../utils/consts/custom_colors.dart';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _TestState extends State<Test> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: blueSoso,
+        backgroundColor: CustomColors.blueSoso,
         elevation: 0,
       ),
       body: Stack(

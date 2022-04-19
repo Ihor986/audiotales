@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
 import '../../widgets/texts/start_regular_user_text.dart';
 import '../../widgets/texts/you_super_text.dart';
 import '../../widgets/uncategorized/custom_clipper_widget.dart';
@@ -33,7 +33,7 @@ class _YouSuperPageState extends State<YouSuperPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: blueSoso,
+        backgroundColor: CustomColors.blueSoso,
         elevation: 0,
       ),
       body: Column(
@@ -42,7 +42,7 @@ class _YouSuperPageState extends State<YouSuperPage> {
             clipper: OvalBC(),
             child: Container(
               height: screenHeight / 4.5,
-              color: blueSoso,
+              color: CustomColors.blueSoso,
               child: const YouSuper(),
             ),
           ),

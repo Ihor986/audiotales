@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../data_base/local_data_base.dart';
 import '../../../pages/new_user/registration_phone.dart';
-import '../../../utils/consts/colors.dart';
+import '../../../utils/consts/custom_colors.dart';
 
 class ContinueButtonNewUser extends StatelessWidget {
   const ContinueButtonNewUser({Key? key}) : super(key: key);
@@ -16,6 +16,7 @@ class ContinueButtonNewUser extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
+              print(authBloc.user.toJson());
               LocalDB.instance.saveUser(authBloc.user);
               Navigator.of(context, rootNavigator: true)
                   .pushNamedAndRemoveUntil(
@@ -29,7 +30,7 @@ class ContinueButtonNewUser extends StatelessWidget {
             ),
             style: ElevatedButton.styleFrom(
                 fixedSize: const Size(309, 59),
-                primary: rose,
+                primary: CustomColors.rose,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50))),
           ),

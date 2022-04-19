@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/consts/colors.dart';
+import '../../../utils/consts/custom_colors.dart';
 import '../../texts/main_screen_text.dart';
 
 class SelectionButtons extends StatelessWidget {
@@ -12,7 +12,7 @@ class SelectionButtons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Container(
-        color: blueSoso,
+        color: CustomColors.blueSoso,
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

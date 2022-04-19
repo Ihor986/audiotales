@@ -1,4 +1,4 @@
-import 'package:audiotales/utils/consts/colors.dart';
+import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -9,10 +9,10 @@ class CustomDrawer extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: 0.66,
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.horizontal(
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.horizontal(
                 left: Radius.zero, right: Radius.circular(50)),
-            color: white),
+            color: CustomColors.white),
 
         // child: ColoredBox(
         //   color: white,

@@ -1,6 +1,7 @@
+import 'package:audiotales/models/audio.dart';
 import 'package:flutter/material.dart';
 import '../../data_base/local_data_base.dart';
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _Profile extends State<Profile> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: blueSoso,
+        backgroundColor: CustomColors.blueSoso,
         elevation: 0,
       ),
       body: Stack(

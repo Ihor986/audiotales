@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utils/consts/colors.dart';
+import '../../utils/consts/custom_colors.dart';
 import '../../widgets/buttons/continue_buttons/continue_button.dart';
 import '../../widgets/texts/memory_box_text.dart';
 import '../../widgets/texts/start_new_user_text.dart';
@@ -16,7 +16,7 @@ class NewUserPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: blueSoso,
+        backgroundColor: CustomColors.blueSoso,
         elevation: 0,
       ),
       body: Stack(
@@ -27,7 +27,7 @@ class NewUserPage extends StatelessWidget {
                 clipper: OvalBC(),
                 child: Container(
                   height: screenHeight / 4.5,
-                  color: blueSoso,
+                  color: CustomColors.blueSoso,
                   child: const MamoryBox(),
                 ),
               ),

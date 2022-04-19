@@ -9,6 +9,7 @@ import 'data_base/local_data_base.dart';
 import 'firebase_options.dart';
 import 'pages/main_screen/head_screen.dart';
 import 'pages/main_screen/main_screen.dart';
+import 'pages/main_screen/record_screen.dart';
 import 'pages/new_user/new_user.dart';
 import 'pages/new_user/registration_phone.dart';
 import 'pages/new_user/you_super.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
+        // initialRoute: MainScreen.routeName,
         initialRoute:
             isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
         routes: {
@@ -55,6 +57,7 @@ class MyApp extends StatelessWidget {
           RegistrationPage.routeName: (_) => const RegistrationPage(),
           YouSuperPage.routeName: (_) => const YouSuperPage(),
           RegularUserPage.routeName: (_) => const RegularUserPage(),
+          RecordScreen.routeName: (_) => const RecordScreen(),
         },
       ),
     );
