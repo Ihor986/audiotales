@@ -8,4 +8,8 @@ class ChangeCurrentIndexEvent extends NavigationEvent {
   });
 
   int currentIndex;
-}
+} //
+
+class StartRecordEvent extends NavigationEvent {}
+
+class StopRecordEvent extends NavigationEvent {}//

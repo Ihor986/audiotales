@@ -1,5 +1,9 @@
 // import 'package:audiotales/utils/consts/colors.dart';
+import 'package:audiotales/utils/consts/custom_icons_img.dart';
+import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/consts/custom_colors.dart';
 
 class SelectionText1 extends StatelessWidget {
   const SelectionText1({Key? key}) : super(key: key);
@@ -173,7 +177,7 @@ Widget talesGroup3() => Center(
           Text(
             'Добавить',
             style: TextStyle(
-              color: Colors.white,
+              color: CustomColors.white,
               fontStyle: FontStyle.normal,
               fontSize: 12,
             ),
@@ -183,7 +187,7 @@ Widget talesGroup3() => Center(
             child: Text(
               '________',
               style: TextStyle(
-                color: Colors.white,
+                color: CustomColors.white,
                 fontStyle: FontStyle.normal,
                 fontSize: 12,
               ),
@@ -193,17 +197,17 @@ Widget talesGroup3() => Center(
       ),
     );
 Text selectionsAudio() => const Text(
-      'Аудиозаписи',
+      TextsConst.selectionsAudio,
       style: TextStyle(
-        color: Color.fromRGBO(58, 58, 85, 1),
+        color: CustomColors.openAllAudio,
         fontStyle: FontStyle.normal,
         fontSize: 20,
       ),
     );
 Text openAllAudio() => const Text(
-      'Открыть все',
+      TextsConst.openAllAudio,
       style: TextStyle(
-        color: Color.fromRGBO(58, 58, 85, 1),
+        color: CustomColors.openAllAudio,
         fontStyle: FontStyle.normal,
         fontSize: 10,
       ),
@@ -214,17 +218,17 @@ Widget noTales(screenHeight) => Center(
         child: Column(
           children: [
             const Text(
-              'Как только ты запишешь ',
+              TextsConst.noTales,
               style: TextStyle(
-                color: Color.fromRGBO(58, 58, 85, 0.5),
+                color: CustomColors.noTalesText,
                 fontStyle: FontStyle.normal,
                 fontSize: 17,
               ),
             ),
             const Text(
-              'аудио, она появится здесь.',
+              TextsConst.noTales1,
               style: TextStyle(
-                color: Color.fromRGBO(58, 58, 85, 0.5),
+                color: CustomColors.noTalesText,
                 fontStyle: FontStyle.normal,
                 fontSize: 17,
               ),
@@ -233,9 +237,9 @@ Widget noTales(screenHeight) => Center(
               height: screenHeight * 0.1,
             ),
             const ImageIcon(
-              AssetImage("assets/icons/arrow_down.png"),
+              CustomIconsImg.arrowDown,
               size: 37,
-              color: Color.fromRGBO(58, 58, 85, 0.5),
+              color: CustomColors.noTalesText,
             ),
           ],
         ),

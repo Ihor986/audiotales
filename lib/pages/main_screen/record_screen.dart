@@ -15,15 +15,7 @@ class RecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     num screenHeight = MediaQuery.of(context).size.height;
 
-    return
-        // Scaffold(
-        //   extendBody: true,
-        //   appBar: AppBar(
-        //     backgroundColor: blueSoso,
-        //     elevation: 0,
-        //   ),
-        //   body:
-        Stack(
+    return Stack(
       children: [
         Column(
           children: [
@@ -32,14 +24,10 @@ class RecordScreen extends StatelessWidget {
               child: Container(
                 height: screenHeight / 4.5,
                 color: CustomColors.blueSoso,
-                // child: const TalesSelectionWidget(),
               ),
             ),
-            // const Text('test'),
           ],
         ),
-        // const SelectionButtons(),
-        // const TalesSelectionWidget(),
         const RecordDraggableWidget(),
       ],
     );

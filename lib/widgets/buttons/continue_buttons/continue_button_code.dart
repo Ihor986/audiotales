@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../pages/main_screen/main_screen.dart';
 import '../../../utils/consts/custom_colors.dart';
+import '../../../utils/consts/texts_consts.dart';
 import '../../texts/registration_text.dart';
 
 class ContinueButtonCode extends StatelessWidget {
@@ -24,9 +25,9 @@ class ContinueButtonCode extends StatelessWidget {
               authBloc.authReposytory.sendCodeToFirebase(context);
               // print(authBloc.authReposytory.verificationCode);
             },
-            child: Text(
-              continueButtonText,
-              style: const TextStyle(fontSize: 18),
+            child: const Text(
+              TextsConst.continueButtonText,
+              style: TextStyle(fontSize: 18),
             ),
             style: ElevatedButton.styleFrom(
                 fixedSize: const Size(309, 59),
@@ -49,5 +50,3 @@ class ContinueButtonCode extends StatelessWidget {
     );
   }
 }
-
-String continueButtonText = 'Продолжить';

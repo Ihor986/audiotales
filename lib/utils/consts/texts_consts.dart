@@ -18,10 +18,11 @@ class TextsConst {
   static const String textHello11 = 'Взрослые иногда нуждаются в';
   static const String textHello12 = 'сказке даже больше, чем дети';
   static const String youSuper = 'Ты супер!';
-// static const String collections = 'Подбoрки';
-// static const String audiofiles = 'Аудиозаписи';
-// static const String head = 'Главная';
-// static const String collections = 'Подбoрки';
+  static const String continueButtonText = 'Продолжить';
+  static const String noTales = 'Как только ты запишешь ';
+  static const String noTales1 = 'аудио, она появится здесь.';
+  static const String openAllAudio = 'Открыть все';
+  static const String selectionsAudio = 'Аудиозаписи';
 // static const String audiofiles = 'Аудиозаписи';
 // static const String head = 'Главная';
 // static const String collections = 'Подбoрки';

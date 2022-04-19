@@ -1,3 +1,4 @@
+import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
@@ -24,9 +25,9 @@ class ContinueButtonPhone extends StatelessWidget {
               authBloc.authReposytory.verifyPhoneNumber();
               authBloc.add(ContinueButtonPhoneEvent());
             },
-            child: Text(
-              continueButtonText,
-              style: const TextStyle(fontSize: 18),
+            child: const Text(
+              TextsConst.continueButtonText,
+              style: TextStyle(fontSize: 18),
             ),
             style: ElevatedButton.styleFrom(
                 fixedSize: const Size(309, 59),
@@ -53,5 +54,3 @@ class ContinueButtonPhone extends StatelessWidget {
     );
   }
 }
-
-String continueButtonText = 'Продолжить';

@@ -16,6 +16,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
   // final int currentIndex;
   // final void Function(int) onSelect;
 
+//   }
+
   @override
   Widget build(BuildContext context) {
     // final NavigationBloc navigationBloc = context.read<NavigationBloc>();
@@ -37,7 +39,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
               topRight: Radius.circular(20), topLeft: Radius.circular(20)),
           boxShadow: [
             BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.15),
+                color: CustomColors.boxShadow,
+                //  Color.fromRGBO(0, 0, 0, 0.15),
                 spreadRadius: 3,
                 blurRadius: 10),
           ],
@@ -54,12 +57,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   activeIcon: ImageIcon(
                     CustomIconsImg.home,
                     size: 25,
-                    color: Color.fromRGBO(140, 132, 226, 1),
+                    color: CustomColors.blueSoso,
+                    //  Color.fromRGBO(140, 132, 226, 1),
                   ),
                   icon: ImageIcon(
                     CustomIconsImg.home,
                     size: 25,
-                    color: Color.fromRGBO(58, 58, 85, 0.8),
+                    color: CustomColors.iconsColorBNB,
+                    // Color.fromRGBO(58, 58, 85, 0.8),
                   ),
                   label: TextsConst.head),
               BottomNavigationBarItem(
@@ -67,18 +72,20 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   activeIcon: ImageIcon(
                     CustomIconsImg.menu,
                     size: 25,
-                    color: Color.fromRGBO(140, 132, 226, 1),
+                    color: CustomColors.blueSoso,
+                    //  Color.fromRGBO(140, 132, 226, 1),
                   ),
                   icon: ImageIcon(
                     CustomIconsImg.menu,
                     size: 25,
-                    color: Color.fromRGBO(58, 58, 85, 0.8),
+                    color: CustomColors.iconsColorBNB,
+                    // Color.fromRGBO(58, 58, 85, 0.8),
                   ),
                   label: TextsConst.collections),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.mic,
-                  color: Colors.white,
+                  color: CustomColors.white,
                 ),
                 label: '',
               ),
@@ -86,12 +93,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 activeIcon: ImageIcon(
                   CustomIconsImg.list,
                   size: 25,
-                  color: Color.fromRGBO(140, 132, 226, 1),
+                  color: CustomColors.blueSoso,
+                  //  Color.fromRGBO(140, 132, 226, 1),
                 ),
                 icon: ImageIcon(
                   CustomIconsImg.list,
                   size: 25,
-                  color: Color.fromRGBO(58, 58, 85, 0.8),
+                  color: CustomColors.iconsColorBNB,
+                  // Color.fromRGBO(58, 58, 85, 0.8),
                 ),
                 label: TextsConst.audiofiles,
               ),
@@ -99,12 +108,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 activeIcon: ImageIcon(
                   CustomIconsImg.profile,
                   size: 25,
-                  color: Color.fromRGBO(140, 132, 226, 1),
+                  color: CustomColors.blueSoso,
+                  //  Color.fromRGBO(140, 132, 226, 1),
                 ),
                 icon: ImageIcon(
                   CustomIconsImg.profile,
                   size: 25,
-                  color: Color.fromRGBO(58, 58, 85, 0.8),
+                  color: CustomColors.iconsColorBNB,
+                  // Color.fromRGBO(58, 58, 85, 0.8),
                 ),
                 label: TextsConst.profile,
               ),
@@ -119,6 +130,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 context
                     .read<NavigationBloc>()
                     .add(ChangeCurrentIndexEvent(currentIndex: index));
+              }
+              if (index == 2 && state.currentIndex != index) {
+                // context.read<NavigationBloc>().add(StartRecordEvent());
+                // state.sound.record();
               }
             },
             selectedLabelStyle: const TextStyle(fontSize: 10),

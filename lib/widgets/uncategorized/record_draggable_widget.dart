@@ -1,4 +1,10 @@
+import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../services/audioService.dart';
+import '../../utils/consts/custom_icons_img.dart';
 
 class RecordDraggableWidget extends StatefulWidget {
   const RecordDraggableWidget({Key? key}) : super(key: key);
@@ -8,10 +14,35 @@ class RecordDraggableWidget extends StatefulWidget {
 }
 
 class _RecordDraggableWidgetState extends State<RecordDraggableWidget> {
+  SoundService sound = SoundService();
+
+  @override
+  void initState() {
+    super.initState();
+    sound.initRecorder();
+    sound.audioPlayer.openPlayer().then((value) {
+      setState(() {
+        sound.isRecoderReady = true;
+      });
+      sound.clickRecorder();
+    });
+  }
+
+  @override
+  void dispose() {
+    sound.recorder.closeRecorder();
+    sound.audioPlayer.stopPlayer();
+    sound.audioPlayer.closePlayer();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     num screenHeight = MediaQuery.of(context).size.height;
     num screenWidth = MediaQuery.of(context).size.width;
+    // return BlocBuilder<NavigationBloc, NavigationState>(
+    //     builder: (context, state) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -24,11 +55,12 @@ class _RecordDraggableWidgetState extends State<RecordDraggableWidget> {
                   decoration: const BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.15),
+                            color: CustomColors.boxShadow,
+                            //  Color.fromRGBO(0, 0, 0, 0.15),
                             spreadRadius: 3,
                             blurRadius: 10)
                       ],
-                      color: Color.fromRGBO(246, 246, 246, 1),
+                      color: CustomColors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20))),
@@ -39,23 +71,27 @@ class _RecordDraggableWidgetState extends State<RecordDraggableWidget> {
                         foregroundDecoration: const BoxDecoration(
                           image: DecorationImage(
                             alignment: Alignment.center,
-                            image: AssetImage("assets/icons/pause-2.png"),
+                            image: CustomIconsImg.pause2,
                             fit: BoxFit.fitHeight,
                           ),
                         ),
                         child: IconButton(
                           onPressed: () {
+                            sound.clickRecorder();
+                            // context
+                            //     .read<NavigationBloc>()
+                            //     .add(StopRecordEvent());
+                            // state.sound.stopRecorder();
                             print('pres pause');
                           },
-                          icon: const Icon(
-                            Icons.pause,
-                            color: Color.fromARGB(255, 252, 252, 0),
-                          ),
+                          icon: const Icon(Icons.pause,
+                              color: CustomColors.invisible),
                         ),
                         height: screenHeight * 0.13,
                       )));
             }),
       ),
     );
+    // });
   }
 }

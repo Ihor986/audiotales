@@ -4,14 +4,13 @@ class User {
       this.name = '',
       this.phone = '',
       this.id = '',
-      this.isNewUser = true,
-      this.audio = const []});
+      this.isNewUser = true});
   String photo;
   String name;
   String phone;
   String id;
   bool isNewUser;
-  List<String> audio;
+  // List<String> audio;
 
   void deleteAccount() {
     photo = '';
@@ -27,7 +26,7 @@ class User {
       phone: json['phone'],
       id: json['id'],
       isNewUser: json['isNewUser'],
-      audio: json['audio'].split(""),
+      // audio: json['audio'].split(""),
     );
   }
   Map<String, dynamic> toJson() => {
@@ -36,6 +35,6 @@ class User {
         'phone': phone,
         'id': id,
         'isNewUser': isNewUser,
-        'audio': audio.toString(),
+        // 'audio': audio.toString(),
       };
 }
