@@ -1,5 +1,7 @@
+import 'package:audiotales/services/audioService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/bloc/sound_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
@@ -21,16 +23,20 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final NavigationBloc navigationBloc = context.read<NavigationBloc>();
-
+    // SoundService sound = context.read<SoundBloc>().sound;
+    List<AssetImage> mic = [
+      CustomIconsImg.mic,
+      CustomIconsImg.mic2,
+      CustomIconsImg.mic3
+    ];
     return BlocBuilder<NavigationBloc, NavigationState>(
         builder: (context, state) {
       return Container(
         foregroundDecoration: BoxDecoration(
           image: DecorationImage(
             alignment: Alignment.center,
-            image: state.currentIndex == 2
-                ? CustomIconsImg.mic3
-                : CustomIconsImg.mic,
+            image: state.soundIndex < 3 ? mic[state.soundIndex] : mic[1],
+            // image: mic[state.soundIndex],
             fit: BoxFit.fitHeight,
           ),
         ),
@@ -131,10 +137,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
                     .read<NavigationBloc>()
                     .add(ChangeCurrentIndexEvent(currentIndex: index));
               }
-              if (index == 2 && state.currentIndex != index) {
-                // context.read<NavigationBloc>().add(StartRecordEvent());
-                // state.sound.record();
-              }
+              // if (index == 2 && state.currentIndex != index) {
+              //   context.read<SoundBloc>().add(StartRecordEvent());
+              //   // state.sound.record();
+              // }
             },
             selectedLabelStyle: const TextStyle(fontSize: 10),
             unselectedLabelStyle: const TextStyle(fontSize: 10),

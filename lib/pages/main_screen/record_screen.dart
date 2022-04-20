@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../services/audioService.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../widgets/buttons/main_screen_buttons/selection_buttons.dart';
 import '../../widgets/uncategorized/audio_draggable_widget.dart';

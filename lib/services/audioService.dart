@@ -11,6 +11,7 @@ class SoundService {
   final audioPlayer = FlutterSoundPlayer();
   bool isRecoderReady = false;
   bool isPlaying = false;
+  int soundIndex = 0;
   String path = '';
   Uint8List? url;
 
@@ -43,8 +44,20 @@ class SoundService {
   clickRecorder() async {
     if (recorder.isRecording) {
       await stopRecorder();
+      recorder.closeRecorder();
+      audioPlayer.stopPlayer();
+      audioPlayer.closePlayer();
+      soundIndex = 2;
     } else {
-      await record();
+      initRecorder();
+      audioPlayer.openPlayer().then((value) {
+        // setState(() {
+        isRecoderReady = true;
+        record();
+        soundIndex = 1;
+        // });
+        // sound.clickRecorder();
+      });
     }
   }
 }
