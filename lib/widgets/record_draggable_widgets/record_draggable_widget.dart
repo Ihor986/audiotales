@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/bloc/sound_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../bloc/sound_bloc/sound_bloc.dart';
 import '../../services/audioService.dart';
 import 'play_record.dart';
 import 'recordering.dart';
@@ -14,7 +14,7 @@ class RecordDraggableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SoundBloc>(
         create: (context) => SoundBloc(),
-        child: BlocBuilder<SoundBloc, SoundState>(builder: (context, state) {
+        child: BlocBuilder<SoundBloc, SoundInitial>(builder: (context, state) {
           SoundService sound = context.read<SoundBloc>().sound;
           if (sound.soundIndex == 0) {
             context

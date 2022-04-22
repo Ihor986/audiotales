@@ -8,13 +8,12 @@ import '../../services/audioService.dart';
 part 'sound_event.dart';
 part 'sound_state.dart';
 
-class SoundBloc extends Bloc<SoundEvent, SoundState> {
+class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
   final SoundService sound = SoundService();
-  SoundBloc() : super(SoundInitial()) {
+  SoundBloc() : super(SoundInitial(SoundService())) {
     on<StartRecordEvent>((event, emit) async {
-      // sound.soundIndex = 1;
       await sound.clickRecorder();
-      emit(SoundInitial());
+      emit(SoundInitial(sound));
     });
     // on<StopRecordEvent>((event, emit) async {
     //   await sound.clickRecorder();

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -16,6 +17,8 @@ class SoundService {
   int soundIndex = 0;
   String path = '';
   Uint8List? url;
+  String recorderTime = '00:00:00';
+  // StreamSubscription _recorderSubscription = recorder.onProgress!.listen((event) { }) ;
 
   _initRecorder() async {
     final status = await Permission.microphone.request();
@@ -23,6 +26,7 @@ class SoundService {
       throw 'Microphone permission not granted';
     }
     await recorder.openRecorder();
+    await recorder.setSubscriptionDuration(Duration(milliseconds: 10));
   }
 
   _record() async {
@@ -50,9 +54,24 @@ class SoundService {
   }
 
   clickRecorder() async {
-    if (recorder.isRecording && soundIndex < 2) {
+    if (!recorder.isRecording && soundIndex == 0) {
+      _initRecorder();
+      audioPlayer.openPlayer().then((value) {
+        isRecoderReady = true;
+        _record();
+        recorder.onProgress!.listen((e) {
+          DateTime date = DateTime.fromMillisecondsSinceEpoch(
+              e.duration.inMilliseconds,
+              isUtc: true);
+          String txt = '$date';
+          recorderTime = txt.substring(11, 19);
+        });
+        soundIndex = 1;
+      });
+    } else if (recorder.isRecording && soundIndex < 2) {
       soundIndex = 2;
       await _stopRecorder();
+      recorder.onProgress!.listen((event) {}).cancel();
       // ------------------------------
       soundIndex = 3;
       await audioPlayer.startPlayer(
@@ -60,13 +79,15 @@ class SoundService {
         codec: Codec.defaultCodec,
       );
       // ------------------------------
-      // } else if (!recorder.isRecording && soundIndex == 2) {
-      //   soundIndex = 3;
-      //   await audioPlayer.startPlayer(
-      //     fromDataBuffer: url,
-      //     codec: Codec.defaultCodec,
-      //   );
-    } else if (!recorder.isRecording && soundIndex == 3) {
+    }
+
+    // } else if (!recorder.isRecording && soundIndex == 2) {
+    //   soundIndex = 3;
+    //   await audioPlayer.startPlayer(
+    //     fromDataBuffer: url,
+    //     codec: Codec.defaultCodec,
+    //   );}
+    else if (!recorder.isRecording && soundIndex == 3) {
       if (!audioPlayer.isPlaying) {
         soundIndex = 3;
         await audioPlayer.startPlayer(
@@ -77,13 +98,6 @@ class SoundService {
       }
       await audioPlayer.stopPlayer();
       soundIndex = 2;
-    } else if (!recorder.isRecording && soundIndex == 0) {
-      _initRecorder();
-      audioPlayer.openPlayer().then((value) {
-        isRecoderReady = true;
-        _record();
-        soundIndex = 1;
-      });
     }
   }
 }

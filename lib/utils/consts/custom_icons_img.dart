@@ -14,7 +14,8 @@ class CustomIconsImg {
   static const AssetImage play = AssetImage("assets/icons/Play.png");
   static const AssetImage plus15 = AssetImage("assets/icons/plus.png");
   static const AssetImage minus15 = AssetImage("assets/icons/minus.png");
-  // static const AssetImage home = AssetImage("assets/icons/home.png");
+  static const AssetImage ellipseRad =
+      AssetImage("assets/icons/EllipseRed.png");
   // static const AssetImage menu = AssetImage("assets/icons/menu.png");
   // static const AssetImage list = AssetImage("assets/icons/list.png");
   // static const AssetImage profile = AssetImage("assets/icons/profile.png");
