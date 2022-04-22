@@ -35,7 +35,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         foregroundDecoration: BoxDecoration(
           image: DecorationImage(
             alignment: Alignment.center,
-            image: state.soundIndex < 3 ? mic[state.soundIndex] : mic[1],
+            image: state.soundIndex < 3 ? mic[state.soundIndex] : mic[2],
             // image: mic[state.soundIndex],
             fit: BoxFit.fitHeight,
           ),

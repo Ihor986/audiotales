@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -10,7 +11,7 @@ class SoundService {
   final recorder = FlutterSoundRecorder();
   final audioPlayer = FlutterSoundPlayer();
   bool isRecoderReady = false;
-  bool isPlaying = false;
+  // String recordLengthLimit = 0;
   int soundIndex = 0;
   String path = '';
   Uint8List? url;
@@ -21,7 +22,6 @@ class SoundService {
 
     final audiofile = File(path!);
     url = audiofile.readAsBytesSync();
-    // toString();
     print(audiofile);
   }
 
@@ -38,25 +38,42 @@ class SoundService {
       throw 'Microphone permission not granted';
     }
     await recorder.openRecorder();
-    // isRecoderReady = true;
+  }
+
+  disposeRecorder() {
+    recorder.closeRecorder();
+    audioPlayer.stopPlayer();
+    audioPlayer.closePlayer();
   }
 
   clickRecorder() async {
-    if (recorder.isRecording) {
-      await stopRecorder();
-      recorder.closeRecorder();
-      audioPlayer.stopPlayer();
-      audioPlayer.closePlayer();
+    if (recorder.isRecording && soundIndex < 2) {
       soundIndex = 2;
-    } else {
+      await stopRecorder();
+    } else if (!recorder.isRecording && soundIndex == 2) {
+      soundIndex = 3;
+      await audioPlayer.startPlayer(
+        fromDataBuffer: url,
+        codec: Codec.defaultCodec,
+      );
+    } else if (!recorder.isRecording && soundIndex == 3) {
+      if (!audioPlayer.isPlaying) {
+        soundIndex = 3;
+        await audioPlayer.startPlayer(
+          fromDataBuffer: url,
+          codec: Codec.defaultCodec,
+        );
+        return;
+      }
+      await audioPlayer.stopPlayer();
+      soundIndex = 2;
+    } else if (!recorder.isRecording && soundIndex == 0) {
+      // print('${DateTime.now()}');
       initRecorder();
       audioPlayer.openPlayer().then((value) {
-        // setState(() {
         isRecoderReady = true;
         record();
         soundIndex = 1;
-        // });
-        // sound.clickRecorder();
       });
     }
   }

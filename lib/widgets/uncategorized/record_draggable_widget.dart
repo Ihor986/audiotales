@@ -80,7 +80,7 @@ class RecordDraggableWidget extends StatelessWidget {
                               foregroundDecoration: BoxDecoration(
                                 image: DecorationImage(
                                   alignment: Alignment.center,
-                                  image: sound.soundIndex != 2
+                                  image: sound.soundIndex == 1
                                       ? CustomIconsImg.pause2
                                       : CustomIconsImg.play,
                                   fit: BoxFit.fitHeight,
