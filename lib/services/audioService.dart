@@ -11,7 +11,10 @@ class SoundService {
   final recorder = FlutterSoundRecorder();
   final audioPlayer = FlutterSoundPlayer();
   bool isRecoderReady = false;
-  // String recordLengthLimit = 0;
+  String recordLengthLimitStart =
+      DateTime.now().millisecondsSinceEpoch.toString();
+  String recordLengthLimitControl =
+      DateTime.now().millisecondsSinceEpoch.toString();
   int soundIndex = 0;
   String path = '';
   Uint8List? url;
@@ -19,9 +22,9 @@ class SoundService {
   stopRecorder() async {
     if (!isRecoderReady) return;
     final path = await recorder.stopRecorder();
-
     final audiofile = File(path!);
     url = audiofile.readAsBytesSync();
+    recordLengthLimitControl = DateTime.now().millisecondsSinceEpoch.toString();
     print(audiofile);
   }
 
@@ -30,6 +33,8 @@ class SoundService {
     await recorder.startRecorder(
         toFile: '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
         codec: Codec.defaultCodec);
+    recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
+    recordLengthLimitControl = recordLengthLimitStart;
   }
 
   initRecorder() async {

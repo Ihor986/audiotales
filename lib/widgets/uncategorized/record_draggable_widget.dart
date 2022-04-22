@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,34 +11,6 @@ import '../../utils/consts/custom_icons_img.dart';
 
 class RecordDraggableWidget extends StatelessWidget {
   const RecordDraggableWidget({Key? key}) : super(key: key);
-
-//   @override
-//   State<RecordDraggableWidget> createState() => _RecordDraggableWidgetState();
-// }
-
-// class _RecordDraggableWidgetState extends State<RecordDraggableWidget> {
-  // kk
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   sound.initRecorder();
-  //   sound.audioPlayer.openPlayer().then((value) {
-  //     setState(() {
-  //       sound.isRecoderReady = true;
-  //     });
-  //     // sound.record();
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   sound.recorder.closeRecorder();
-  //   sound.audioPlayer.stopPlayer();
-  //   sound.audioPlayer.closePlayer();
-
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +25,17 @@ class RecordDraggableWidget extends StatelessWidget {
                 .read<NavigationBloc>()
                 .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
             context.read<SoundBloc>().add(StartRecordEvent());
+            Timer(const Duration(seconds: 10), () async {
+              print('stop${sound.recordLengthLimitStart}');
+              if (sound.recordLengthLimitStart ==
+                  sound.recordLengthLimitControl) {
+                context
+                    .read<NavigationBloc>()
+                    .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
+                context.read<SoundBloc>().add(StartRecordEvent());
+                print('stop${sound.recordLengthLimitControl}');
+              }
+            });
           }
           return Center(
             child: Padding(

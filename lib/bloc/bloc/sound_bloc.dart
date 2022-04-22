@@ -15,16 +15,6 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
       // sound.soundIndex = 1;
       await sound.clickRecorder();
       emit(SoundInitial());
-      // Timer(const Duration(seconds: 10), () async {
-      // if (false) {
-      //   await sound.stopRecorder();
-      //   sound.recorder.closeRecorder();
-      //   sound.audioPlayer.stopPlayer();
-      //   sound.audioPlayer.closePlayer();
-      //   sound.soundIndex = 2;
-      //    emit(SoundInitial());
-      // }
-      // });
     });
     // on<StopRecordEvent>((event, emit) async {
     //   await sound.clickRecorder();
