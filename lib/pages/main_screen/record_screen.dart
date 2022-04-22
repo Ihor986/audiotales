@@ -6,7 +6,7 @@ import '../../utils/consts/custom_colors.dart';
 import '../../widgets/buttons/main_screen_buttons/selection_buttons.dart';
 import '../../widgets/uncategorized/audio_draggable_widget.dart';
 import '../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../../widgets/uncategorized/record_draggable_widget.dart';
+import '../../widgets/record_draggable_widgets/record_draggable_widget.dart';
 import '../../widgets/uncategorized/tales_selection_widget.dart';
 
 class RecordScreen extends StatelessWidget {
