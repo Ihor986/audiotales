@@ -12,22 +12,25 @@ class RecordDraggableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SoundBloc>(
-        create: (context) => SoundBloc(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<SoundBloc>(create: (context) => SoundBloc()),
+        ],
         child: BlocBuilder<SoundBloc, SoundInitial>(builder: (context, state) {
           SoundService sound = context.read<SoundBloc>().sound;
           if (sound.soundIndex == 0) {
+            context.read<SoundBloc>().add(StartRecordEvent());
             context
                 .read<NavigationBloc>()
                 .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
-            context.read<SoundBloc>().add(StartRecordEvent());
+
             Timer(const Duration(seconds: 10), () async {
               if (sound.recordLengthLimitStart ==
                   sound.recordLengthLimitControl) {
+                context.read<SoundBloc>().add(StartRecordEvent());
                 context
                     .read<NavigationBloc>()
                     .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
-                context.read<SoundBloc>().add(StartRecordEvent());
               }
             });
           }

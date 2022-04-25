@@ -26,7 +26,44 @@ class SoundService {
       throw 'Microphone permission not granted';
     }
     await recorder.openRecorder();
-    await recorder.setSubscriptionDuration(Duration(milliseconds: 10));
+    await recorder.setSubscriptionDuration(Duration(seconds: 1));
+  }
+
+  // i() async {
+  //   final status = await Permission.microphone.request();
+  //   if (status != PermissionStatus.granted) {
+  //     throw 'Microphone permission not granted';
+  //   }
+  //   await recorder.openRecorder();
+  //   await recorder.setSubscriptionDuration(Duration(milliseconds: 10));
+  //   audioPlayer.openPlayer().then((value) async {
+  //     isRecoderReady = true;
+  //     if (!isRecoderReady) return;
+  //     await recorder.startRecorder(
+  //         toFile: '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
+  //         codec: Codec.defaultCodec);
+  //     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
+  //     recordLengthLimitControl = recordLengthLimitStart;
+  //     recorder.onProgress!.listen((e) {
+  //       DateTime date = DateTime.fromMillisecondsSinceEpoch(
+  //           e.duration.inMilliseconds,
+  //           isUtc: true);
+  //       String txt = '$date';
+  //       recorderTime = txt.substring(11, 19);
+  //       print(recorderTime);
+  //     });
+  //     soundIndex = 1;
+  //   });
+  // }
+
+  _startRecord() {
+    _initRecorder();
+    audioPlayer.openPlayer().then((value) {
+      isRecoderReady = true;
+      _record();
+      // _startTimer();
+      soundIndex = 1;
+    });
   }
 
   _record() async {
@@ -36,6 +73,17 @@ class SoundService {
         codec: Codec.defaultCodec);
     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
     recordLengthLimitControl = recordLengthLimitStart;
+  }
+
+  _startTimer() {
+    recorder.onProgress!.listen((e) {
+      DateTime date = DateTime.fromMillisecondsSinceEpoch(
+          e.duration.inMilliseconds,
+          isUtc: true);
+      String txt = '$date';
+      recorderTime = txt.substring(11, 19);
+      print(recorderTime);
+    });
   }
 
   _stopRecorder() async {
@@ -55,19 +103,8 @@ class SoundService {
 
   clickRecorder() async {
     if (!recorder.isRecording && soundIndex == 0) {
-      _initRecorder();
-      audioPlayer.openPlayer().then((value) {
-        isRecoderReady = true;
-        _record();
-        recorder.onProgress!.listen((e) {
-          DateTime date = DateTime.fromMillisecondsSinceEpoch(
-              e.duration.inMilliseconds,
-              isUtc: true);
-          String txt = '$date';
-          recorderTime = txt.substring(11, 19);
-        });
-        soundIndex = 1;
-      });
+      _startRecord();
+      // i();
     } else if (recorder.isRecording && soundIndex < 2) {
       soundIndex = 2;
       await _stopRecorder();
@@ -79,15 +116,7 @@ class SoundService {
         codec: Codec.defaultCodec,
       );
       // ------------------------------
-    }
-
-    // } else if (!recorder.isRecording && soundIndex == 2) {
-    //   soundIndex = 3;
-    //   await audioPlayer.startPlayer(
-    //     fromDataBuffer: url,
-    //     codec: Codec.defaultCodec,
-    //   );}
-    else if (!recorder.isRecording && soundIndex == 3) {
+    } else if (!recorder.isRecording && soundIndex == 3) {
       if (!audioPlayer.isPlaying) {
         soundIndex = 3;
         await audioPlayer.startPlayer(
@@ -96,7 +125,7 @@ class SoundService {
         );
         return;
       }
-      await audioPlayer.stopPlayer();
+      await disposeRecorder();
       soundIndex = 2;
     }
   }

@@ -36,7 +36,7 @@ class Recordering extends StatelessWidget {
                           topRight: Radius.circular(20))),
                   child: Stack(
                     children: [
-                      RecorderingTimer(),
+                      const RecorderingTimer(),
                       Align(
                           alignment: const Alignment(0, 1),
                           child: Container(
