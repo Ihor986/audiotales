@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
@@ -18,16 +20,10 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
     num screenWidth = MediaQuery.of(context).size.width;
     SoundService sound =
         BlocProvider.of<SoundBloc>(context, listen: true).sound;
-
-    sound.recorder.onProgress?.listen((e) {
-      DateTime date = DateTime.fromMillisecondsSinceEpoch(
-          e.duration.inMilliseconds,
-          isUtc: true);
-      String txt = '$date';
-      setState(() {
-        sound.recorderTime = txt.substring(11, 19);
-      });
-      // print(sound.recorderTime);
+    Timer.periodic(Duration(seconds: 1), (i) {
+      if (sound.recorder.isRecording) {
+        setState(() {});
+      }
     });
 
     return Align(

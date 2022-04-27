@@ -4,6 +4,8 @@ import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
+import '../texts/record_screen_text.dart';
+import 'record_animation.dart';
 import 'recordering_timer.dart';
 
 class Recordering extends StatelessWidget {
@@ -36,6 +38,11 @@ class Recordering extends StatelessWidget {
                           topRight: Radius.circular(20))),
                   child: Stack(
                     children: [
+                      const Align(
+                        alignment: Alignment(0, -0.7),
+                        child: RecordText(),
+                      ),
+                      RecorderingAnimation(),
                       const RecorderingTimer(),
                       Align(
                           alignment: const Alignment(0, 1),

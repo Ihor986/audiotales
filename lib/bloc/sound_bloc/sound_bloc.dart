@@ -11,10 +11,10 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
       await sound.clickRecorder();
       emit(SoundInitial());
     });
-    // on<StopRecordEvent>((event, emit) async {
-    //   await sound.clickRecorder();
-    //   // sound.soundIndex = 2;
-    //   emit(SoundInitial());
-    // });
+    on<StopRecordEvent>((event, emit) async {
+      // await sound.disposeRecorder();
+      // sound.soundIndex = 2;
+      // emit(SoundInitial());
+    });
   }
 }

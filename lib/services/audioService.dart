@@ -1,14 +1,16 @@
+// import 'dart:async';
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class SoundService {
   SoundService();
 
-  final recorder = FlutterSoundRecorder();
-  final audioPlayer = FlutterSoundPlayer();
+  final FlutterSoundRecorder recorder = FlutterSoundRecorder();
+  final FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
   bool isRecoderReady = false;
   String recordLengthLimitStart =
       DateTime.now().millisecondsSinceEpoch.toString();
@@ -18,7 +20,43 @@ class SoundService {
   String path = '';
   Uint8List? url;
   String recorderTime = '00:00:00';
-  // StreamSubscription _recorderSubscription = recorder.onProgress!.listen((event) { }) ;
+  double recorderPower = 0;
+  List<Widget> children = [];
+
+  clickRecorder() async {
+    if (!recorder.isRecording && soundIndex == 0) {
+      _startRecord();
+    } else if (recorder.isRecording && soundIndex < 2) {
+      soundIndex = 2;
+      await _stopRecorder();
+      // recorder.onProgress!.listen((event) {}).cancel();
+      // ------------------------------
+      soundIndex = 3;
+      await audioPlayer.startPlayer(
+        fromDataBuffer: url,
+        codec: Codec.defaultCodec,
+      );
+      // ------------------------------
+    } else if (!recorder.isRecording && soundIndex == 2) {
+      soundIndex = 3;
+      await audioPlayer.startPlayer(
+        fromDataBuffer: url,
+        codec: Codec.defaultCodec,
+      );
+    } else if (!recorder.isRecording && soundIndex == 3) {
+      if (!audioPlayer.isPlaying) {
+        soundIndex = 3;
+        await audioPlayer.startPlayer(
+          fromDataBuffer: url,
+          codec: Codec.defaultCodec,
+        );
+        return;
+      }
+      // await _disposeRecorder();
+      audioPlayer.stopPlayer();
+      soundIndex = 2;
+    }
+  }
 
   _initRecorder() async {
     final status = await Permission.microphone.request();
@@ -29,42 +67,30 @@ class SoundService {
     await recorder.setSubscriptionDuration(Duration(seconds: 1));
   }
 
-  // i() async {
-  //   final status = await Permission.microphone.request();
-  //   if (status != PermissionStatus.granted) {
-  //     throw 'Microphone permission not granted';
-  //   }
-  //   await recorder.openRecorder();
-  //   await recorder.setSubscriptionDuration(Duration(milliseconds: 10));
-  //   audioPlayer.openPlayer().then((value) async {
-  //     isRecoderReady = true;
-  //     if (!isRecoderReady) return;
-  //     await recorder.startRecorder(
-  //         toFile: '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-  //         codec: Codec.defaultCodec);
-  //     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
-  //     recordLengthLimitControl = recordLengthLimitStart;
-  //     recorder.onProgress!.listen((e) {
-  //       DateTime date = DateTime.fromMillisecondsSinceEpoch(
-  //           e.duration.inMilliseconds,
-  //           isUtc: true);
-  //       String txt = '$date';
-  //       recorderTime = txt.substring(11, 19);
-  //       print(recorderTime);
-  //     });
-  //     soundIndex = 1;
-  //   });
-  // }
-
   _startRecord() {
     _initRecorder();
     audioPlayer.openPlayer().then((value) {
       isRecoderReady = true;
       _record();
-      // _startTimer();
+      _startTimer();
       soundIndex = 1;
     });
+    // timer();
   }
+
+  // timer() {
+  //   Timer(const Duration(seconds: 10), () async {
+  //     if (recordLengthLimitStart == recordLengthLimitControl) {
+  //       soundIndex = 2;
+  //       await _stopRecorder();
+  //       soundIndex = 3;
+  //       await audioPlayer.startPlayer(
+  //         fromDataBuffer: url,
+  //         codec: Codec.defaultCodec,
+  //       );
+  //     }
+  //   });
+  // }
 
   _record() async {
     if (!isRecoderReady) return;
@@ -77,12 +103,13 @@ class SoundService {
 
   _startTimer() {
     recorder.onProgress!.listen((e) {
+      int vol = e.decibels!.toInt();
       DateTime date = DateTime.fromMillisecondsSinceEpoch(
           e.duration.inMilliseconds,
           isUtc: true);
       String txt = '$date';
       recorderTime = txt.substring(11, 19);
-      print(recorderTime);
+      recorderPower = vol / 10;
     });
   }
 
@@ -93,40 +120,16 @@ class SoundService {
     url = audiofile.readAsBytesSync();
     recordLengthLimitControl = DateTime.now().millisecondsSinceEpoch.toString();
     print(audiofile);
+    recorder.onProgress!.listen((event) {}).cancel();
   }
 
   disposeRecorder() {
+    print('0000000000000000000000');
+    if (recorder.isRecording) {
+      _stopRecorder();
+    }
     recorder.closeRecorder();
     audioPlayer.stopPlayer();
     audioPlayer.closePlayer();
-  }
-
-  clickRecorder() async {
-    if (!recorder.isRecording && soundIndex == 0) {
-      _startRecord();
-      // i();
-    } else if (recorder.isRecording && soundIndex < 2) {
-      soundIndex = 2;
-      await _stopRecorder();
-      recorder.onProgress!.listen((event) {}).cancel();
-      // ------------------------------
-      soundIndex = 3;
-      await audioPlayer.startPlayer(
-        fromDataBuffer: url,
-        codec: Codec.defaultCodec,
-      );
-      // ------------------------------
-    } else if (!recorder.isRecording && soundIndex == 3) {
-      if (!audioPlayer.isPlaying) {
-        soundIndex = 3;
-        await audioPlayer.startPlayer(
-          fromDataBuffer: url,
-          codec: Codec.defaultCodec,
-        );
-        return;
-      }
-      await disposeRecorder();
-      soundIndex = 2;
-    }
   }
 }

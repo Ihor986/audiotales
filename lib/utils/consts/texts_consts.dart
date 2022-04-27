@@ -23,7 +23,7 @@ class TextsConst {
   static const String noTales1 = 'аудио, она появится здесь.';
   static const String openAllAudio = 'Открыть все';
   static const String selectionsAudio = 'Аудиозаписи';
-// static const String audiofiles = 'Аудиозаписи';
+  static const String record = 'Запись';
 // static const String head = 'Главная';
 // static const String collections = 'Подбoрки';
 // static const String audiofiles = 'Аудиозаписи';
