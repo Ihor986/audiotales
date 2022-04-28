@@ -20,15 +20,19 @@ class RecordDraggableWidget extends StatelessWidget {
             .read<NavigationBloc>()
             .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
 
-        Timer(const Duration(seconds: 10), () async {
-          if (sound.recordLengthLimitStart == sound.recordLengthLimitControl) {
-            context.read<SoundBloc>().add(StartRecordEvent());
-            context
-                .read<NavigationBloc>()
-                .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
-          }
-        });
+        // Timer(const Duration(seconds: 3), () async {
+        //   context.read<SoundBloc>().add(StartRecordEvent());
+        // if (sound.recordLengthLimitStart == sound.recordLengthLimitControl) {
+        //   context.read<SoundBloc>().add(StartRecordEvent());
+        //   context
+        //       .read<NavigationBloc>()
+        //       .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
+        // }
+        // });
       }
+      // sound.recorder.isRecording
+      //     ? print('ok')
+      //     : context.read<SoundBloc>().add(StartRecordEvent());
       return sound.soundIndex < 2 ? const Recordering() : const PlayRecord();
     });
   }

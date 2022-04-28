@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
@@ -17,6 +18,13 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
   late Timer _timer;
   void startTimer(SoundBloc _soundBloc) {
     _timer = Timer.periodic(const Duration(seconds: 1), (i) {
+      if (!_soundBloc.sound.recorder.isRecording &&
+          _soundBloc.sound.soundIndex == 0) {
+        context.read<SoundBloc>().add(StartRecordEvent());
+      }
+      if (_soundBloc.sound.limit > 10) {
+        context.read<SoundBloc>().add(StartRecordEvent());
+      }
       if (_soundBloc.sound.recorder.isRecording) {
         if (mounted) setState(() {});
       }

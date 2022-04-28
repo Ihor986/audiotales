@@ -11,6 +11,7 @@ class SoundService {
   final FlutterSoundRecorder recorder = FlutterSoundRecorder();
   final FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
   bool isRecoderReady = false;
+  int limit = 0;
   String recordLengthLimitStart =
       DateTime.now().millisecondsSinceEpoch.toString();
   String recordLengthLimitControl =
@@ -22,6 +23,7 @@ class SoundService {
   List<Widget> children = [];
 
   clickRecorder() async {
+    print('click');
     if (!recorder.isRecording && soundIndex == 0) {
       _startRecord();
     } else if (recorder.isRecording && soundIndex < 2) {
@@ -55,29 +57,32 @@ class SoundService {
     }
   }
 
-  _initRecorder() async {
+  _startRecord() {
+    initRecorder();
+    // audioPlayer.openPlayer().then((value) {
+    //   isRecoderReady = true;
+    _record();
+    _startTimer();
+    soundIndex = 1;
+    // });
+  }
+
+  initRecorder() async {
+    await audioPlayer.openPlayer().then((value) {
+      isRecoderReady = true;
+    });
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
       throw 'Microphone permission not granted';
     }
+
     await recorder.openRecorder();
     await recorder.setSubscriptionDuration(const Duration(seconds: 1));
-  }
-
-  _startRecord() {
-    _initRecorder();
-    audioPlayer.openPlayer().then((value) {
-      isRecoderReady = true;
-      _record();
-      _startTimer();
-      soundIndex = 1;
-    });
   }
 
   _record() async {
     if (!isRecoderReady) return;
     await recorder.startRecorder(
-        // toFile: '11.mp4',
         toFile: '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
         codec: Codec.defaultCodec);
     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
@@ -90,6 +95,7 @@ class SoundService {
       DateTime date = DateTime.fromMillisecondsSinceEpoch(
           e.duration.inMilliseconds,
           isUtc: true);
+      limit = e.duration.inSeconds;
       String txt = '$date';
       recorderTime = txt.substring(11, 19);
       recorderPower = vol / 10;
@@ -105,6 +111,7 @@ class SoundService {
     print(audiofile);
     recorder.onProgress!.listen((event) {}).cancel();
     recorder.closeRecorder();
+    limit = 0;
   }
 
   disposeRecorder() {
