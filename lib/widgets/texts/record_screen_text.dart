@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../utils/consts/texts_consts.dart';
 
 class RecordText extends StatelessWidget {
@@ -7,7 +6,6 @@ class RecordText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
     return const Text(TextsConst.record,
         style: TextStyle(
           color: Colors.black,

@@ -42,7 +42,7 @@ class Recordering extends StatelessWidget {
                         alignment: Alignment(0, -0.7),
                         child: RecordText(),
                       ),
-                      RecorderingAnimation(),
+                      const RecorderingAnimation(),
                       const RecorderingTimer(),
                       Align(
                           alignment: const Alignment(0, 1),

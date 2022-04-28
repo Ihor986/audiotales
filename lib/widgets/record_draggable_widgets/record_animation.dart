@@ -1,61 +1,73 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../bloc/sound_bloc/sound_bloc.dart';
-import '../../services/audioService.dart';
 import '../../utils/consts/custom_icons_img.dart';
 
 class RecorderingAnimation extends StatefulWidget {
-  RecorderingAnimation({Key? key}) : super(key: key);
+  const RecorderingAnimation({Key? key}) : super(key: key);
 
   @override
   State<RecorderingAnimation> createState() => _RecorderingAnimationState();
 }
 
 class _RecorderingAnimationState extends State<RecorderingAnimation> {
-  @override
-  Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    SoundService sound =
-        BlocProvider.of<SoundBloc>(context, listen: true).sound;
-    List lines = [
-      CustomIconsImg.powerLine6,
-      CustomIconsImg.powerLine6,
-      CustomIconsImg.powerLine5,
-      CustomIconsImg.powerLine4,
-      CustomIconsImg.powerLine3,
-      CustomIconsImg.powerLine2,
-      CustomIconsImg.powerLine2,
-      CustomIconsImg.powerLine1,
-      CustomIconsImg.powerLine1,
-      CustomIconsImg.powerLine,
-      CustomIconsImg.powerLine,
-    ];
-    int length1 = 0;
-
-    Timer.periodic(Duration(seconds: 1), (i) {
-      int length2 = 0;
-      if (sound.recorder.isRecording && length1 == length2) {
-        sound.children.add(Padding(
+  List lines = [
+    CustomIconsImg.powerLine6,
+    CustomIconsImg.powerLine5,
+    CustomIconsImg.powerLine4,
+    CustomIconsImg.powerLine3,
+    CustomIconsImg.powerLine2,
+    CustomIconsImg.powerLine2,
+    CustomIconsImg.powerLine1,
+    CustomIconsImg.powerLine1,
+    CustomIconsImg.powerLine,
+    CustomIconsImg.powerLine,
+    CustomIconsImg.powerLine,
+  ];
+  late Timer _timer;
+  int length1 = 0;
+  void startTimer(SoundBloc _soundBloc, Size screen) {
+    int length2 = 0;
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (_soundBloc.sound.recorder.isRecording && length2 == 0) {
+        _soundBloc.sound.children.add(Padding(
           padding: EdgeInsets.all(screen.width * 0.005),
           child: Image(
-            image: sound.recorderPower.round() > 10
+            image: context.read<SoundBloc>().sound.recorderPower.round() > 10
                 ? lines[10]
-                : lines[sound.recorderPower.round()],
+                : lines[_soundBloc.sound.recorderPower.round()],
             height: screen.height * 0.1,
             //
           ),
         ));
         length1++;
         length2++;
-        if (sound.children.length > 33) {
-          sound.children.removeAt(0);
+        if (_soundBloc.sound.children.length > 33) {
+          _soundBloc.sound.children.removeAt(0);
         }
-        setState(() {});
+        if (mounted) setState(() {});
       }
+      // if (!_soundBloc.sound.recorder.isRecording && length1 > 0) {
+      //   print('${_soundBloc.sound.recorder.isRecording} $length1');
+      //   _timer.cancel();
+      // }
+      // print('${_soundBloc.sound.recorder.isRecording} $length1');
     });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    Size screen = MediaQuery.of(context).size;
+
+    startTimer(_soundBloc, screen);
 
     return Align(
       alignment: const Alignment(0, -0.2),
@@ -73,7 +85,7 @@ class _RecorderingAnimationState extends State<RecorderingAnimation> {
                     image: DecorationImage(image: CustomIconsImg.line)),
               ),
               Row(
-                children: sound.children,
+                children: _soundBloc.sound.children,
               )
             ],
           ),

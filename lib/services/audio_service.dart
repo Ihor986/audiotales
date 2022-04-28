@@ -1,5 +1,4 @@
 // import 'dart:async';
-import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ class SoundService {
   String recordLengthLimitControl =
       DateTime.now().millisecondsSinceEpoch.toString();
   int soundIndex = 0;
-  String path = '';
   Uint8List? url;
   String recorderTime = '00:00:00';
   double recorderPower = 0;
@@ -29,7 +27,7 @@ class SoundService {
     } else if (recorder.isRecording && soundIndex < 2) {
       soundIndex = 2;
       await _stopRecorder();
-      // recorder.onProgress!.listen((event) {}).cancel();
+      recorder.onProgress!.listen((event) {}).cancel();
       // ------------------------------
       soundIndex = 3;
       await audioPlayer.startPlayer(
@@ -52,7 +50,6 @@ class SoundService {
         );
         return;
       }
-      // await _disposeRecorder();
       audioPlayer.stopPlayer();
       soundIndex = 2;
     }
@@ -64,7 +61,7 @@ class SoundService {
       throw 'Microphone permission not granted';
     }
     await recorder.openRecorder();
-    await recorder.setSubscriptionDuration(Duration(seconds: 1));
+    await recorder.setSubscriptionDuration(const Duration(seconds: 1));
   }
 
   _startRecord() {
@@ -75,26 +72,12 @@ class SoundService {
       _startTimer();
       soundIndex = 1;
     });
-    // timer();
   }
-
-  // timer() {
-  //   Timer(const Duration(seconds: 10), () async {
-  //     if (recordLengthLimitStart == recordLengthLimitControl) {
-  //       soundIndex = 2;
-  //       await _stopRecorder();
-  //       soundIndex = 3;
-  //       await audioPlayer.startPlayer(
-  //         fromDataBuffer: url,
-  //         codec: Codec.defaultCodec,
-  //       );
-  //     }
-  //   });
-  // }
 
   _record() async {
     if (!isRecoderReady) return;
     await recorder.startRecorder(
+        // toFile: '11.mp4',
         toFile: '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
         codec: Codec.defaultCodec);
     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
@@ -121,15 +104,16 @@ class SoundService {
     recordLengthLimitControl = DateTime.now().millisecondsSinceEpoch.toString();
     print(audiofile);
     recorder.onProgress!.listen((event) {}).cancel();
+    recorder.closeRecorder();
   }
 
   disposeRecorder() {
-    print('0000000000000000000000');
     if (recorder.isRecording) {
       _stopRecorder();
+      //  recorder.closeRecorder();
     }
-    recorder.closeRecorder();
-    audioPlayer.stopPlayer();
+
+    // audioPlayer.stopPlayer();
     audioPlayer.closePlayer();
   }
 }

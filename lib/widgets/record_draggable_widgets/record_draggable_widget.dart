@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
-import '../../services/audioService.dart';
+import '../../services/audio_service.dart';
 import 'play_record.dart';
 import 'recordering.dart';
 
@@ -20,7 +20,7 @@ class RecordDraggableWidget extends StatelessWidget {
             .read<NavigationBloc>()
             .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
 
-        Timer(const Duration(seconds: 100), () async {
+        Timer(const Duration(seconds: 10), () async {
           if (sound.recordLengthLimitStart == sound.recordLengthLimitControl) {
             context.read<SoundBloc>().add(StartRecordEvent());
             context

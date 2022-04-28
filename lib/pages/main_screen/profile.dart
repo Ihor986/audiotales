@@ -1,4 +1,3 @@
-import 'package:audiotales/models/audio.dart';
 import 'package:flutter/material.dart';
 import '../../data_base/local_data_base.dart';
 import '../../utils/consts/custom_colors.dart';

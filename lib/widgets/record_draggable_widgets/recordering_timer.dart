@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
-import '../../services/audioService.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
 
@@ -15,17 +14,27 @@ class RecorderingTimer extends StatefulWidget {
 }
 
 class _RecorderingTimerState extends State<RecorderingTimer> {
-  @override
-  Widget build(BuildContext context) {
-    num screenWidth = MediaQuery.of(context).size.width;
-    SoundService sound =
-        BlocProvider.of<SoundBloc>(context, listen: true).sound;
-    Timer.periodic(Duration(seconds: 1), (i) {
-      if (sound.recorder.isRecording) {
-        setState(() {});
+  late Timer _timer;
+  void startTimer(SoundBloc _soundBloc) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (i) {
+      if (_soundBloc.sound.recorder.isRecording) {
+        if (mounted) setState(() {});
       }
     });
+  }
 
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+    // context.read<SoundBloc>().sound.disposeRecorder();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    Size screen = MediaQuery.of(context).size;
+    startTimer(_soundBloc);
     return Align(
         alignment: const Alignment(0, 0.3),
         child: Row(
@@ -34,12 +43,12 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
             ImageIcon(
               CustomIconsImg.ellipseRad,
               color: CustomColors.rad,
-              size: screenWidth * 0.02,
+              size: screen.width * 0.02,
             ),
             SizedBox(
-              width: screenWidth * 0.02,
+              width: screen.width * 0.02,
             ),
-            Text(sound.recorderTime),
+            Text(_soundBloc.sound.recorderTime),
           ],
         ));
   }

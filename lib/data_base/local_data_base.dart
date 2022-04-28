@@ -65,7 +65,7 @@ class LocalDB {
   Future<void> saveUser(User user) async {
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(user.toJson()));
-    print(User().toJson());
+    // print(User().toJson());
   }
 
   void deleteUser() async {
