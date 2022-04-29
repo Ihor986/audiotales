@@ -22,8 +22,10 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
           _soundBloc.sound.soundIndex == 0) {
         context.read<SoundBloc>().add(StartRecordEvent());
       }
-      if (_soundBloc.sound.limit > 10) {
+      if (_soundBloc.sound.limit > 100) {
         context.read<SoundBloc>().add(StartRecordEvent());
+        context.read<NavigationBloc>().add(
+            StartRecordNavEvent(soundIndex: _soundBloc.sound.soundIndex + 1));
       }
       if (_soundBloc.sound.recorder.isRecording) {
         if (mounted) setState(() {});
@@ -35,7 +37,6 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
   void dispose() {
     _timer.cancel();
     super.dispose();
-    // context.read<SoundBloc>().sound.disposeRecorder();
   }
 
   @override

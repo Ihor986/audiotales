@@ -30,6 +30,16 @@ class CustomIconsImg {
       AssetImage("assets/icons/audioLine5.png");
   static const AssetImage powerLine6 =
       AssetImage("assets/icons/audioLine6.png");
+  static const AssetImage power0 = AssetImage("assets/icons/power0.png");
+  static const AssetImage power1 = AssetImage("assets/icons/power1.png");
+  static const AssetImage power2 = AssetImage("assets/icons/power2.png");
+  static const AssetImage power3 = AssetImage("assets/icons/power3.png");
+  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
+  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
+  // static const AssetImage profile = AssetImage("assets/icons/profile.png");
+  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage profile = AssetImage("assets/icons/profile.png");

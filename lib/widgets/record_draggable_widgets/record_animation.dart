@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
@@ -13,38 +14,38 @@ class RecorderingAnimation extends StatefulWidget {
 
 class _RecorderingAnimationState extends State<RecorderingAnimation> {
   List lines = [
-    CustomIconsImg.powerLine6,
-    CustomIconsImg.powerLine5,
-    CustomIconsImg.powerLine4,
-    CustomIconsImg.powerLine3,
-    CustomIconsImg.powerLine2,
-    CustomIconsImg.powerLine2,
-    CustomIconsImg.powerLine1,
-    CustomIconsImg.powerLine1,
-    CustomIconsImg.powerLine,
-    CustomIconsImg.powerLine,
-    CustomIconsImg.powerLine,
+    CustomIconsImg.power0,
+    CustomIconsImg.power1,
+    CustomIconsImg.power1,
+    CustomIconsImg.power1,
+    CustomIconsImg.power2,
+    CustomIconsImg.power2,
+    CustomIconsImg.power2,
+    CustomIconsImg.power2,
+    CustomIconsImg.power3,
+    CustomIconsImg.power3,
+    CustomIconsImg.power3,
   ];
+
+  List<Widget> children = [];
   late Timer _timer;
   int length1 = 0;
   void startTimer(SoundBloc _soundBloc, Size screen) {
     int length2 = 0;
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_soundBloc.sound.recorder.isRecording && length2 == 0) {
-        _soundBloc.sound.children.add(Padding(
-          padding: EdgeInsets.all(screen.width * 0.005),
-          child: Image(
-            image: context.read<SoundBloc>().sound.recorderPower.round() > 10
-                ? lines[10]
-                : lines[_soundBloc.sound.recorderPower.round()],
-            height: screen.height * 0.1,
-            //
-          ),
+        children.add(Image(
+          image: context.read<SoundBloc>().sound.recorderPower.round() > 10
+              ? lines[10]
+              : lines[_soundBloc.sound.recorderPower.round()],
+          height: screen.height * 0.1,
+          // width: screen.width * 0.01,
+          //
         ));
         length1++;
         length2++;
-        if (_soundBloc.sound.children.length > 33) {
-          _soundBloc.sound.children.removeAt(0);
+        if (children.length > 45) {
+          children.removeAt(0);
         }
         if (mounted) setState(() {});
       }
@@ -82,10 +83,12 @@ class _RecorderingAnimationState extends State<RecorderingAnimation> {
                 height: screen.height * 0.1,
                 width: screen.width,
                 decoration: const BoxDecoration(
-                    image: DecorationImage(image: CustomIconsImg.line)),
+                  color: CustomColors.white,
+                ),
               ),
               Row(
-                children: _soundBloc.sound.children,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: children,
               )
             ],
           ),

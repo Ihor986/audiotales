@@ -20,7 +20,6 @@ class SoundService {
   Uint8List? url;
   String recorderTime = '00:00:00';
   double recorderPower = 0;
-  List<Widget> children = [];
 
   clickRecorder() async {
     print('click');
