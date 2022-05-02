@@ -22,15 +22,16 @@ class SoundService {
   int sliderPosition = 0;
   int endOfSliderPosition = 1;
 
+  String sliderPositionText = '00:00:00';
+  String endOfSliderPositionText = '00:00:01';
+
   clickRecorder() async {
-    print('click');
     if (!recorder.isRecording && soundIndex == 0) {
       _startRecord();
     } else if (recorder.isRecording && soundIndex < 2) {
       soundIndex = 2;
       await _stopRecorder();
       recorder.onProgress!.listen((event) {}).cancel();
-      // endOfSliderPosition = limit;
       // ------------------------------
       soundIndex = 3;
       await audioPlayer.startPlayer(
@@ -62,16 +63,13 @@ class SoundService {
   }
 
   _startRecord() {
-    initRecorder();
-    // audioPlayer.openPlayer().then((value) {
-    //   isRecoderReady = true;
+    _initRecorder();
     _record();
     _startTimer();
     soundIndex = 1;
-    // });
   }
 
-  initRecorder() async {
+  _initRecorder() async {
     await audioPlayer.openPlayer().then((value) {
       isRecoderReady = true;
     });
@@ -93,7 +91,6 @@ class SoundService {
         codec: Codec.defaultCodec);
     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
     recordLengthLimitControl = recordLengthLimitStart;
-    // _startTimer();
   }
 
   _startTimer() {
@@ -116,7 +113,7 @@ class SoundService {
     final audiofile = File(path!);
     url = audiofile.readAsBytesSync();
     recordLengthLimitControl = DateTime.now().millisecondsSinceEpoch.toString();
-    print(audiofile);
+    // print(audiofile);
     recorder.onProgress!.listen((event) {}).cancel();
     recorder.closeRecorder();
     limit = 0;
@@ -124,9 +121,18 @@ class SoundService {
 
   _showPlayerProgres() {
     audioPlayer.onProgress!.listen((event) {
-      print('${event.duration.abs().inSeconds} nnnnnnnnnnnnnnn');
-      endOfSliderPosition = event.duration.abs().inSeconds;
-      sliderPosition = event.position.inSeconds + 1;
+      endOfSliderPosition = event.duration.abs().inMilliseconds;
+      sliderPosition = event.position.inMilliseconds;
+      endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(
+              event.duration.abs().inMilliseconds - 1000,
+              isUtc: true)
+          .toString()
+          .substring(11, 19);
+      sliderPositionText = DateTime.fromMillisecondsSinceEpoch(
+              event.position.inMilliseconds,
+              isUtc: true)
+          .toString()
+          .substring(11, 19);
     });
   }
 

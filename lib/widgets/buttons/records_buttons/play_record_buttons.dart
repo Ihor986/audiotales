@@ -28,7 +28,15 @@ class PlayRecordButtons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              onPressed: () async {},
+              onPressed: () {
+                if (_soundBloc.sound.audioPlayer.isPlaying ||
+                    _soundBloc.sound.audioPlayer.isPaused) {
+                  _soundBloc.sound.audioPlayer.seekToPlayer(Duration(
+                      milliseconds: _soundBloc.sound.sliderPosition > 16000
+                          ? _soundBloc.sound.sliderPosition - 15000
+                          : 0));
+                }
+              },
               icon: const ImageIcon(
                 CustomIconsImg.minus15,
                 size: 25,
@@ -43,7 +51,16 @@ class PlayRecordButtons extends StatelessWidget {
               icon: const Icon(Icons.pause, color: CustomColors.invisible),
             ),
             IconButton(
-              onPressed: () async {},
+              onPressed: () {
+                if (_soundBloc.sound.audioPlayer.isPlaying ||
+                    _soundBloc.sound.audioPlayer.isPaused) {
+                  _soundBloc.sound.audioPlayer.seekToPlayer(Duration(
+                      milliseconds: _soundBloc.sound.endOfSliderPosition >
+                              _soundBloc.sound.sliderPosition + 16000
+                          ? _soundBloc.sound.sliderPosition + 15000
+                          : _soundBloc.sound.endOfSliderPosition - 1000));
+                }
+              },
               icon: const ImageIcon(
                 CustomIconsImg.plus15,
                 size: 25,

@@ -14,14 +14,10 @@ class PlayRecordProgres extends StatefulWidget {
 class _PlayRecordProgresState extends State<PlayRecordProgres> {
   @override
   Widget build(BuildContext context) {
-    // final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
     return StreamBuilder<Object>(
         stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
         builder: (context, snapshot) {
-          SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
-          if (snapshot.hasData) {
-            _soundBloc = BlocProvider.of<SoundBloc>(context);
-          }
           return _play(_soundBloc);
         });
   }
@@ -46,7 +42,7 @@ class _PlayRecordProgresState extends State<PlayRecordProgres> {
                 if (soundBloc.sound.audioPlayer.isPlaying ||
                     soundBloc.sound.audioPlayer.isPaused) {
                   soundBloc.sound.audioPlayer
-                      .seekToPlayer(Duration(seconds: d.floor()));
+                      .seekToPlayer(Duration(milliseconds: d.floor()));
                 }
               });
             }, // setSubscriptionDuration,
@@ -57,8 +53,8 @@ class _PlayRecordProgresState extends State<PlayRecordProgres> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${soundBloc.sound.sliderPosition}'),
-              Text('${soundBloc.sound.endOfSliderPosition}')
+              Text(soundBloc.sound.sliderPositionText),
+              Text(soundBloc.sound.endOfSliderPositionText)
             ],
           ),
         )
