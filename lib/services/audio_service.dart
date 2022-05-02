@@ -1,7 +1,6 @@
 // import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -20,6 +19,8 @@ class SoundService {
   Uint8List? url;
   String recorderTime = '00:00:00';
   double recorderPower = 0;
+  int sliderPosition = 0;
+  int endOfSliderPosition = 1;
 
   clickRecorder() async {
     print('click');
@@ -29,12 +30,14 @@ class SoundService {
       soundIndex = 2;
       await _stopRecorder();
       recorder.onProgress!.listen((event) {}).cancel();
+      // endOfSliderPosition = limit;
       // ------------------------------
       soundIndex = 3;
       await audioPlayer.startPlayer(
         fromDataBuffer: url,
         codec: Codec.defaultCodec,
       );
+      _showPlayerProgres();
       // ------------------------------
     } else if (!recorder.isRecording && soundIndex == 2) {
       soundIndex = 3;
@@ -42,6 +45,7 @@ class SoundService {
         fromDataBuffer: url,
         codec: Codec.defaultCodec,
       );
+      _showPlayerProgres();
     } else if (!recorder.isRecording && soundIndex == 3) {
       if (!audioPlayer.isPlaying) {
         soundIndex = 3;
@@ -49,6 +53,7 @@ class SoundService {
           fromDataBuffer: url,
           codec: Codec.defaultCodec,
         );
+        _showPlayerProgres();
         return;
       }
       audioPlayer.stopPlayer();
@@ -77,6 +82,8 @@ class SoundService {
 
     await recorder.openRecorder();
     await recorder.setSubscriptionDuration(const Duration(seconds: 1));
+    await audioPlayer
+        .setSubscriptionDuration(const Duration(milliseconds: 1000));
   }
 
   _record() async {
@@ -86,6 +93,7 @@ class SoundService {
         codec: Codec.defaultCodec);
     recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
     recordLengthLimitControl = recordLengthLimitStart;
+    // _startTimer();
   }
 
   _startTimer() {
@@ -95,6 +103,7 @@ class SoundService {
           e.duration.inMilliseconds,
           isUtc: true);
       limit = e.duration.inSeconds;
+      endOfSliderPosition = e.duration.inSeconds;
       String txt = '$date';
       recorderTime = txt.substring(11, 19);
       recorderPower = vol / 10;
@@ -111,6 +120,14 @@ class SoundService {
     recorder.onProgress!.listen((event) {}).cancel();
     recorder.closeRecorder();
     limit = 0;
+  }
+
+  _showPlayerProgres() {
+    audioPlayer.onProgress!.listen((event) {
+      print('${event.duration.abs().inSeconds} nnnnnnnnnnnnnnn');
+      endOfSliderPosition = event.duration.abs().inSeconds;
+      sliderPosition = event.position.inSeconds + 1;
+    });
   }
 
   disposeRecorder() {

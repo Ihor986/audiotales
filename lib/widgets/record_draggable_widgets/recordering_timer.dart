@@ -15,35 +15,51 @@ class RecorderingTimer extends StatefulWidget {
 }
 
 class _RecorderingTimerState extends State<RecorderingTimer> {
-  late Timer _timer;
-  void startTimer(SoundBloc _soundBloc) {
-    _timer = Timer.periodic(const Duration(seconds: 1), (i) {
-      if (!_soundBloc.sound.recorder.isRecording &&
-          _soundBloc.sound.soundIndex == 0) {
-        context.read<SoundBloc>().add(StartRecordEvent());
-      }
-      if (_soundBloc.sound.limit > 100) {
-        context.read<SoundBloc>().add(StartRecordEvent());
-        context.read<NavigationBloc>().add(
-            StartRecordNavEvent(soundIndex: _soundBloc.sound.soundIndex + 1));
-      }
-      if (_soundBloc.sound.recorder.isRecording) {
-        if (mounted) setState(() {});
-      }
-    });
-  }
+  // late Timer _timer;
+  // void startTimer(SoundBloc _soundBloc) {
+  //   _timer = Timer.periodic(const Duration(seconds: 1), (i) {
+  // if (!_soundBloc.sound.recorder.isRecording &&
+  //     _soundBloc.sound.soundIndex == 0) {
+  //   context.read<SoundBloc>().add(StartRecordEvent());
+  // }
+  // if (_soundBloc.sound.limit > 100) {
+  //   context.read<SoundBloc>().add(StartRecordEvent());
+  //   context.read<NavigationBloc>().add(
+  //       StartRecordNavEvent(soundIndex: _soundBloc.sound.soundIndex + 1));
+  // }
+  // if (_soundBloc.sound.recorder.isRecording) {
+  //   if (mounted) setState(() {});
+  // }
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    return StreamBuilder<Object>(
+        stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
+        builder: (context, snapshot) {
+          if (!_soundBloc.sound.recorder.isRecording &&
+              _soundBloc.sound.soundIndex == 0) {
+            context.read<SoundBloc>().add(StartRecordEvent());
+          }
+          if (_soundBloc.sound.limit > 10) {
+            context.read<SoundBloc>().add(StartRecordEvent());
+            context.read<NavigationBloc>().add(StartRecordNavEvent(
+                soundIndex: _soundBloc.sound.soundIndex + 1));
+          }
+          return timer(_soundBloc);
+        });
+  }
+
+  Widget timer(_soundBloc) {
     Size screen = MediaQuery.of(context).size;
-    startTimer(_soundBloc);
     return Align(
         alignment: const Alignment(0, 0.3),
         child: Row(

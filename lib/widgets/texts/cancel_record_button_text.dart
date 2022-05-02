@@ -7,7 +7,7 @@ class CancelRecordButtonText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    // Size screen = MediaQuery.of(context).size;
     return const Text(
       TextsConst.cancel,
       style: TextStyle(
