@@ -15,12 +15,12 @@ class RecorderingAnimation extends StatefulWidget {
 class _RecorderingAnimationState extends State<RecorderingAnimation> {
   List lines = [
     CustomIconsImg.power0,
-    CustomIconsImg.power0,
     CustomIconsImg.power1,
     CustomIconsImg.power1,
     CustomIconsImg.power2,
     CustomIconsImg.power2,
-    CustomIconsImg.power2,
+    CustomIconsImg.power3,
+    CustomIconsImg.power3,
     CustomIconsImg.power3,
     CustomIconsImg.power3,
     CustomIconsImg.power3,

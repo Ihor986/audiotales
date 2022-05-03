@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../buttons/records_buttons/play_record_buttons.dart';
+import '../buttons/records_buttons/play_record_upbar_buttons.dart';
+import '../texts/record_screen_text.dart';
 import 'play_record_progress.dart';
 
 class PlayRecord extends StatelessWidget {
@@ -31,6 +33,12 @@ class PlayRecord extends StatelessWidget {
                           topRight: Radius.circular(20))),
                   child: Stack(
                     children: const [
+                      Align(
+                          alignment: Alignment(-1, -1),
+                          child: PlayRecordUpbarButtons()),
+                      Align(
+                          alignment: Alignment(0, -0.4),
+                          child: AudioNameText()),
                       Align(
                           alignment: Alignment(0, 0.25),
                           child: PlayRecordProgres()),

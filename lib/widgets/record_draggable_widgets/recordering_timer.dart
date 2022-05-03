@@ -43,19 +43,22 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
   Widget build(BuildContext context) {
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
     return StreamBuilder<Object>(
-        stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
-        builder: (context, snapshot) {
-          if (!_soundBloc.sound.recorder.isRecording &&
-              _soundBloc.sound.soundIndex == 0) {
-            context.read<SoundBloc>().add(StartRecordEvent());
-          }
-          if (_soundBloc.sound.limit >= 100) {
-            context.read<SoundBloc>().add(StartRecordEvent());
-            context.read<NavigationBloc>().add(StartRecordNavEvent(
-                soundIndex: _soundBloc.sound.soundIndex + 1));
-          }
-          return timer(_soundBloc);
-        });
+      stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
+      builder: (context, snapshot) {
+        if (!_soundBloc.sound.recorder.isRecording &&
+            _soundBloc.sound.soundIndex == 0) {
+          context.read<SoundBloc>().add(
+                StartRecordEvent(),
+              );
+        }
+        if (_soundBloc.sound.limit >= 100) {
+          context.read<SoundBloc>().add(StartRecordEvent());
+          context.read<NavigationBloc>().add(
+              StartRecordNavEvent(soundIndex: _soundBloc.sound.soundIndex + 1));
+        }
+        return timer(_soundBloc);
+      },
+    );
   }
 
   Widget timer(_soundBloc) {

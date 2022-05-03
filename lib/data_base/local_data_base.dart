@@ -6,6 +6,8 @@ import 'package:audiotales/models/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../models/tales_list.dart';
+
 // class _ClearStorage {
 //   const _ClearStorage._();
 
@@ -83,6 +85,21 @@ class LocalDB {
           userBox.get('authUser', defaultValue: jsonEncode(User().toJson()))!),
     );
   }
+
+  Future<void> saveAudioTales(TalesList talesList) async {
+    if (talesList.getList != []) {
+      final Box<String> userBox = Hive.box(_userBox);
+      await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+    }
+  }
+
+  // TalesList getAudioTales() {
+  //   final Box<String> userBox = Hive.box(_userBox);
+  //   return TalesList.fromJson(
+  //     jsonDecode(userBox.get('audiolist',
+  //         defaultValue: jsonEncode(TalesList([]).toJson()))!),
+  //   );
+  // }
 
 // [END] User
 }

@@ -4,26 +4,39 @@ import 'dart:typed_data';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../data_base/local_data_base.dart';
+import '../models/audio.dart';
+import '../models/tales_list.dart';
+
 class SoundService {
   SoundService();
 
   final FlutterSoundRecorder recorder = FlutterSoundRecorder();
   final FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
+  String? id;
   bool isRecoderReady = false;
   int limit = 0;
-  String recordLengthLimitStart =
-      DateTime.now().millisecondsSinceEpoch.toString();
-  String recordLengthLimitControl =
-      DateTime.now().millisecondsSinceEpoch.toString();
   int soundIndex = 0;
   Uint8List? url;
+  String? path;
+  String audioname = 'Аудиозапись 1';
   String recorderTime = '00:00:00';
   double recorderPower = 0;
   int sliderPosition = 0;
   int endOfSliderPosition = 1;
-
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
+
+  saveAudioTale(TalesList talesList) {
+    if (url != null && id != '' && path != '') {
+      AudioTale audioTale = AudioTale(
+          id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
+          path: path ?? '',
+          name: audioname);
+      talesList.addNewAudio(audioTale);
+      LocalDB.instance.saveAudioTales(talesList);
+    }
+  }
 
   clickRecorder() async {
     if (!recorder.isRecording && soundIndex == 0) {
@@ -31,29 +44,16 @@ class SoundService {
     } else if (recorder.isRecording && soundIndex < 2) {
       soundIndex = 2;
       await _stopRecorder();
-      recorder.onProgress!.listen((event) {}).cancel();
       // ------------------------------
-      soundIndex = 3;
-      await audioPlayer.startPlayer(
-        fromDataBuffer: url,
-        codec: Codec.defaultCodec,
-      );
+      _startPlayer();
       _showPlayerProgres();
       // ------------------------------
     } else if (!recorder.isRecording && soundIndex == 2) {
-      soundIndex = 3;
-      await audioPlayer.startPlayer(
-        fromDataBuffer: url,
-        codec: Codec.defaultCodec,
-      );
+      _startPlayer();
       _showPlayerProgres();
     } else if (!recorder.isRecording && soundIndex == 3) {
       if (!audioPlayer.isPlaying) {
-        soundIndex = 3;
-        await audioPlayer.startPlayer(
-          fromDataBuffer: url,
-          codec: Codec.defaultCodec,
-        );
+        _startPlayer();
         _showPlayerProgres();
         return;
       }
@@ -86,11 +86,8 @@ class SoundService {
 
   _record() async {
     if (!isRecoderReady) return;
-    await recorder.startRecorder(
-        toFile: '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-        codec: Codec.defaultCodec);
-    recordLengthLimitStart = DateTime.now().millisecondsSinceEpoch.toString();
-    recordLengthLimitControl = recordLengthLimitStart;
+    id = '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4';
+    await recorder.startRecorder(toFile: id, codec: Codec.defaultCodec);
   }
 
   _startTimer() {
@@ -109,14 +106,23 @@ class SoundService {
 
   _stopRecorder() async {
     if (!isRecoderReady) return;
-    final path = await recorder.stopRecorder();
+    path = await recorder.stopRecorder();
+    // final audiofile = File(
+    //     '/Users/iya/Library/Developer/CoreSimulator/Devices/BDB56019-77E1-49EC-BE1C-F9FEAEEAECF9/data/Containers/Data/Application/411BFBB0-4E40-43E2-8095-2178066F26C2/tmp/1651586582427.mp4');
     final audiofile = File(path!);
     url = audiofile.readAsBytesSync();
-    recordLengthLimitControl = DateTime.now().millisecondsSinceEpoch.toString();
-    // print(audiofile);
     recorder.onProgress!.listen((event) {}).cancel();
     recorder.closeRecorder();
     limit = 0;
+    recorder.onProgress!.listen((event) {}).cancel();
+  }
+
+  _startPlayer() async {
+    soundIndex = 3;
+    await audioPlayer.startPlayer(
+      fromDataBuffer: url,
+      codec: Codec.defaultCodec,
+    );
   }
 
   _showPlayerProgres() {
