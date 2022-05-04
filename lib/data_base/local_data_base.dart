@@ -87,7 +87,7 @@ class LocalDB {
   }
 
   Future<void> saveAudioTales(TalesList talesList) async {
-    if (talesList.talesList != []) {
+    if (talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(talesList.toJson()));
     }
@@ -97,7 +97,7 @@ class LocalDB {
     final Box<String> userBox = Hive.box(_userBox);
     return TalesList.fromJson(
       jsonDecode(userBox.get('audiolist',
-          defaultValue: jsonEncode(TalesList(talesList: []).toJson()))!),
+          defaultValue: jsonEncode(TalesList(fullTalesList: []).toJson()))!),
     );
   }
 

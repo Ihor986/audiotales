@@ -7,6 +7,7 @@ class AudioTale {
   final String id;
   final String name;
   final String path;
+  final bool isDeleted = false;
   List compilationsId;
 
   factory AudioTale.fromJson(Map<String, dynamic> json) {

@@ -19,7 +19,7 @@ class SoundService {
   int soundIndex = 0;
   Uint8List? url;
   String? path;
-  String audioname = 'Аудиозапись 1';
+  String audioname = 'Аудиозапись';
   String recorderTime = '00:00:00';
   double recorderPower = 0;
   int sliderPosition = 0;
@@ -27,14 +27,15 @@ class SoundService {
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
 
-  saveAudioTale(TalesList talesList) {
-    if (url != null && id != '' && path != '') {
+  saveAudioTale(TalesList fullTalesList) {
+    if (url != null) {
       AudioTale audioTale = AudioTale(
           id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
           path: path ?? '',
-          name: audioname);
-      talesList.addNewAudio(audioTale);
-      LocalDB.instance.saveAudioTales(talesList);
+          name:
+              '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
+      fullTalesList.addNewAudio(audioTale);
+      LocalDB.instance.saveAudioTales(fullTalesList);
     }
   }
 
@@ -60,6 +61,18 @@ class SoundService {
       audioPlayer.stopPlayer();
       soundIndex = 2;
     }
+  }
+
+  disposeRecorder() {
+    if (recorder.isRecording) {
+      _stopRecorder();
+    }
+    if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+      audioPlayer.stopPlayer();
+    }
+
+    recorder.closeRecorder();
+    audioPlayer.closePlayer();
   }
 
   _startRecord() {
@@ -91,17 +104,19 @@ class SoundService {
   }
 
   _startTimer() {
-    recorder.onProgress!.listen((e) {
-      int vol = e.decibels!.toInt();
-      DateTime date = DateTime.fromMillisecondsSinceEpoch(
-          e.duration.inMilliseconds,
-          isUtc: true);
-      limit = e.duration.inSeconds;
-      endOfSliderPosition = e.duration.inSeconds;
-      String txt = '$date';
-      recorderTime = txt.substring(11, 19);
-      recorderPower = vol / 10;
-    });
+    recorder.onProgress!.listen(
+      (e) {
+        int vol = e.decibels!.toInt();
+        DateTime date = DateTime.fromMillisecondsSinceEpoch(
+            e.duration.inMilliseconds,
+            isUtc: true);
+        limit = e.duration.inSeconds;
+        endOfSliderPosition = e.duration.inSeconds;
+        String txt = '$date';
+        recorderTime = txt.substring(11, 19);
+        recorderPower = vol / 10;
+      },
+    );
   }
 
   _stopRecorder() async {
@@ -126,31 +141,21 @@ class SoundService {
   }
 
   _showPlayerProgres() {
-    audioPlayer.onProgress!.listen((event) {
-      endOfSliderPosition = event.duration.abs().inMilliseconds;
-      sliderPosition = event.position.inMilliseconds;
-      endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(
-              event.duration.abs().inMilliseconds - 1000,
-              isUtc: true)
-          .toString()
-          .substring(11, 19);
-      sliderPositionText = DateTime.fromMillisecondsSinceEpoch(
-              event.position.inMilliseconds,
-              isUtc: true)
-          .toString()
-          .substring(11, 19);
-    });
-  }
-
-  disposeRecorder() {
-    if (recorder.isRecording) {
-      _stopRecorder();
-    }
-    if (audioPlayer.isPlaying || audioPlayer.isPaused) {
-      audioPlayer.stopPlayer();
-    }
-
-    recorder.closeRecorder();
-    audioPlayer.closePlayer();
+    audioPlayer.onProgress!.listen(
+      (event) {
+        endOfSliderPosition = event.duration.abs().inMilliseconds;
+        sliderPosition = event.position.inMilliseconds;
+        endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(
+                event.duration.abs().inMilliseconds - 1000,
+                isUtc: true)
+            .toString()
+            .substring(11, 19);
+        sliderPositionText = DateTime.fromMillisecondsSinceEpoch(
+                event.position.inMilliseconds,
+                isUtc: true)
+            .toString()
+            .substring(11, 19);
+      },
+    );
   }
 }
