@@ -4,6 +4,9 @@ abstract class SoundEvent {}
 
 class StartRecordEvent extends SoundEvent {}
 
-class SaveRecordEvent extends SoundEvent {}
+class SaveRecordEvent extends SoundEvent {
+  SaveRecordEvent(this.talesListRep);
+  TalesList talesListRep;
+}
 
 class StopRecordEvent extends SoundEvent {}

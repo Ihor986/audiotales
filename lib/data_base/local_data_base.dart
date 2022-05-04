@@ -87,19 +87,19 @@ class LocalDB {
   }
 
   Future<void> saveAudioTales(TalesList talesList) async {
-    if (talesList.getList != []) {
+    if (talesList.talesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(talesList.toJson()));
     }
   }
 
-  // TalesList getAudioTales() {
-  //   final Box<String> userBox = Hive.box(_userBox);
-  //   return TalesList.fromJson(
-  //     jsonDecode(userBox.get('audiolist',
-  //         defaultValue: jsonEncode(TalesList([]).toJson()))!),
-  //   );
-  // }
+  TalesList getAudioTales() {
+    final Box<String> userBox = Hive.box(_userBox);
+    return TalesList.fromJson(
+      jsonDecode(userBox.get('audiolist',
+          defaultValue: jsonEncode(TalesList(talesList: []).toJson()))!),
+    );
+  }
 
 // [END] User
 }

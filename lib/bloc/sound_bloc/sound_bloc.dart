@@ -16,9 +16,14 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     );
     on<SaveRecordEvent>(
       (event, emit) async {
-        // TalesList tl = TalesList([]);
-        // await sound.saveAudioTale(tl);
-        // print('${tl.getList} !!!!!!!!!!!!!');
+        await sound.saveAudioTale(event.talesListRep);
+        print(event.talesListRep.talesList.length);
+        emit(SoundInitial());
+      },
+    );
+    on<StopRecordEvent>(
+      (event, emit) async {
+        await sound.disposeRecorder();
         emit(SoundInitial());
       },
     );

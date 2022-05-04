@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/sound_bloc/sound_bloc.dart';
+import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../texts/record_screen_text.dart';
 
@@ -54,7 +55,9 @@ class PlayRecordUpbarButtons extends StatelessWidget {
           padding: EdgeInsets.all(screen.width * 0.04),
           child: TextButton(
               onPressed: () {
-                context.read<SoundBloc>().add(SaveRecordEvent());
+                context.read<SoundBloc>().add(SaveRecordEvent(
+                    RepositoryProvider.of<TalesListRepository>(context)
+                        .getTalesListRepository()));
               },
               child: const PlayRecordText()),
         )

@@ -1,31 +1,33 @@
 import 'audio.dart';
 
 class TalesList {
-  TalesList(this._talesList);
+  TalesList({required this.talesList});
 
-  final List<AudioTale> _talesList;
+  final List<AudioTale> talesList;
 
   getCompilation(String value) {
-    return _talesList
-        .where((element) => element.compilationsId.contains(value));
+    return talesList.where((element) => element.compilationsId.contains(value));
   }
 
   addNewAudio(AudioTale audioTale) {
-    _talesList.add(audioTale);
+    talesList.add(audioTale);
   }
 
   Map<String, dynamic> toJson() => {
-        'talesList': _talesList,
+        'talesList': talesList.map((e) => e.toJson()).toList(),
       };
 
-  // factory TalesList.fromJson(Map<String, dynamic> json) {
-  //   return TalesList(
-  //     json['talesList'].split(""),
-  //   );
-  // }
+  factory TalesList.fromJson(Map<String, dynamic> json) {
+    List listJson = json['talesList'];
+    List<AudioTale> tList = listJson.map((e) => AudioTale.fromJson(e)).toList();
 
-  get getList {
-    List<AudioTale> talesList = _talesList;
-    return talesList;
+    return TalesList(
+      talesList: tList,
+    );
   }
+
+  // get getList {
+  //   List<AudioTale> talesList = _talesList;
+  //   return talesList;
+  // }
 }

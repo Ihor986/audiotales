@@ -145,10 +145,12 @@ class SoundService {
   disposeRecorder() {
     if (recorder.isRecording) {
       _stopRecorder();
-      //  recorder.closeRecorder();
+    }
+    if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+      audioPlayer.stopPlayer();
     }
 
-    // audioPlayer.stopPlayer();
+    recorder.closeRecorder();
     audioPlayer.closePlayer();
   }
 }
