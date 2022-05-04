@@ -10,7 +10,7 @@ class TalesListRepository {
     return talesListRep;
   }
 
-  List getActiveTalesList() {
+  List<AudioTale> getActiveTalesList() {
     List<AudioTale> activeTalesListRep = _talesListRep.fullTalesList
         .where((element) => !element.isDeleted)
         .toList();

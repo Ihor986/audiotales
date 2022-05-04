@@ -26,9 +26,9 @@ class TextsConst {
   static const String record = 'Запись';
   static const String cancel = 'Отменить';
   static const String save = 'Сохранить';
-// static const String audiofiles = 'Аудиозаписи';
-// static const String head = 'Главная';
-// static const String collections = 'Подбoрки';
+  static const String minutes = 'минут';
+  static const String minutes1 = 'минута';
+  static const String minutes2 = 'минуты';
 // static const String audiofiles = 'Аудиозаписи';
 // static const String head = 'Главная';
 // static const String collections = 'Подбoрки';

@@ -22,6 +22,7 @@ class SoundService {
   String audioname = 'Аудиозапись';
   String recorderTime = '00:00:00';
   double recorderPower = 0;
+  // int audioDuration = 0;
   int sliderPosition = 0;
   int endOfSliderPosition = 1;
   String sliderPositionText = '00:00:00';
@@ -32,6 +33,7 @@ class SoundService {
       AudioTale audioTale = AudioTale(
           id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
           path: path ?? '',
+          time: endOfSliderPosition / 60000,
           name:
               '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
       fullTalesList.addNewAudio(audioTale);
@@ -111,7 +113,9 @@ class SoundService {
             e.duration.inMilliseconds,
             isUtc: true);
         limit = e.duration.inSeconds;
-        endOfSliderPosition = e.duration.inSeconds;
+        endOfSliderPosition = e.duration.inMilliseconds;
+        // audioDuration = e.duration.inMinutes;
+
         String txt = '$date';
         recorderTime = txt.substring(11, 19);
         recorderPower = vol / 10;
@@ -144,6 +148,7 @@ class SoundService {
     audioPlayer.onProgress!.listen(
       (event) {
         endOfSliderPosition = event.duration.abs().inMilliseconds;
+        // audioDuration = event.duration.abs().inMinutes;
         sliderPosition = event.position.inMilliseconds;
         endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(
                 event.duration.abs().inMilliseconds - 1000,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../buttons/main_screen_buttons/selection_buttons_audio.dart';
 import '../texts/main_screen_text.dart';
+import 'active_tales_list_widget.dart';
 
 class AudioDraggableWidget extends StatefulWidget {
   const AudioDraggableWidget({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _AudioDraggableWidgetState extends State<AudioDraggableWidget> {
                     Padding(
                       padding: const EdgeInsets.only(top: 50),
                       child: talesList.isNotEmpty
-                          ? const SelectionText9()
+                          ? const ActiveTalesListWidget()
                           : const SelectionText9(),
 
                       //  ListView.builder(
