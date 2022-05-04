@@ -10,12 +10,12 @@ class CancelRecordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
     final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
     return TextButton(
         onPressed: () {
           _navdBloc.state.soundIndex = 0;
+          // _soundBloc.sound.soundIndex = 0;
           _soundBloc.add(StopRecordEvent());
           _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
         },

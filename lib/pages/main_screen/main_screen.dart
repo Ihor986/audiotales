@@ -1,5 +1,3 @@
-import 'package:audiotales/data_base/local_data_base.dart';
-import 'package:audiotales/models/tales_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
