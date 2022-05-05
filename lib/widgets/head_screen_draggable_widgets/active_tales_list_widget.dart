@@ -2,6 +2,7 @@ import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../models/audio.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_icons_img.dart';
@@ -13,6 +14,8 @@ class ActiveTalesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
+    final MainScreenBloc _mainScreenBloc =
+        BlocProvider.of<MainScreenBloc>(context);
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getActiveTalesList();
@@ -28,7 +31,9 @@ class ActiveTalesListWidget extends StatelessWidget {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _mainScreenBloc.add(ClickPlayEvent(talesList[i].path));
+                      },
                       icon: ImageIcon(
                         CustomIconsImg.playBlueSolo,
                         color: CustomColors.blueSoso,

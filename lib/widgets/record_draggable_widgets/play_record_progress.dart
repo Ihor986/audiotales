@@ -45,7 +45,7 @@ class _PlayRecordProgresState extends State<PlayRecordProgres> {
                       .seekToPlayer(Duration(milliseconds: d.floor()));
                 }
               });
-            }, // setSubscriptionDuration,
+            },
           ),
         ),
         Padding(

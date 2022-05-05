@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_colors.dart';
@@ -16,6 +17,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Size screenHeight = MediaQuery.of(context).size;
     List _pages = [
       const HeadScreen(),
       const Test(),
@@ -24,10 +26,9 @@ class MainScreen extends StatelessWidget {
       const Profile(),
     ];
 
-    // num screenHeight = MediaQuery.of(context).size.height;
     return MultiBlocProvider(
       providers: [
-        // BlocProvider<MainscreenBloc>(create: (context) => MainscreenBloc()),
+        BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
       ],
       child: RepositoryProvider(

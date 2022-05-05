@@ -5,9 +5,8 @@ part 'sound_event.dart';
 part 'sound_state.dart';
 
 class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
-  final SoundService sound = SoundService();
-
-  SoundBloc() : super(SoundInitial()) {
+  final SoundService sound;
+  SoundBloc(this.sound) : super(SoundInitial()) {
     on<StartRecordEvent>(
       (event, emit) async {
         await sound.clickRecorder();
@@ -17,14 +16,12 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     on<SaveRecordEvent>(
       (event, emit) async {
         await sound.saveAudioTale(event.talesListRep);
-        await sound.disposeRecorder();
-        print(event.talesListRep.fullTalesList.length);
         emit(SoundInitial());
       },
     );
     on<StopRecordEvent>(
       (event, emit) async {
-        await sound.disposeRecorder();
+        await sound.stopRecorder();
         emit(SoundInitial());
       },
     );

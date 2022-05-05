@@ -1,12 +1,14 @@
 // import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../data_base/local_data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
+import '../utils/consts/custom_icons_img.dart';
 
 class SoundService {
   SoundService();
@@ -22,7 +24,6 @@ class SoundService {
   String audioname = 'Аудиозапись';
   String recorderTime = '00:00:00';
   double recorderPower = 0;
-  // int audioDuration = 0;
   int sliderPosition = 0;
   int endOfSliderPosition = 1;
   String sliderPositionText = '00:00:00';
@@ -42,52 +43,70 @@ class SoundService {
   }
 
   clickRecorder() async {
-    if (!recorder.isRecording && soundIndex == 0) {
-      _startRecord();
-    } else if (recorder.isRecording && soundIndex < 2) {
-      soundIndex = 2;
-      await _stopRecorder();
-      // ------------------------------
-      _startPlayer();
+    if (!recorder.isRecording && url == null && !audioPlayer.isPlaying) {
+      await _startRecord();
+    } else if (recorder.isRecording) {
+      await stopRecorder();
+      await _startPlayer(
+        path ?? '',
+      );
       _showPlayerProgres();
-      // ------------------------------
-    } else if (!recorder.isRecording && soundIndex == 2) {
-      _startPlayer();
+    } else if (!recorder.isRecording && url != null && !audioPlayer.isPlaying) {
+      await _startPlayer(
+        path ?? '',
+      );
       _showPlayerProgres();
-    } else if (!recorder.isRecording && soundIndex == 3) {
-      if (!audioPlayer.isPlaying) {
-        _startPlayer();
-        _showPlayerProgres();
-        return;
-      }
+    } else if (!recorder.isRecording && audioPlayer.isPlaying) {
       audioPlayer.stopPlayer();
-      soundIndex = 2;
     }
   }
 
-  disposeRecorder() {
-    if (recorder.isRecording) {
-      _stopRecorder();
-    }
-    if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+  clickPlayer(path) async {
+    if (!audioPlayer.isPlaying) {
+      await _initPlayer();
+      _startPlayer(path);
+      _showPlayerProgres();
+    } else if (audioPlayer.isPlaying) {
       audioPlayer.stopPlayer();
     }
-
-    recorder.closeRecorder();
-    audioPlayer.closePlayer();
   }
 
-  _startRecord() {
-    _initRecorder();
-    _record();
+  // disposeRecorder() {
+  //   if (recorder.isRecording) {
+  //     _stopRecorder();
+  //   }
+  //   if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+  //     audioPlayer.stopPlayer();
+  //   }
+
+  //   recorder.closeRecorder();
+  //   audioPlayer.closePlayer();
+  // }
+
+  _startRecord() async {
+    await _record();
     _startTimer();
     soundIndex = 1;
   }
 
-  _initRecorder() async {
-    await audioPlayer.openPlayer().then((value) {
-      isRecoderReady = true;
-    });
+  _initPlayer() async {
+    if (!isRecoderReady) {
+      await audioPlayer.openPlayer().then((value) {
+        isRecoderReady = true;
+      });
+      await audioPlayer
+          .setSubscriptionDuration(const Duration(milliseconds: 1000));
+    }
+  }
+
+  initRecorder() async {
+    if (!isRecoderReady) {
+      await audioPlayer.openPlayer().then((value) {
+        isRecoderReady = true;
+      });
+      await audioPlayer
+          .setSubscriptionDuration(const Duration(milliseconds: 1000));
+    }
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
       throw 'Microphone permission not granted';
@@ -95,8 +114,12 @@ class SoundService {
 
     await recorder.openRecorder();
     await recorder.setSubscriptionDuration(const Duration(seconds: 1));
-    await audioPlayer
-        .setSubscriptionDuration(const Duration(milliseconds: 1000));
+    if (audioPlayer.isPlaying) {
+      await audioPlayer.stopPlayer();
+      await _startRecord();
+    } else {
+      await _startRecord();
+    }
   }
 
   _record() async {
@@ -115,7 +138,6 @@ class SoundService {
         limit = e.duration.inSeconds;
         endOfSliderPosition = e.duration.inMilliseconds;
         // audioDuration = e.duration.inMinutes;
-
         String txt = '$date';
         recorderTime = txt.substring(11, 19);
         recorderPower = vol / 10;
@@ -123,7 +145,7 @@ class SoundService {
     );
   }
 
-  _stopRecorder() async {
+  stopRecorder() async {
     if (!isRecoderReady) return;
     path = await recorder.stopRecorder();
     // final audiofile = File(
@@ -134,14 +156,20 @@ class SoundService {
     recorder.closeRecorder();
     limit = 0;
     recorder.onProgress!.listen((event) {}).cancel();
+    recorderTime = '00:00:00';
   }
 
-  _startPlayer() async {
-    soundIndex = 3;
-    await audioPlayer.startPlayer(
-      fromDataBuffer: url,
-      codec: Codec.defaultCodec,
-    );
+  _startPlayer(String path) async {
+    try {
+      if (path != '') {
+        final audiofile = File(path);
+        url = audiofile.readAsBytesSync();
+        await audioPlayer.startPlayer(
+          fromDataBuffer: url,
+          codec: Codec.defaultCodec,
+        );
+      }
+    } catch (_) {}
   }
 
   _showPlayerProgres() {
@@ -162,5 +190,15 @@ class SoundService {
             .substring(11, 19);
       },
     );
+  }
+
+  getNavImg() {
+    AssetImage mic;
+    if (soundIndex == 0) {
+      mic = CustomIconsImg.mic2;
+    } else {
+      mic = CustomIconsImg.mic3;
+    }
+    return mic;
   }
 }

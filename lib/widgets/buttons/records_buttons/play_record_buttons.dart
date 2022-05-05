@@ -44,9 +44,8 @@ class PlayRecordButtons extends StatelessWidget {
             ),
             IconButton(
               onPressed: () async {
-                context.read<NavigationBloc>().add(StartRecordNavEvent(
-                    soundIndex: _soundBloc.sound.soundIndex + 1));
-                context.read<SoundBloc>().add(StartRecordEvent());
+                _soundBloc.add(StartRecordEvent());
+                context.read<NavigationBloc>().add(StartRecordNavEvent());
               },
               icon: const Icon(Icons.pause, color: CustomColors.invisible),
             ),

@@ -9,7 +9,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
       emit(NavigationState(currentIndex: event.currentIndex));
     });
     on<StartRecordNavEvent>((event, emit) {
-      emit(NavigationState(currentIndex: 2, soundIndex: event.soundIndex));
+      emit(NavigationState(currentIndex: 2));
     });
   }
 }

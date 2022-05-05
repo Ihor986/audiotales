@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../bloc/sound_bloc/sound_bloc.dart';
 import '../../services/audio_service.dart';
 import 'play_record.dart';
@@ -11,15 +10,12 @@ class RecordDraggableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SoundBloc, SoundInitial>(builder: (context, state) {
-      SoundService sound = context.read<SoundBloc>().sound;
-      if (sound.soundIndex == 0) {
-        context.read<SoundBloc>().add(StartRecordEvent());
-        context
-            .read<NavigationBloc>()
-            .add(StartRecordNavEvent(soundIndex: sound.soundIndex + 1));
-      }
-      return sound.soundIndex < 2 ? const Recordering() : const PlayRecord();
-    });
+    return BlocBuilder<SoundBloc, SoundInitial>(
+      builder: (context, state) {
+        SoundService sound = context.read<SoundBloc>().sound;
+
+        return sound.url == null ? const Recordering() : const PlayRecord();
+      },
+    );
   }
 }

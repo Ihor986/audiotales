@@ -10,9 +10,6 @@ class ChangeCurrentIndexEvent extends NavigationEvent {
   int currentIndex;
 } //
 
-class StartRecordNavEvent extends NavigationEvent {
-  StartRecordNavEvent({required this.soundIndex});
-  int soundIndex;
-}
+class StartRecordNavEvent extends NavigationEvent {}
 
 // class StopRecordEvent extends NavigationEvent {}//

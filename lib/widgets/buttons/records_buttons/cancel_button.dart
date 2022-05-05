@@ -14,8 +14,6 @@ class CancelRecordButton extends StatelessWidget {
     final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
     return TextButton(
         onPressed: () {
-          _navdBloc.state.soundIndex = 0;
-          // _soundBloc.sound.soundIndex = 0;
           _soundBloc.add(StopRecordEvent());
           _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
         },

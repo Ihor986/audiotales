@@ -10,3 +10,5 @@ class SaveRecordEvent extends SoundEvent {
 }
 
 class StopRecordEvent extends SoundEvent {}
+
+class StartPlaydEvent extends SoundEvent {}

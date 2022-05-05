@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
-        // initialRoute: MainScreen.routeName,
         initialRoute:
             isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
         routes: {

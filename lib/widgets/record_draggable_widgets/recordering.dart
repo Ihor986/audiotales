@@ -14,70 +14,70 @@ class Recordering extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
-    num screenWidth = MediaQuery.of(context).size.width;
+    Size screen = MediaQuery.of(context).size;
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    final NavigationBloc _navigationBloc =
+        BlocProvider.of<NavigationBloc>(context);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
         child: DraggableScrollableSheet(
-            initialChildSize: 0.93,
-            maxChildSize: 0.93,
-            minChildSize: 0.9,
-            builder: (context, scrollController) {
-              return Container(
-                  decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: CustomColors.boxShadow,
-                            spreadRadius: 3,
-                            blurRadius: 10)
-                      ],
-                      color: CustomColors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Stack(
-                    children: [
-                      const Align(
-                        child: CancelRecordButton(),
-                        alignment: Alignment(0.92, -0.95),
+          initialChildSize: 0.93,
+          maxChildSize: 0.93,
+          minChildSize: 0.9,
+          builder: (context, scrollController) {
+            return Container(
+              decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: CustomColors.boxShadow,
+                        spreadRadius: 3,
+                        blurRadius: 10)
+                  ],
+                  color: CustomColors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              child: Stack(
+                children: [
+                  const Align(
+                    child: CancelRecordButton(),
+                    alignment: Alignment(0.92, -0.95),
+                  ),
+                  const Align(
+                    alignment: Alignment(0, -0.7),
+                    child: RecordText(),
+                  ),
+                  const RecorderingAnimation(),
+                  const RecorderingTimer(),
+                  Align(
+                    alignment: const Alignment(0, 1),
+                    child: Container(
+                      width: screen.width * 1,
+                      foregroundDecoration: const BoxDecoration(
+                        image: DecorationImage(
+                          alignment: Alignment.center,
+                          image: CustomIconsImg.pause2,
+                          fit: BoxFit.fitHeight,
+                        ),
                       ),
-                      const Align(
-                        alignment: Alignment(0, -0.7),
-                        child: RecordText(),
+                      child: IconButton(
+                        onPressed: () async {
+                          _soundBloc.add(StartRecordEvent());
+                          _navigationBloc.add(StartRecordNavEvent());
+                        },
+                        icon: const Icon(Icons.pause,
+                            color: CustomColors.invisible),
                       ),
-                      const RecorderingAnimation(),
-                      const RecorderingTimer(),
-                      Align(
-                          alignment: const Alignment(0, 1),
-                          child: Container(
-                            width: screenWidth * 1,
-                            foregroundDecoration: const BoxDecoration(
-                              image: DecorationImage(
-                                alignment: Alignment.center,
-                                image: CustomIconsImg.pause2,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                            child: IconButton(
-                              onPressed: () async {
-                                context.read<NavigationBloc>().add(
-                                    StartRecordNavEvent(
-                                        soundIndex:
-                                            _soundBloc.sound.soundIndex + 1));
-                                context
-                                    .read<SoundBloc>()
-                                    .add(StartRecordEvent());
-                              },
-                              icon: const Icon(Icons.pause,
-                                  color: CustomColors.invisible),
-                            ),
-                            height: screenHeight * 0.25,
-                          )),
-                    ],
-                  ));
-            }),
+                      height: screen.height * 0.25,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
