@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 
+import '../../models/audio.dart';
 import '../../services/audio_service.dart';
 
 part 'main_screen_event.dart';

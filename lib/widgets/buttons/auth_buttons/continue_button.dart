@@ -1,8 +1,5 @@
 import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../../data_base/local_data_base.dart';
 import '../../../pages/income_screen/new_user/registration_phone.dart';
 import '../../../utils/consts/custom_colors.dart';
 
@@ -11,7 +8,6 @@ class ContinueButtonNewUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     return Center(
       child: Column(
         children: [

@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../models/user.dart';
-import '../../repositorys/auth.dart';
 
 part 'auth_block_event.dart';
 part 'auth_block_state.dart';

@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../data_base/local_data_base.dart';
 import '../models/user.dart';
 import '../pages/income_screen/new_user/you_super.dart';
 

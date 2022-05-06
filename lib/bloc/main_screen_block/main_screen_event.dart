@@ -4,7 +4,7 @@ abstract class MainScreenEvent {}
 
 class ClickPlayEvent extends MainScreenEvent {
   ClickPlayEvent(this.path);
-  String path;
+  AudioTale path;
 }
 
 class Rewind15Event extends MainScreenEvent {

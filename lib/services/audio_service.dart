@@ -1,6 +1,7 @@
 // import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -26,6 +27,7 @@ class SoundService {
   int soundIndex = 0;
   Uint8List? url;
   String? path;
+  String? pathUrl;
   String audioname = 'Аудиозапись';
   String recorderTime = '00:00:00';
   double recorderPower = 0;
@@ -34,40 +36,29 @@ class SoundService {
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
 
-  saveAudioTale(
-    TalesList fullTalesList,
-  ) {
+  saveAudioTale(TalesList fullTalesList) async {
     if (url == null) {
       return;
     }
 
-    //  if (saveMetod == SaveMetod.firestore) {
-    // context.read<AuthBlockBloc>().user.name = 'IYa';
-    // context.read<AuthBlockBloc>().user.phone =
-    //     '${FirebaseAuth.instance.currentUser?.phoneNumber}';
-    // FirebaseFirestore.instance
-    //     .collection(
-    //         '${context.read<AuthBlockBloc>().user.phone}')
-    //     .doc('${context.read<AuthBlockBloc>().user.phone}')
-    //     .set(context.read<AuthBlockBloc>().user.toJson());
-    // print(FirebaseFirestore.instance.collection('userData'));
-    // var i =
-    //     FirebaseFirestore.instance.collection('userData').get();
+    try {
+      final storageRef = FirebaseStorage.instance.ref().child(id!);
+      final audiofile = File(path!);
+      await storageRef.putFile(audiofile);
+      pathUrl = await storageRef.getDownloadURL();
+    } on FirebaseException catch (e) {
+      print('$e ');
+    }
 
-    // print(
-    //     '${i.asStream.call().first.asStream.call().first.toString()}');
-
-    // }
-    // if (saveMetod == SaveMetod.localDB) {
     AudioTale audioTale = AudioTale(
         id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-        path: path ?? '',
+        path: '',
+        pathUrl: pathUrl ?? '',
         time: endOfSliderPosition / 60000,
         name:
             '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
     fullTalesList.addNewAudio(audioTale);
     LocalDB.instance.saveAudioTales(fullTalesList);
-    // }
   }
 
   clickRecorder() async {
@@ -75,12 +66,12 @@ class SoundService {
       await _startRecord();
     } else if (recorder.isRecording) {
       await stopRecorder();
-      await _startPlayer(
+      await _startLocalPlayer(
         path ?? '',
       );
       _showPlayerProgres();
     } else if (!recorder.isRecording && url != null && !audioPlayer.isPlaying) {
-      await _startPlayer(
+      await _startLocalPlayer(
         path ?? '',
       );
       _showPlayerProgres();
@@ -187,7 +178,30 @@ class SoundService {
     recorderTime = '00:00:00';
   }
 
-  _startPlayer(String path) async {
+  _startPlayer(AudioTale path) async {
+    // print('${path.path} && ${path.pathUrl}');
+    try {
+      if (path.path != '') {
+        final audiofile = File(path.path);
+        url = audiofile.readAsBytesSync();
+        await audioPlayer.startPlayer(
+          fromDataBuffer: url,
+          codec: Codec.defaultCodec,
+        );
+      }
+
+      if (path.pathUrl != '' && path.path == '') {
+        await audioPlayer.startPlayer(
+          fromURI: path.pathUrl,
+          codec: Codec.defaultCodec,
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _startLocalPlayer(String path) async {
     try {
       if (path != '') {
         final audiofile = File(path);
@@ -197,7 +211,9 @@ class SoundService {
           codec: Codec.defaultCodec,
         );
       }
-    } catch (_) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   _showPlayerProgres() {

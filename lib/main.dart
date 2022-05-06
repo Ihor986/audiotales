@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'bloc/auth_bloc/auth_block_bloc.dart';
 import 'data_base/local_data_base.dart';
@@ -22,6 +23,7 @@ import 'repositorys/user_reposytory.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalDB.instance.ensureInitialized();
+  await Hive.openBox('testBox');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -35,9 +37,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isNewUser = LocalDB.instance.getUser().isNewUser;
 
-    // User? user = FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     // isNewUser = user == null ? isNewUser : true;
-    // user == null ? print('no user') : print('${user.email}');
+    user == null ? print('no user') : print('${user.email}');
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBlockBloc>(

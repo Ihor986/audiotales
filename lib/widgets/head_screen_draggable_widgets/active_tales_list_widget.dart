@@ -32,7 +32,9 @@ class ActiveTalesListWidget extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        _mainScreenBloc.add(ClickPlayEvent(talesList[i].path));
+                        // print('${talesList[i].pathUrl} 11111111111111');
+                        var im = talesList[i];
+                        _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                       },
                       icon: ImageIcon(
                         CustomIconsImg.playBlueSolo,
