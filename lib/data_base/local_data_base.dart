@@ -2,10 +2,12 @@ import 'dart:convert';
 
 // import 'package:file_structure_flutter/models/users/user_model.dart';
 import 'package:audiotales/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../bloc/auth_bloc/auth_block_bloc.dart';
 import '../models/tales_list.dart';
 
 // class _ClearStorage {
@@ -64,10 +66,16 @@ class LocalDB {
 
   // [START] User
 
-  Future<void> saveUser(User user) async {
+  Future<void> saveUser(LocalUser user) async {
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(user.toJson()));
     // print(User().toJson());
+    try {
+      FirebaseFirestore.instance
+          .collection(user.phone)
+          .doc('authUser')
+          .set(user.toJson());
+    } catch (_) {}
   }
 
   void deleteUser() async {
@@ -75,14 +83,14 @@ class LocalDB {
     await userBox.delete('authUser');
   }
 
-  User getUser() {
+  LocalUser getUser() {
     // saveUser(User());
 
     // Hive.openBox<String>(_userBox);
     final Box<String> userBox = Hive.box(_userBox);
-    return User.fromJson(
-      jsonDecode(
-          userBox.get('authUser', defaultValue: jsonEncode(User().toJson()))!),
+    return LocalUser.fromJson(
+      jsonDecode(userBox.get('authUser',
+          defaultValue: jsonEncode(LocalUser().toJson()))!),
     );
   }
 
@@ -90,6 +98,13 @@ class LocalDB {
     if (talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+
+      try {
+        FirebaseFirestore.instance
+            .collection(getUser().phone)
+            .doc('audiolist')
+            .set(talesList.toJson());
+      } catch (_) {}
     }
   }
 

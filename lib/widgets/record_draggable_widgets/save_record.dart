@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../buttons/records_buttons/play_record_buttons.dart';
-import '../buttons/records_buttons/play_record_upbar_buttons.dart';
-import '../texts/record_screen_text.dart';
-import 'play_record_progress.dart';
 
 class SaveRecord extends StatelessWidget {
   const SaveRecord({Key? key}) : super(key: key);

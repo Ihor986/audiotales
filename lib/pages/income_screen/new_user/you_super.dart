@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../bloc/auth_bloc/auth_block_bloc.dart';
+import '../../../data_base/local_data_base.dart';
+import '../../../repositorys/auth.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/texts/start_regular_user_text.dart';
 import '../../../widgets/texts/you_super_text.dart';
@@ -28,8 +32,12 @@ class _YouSuperPageState extends State<YouSuperPage> {
 
   @override
   Widget build(BuildContext context) {
-    // num screenWidth = MediaQuery.of(context).size.width;
-    num screenHeight = MediaQuery.of(context).size.height;
+    final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
+    authBloc.user.phone = RepositoryProvider.of<AuthReposytory>(context)
+        .phoneNumberForVerification;
+    LocalDB.instance.saveUser(authBloc.user);
+    Size screen = MediaQuery.of(context).size;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -41,7 +49,7 @@ class _YouSuperPageState extends State<YouSuperPage> {
           ClipPath(
             clipper: OvalBC(),
             child: Container(
-              height: screenHeight / 4.5,
+              height: screen.height / 4.5,
               color: CustomColors.blueSoso,
               child: const YouSuper(),
             ),

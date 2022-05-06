@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../data_base/local_data_base.dart';
+import '../models/user.dart';
 import '../pages/income_screen/new_user/you_super.dart';
 
 class AuthReposytory {
@@ -9,15 +12,16 @@ class AuthReposytory {
   String verificationCode = '';
   String smsCode = '';
   FirebaseAuth auth = FirebaseAuth.instance;
+  User? firebaseUser;
+  LocalUser? localUser;
 
   void verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumberForVerification,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) async {
-          if (value.user != null) {
-            // print('user logged in');
-          }
+          print('hi');
+          if (value.user != null) {}
         });
       },
       verificationFailed: (FirebaseAuthException e) {
@@ -52,7 +56,7 @@ class AuthReposytory {
         });
       }
     } catch (_) {
-      // print('wrong pass');
+      print('wrong pass');
     }
 
     // .whenComplete(() {})
@@ -63,4 +67,6 @@ class AuthReposytory {
     //   });
     // });
   }
+
+  getUser() {}
 }

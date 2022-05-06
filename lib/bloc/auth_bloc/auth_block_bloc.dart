@@ -8,9 +8,9 @@ part 'auth_block_event.dart';
 part 'auth_block_state.dart';
 
 class AuthBlockBloc extends Bloc<AuthBlockEvent, AuthBlockState> {
-  final AuthReposytory authReposytory;
-  final User user;
-  AuthBlockBloc(this.authReposytory, this.user) : super(AuthBlockInitial()) {
+  // final AuthReposytory authReposytory;
+  final LocalUser user;
+  AuthBlockBloc(this.user) : super(AuthBlockInitial()) {
     on<ContinueButtonEvent>((event, emit) async {
       emit(AuthBlockInitial());
     });

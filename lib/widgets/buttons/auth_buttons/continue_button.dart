@@ -18,7 +18,7 @@ class ContinueButtonNewUser extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // print(authBloc.user.toJson());
-              LocalDB.instance.saveUser(authBloc.user);
+              // LocalDB.instance.saveUser(authBloc.user);
               Navigator.of(context, rootNavigator: true)
                   .pushNamedAndRemoveUntil(
                 RegistrationPage.routeName,

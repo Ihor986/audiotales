@@ -10,6 +10,11 @@ import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
 
+// enum SaveMetod {
+//   firestore,
+//   localDB
+// }
+
 class SoundService {
   SoundService();
 
@@ -29,17 +34,40 @@ class SoundService {
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
 
-  saveAudioTale(TalesList fullTalesList) {
-    if (url != null) {
-      AudioTale audioTale = AudioTale(
-          id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-          path: path ?? '',
-          time: endOfSliderPosition / 60000,
-          name:
-              '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
-      fullTalesList.addNewAudio(audioTale);
-      LocalDB.instance.saveAudioTales(fullTalesList);
+  saveAudioTale(
+    TalesList fullTalesList,
+  ) {
+    if (url == null) {
+      return;
     }
+
+    //  if (saveMetod == SaveMetod.firestore) {
+    // context.read<AuthBlockBloc>().user.name = 'IYa';
+    // context.read<AuthBlockBloc>().user.phone =
+    //     '${FirebaseAuth.instance.currentUser?.phoneNumber}';
+    // FirebaseFirestore.instance
+    //     .collection(
+    //         '${context.read<AuthBlockBloc>().user.phone}')
+    //     .doc('${context.read<AuthBlockBloc>().user.phone}')
+    //     .set(context.read<AuthBlockBloc>().user.toJson());
+    // print(FirebaseFirestore.instance.collection('userData'));
+    // var i =
+    //     FirebaseFirestore.instance.collection('userData').get();
+
+    // print(
+    //     '${i.asStream.call().first.asStream.call().first.toString()}');
+
+    // }
+    // if (saveMetod == SaveMetod.localDB) {
+    AudioTale audioTale = AudioTale(
+        id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
+        path: path ?? '',
+        time: endOfSliderPosition / 60000,
+        name:
+            '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
+    fullTalesList.addNewAudio(audioTale);
+    LocalDB.instance.saveAudioTales(fullTalesList);
+    // }
   }
 
   clickRecorder() async {

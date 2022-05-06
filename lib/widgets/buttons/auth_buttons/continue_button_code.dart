@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
+import '../../../data_base/local_data_base.dart';
 import '../../../pages/main_screen/main_screen.dart';
+import '../../../repositorys/auth.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/texts_consts.dart';
 import '../../texts/registration_text.dart';
@@ -12,6 +14,8 @@ class ContinueButtonCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
+    final AuthReposytory authReposytory =
+        RepositoryProvider.of<AuthReposytory>(context);
     // num screenWidth = MediaQuery.of(context).size.width;
     num screenHeight = MediaQuery.of(context).size.height;
     return Center(
@@ -22,7 +26,7 @@ class ContinueButtonCode extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              authBloc.authReposytory.sendCodeToFirebase(context);
+              authReposytory.sendCodeToFirebase(context);
               // print(authBloc.authReposytory.verificationCode);
             },
             child: const Text(
@@ -37,6 +41,7 @@ class ContinueButtonCode extends StatelessWidget {
           ),
           TextButton(
               onPressed: () {
+                LocalDB.instance.saveUser(authBloc.user);
                 Navigator.of(context, rootNavigator: true)
                     .pushNamedAndRemoveUntil(
                   MainScreen.routeName,

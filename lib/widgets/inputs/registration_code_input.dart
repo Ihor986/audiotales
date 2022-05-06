@@ -1,3 +1,4 @@
+import 'package:audiotales/repositorys/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -19,7 +20,8 @@ class _RegistrationCodeInputState extends State<RegistrationCodeInput> {
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
-    final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
+    final AuthReposytory authReposytory =
+        RepositoryProvider.of<AuthReposytory>(context);
     return Container(
         decoration: BoxDecoration(
           color: CustomColors.white,
@@ -37,7 +39,7 @@ class _RegistrationCodeInputState extends State<RegistrationCodeInput> {
         child: TextFormField(
           // autofocus: true,
           onChanged: (value) {
-            authBloc.authReposytory.smsCode = maskFormatter.getUnmaskedText();
+            authReposytory.smsCode = maskFormatter.getUnmaskedText();
           },
           textAlign: TextAlign.center,
           // style: const TextStyle(

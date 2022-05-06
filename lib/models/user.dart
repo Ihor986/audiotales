@@ -1,5 +1,5 @@
-class User {
-  User(
+class LocalUser {
+  LocalUser(
       {this.photo = '',
       this.name = '',
       this.phone = '',
@@ -19,8 +19,8 @@ class User {
     id = '';
   }
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory LocalUser.fromJson(Map<String, dynamic> json) {
+    return LocalUser(
       photo: json['photo'],
       name: json['name'],
       phone: json['phone'],

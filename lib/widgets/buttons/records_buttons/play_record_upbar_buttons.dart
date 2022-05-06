@@ -1,8 +1,11 @@
+import 'package:audiotales/bloc/auth_bloc/auth_block_bloc.dart';
 import 'package:audiotales/utils/consts/custom_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/sound_bloc/sound_bloc.dart';
+import '../../../data_base/local_data_base.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../texts/record_screen_text.dart';

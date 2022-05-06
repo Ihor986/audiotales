@@ -1,5 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:audiotales/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +15,9 @@ import 'pages/main_screen/head_screen.dart';
 import 'pages/main_screen/main_screen.dart';
 import 'pages/main_screen/record_screen/record_screen.dart';
 import 'pages/income_screen/regular_user.dart';
-import 'pages/main_screen/record_screen/save_record_screen.dart';
 import 'pages/test.dart';
 import 'repositorys/auth.dart';
+import 'repositorys/user_reposytory.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,32 +35,41 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isNewUser = LocalDB.instance.getUser().isNewUser;
 
+    // User? user = FirebaseAuth.instance.currentUser;
+    // isNewUser = user == null ? isNewUser : true;
+    // user == null ? print('no user') : print('${user.email}');
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBlockBloc>(
             create: (context) => AuthBlockBloc(
-                AuthReposytory(''),
+                // AuthReposytory(''),
                 isNewUser
-                    ? User(isNewUser: false)
+                    ? LocalUser(isNewUser: false)
                     : LocalDB.instance.getUser())),
         // BlocProvider<MainscreenBloc>(create: (context) => MainscreenBloc()),
         // BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: true,
-        initialRoute:
-            isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
-        routes: {
-          Test.routeName: (_) => const Test(),
-          NewUserPage.routeName: (_) => const NewUserPage(),
-          HeadScreen.routeName: (_) => const HeadScreen(),
-          MainScreen.routeName: (_) => const MainScreen(),
-          RegistrationPage.routeName: (_) => const RegistrationPage(),
-          YouSuperPage.routeName: (_) => const YouSuperPage(),
-          RegularUserPage.routeName: (_) => const RegularUserPage(),
-          RecordScreen.routeName: (_) => const RecordScreen(),
-          // SaveRecordScreen.routeName: (_) => const SaveRecordScreen(),
-        },
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(create: (context) => UserRepository()),
+          RepositoryProvider(create: (context) => AuthReposytory('')),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: true,
+          initialRoute:
+              isNewUser ? NewUserPage.routeName : RegularUserPage.routeName,
+          routes: {
+            Test.routeName: (_) => const Test(),
+            NewUserPage.routeName: (_) => const NewUserPage(),
+            HeadScreen.routeName: (_) => const HeadScreen(),
+            MainScreen.routeName: (_) => const MainScreen(),
+            RegistrationPage.routeName: (_) => const RegistrationPage(),
+            YouSuperPage.routeName: (_) => const YouSuperPage(),
+            RegularUserPage.routeName: (_) => const RegularUserPage(),
+            RecordScreen.routeName: (_) => const RecordScreen(),
+            // SaveRecordScreen.routeName: (_) => const SaveRecordScreen(),
+          },
+        ),
       ),
     );
   }

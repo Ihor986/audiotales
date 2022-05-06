@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../bloc/auth_bloc/auth_block_bloc.dart';
+import '../../repositorys/auth.dart';
 import '../../utils/consts/custom_colors.dart';
 
 class RegistrationPhoneInput extends StatefulWidget {
@@ -20,7 +20,9 @@ class _RegistrationPhoneInputState extends State<RegistrationPhoneInput> {
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
-    final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
+    // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
+    final AuthReposytory authReposytory =
+        RepositoryProvider.of<AuthReposytory>(context);
     return Container(
         decoration: BoxDecoration(
           color: CustomColors.white,
@@ -38,7 +40,7 @@ class _RegistrationPhoneInputState extends State<RegistrationPhoneInput> {
         child: TextFormField(
           // autofocus: true,
           onChanged: (value) {
-            authBloc.authReposytory.phoneNumberForVerification =
+            authReposytory.phoneNumberForVerification =
                 '+380${maskFormatter.getUnmaskedText()}';
           },
           textAlign: TextAlign.center,
