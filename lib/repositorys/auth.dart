@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/new_user/you_super.dart';
+import '../pages/income_screen/new_user/you_super.dart';
 
 class AuthReposytory {
   AuthReposytory(this.phoneNumberForVerification);

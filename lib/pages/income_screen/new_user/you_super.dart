@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../utils/consts/custom_colors.dart';
-import '../../widgets/texts/start_regular_user_text.dart';
-import '../../widgets/texts/you_super_text.dart';
-import '../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../main_screen/main_screen.dart';
+import '../../../utils/consts/custom_colors.dart';
+import '../../../widgets/texts/start_regular_user_text.dart';
+import '../../../widgets/texts/you_super_text.dart';
+import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../main_screen/main_screen.dart';
 
 class YouSuperPage extends StatefulWidget {
   const YouSuperPage({Key? key}) : super(key: key);

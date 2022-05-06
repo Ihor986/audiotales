@@ -37,13 +37,8 @@ class _PlayRecordProgresState extends State<PlayRecordProgres> {
             min: 0.0,
             max: soundBloc.sound.endOfSliderPosition.toDouble(),
             onChanged: (double d) async {
-              soundBloc.sound.sliderPosition = d.floor();
               setState(() {
-                if (soundBloc.sound.audioPlayer.isPlaying ||
-                    soundBloc.sound.audioPlayer.isPaused) {
-                  soundBloc.sound.audioPlayer
-                      .seekToPlayer(Duration(milliseconds: d.floor()));
-                }
+                soundBloc.sound.forwardPlayerWithSlider(d);
               });
             },
           ),

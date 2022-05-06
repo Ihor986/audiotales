@@ -9,7 +9,7 @@ import '../../widgets/navigation/custom_drawer.dart';
 import '../test.dart';
 import 'head_screen.dart';
 import 'profile.dart';
-import 'record_screen.dart';
+import 'record_screen/record_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);

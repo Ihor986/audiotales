@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../utils/consts/custom_colors.dart';
-import '../../widgets/buttons/auth_buttons/continue_button.dart';
-import '../../widgets/texts/memory_box_text.dart';
-import '../../widgets/texts/start_new_user_text.dart';
-import '../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../../utils/consts/custom_colors.dart';
+import '../../../widgets/buttons/auth_buttons/continue_button.dart';
+import '../../../widgets/texts/memory_box_text.dart';
+import '../../../widgets/texts/start_new_user_text.dart';
+import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 
 class NewUserPage extends StatelessWidget {
   const NewUserPage({Key? key}) : super(key: key);

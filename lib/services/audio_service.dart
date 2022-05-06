@@ -201,4 +201,27 @@ class SoundService {
     }
     return mic;
   }
+
+  forwardPlayer(int i) {
+    if (i > 0) {
+      if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+        audioPlayer.seekToPlayer(Duration(
+            milliseconds: endOfSliderPosition > sliderPosition + 16000
+                ? sliderPosition + 15000
+                : endOfSliderPosition - 1000));
+      }
+    } else {
+      if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+        audioPlayer.seekToPlayer(Duration(
+            milliseconds: sliderPosition > 16000 ? sliderPosition - 15000 : 0));
+      }
+    }
+  }
+
+  forwardPlayerWithSlider(num d) {
+    sliderPosition = d.floor();
+    if (audioPlayer.isPlaying || audioPlayer.isPaused) {
+      audioPlayer.seekToPlayer(Duration(milliseconds: d.floor()));
+    }
+  }
 }

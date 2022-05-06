@@ -7,13 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/auth_bloc/auth_block_bloc.dart';
 import 'data_base/local_data_base.dart';
 import 'firebase_options.dart';
+import 'pages/income_screen/new_user/new_user.dart';
+import 'pages/income_screen/new_user/registration_phone.dart';
+import 'pages/income_screen/new_user/you_super.dart';
 import 'pages/main_screen/head_screen.dart';
 import 'pages/main_screen/main_screen.dart';
-import 'pages/main_screen/record_screen.dart';
-import 'pages/new_user/new_user.dart';
-import 'pages/new_user/registration_phone.dart';
-import 'pages/new_user/you_super.dart';
-import 'pages/regular_user.dart';
+import 'pages/main_screen/record_screen/record_screen.dart';
+import 'pages/income_screen/regular_user.dart';
+import 'pages/main_screen/record_screen/save_record_screen.dart';
 import 'pages/test.dart';
 import 'repositorys/auth.dart';
 
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           YouSuperPage.routeName: (_) => const YouSuperPage(),
           RegularUserPage.routeName: (_) => const RegularUserPage(),
           RecordScreen.routeName: (_) => const RecordScreen(),
+          // SaveRecordScreen.routeName: (_) => const SaveRecordScreen(),
         },
       ),
     );

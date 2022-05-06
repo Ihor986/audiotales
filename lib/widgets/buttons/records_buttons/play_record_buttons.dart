@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../bloc/sound_bloc/sound_bloc.dart';
 import '../../../utils/consts/custom_colors.dart';
@@ -12,7 +13,8 @@ class PlayRecordButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    final SoundBloc _record = BlocProvider.of<SoundBloc>(context);
+    final MainScreenBloc _player = BlocProvider.of<MainScreenBloc>(context);
     return Container(
       width: screen.width * 1,
       foregroundDecoration: const BoxDecoration(
@@ -29,13 +31,7 @@ class PlayRecordButtons extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                if (_soundBloc.sound.audioPlayer.isPlaying ||
-                    _soundBloc.sound.audioPlayer.isPaused) {
-                  _soundBloc.sound.audioPlayer.seekToPlayer(Duration(
-                      milliseconds: _soundBloc.sound.sliderPosition > 16000
-                          ? _soundBloc.sound.sliderPosition - 15000
-                          : 0));
-                }
+                _player.add(Rewind15Event(-15));
               },
               icon: const ImageIcon(
                 CustomIconsImg.minus15,
@@ -44,21 +40,14 @@ class PlayRecordButtons extends StatelessWidget {
             ),
             IconButton(
               onPressed: () async {
-                _soundBloc.add(StartRecordEvent());
+                _record.add(StartRecordEvent());
                 context.read<NavigationBloc>().add(StartRecordNavEvent());
               },
               icon: const Icon(Icons.pause, color: CustomColors.invisible),
             ),
             IconButton(
               onPressed: () {
-                if (_soundBloc.sound.audioPlayer.isPlaying ||
-                    _soundBloc.sound.audioPlayer.isPaused) {
-                  _soundBloc.sound.audioPlayer.seekToPlayer(Duration(
-                      milliseconds: _soundBloc.sound.endOfSliderPosition >
-                              _soundBloc.sound.sliderPosition + 16000
-                          ? _soundBloc.sound.sliderPosition + 15000
-                          : _soundBloc.sound.endOfSliderPosition - 1000));
-                }
+                _player.add(Rewind15Event(15));
               },
               icon: const ImageIcon(
                 CustomIconsImg.plus15,
