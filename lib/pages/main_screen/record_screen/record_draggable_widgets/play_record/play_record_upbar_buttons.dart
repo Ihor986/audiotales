@@ -1,11 +1,10 @@
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../bloc/sound_bloc/sound_bloc.dart';
-import '../../../repositorys/tales_list_repository.dart';
-import '../../../utils/consts/custom_icons_img.dart';
-import '../../texts/record_screen_text.dart';
+import '../../../../../repositorys/tales_list_repository.dart';
+import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../sound_bloc/sound_bloc.dart';
+import '../recordering/record_screen_text.dart';
 
 class PlayRecordUpbarButtons extends StatelessWidget {
   const PlayRecordUpbarButtons({Key? key}) : super(key: key);

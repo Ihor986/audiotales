@@ -7,6 +7,7 @@ import '../pages/income_screen/new_user/you_super.dart';
 class AuthReposytory {
   AuthReposytory(this.phoneNumberForVerification);
   String phoneNumberForVerification;
+  String phoneNumber = '';
   String verificationCode = '';
   String smsCode = '';
   FirebaseAuth auth = FirebaseAuth.instance;

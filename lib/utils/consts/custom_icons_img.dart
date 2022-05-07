@@ -39,8 +39,9 @@ class CustomIconsImg {
   static const AssetImage delete = AssetImage("assets/icons/delete.png");
   static const AssetImage share = AssetImage("assets/icons/share.png");
   static const AssetImage download = AssetImage("assets/icons/download.png");
-  // static const AssetImage profile = AssetImage("assets/icons/profile.png");
-  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+  static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
+  static const AssetImage arrowDownCircle =
+      AssetImage("assets/icons/arrowDownCircle.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");

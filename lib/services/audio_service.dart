@@ -35,6 +35,7 @@ class SoundService {
   int endOfSliderPosition = 1;
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
+  late AudioTale audioTale;
 
   saveAudioTale(TalesList fullTalesList) async {
     if (url == null) {
@@ -42,7 +43,8 @@ class SoundService {
     }
 
     try {
-      final storageRef = FirebaseStorage.instance.ref().child(id!);
+      final storageRef =
+          FirebaseStorage.instance.ref().child('audio/').child(id!);
       final audiofile = File(path!);
       await storageRef.putFile(audiofile);
       pathUrl = await storageRef.getDownloadURL();
@@ -50,15 +52,20 @@ class SoundService {
       print('$e ');
     }
 
-    AudioTale audioTale = AudioTale(
+    audioTale = AudioTale(
         id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-        path: '',
+        path: path ?? '',
         pathUrl: pathUrl ?? '',
         time: endOfSliderPosition / 60000,
         name:
             '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
     fullTalesList.addNewAudio(audioTale);
     LocalDB.instance.saveAudioTales(fullTalesList);
+  }
+
+  checkDeleteAudio({required TalesList list, required AudioTale audio}) {
+    audio.isDeleted = true;
+    LocalDB.instance.saveAudioTales(list);
   }
 
   clickRecorder() async {
@@ -80,10 +87,10 @@ class SoundService {
     }
   }
 
-  clickPlayer(path) async {
+  clickPlayer(audio) async {
     if (!audioPlayer.isPlaying) {
       await _initPlayer();
-      _startPlayer(path);
+      _startPlayer(audio);
       _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
       audioPlayer.stopPlayer();
@@ -178,11 +185,11 @@ class SoundService {
     recorderTime = '00:00:00';
   }
 
-  _startPlayer(AudioTale path) async {
+  _startPlayer(AudioTale audio) async {
     // print('${path.path} && ${path.pathUrl}');
     try {
-      if (path.path != '') {
-        final audiofile = File(path.path);
+      if (audio.path != '') {
+        final audiofile = File(audio.path);
         url = audiofile.readAsBytesSync();
         await audioPlayer.startPlayer(
           fromDataBuffer: url,
@@ -190,9 +197,9 @@ class SoundService {
         );
       }
 
-      if (path.pathUrl != '' && path.path == '') {
+      if (audio.pathUrl != '' && audio.path == '') {
         await audioPlayer.startPlayer(
-          fromURI: path.pathUrl,
+          fromURI: audio.pathUrl,
           codec: Codec.defaultCodec,
         );
       }

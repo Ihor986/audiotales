@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../../bloc/sound_bloc/sound_bloc.dart';
-import '../../texts/cancel_record_button_text.dart';
+import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../sound_bloc/sound_bloc.dart';
+import 'cancel_record_button_text.dart';
 
 class CancelRecordButton extends StatelessWidget {
   const CancelRecordButton({Key? key}) : super(key: key);

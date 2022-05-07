@@ -1,6 +1,6 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
-import '../../services/audio_service.dart';
+import '../../../../services/audio_service.dart';
 part 'sound_event.dart';
 part 'sound_state.dart';
 

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
 
     User? user = FirebaseAuth.instance.currentUser;
     // isNewUser = user == null ? isNewUser : true;
-    user == null ? print('no user') : print('${user.email}');
+    user == null ? print('no user') : print('${user.phoneNumber}');
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBlockBloc>(

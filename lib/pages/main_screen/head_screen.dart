@@ -9,10 +9,10 @@ import '../../widgets/uncategorized/tales_selection_widget.dart';
 class HeadScreen extends StatelessWidget {
   const HeadScreen({Key? key}) : super(key: key);
   static const routeName = '/head_screen.dart';
-
+  static const String title = '';
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
+    Size screen = MediaQuery.of(context).size;
 
     return
         // Scaffold(
@@ -29,7 +29,7 @@ class HeadScreen extends StatelessWidget {
             ClipPath(
               clipper: OvalBC(),
               child: Container(
-                height: screenHeight / 4.5,
+                height: screen.height / 4.5,
                 color: CustomColors.blueSoso,
                 // child: const TalesSelectionWidget(),
               ),

@@ -8,7 +8,7 @@ import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/custom_drawer.dart';
 import '../test.dart';
 import 'head_screen.dart';
-import 'profile.dart';
+import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -26,6 +26,14 @@ class MainScreen extends StatelessWidget {
       const Profile(),
     ];
 
+    List _titles = [
+      HeadScreen.title,
+      Test.title,
+      RecordScreen.title,
+      Test.title,
+      Profile.title,
+    ];
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
@@ -40,6 +48,7 @@ class MainScreen extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: CustomColors.blueSoso,
                 elevation: 0,
+                title: Text(_titles[state.currentIndex]),
               ),
               body: _pages[state.currentIndex],
               drawer: const CustomDrawer(),

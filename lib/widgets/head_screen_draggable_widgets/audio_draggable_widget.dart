@@ -6,14 +6,15 @@ import '../buttons/main_screen_buttons/selection_buttons_audio.dart';
 import '../texts/main_screen_text.dart';
 import 'active_tales_list_widget.dart';
 
-class AudioDraggableWidget extends StatefulWidget {
+// class AudioDraggableWidget extends StatefulWidget {
+class AudioDraggableWidget extends StatelessWidget {
   const AudioDraggableWidget({Key? key}) : super(key: key);
 
-  @override
-  State<AudioDraggableWidget> createState() => _AudioDraggableWidgetState();
-}
+//   @override
+//   State<AudioDraggableWidget> createState() => _AudioDraggableWidgetState();
+// }
 
-class _AudioDraggableWidgetState extends State<AudioDraggableWidget> {
+// class _AudioDraggableWidgetState extends State<AudioDraggableWidget> {
   @override
   Widget build(BuildContext context) {
     final List talesList = RepositoryProvider.of<TalesListRepository>(context)

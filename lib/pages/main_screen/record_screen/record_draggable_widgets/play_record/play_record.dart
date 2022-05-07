@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../utils/consts/custom_colors.dart';
-import '../buttons/records_buttons/play_record_buttons.dart';
+import '../../../../../utils/consts/custom_colors.dart';
+import 'play_record_buttons.dart';
+import 'play_record_upbar_buttons.dart';
+import '../recordering/record_screen_text.dart';
+import 'play_record_progress.dart';
 
-class SaveRecord extends StatelessWidget {
-  const SaveRecord({Key? key}) : super(key: key);
+class PlayRecord extends StatelessWidget {
+  const PlayRecord({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +33,15 @@ class SaveRecord extends StatelessWidget {
                           topRight: Radius.circular(20))),
                   child: Stack(
                     children: const [
-                      // Align(
-                      //     alignment: Alignment(-1, -1),
-                      //     child: PlayRecordUpbarButtons()),
-                      // Align(
-                      //     alignment: Alignment(0, -0.4),
-                      //     child: AudioNameText()),
-                      // Align(
-                      //     alignment: Alignment(0, 0.7),
-                      //     child: PlayRecordProgres()),
-
+                      Align(
+                          alignment: Alignment(-1, -1),
+                          child: PlayRecordUpbarButtons()),
+                      Align(
+                          alignment: Alignment(0, -0.4),
+                          child: AudioNameText()),
+                      Align(
+                          alignment: Alignment(0, 0),
+                          child: PlayRecordProgres()),
                       Align(
                           alignment: Alignment(0, 1),
                           child: PlayRecordButtons()),

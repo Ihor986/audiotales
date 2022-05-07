@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/main_screen_block/main_screen_bloc.dart';
-import '../../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../../bloc/sound_bloc/sound_bloc.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons_img.dart';
+import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
+import '../../../../../repositorys/tales_list_repository.dart';
+import '../../../../../utils/consts/custom_colors.dart';
+import '../../../../../utils/consts/custom_icons_img.dart';
 
-class PlayRecordButtons extends StatelessWidget {
-  const PlayRecordButtons({Key? key}) : super(key: key);
-
+class SavePagePlayRecordButtons extends StatelessWidget {
+  const SavePagePlayRecordButtons({Key? key}) : super(key: key);
+//  final AudioTale path;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    final SoundBloc _record = BlocProvider.of<SoundBloc>(context);
+    final TalesListRepository _talesListRep =
+        RepositoryProvider.of<TalesListRepository>(context);
     final MainScreenBloc _player = BlocProvider.of<MainScreenBloc>(context);
     return Container(
       width: screen.width * 1,
@@ -40,8 +40,8 @@ class PlayRecordButtons extends StatelessWidget {
             ),
             IconButton(
               onPressed: () async {
-                _record.add(StartRecordEvent());
-                context.read<NavigationBloc>().add(StartRecordNavEvent());
+                _player.add(ClickPlayEvent(
+                    _talesListRep.getTalesListRepository().fullTalesList.last));
               },
               icon: const Icon(Icons.pause, color: CustomColors.invisible),
             ),

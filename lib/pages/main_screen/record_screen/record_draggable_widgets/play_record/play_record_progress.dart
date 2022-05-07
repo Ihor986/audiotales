@@ -2,7 +2,7 @@ import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/sound_bloc/sound_bloc.dart';
+import '../../sound_bloc/sound_bloc.dart';
 
 class PlayRecordProgres extends StatefulWidget {
   const PlayRecordProgres({Key? key}) : super(key: key);
@@ -15,10 +15,15 @@ class _PlayRecordProgresState extends State<PlayRecordProgres> {
   @override
   Widget build(BuildContext context) {
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    Size screen = MediaQuery.of(context).size;
     return StreamBuilder<Object>(
         stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
         builder: (context, snapshot) {
-          return _play(_soundBloc);
+          return Container(
+            height: screen.height * 0.1,
+            child: _play(_soundBloc),
+            // color: CustomColors.blueSoso,
+          );
         });
   }
 

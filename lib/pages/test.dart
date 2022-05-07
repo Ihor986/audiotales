@@ -5,6 +5,7 @@ import '../utils/consts/custom_colors.dart';
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
   static const routeName = '/test.dart';
+  static const String title = 'Profile';
 
   @override
   State<Test> createState() => _TestState();

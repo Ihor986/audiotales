@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../bloc/sound_bloc/sound_bloc.dart';
-import '../../utils/consts/custom_colors.dart';
-import '../../utils/consts/custom_icons_img.dart';
-import '../buttons/records_buttons/cancel_button.dart';
-import '../texts/record_screen_text.dart';
+import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../../../../utils/consts/custom_colors.dart';
+import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../sound_bloc/sound_bloc.dart';
+import 'cancel_button.dart';
+import 'record_screen_text.dart';
 import 'record_animation.dart';
 import 'recordering_timer.dart';
 

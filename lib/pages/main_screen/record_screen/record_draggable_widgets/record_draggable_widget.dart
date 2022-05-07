@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/sound_bloc/sound_bloc.dart';
 // import '../../services/audio_service.dart';
-import 'play_record.dart';
-import 'recordering.dart';
-import 'save_record.dart';
+import '../sound_bloc/sound_bloc.dart';
+import 'play_record/play_record.dart';
+import 'recordering/recordering.dart';
+import 'save_record/save_record.dart';
 
 class RecordDraggableWidget extends StatelessWidget {
   RecordDraggableWidget({Key? key}) : super(key: key);
@@ -13,6 +13,8 @@ class RecordDraggableWidget extends StatelessWidget {
     const Recordering(),
     const PlayRecord(),
     const SaveRecord(),
+    // const SaveRecord(),
+    // const SaveRecord(),
   ];
 
   @override

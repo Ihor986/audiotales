@@ -5,7 +5,7 @@ class AudioTale {
       required this.pathUrl,
       required this.name,
       required this.time,
-      this.compilationsId = const ['head'],
+      this.compilationsId = const [],
       this.isDeleted = false});
   final String id;
   final String name;
@@ -13,7 +13,7 @@ class AudioTale {
   final String pathUrl;
   final num time;
   List compilationsId;
-  final bool isDeleted;
+  bool isDeleted;
 
   factory AudioTale.fromJson(Map<String, dynamic> json) {
     return AudioTale(
