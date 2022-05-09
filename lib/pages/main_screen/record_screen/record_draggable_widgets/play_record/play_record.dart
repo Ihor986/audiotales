@@ -11,6 +11,7 @@ class PlayRecord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    // try {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -50,5 +51,8 @@ class PlayRecord extends StatelessWidget {
             }),
       ),
     );
+    // } catch (e) {
+    //   return const CircularProgressIndicator();
+    // }
   }
 }

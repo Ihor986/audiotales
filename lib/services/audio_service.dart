@@ -35,6 +35,7 @@ class SoundService {
   int endOfSliderPosition = 1;
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
+  num? size;
   late AudioTale audioTale;
 
   saveAudioTale(TalesList fullTalesList) async {
@@ -43,11 +44,17 @@ class SoundService {
     }
 
     try {
-      final storageRef =
-          FirebaseStorage.instance.ref().child('audio/').child(id!);
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('${LocalDB.instance.getUser().id}/audio/')
+          .child(id!);
       final audiofile = File(path!);
       await storageRef.putFile(audiofile);
       pathUrl = await storageRef.getDownloadURL();
+      FullMetadata sizeFromMD = await storageRef.getMetadata();
+      size = sizeFromMD.size;
+      print(sizeFromMD.size);
+      print(id);
     } on FirebaseException catch (e) {
       print('$e ');
     }
@@ -57,6 +64,7 @@ class SoundService {
         path: path ?? '',
         pathUrl: pathUrl ?? '',
         time: endOfSliderPosition / 60000,
+        size: size ?? 0,
         name:
             '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
     fullTalesList.addNewAudio(audioTale);
@@ -162,7 +170,7 @@ class SoundService {
             e.duration.inMilliseconds,
             isUtc: true);
         limit = e.duration.inSeconds;
-        endOfSliderPosition = e.duration.inMilliseconds;
+        endOfSliderPosition = e.duration.inMilliseconds + 1000;
         // audioDuration = e.duration.inMinutes;
         String txt = '$date';
         recorderTime = txt.substring(11, 19);
@@ -226,7 +234,7 @@ class SoundService {
   _showPlayerProgres() {
     audioPlayer.onProgress!.listen(
       (event) {
-        endOfSliderPosition = event.duration.abs().inMilliseconds;
+        endOfSliderPosition = event.duration.inMilliseconds;
         // audioDuration = event.duration.abs().inMinutes;
         sliderPosition = event.position.inMilliseconds;
         endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(

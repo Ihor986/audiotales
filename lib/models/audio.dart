@@ -5,6 +5,7 @@ class AudioTale {
       required this.pathUrl,
       required this.name,
       required this.time,
+      required this.size,
       this.compilationsId = const [],
       this.isDeleted = false});
   final String id;
@@ -12,6 +13,7 @@ class AudioTale {
   final String path;
   final String pathUrl;
   final num time;
+  final num size;
   List compilationsId;
   bool isDeleted;
 
@@ -22,6 +24,7 @@ class AudioTale {
       path: json['path'] as String,
       pathUrl: json['pathUrl'] as String,
       time: json['time'] as num,
+      size: json['size'] as num,
       compilationsId: json['compilationsId'] as List,
       isDeleted: json['isDeleted'] as bool,
     );
@@ -33,6 +36,7 @@ class AudioTale {
         'path': path,
         'pathUrl': pathUrl,
         'time': time,
+        'size': size,
         'compilationsId': compilationsId,
         'isDeleted': isDeleted,
       };

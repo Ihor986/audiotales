@@ -64,7 +64,7 @@ class LocalDB {
   TalesList getAudioTales() {
     final Box<String> userBox = Hive.box(_userBox);
     // userBox.delete('audiolist');
-    // return;
+    // return TalesList(fullTalesList: []);
     return TalesList.fromJson(
       jsonDecode(userBox.get('audiolist',
           defaultValue: jsonEncode(TalesList(fullTalesList: []).toJson()))!),

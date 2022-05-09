@@ -46,7 +46,9 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthBlockBloc(
                 // AuthReposytory(''),
                 isNewUser
-                    ? LocalUser(isNewUser: false)
+                    ? LocalUser(
+                        isNewUser: false,
+                        id: '${DateTime.now().microsecondsSinceEpoch}')
                     : LocalDB.instance.getUser())),
         // BlocProvider<MainscreenBloc>(create: (context) => MainscreenBloc()),
         // BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
