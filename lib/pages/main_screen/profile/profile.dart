@@ -62,7 +62,10 @@ class Profile extends StatelessWidget {
         Align(
           alignment: const Alignment(0, 0.2),
           child: TextButton(
-            child: const Text('Subscribe'),
+            child: const Text(
+              'Subscribe',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ),
             onPressed: () {},
           ),
         ),

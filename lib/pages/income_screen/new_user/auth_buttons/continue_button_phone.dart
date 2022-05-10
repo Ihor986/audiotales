@@ -27,9 +27,10 @@ class ContinueButtonPhone extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              authReposytory.verifyPhoneNumber();
-              // authBloc.authReposytory. authReposytory.phoneNumberForVerification
-              authBloc.add(ContinueButtonPhoneEvent());
+              if (authReposytory.phoneNumberForVerification.length == 13) {
+                authReposytory.verifyPhoneNumber();
+                authBloc.add(ContinueButtonPhoneEvent());
+              }
             },
             child: const Text(
               TextsConst.continueButtonText,

@@ -176,21 +176,12 @@ Widget talesGroup3() => Center(
         children: const [
           Text(
             'Добавить',
+            // style: TextStyle(),
             style: TextStyle(
               color: CustomColors.white,
+              decoration: TextDecoration.underline,
               fontStyle: FontStyle.normal,
-              fontSize: 12,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: Text(
-              '________',
-              style: TextStyle(
-                color: CustomColors.white,
-                fontStyle: FontStyle.normal,
-                fontSize: 12,
-              ),
+              fontSize: 14,
             ),
           ),
         ],
