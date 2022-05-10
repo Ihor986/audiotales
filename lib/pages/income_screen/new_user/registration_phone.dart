@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/buttons/auth_buttons/continue_button_code.dart';
-import '../../../widgets/buttons/auth_buttons/continue_button_phone.dart';
-import '../../../widgets/inputs/registration_code_input.dart';
-import '../../../widgets/inputs/registration_phone_input.dart';
+import 'registration_code_input.dart';
+import 'registration_phone_input.dart';
 import '../../../widgets/texts/registration_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import 'auth_buttons/continue_button_code.dart';
+import 'auth_buttons/continue_button_phone.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({Key? key}) : super(key: key);

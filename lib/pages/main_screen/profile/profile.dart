@@ -75,7 +75,11 @@ class Profile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              TextButton(onPressed: () {}, child: const Text('logout')),
+              TextButton(
+                  onPressed: () {
+                    auth.signOut();
+                  },
+                  child: const Text('logout')),
               TextButton(
                   onPressed: () {
                     LocalDB.instance.deleteUser();
