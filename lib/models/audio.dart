@@ -1,13 +1,15 @@
 class AudioTale {
-  AudioTale(
-      {required this.id,
-      required this.path,
-      required this.pathUrl,
-      required this.name,
-      required this.time,
-      required this.size,
-      this.compilationsId = const [],
-      this.isDeleted = false});
+  AudioTale({
+    required this.id,
+    required this.path,
+    required this.pathUrl,
+    required this.name,
+    required this.time,
+    required this.size,
+    this.compilationsId = const [],
+    this.isDeleted = false,
+  });
+
   final String id;
   final String name;
   final String path;

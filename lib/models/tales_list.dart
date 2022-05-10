@@ -15,7 +15,6 @@ class TalesList {
         .where((element) => element.pathUrl != '')
         .map((e) => e.size)
         .fold(0, (num previousValue, element) => previousValue + element);
-    // i.fold(0, (num previousValue, element) => previousValue + element);
   }
 
   addNewAudio(AudioTale audioTale) {

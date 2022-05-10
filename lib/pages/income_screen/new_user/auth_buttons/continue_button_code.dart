@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../../data_base/local_data_base.dart';
-import '../../../pages/main_screen/main_screen.dart';
-import '../../../repositorys/auth.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/texts_consts.dart';
-import '../../texts/registration_text.dart';
+
+import '../../../../bloc/auth_bloc/auth_block_bloc.dart';
+import '../../../../data_base/local_data_base.dart';
+import '../../../../repositorys/auth.dart';
+import '../../../../utils/consts/custom_colors.dart';
+import '../../../../utils/consts/texts_consts.dart';
+import '../../../../widgets/texts/registration_text.dart';
+import '../../../main_screen/main_screen.dart';
 
 class ContinueButtonCode extends StatelessWidget {
   const ContinueButtonCode({Key? key}) : super(key: key);

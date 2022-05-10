@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../repositorys/tales_list_repository.dart';
-import '../buttons/main_screen_buttons/selection_buttons_audio.dart';
-import '../texts/main_screen_text.dart';
+import '../../../repositorys/tales_list_repository.dart';
+import 'selection_buttons_audio.dart';
+import '../../../widgets/texts/main_screen_text.dart';
 import 'active_tales_list_widget.dart';
 
 // class AudioDraggableWidget extends StatefulWidget {

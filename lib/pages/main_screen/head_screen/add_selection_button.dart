@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../texts/main_screen_text.dart';
+import '../../../widgets/texts/main_screen_text.dart';
 
 class AddSelectionButton extends StatelessWidget {
   const AddSelectionButton({Key? key}) : super(key: key);

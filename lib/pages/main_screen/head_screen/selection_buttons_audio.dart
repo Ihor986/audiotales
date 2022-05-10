@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../texts/main_screen_text.dart';
+import '../../../widgets/texts/main_screen_text.dart';
 
 class SelectionButtonsAudio extends StatelessWidget {
   const SelectionButtonsAudio({Key? key}) : super(key: key);
