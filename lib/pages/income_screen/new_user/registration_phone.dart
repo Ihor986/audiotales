@@ -16,25 +16,33 @@ class RegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenWidth = MediaQuery.of(context).size.width;
-    num screenHeight = MediaQuery.of(context).size.height;
+    Size screen = MediaQuery.of(context).size;
 
     return BlocBuilder<AuthBlockBloc, AuthBlockState>(
         builder: (context, state) {
       return Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: CustomColors.blueSoso,
           elevation: 0,
         ),
-        body: Stack(
-          children: [
-            Column(
+        body: GestureDetector(
+          onTap: () {
+            if (FocusNode().hasFocus) {
+              FocusScope.of(context).unfocus();
+            } else {
+              FocusScope.of(context).requestFocus(FocusNode());
+            }
+          },
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            reverse: true,
+            child: Column(
               children: [
                 ClipPath(
                   clipper: OvalBC(),
                   child: Container(
-                    height: screenHeight / 4.5,
+                    height: screen.height / 4.5,
                     color: CustomColors.blueSoso,
                     child: const RegistrationText(),
                   ),
@@ -47,10 +55,7 @@ class RegistrationPage extends StatelessWidget {
                     : const ContinueButtonCode(),
               ],
             ),
-            // state is AuthBlockInitial
-            //     ? const ContinueButtonPhone()
-            //     : const ContinueButtonCode(),
-          ],
+          ),
         ),
       );
     });
@@ -62,15 +67,16 @@ class ContinuePhone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
+    Size screen = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
-          height: screenHeight / 20,
+          // height: double.infinity / 20,
+          height: screen.height / 20,
         ),
         const RegistrationText1(),
         SizedBox(
-          height: screenHeight / 50,
+          height: screen.height / 50,
         ),
         const RegistrationPhoneInput(),
       ],
@@ -83,15 +89,15 @@ class ContinueCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
+    Size screen = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
-          height: screenHeight / 40,
+          height: screen.height / 40,
         ),
         const RegistrationText3(),
         SizedBox(
-          height: screenHeight / 50,
+          height: screen.height / 50,
         ),
         const RegistrationCodeInput(),
       ],
