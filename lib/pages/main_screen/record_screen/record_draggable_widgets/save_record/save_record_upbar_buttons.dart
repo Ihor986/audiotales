@@ -1,10 +1,10 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 
 class SaveRecordUpbarButtons extends StatelessWidget {
   const SaveRecordUpbarButtons({Key? key}) : super(key: key);

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 
 class SavePagePlayRecordButtons extends StatelessWidget {
   const SavePagePlayRecordButtons({Key? key}) : super(key: key);

@@ -54,6 +54,7 @@ class SoundService {
       FullMetadata sizeFromMD = await storageRef.getMetadata();
       size = sizeFromMD.size;
       File(path!).delete();
+      path = null;
       print(sizeFromMD.size);
       print(path);
     } on FirebaseException catch (e) {

@@ -7,4 +7,8 @@ class ContinueButtonEvent extends AuthBlockEvent {}
 
 class ContinueButtonPhoneEvent extends AuthBlockEvent {}
 
-class ContinueButtonCodeEvent extends AuthBlockEvent {}
+class ContinueButtonCodeEvent extends AuthBlockEvent {
+  ContinueButtonCodeEvent({required this.phone, required this.user});
+  final String phone;
+  final LocalUser user;
+}

@@ -1,13 +1,14 @@
 import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../../data_base/local_data_base.dart';
+import '../../../../models/user.dart';
 import '../../../../repositorys/auth.dart';
+import '../../../../repositorys/user_reposytory.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../widgets/texts/registration_text.dart';
 import '../../../main_screen/main_screen.dart';
+import '../../auth_bloc/auth_block_bloc.dart';
 
 class ContinueButtonPhone extends StatelessWidget {
   const ContinueButtonPhone({Key? key}) : super(key: key);
@@ -15,15 +16,16 @@ class ContinueButtonPhone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
+    final LocalUser _user =
+        RepositoryProvider.of<UserRepository>(context).localUser;
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);
-    // num screenWidth = MediaQuery.of(context).size.width;
-    num screenHeight = MediaQuery.of(context).size.height;
+    Size screen = MediaQuery.of(context).size;
     return Center(
       child: Column(
         children: [
           SizedBox(
-            height: screenHeight * 0.05,
+            height: screen.height * 0.05,
           ),
           ElevatedButton(
             onPressed: () {
@@ -42,10 +44,10 @@ class ContinueButtonPhone extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50))),
           ),
-          SizedBox(height: screenHeight / 40),
+          SizedBox(height: screen.height / 40),
           TextButton(
               onPressed: () {
-                LocalDB.instance.saveUser(authBloc.user);
+                LocalDB.instance.saveUser(_user);
                 Navigator.of(context, rootNavigator: true)
                     .pushNamedAndRemoveUntil(
                   MainScreen.routeName,
@@ -54,7 +56,7 @@ class ContinueButtonPhone extends StatelessWidget {
               },
               child: const RegistrationText4()),
           SizedBox(
-            height: screenHeight * 0.05,
+            height: screen.height * 0.05,
           ),
           const RegistrationText2(),
         ],

@@ -39,8 +39,8 @@ class _ProfilePhoneInputState extends State<ProfilePhoneInput> {
         width: 309,
         height: 59,
         child: TextFormField(
-          initialValue: maskFormatter.maskText(_user.localUser.phone
-              .substring(_user.localUser.phone.length - 10)),
+          initialValue: maskFormatter
+              .maskText(_user.localUser.phone ?? '0000000000000'.substring(3)),
           readOnly: true,
           autofocus: true,
           onChanged: (value) {

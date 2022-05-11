@@ -40,9 +40,9 @@ class Profile extends StatelessWidget {
                 const ProfilePhotoWidget(),
                 Padding(
                   padding: EdgeInsets.all(screen.width * 0.03),
-                  child: Text(_user.localUser.name == ''
+                  child: Text(_user.localUser.name == null
                       ? 'name'
-                      : _user.localUser.name),
+                      : _user.localUser.name!),
                 ),
               ],
             ),

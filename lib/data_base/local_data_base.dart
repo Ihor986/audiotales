@@ -26,7 +26,7 @@ class LocalDB {
     try {
       // FirebaseFirestore.instance.
       FirebaseFirestore.instance
-          .collection(user.phone)
+          .collection(user.id!)
           .doc('authUser')
           .set(user.toJson());
     } catch (_) {}
@@ -54,7 +54,7 @@ class LocalDB {
 
       try {
         FirebaseFirestore.instance
-            .collection(getUser().phone)
+            .collection(getUser().id!)
             .doc('audiolist')
             .set(talesList.toJson());
       } catch (_) {}

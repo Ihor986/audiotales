@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/auth_bloc/auth_block_bloc.dart';
-import '../../../data_base/local_data_base.dart';
+import '../../../models/user.dart';
 import '../../../repositorys/auth.dart';
+import '../../../repositorys/user_reposytory.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/texts/start_regular_user_text.dart';
 import '../../../widgets/texts/you_super_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../main_screen/main_screen.dart';
+import '../auth_bloc/auth_block_bloc.dart';
 
 class YouSuperPage extends StatefulWidget {
   const YouSuperPage({Key? key}) : super(key: key);
@@ -33,10 +34,13 @@ class _YouSuperPageState extends State<YouSuperPage> {
   @override
   Widget build(BuildContext context) {
     final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
-    authBloc.user.phone = RepositoryProvider.of<AuthReposytory>(context)
-        .phoneNumberForVerification;
-    LocalDB.instance.saveUser(authBloc.user);
+    final LocalUser _user =
+        RepositoryProvider.of<UserRepository>(context).localUser;
     Size screen = MediaQuery.of(context).size;
+    authBloc.add(ContinueButtonCodeEvent(
+        phone: RepositoryProvider.of<AuthReposytory>(context)
+            .phoneNumberForVerification,
+        user: _user));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

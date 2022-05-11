@@ -20,7 +20,7 @@ class _PlayRecordProgresState extends State<PlayRecordProgres> {
         stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
         builder: (context, snapshot) {
           return Container(
-            height: screen.height * 0.1,
+            height: screen.height * 0.2,
             child: _play(_soundBloc),
             // color: CustomColors.blueSoso,
           );

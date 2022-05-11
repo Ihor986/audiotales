@@ -11,8 +11,8 @@ class AuthReposytory {
   String verificationCode = '';
   String smsCode = '';
   FirebaseAuth auth = FirebaseAuth.instance;
-  User? firebaseUser;
-  LocalUser? localUser;
+  // User? firebaseUser;
+  // LocalUser? localUser;
 
   void verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(

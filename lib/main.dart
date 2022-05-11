@@ -1,14 +1,12 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:audiotales/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'bloc/auth_bloc/auth_block_bloc.dart';
 import 'data_base/local_data_base.dart';
 import 'firebase_options.dart';
+import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/income_screen/new_user/new_user_page.dart';
 import 'pages/income_screen/new_user/registration_phone.dart';
 import 'pages/income_screen/new_user/you_super.dart';
@@ -35,28 +33,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNewUser = LocalDB.instance.getUser().isNewUser;
+    bool isNewUser = LocalDB.instance.getUser().isNewUser == null;
 
     User? user = FirebaseAuth.instance.currentUser;
     // isNewUser = user == null ? isNewUser : true;
     user == null ? print('no user') : print('${user.phoneNumber}');
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider<AuthBlockBloc>(
-            create: (context) => AuthBlockBloc(
-                // AuthReposytory(''),
-                isNewUser
-                    ? LocalUser(
-                        isNewUser: false,
-                        id: '${DateTime.now().microsecondsSinceEpoch}')
-                    : LocalDB.instance.getUser())),
-        // BlocProvider<MainscreenBloc>(create: (context) => MainscreenBloc()),
-        // BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
+        RepositoryProvider(create: (context) => UserRepository()),
+        RepositoryProvider(create: (context) => AuthReposytory('')),
       ],
-      child: MultiRepositoryProvider(
+      child: MultiBlocProvider(
         providers: [
-          RepositoryProvider(create: (context) => UserRepository()),
-          RepositoryProvider(create: (context) => AuthReposytory('')),
+          BlocProvider<AuthBlockBloc>(
+            create: (context) => AuthBlockBloc(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: true,

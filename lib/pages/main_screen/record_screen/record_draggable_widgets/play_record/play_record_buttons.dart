@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../sound_bloc/sound_bloc.dart';
 
 class PlayRecordButtons extends StatelessWidget {

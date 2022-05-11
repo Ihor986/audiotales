@@ -38,7 +38,6 @@ class _RegistrationPhoneInputState extends State<RegistrationPhoneInput> {
         width: 309,
         height: 59,
         child: TextFormField(
-          focusNode: FocusNode(),
           autofocus: true,
           onChanged: (value) {
             authReposytory.phoneNumberForVerification =

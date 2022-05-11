@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../bloc/auth_bloc/auth_block_bloc.dart';
 import '../../../utils/consts/custom_colors.dart';
+import '../auth_bloc/auth_block_bloc.dart';
 import 'registration_code_input.dart';
 import 'registration_phone_input.dart';
 import '../../../widgets/texts/registration_text.dart';
