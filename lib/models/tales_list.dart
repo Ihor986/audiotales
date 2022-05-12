@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'audio.dart';
 
 class TalesList {
@@ -12,7 +14,7 @@ class TalesList {
 
   getTalesListSize() {
     return fullTalesList
-        .where((element) => element.pathUrl != '')
+        .where((element) => element.pathUrl != null)
         .map((e) => e.size)
         .fold(0, (num previousValue, element) => previousValue + element);
   }
@@ -32,5 +34,27 @@ class TalesList {
     return TalesList(
       fullTalesList: tList,
     );
+  }
+
+  TalesList.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) : fullTalesList = snapshot.data()?['talesList'];
+
+  // static TalesList fromFirestoreu(DocumentSnapshot snapshot) {
+  //   return TalesList(
+  //     fullTalesList: snapshot.data()['data'],
+  //   );
+  // }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'talesList': fullTalesList.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  void updateTalesList({required TalesList newTalesList}) {
+    newTalesList.fullTalesList
+        .map((e) => fullTalesList.contains(e) ? null : fullTalesList.add(e));
   }
 }

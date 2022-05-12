@@ -1,12 +1,13 @@
 // import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:audiotales/models/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../data_base/local_data_base.dart';
+import '../data_base/data/local_data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
@@ -36,46 +37,49 @@ class SoundService {
   String sliderPositionText = '00:00:00';
   String endOfSliderPositionText = '00:00:01';
   num? size;
-  late AudioTale audioTale;
+  AudioTale? audioTale;
+  bool saveLocal = false;
 
-  saveAudioTale(TalesList fullTalesList) async {
+  saveAudioTale(
+      {required TalesList fullTalesList, required LocalUser localUser}) async {
     if (url == null) {
       return;
     }
-
-    try {
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('${LocalDB.instance.getUser().id}/audio/')
-          .child(id!);
-      final audiofile = File(path!);
-      await storageRef.putFile(audiofile);
-      pathUrl = await storageRef.getDownloadURL();
-      FullMetadata sizeFromMD = await storageRef.getMetadata();
-      size = sizeFromMD.size;
-      File(path!).delete();
-      path = null;
-      print(sizeFromMD.size);
-      print(path);
-    } on FirebaseException catch (e) {
-      print('$e ');
+    if (localUser.isUserRegistered == true) {
+      try {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('${LocalDB.instance.getUser().id}/audio/')
+            .child(id!);
+        final audiofile = File(path!);
+        await storageRef.putFile(audiofile);
+        pathUrl = await storageRef.getDownloadURL();
+        FullMetadata sizeFromMD = await storageRef.getMetadata();
+        size = sizeFromMD.size;
+        if (saveLocal != true) {
+          File(path!).delete();
+          path = null;
+        }
+      } on FirebaseException catch (e) {
+        print(e);
+      }
     }
 
     audioTale = AudioTale(
         id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-        path: path ?? '',
-        pathUrl: pathUrl ?? '',
+        path: path,
+        pathUrl: pathUrl,
         time: endOfSliderPosition / 60000,
         size: size ?? 0,
         name:
             '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
-    fullTalesList.addNewAudio(audioTale);
-    LocalDB.instance.saveAudioTales(fullTalesList);
+    fullTalesList.addNewAudio(audioTale!);
+    LocalDB.instance.saveAudioTales(Future.value(fullTalesList));
   }
 
   checkDeleteAudio({required TalesList list, required AudioTale audio}) {
     audio.isDeleted = true;
-    LocalDB.instance.saveAudioTales(list);
+    LocalDB.instance.saveAudioTales(Future.value(list));
   }
 
   clickRecorder() async {
@@ -198,8 +202,8 @@ class SoundService {
   _startPlayer(AudioTale audio) async {
     // print('${path.path} && ${path.pathUrl}');
     try {
-      if (audio.path != '') {
-        final audiofile = File(audio.path);
+      if (audio.path != null) {
+        final audiofile = File(audio.path!);
         url = audiofile.readAsBytesSync();
         await audioPlayer.startPlayer(
           fromDataBuffer: url,
@@ -207,7 +211,7 @@ class SoundService {
         );
       }
 
-      if (audio.pathUrl != '' && audio.path == '') {
+      if (audio.pathUrl != null && audio.path == null) {
         await audioPlayer.startPlayer(
           fromURI: audio.pathUrl,
           codec: Codec.defaultCodec,
@@ -220,14 +224,12 @@ class SoundService {
 
   _startLocalPlayer(String path) async {
     try {
-      if (path != '') {
-        final audiofile = File(path);
-        url = audiofile.readAsBytesSync();
-        await audioPlayer.startPlayer(
-          fromDataBuffer: url,
-          codec: Codec.defaultCodec,
-        );
-      }
+      final audiofile = File(path);
+      url = audiofile.readAsBytesSync();
+      await audioPlayer.startPlayer(
+        fromDataBuffer: url,
+        codec: Codec.defaultCodec,
+      );
     } catch (e) {
       print(e);
     }

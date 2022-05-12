@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
 import '../pages/income_screen/new_user/you_super.dart';
 
 class AuthReposytory {
@@ -11,6 +10,7 @@ class AuthReposytory {
   String verificationCode = '';
   String smsCode = '';
   FirebaseAuth auth = FirebaseAuth.instance;
+  bool? isNewUser;
   // User? firebaseUser;
   // LocalUser? localUser;
 
@@ -19,7 +19,6 @@ class AuthReposytory {
       phoneNumber: phoneNumberForVerification,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) async {
-          print('hi');
           if (value.user != null) {}
         });
       },
@@ -46,7 +45,8 @@ class AuthReposytory {
             verificationId: verificationCode, smsCode: smsCode);
 
         await auth.signInWithCredential(credential).then((value) {
-          // print(value.toString());
+          isNewUser = value.additionalUserInfo?.isNewUser;
+          // print('4'+value. .toString());
           Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
             YouSuperPage.routeName,
             (_) => false,

@@ -3,7 +3,7 @@ import 'package:audiotales/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import '../models/tales_list.dart';
+import '../../models/tales_list.dart';
 
 class LocalDB {
   const LocalDB._();
@@ -20,15 +20,16 @@ class LocalDB {
     await _initializeHive();
   }
 
-  Future<void> saveUser(LocalUser user) async {
+  Future<void> saveUser(Future<LocalUser> user) async {
+    final _user = await user;
+    _user.updateDate = DateTime.now().millisecondsSinceEpoch;
     final Box<String> userBox = Hive.box(_userBox);
-    await userBox.put('authUser', jsonEncode(user.toJson()));
+    await userBox.put('authUser', jsonEncode(_user.toJson()));
     try {
-      // FirebaseFirestore.instance.
       FirebaseFirestore.instance
-          .collection(user.id!)
+          .collection(_user.id!)
           .doc('authUser')
-          .set(user.toJson());
+          .set(_user.toJson());
     } catch (_) {}
   }
 
@@ -47,16 +48,17 @@ class LocalDB {
     );
   }
 
-  Future<void> saveAudioTales(TalesList talesList) async {
-    if (talesList.fullTalesList != []) {
+  Future<void> saveAudioTales(Future<TalesList> talesList) async {
+    final _talesList = await talesList;
+    if (_talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
-      await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+      await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
 
       try {
         FirebaseFirestore.instance
             .collection(getUser().id!)
             .doc('audiolist')
-            .set(talesList.toJson());
+            .set(_talesList.toJson());
       } catch (_) {}
     }
   }

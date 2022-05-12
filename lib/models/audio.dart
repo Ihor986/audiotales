@@ -12,8 +12,8 @@ class AudioTale {
 
   final String id;
   final String name;
-  final String path;
-  final String pathUrl;
+  final String? path;
+  final String? pathUrl;
   final num time;
   final num size;
   List compilationsId;
@@ -21,14 +21,14 @@ class AudioTale {
 
   factory AudioTale.fromJson(Map<String, dynamic> json) {
     return AudioTale(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      path: json['path'] as String,
-      pathUrl: json['pathUrl'] as String,
-      time: json['time'] as num,
-      size: json['size'] as num,
-      compilationsId: json['compilationsId'] as List,
-      isDeleted: json['isDeleted'] as bool,
+      id: json['id'],
+      name: json['name'],
+      path: json['path'],
+      pathUrl: json['pathUrl'],
+      time: json['time'],
+      size: json['size'],
+      compilationsId: json['compilationsId'],
+      isDeleted: json['isDeleted'],
     );
   }
 

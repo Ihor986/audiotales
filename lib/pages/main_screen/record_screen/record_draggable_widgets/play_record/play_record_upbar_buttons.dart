@@ -1,7 +1,10 @@
+import 'package:audiotales/models/tales_list.dart';
+import 'package:audiotales/models/user.dart';
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
+import '../../../../../repositorys/user_reposytory.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../sound_bloc/sound_bloc.dart';
 import '../recordering/record_screen_text.dart';
@@ -11,6 +14,11 @@ class PlayRecordUpbarButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TalesList _fullTalesList =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository();
+    final LocalUser _localUser =
+        RepositoryProvider.of<UserRepository>(context).localUser;
     Size screen = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,9 +62,10 @@ class PlayRecordUpbarButtons extends StatelessWidget {
           padding: EdgeInsets.all(screen.width * 0.04),
           child: TextButton(
               onPressed: () {
-                context.read<SoundBloc>().add(SaveRecordEvent(
-                    RepositoryProvider.of<TalesListRepository>(context)
-                        .getTalesListRepository()));
+                context.read<SoundBloc>().add(
+                      SaveRecordEvent(
+                          talesListRep: _fullTalesList, localUser: _localUser),
+                    );
               },
               child: const PlayRecordText()),
         )

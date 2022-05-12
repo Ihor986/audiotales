@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../repositorys/user_reposytory.dart';
 import '../../../utils/consts/custom_colors.dart';
 import 'selection_buttons.dart';
 import 'audio_draggable_widget.dart';

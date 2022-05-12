@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'data_base/local_data_base.dart';
+import 'data_base/data/local_data_base.dart';
 import 'firebase_options.dart';
 import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/income_screen/new_user/new_user_page.dart';
@@ -16,6 +15,7 @@ import 'pages/main_screen/record_screen/record_screen.dart';
 import 'pages/income_screen/regular_user.dart';
 import 'pages/test.dart';
 import 'repositorys/auth.dart';
+import 'repositorys/tales_list_repository.dart';
 import 'repositorys/user_reposytory.dart';
 
 void main() async {
@@ -35,13 +35,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isNewUser = LocalDB.instance.getUser().isNewUser == null;
 
-    User? user = FirebaseAuth.instance.currentUser;
+    // User? user = FirebaseAuth.instance.currentUser;
     // isNewUser = user == null ? isNewUser : true;
-    user == null ? print('no user') : print('${user.phoneNumber}');
+    // user == null ? print('no user') : print('${user.phoneNumber}');
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => UserRepository()),
         RepositoryProvider(create: (context) => AuthReposytory('')),
+        RepositoryProvider(create: (context) => TalesListRepository()),
       ],
       child: MultiBlocProvider(
         providers: [

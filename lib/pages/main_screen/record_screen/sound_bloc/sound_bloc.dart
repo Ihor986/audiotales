@@ -1,5 +1,6 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
+import '../../../../models/user.dart';
 import '../../../../services/audio_service.dart';
 part 'sound_event.dart';
 part 'sound_state.dart';
@@ -15,7 +16,8 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     );
     on<SaveRecordEvent>(
       (event, emit) async {
-        await sound.saveAudioTale(event.talesListRep);
+        await sound.saveAudioTale(
+            fullTalesList: event.talesListRep, localUser: event.localUser);
         emit(SoundInitial(indexPage: 2));
       },
     );

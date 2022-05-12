@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import '../../../models/user.dart';
 import '../../../repositorys/auth.dart';
 import '../../../repositorys/user_reposytory.dart';
 import '../../../utils/consts/custom_colors.dart';
@@ -20,10 +21,16 @@ class _ProfilePhoneInputState extends State<ProfilePhoneInput> {
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
-    final UserRepository _user = RepositoryProvider.of<UserRepository>(context);
+    final LocalUser _user =
+        RepositoryProvider.of<UserRepository>(context).localUser;
     // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);
+    //  getUser(UserRepository _user) async {
+    //   final user = await _user.localUser;
+    //   return user;
+    // }
+
     return Container(
         decoration: BoxDecoration(
           color: CustomColors.white,
@@ -40,7 +47,7 @@ class _ProfilePhoneInputState extends State<ProfilePhoneInput> {
         height: 59,
         child: TextFormField(
           initialValue: maskFormatter
-              .maskText(_user.localUser.phone ?? '0000000000000'.substring(3)),
+              .maskText(_user.phone ?? '0000000000000'.substring(3)),
           readOnly: true,
           autofocus: true,
           onChanged: (value) {

@@ -1,10 +1,11 @@
+import 'package:audiotales/data_base/data_base.dart';
 import 'package:audiotales/models/audio.dart';
 
-import '../data_base/local_data_base.dart';
 import '../models/tales_list.dart';
 
 class TalesListRepository {
-  final TalesList _talesListRep = LocalDB.instance.getAudioTales();
+  final TalesList _talesListRep = DataBase.instance.getAudioTales();
+
   TalesList getTalesListRepository() {
     TalesList talesListRep = _talesListRep;
     return talesListRep;

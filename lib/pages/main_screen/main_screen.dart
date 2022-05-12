@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/custom_drawer.dart';
@@ -39,24 +38,22 @@ class MainScreen extends StatelessWidget {
         BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
       ],
-      child: RepositoryProvider(
-        create: (context) => TalesListRepository(),
-        child: BlocBuilder<NavigationBloc, NavigationState>(
-          builder: (context, state) {
-            return Scaffold(
-              extendBody: true,
-              appBar: AppBar(
-                backgroundColor: CustomColors.blueSoso,
-                elevation: 0,
-                title: Text(_titles[state.currentIndex]),
-              ),
-              body: _pages[state.currentIndex],
-              drawer: const CustomDrawer(),
-              resizeToAvoidBottomInset: false,
-              bottomNavigationBar: const CustomBottomNavigationBar(),
-            );
-          },
-        ),
+      // child:
+      child: BlocBuilder<NavigationBloc, NavigationState>(
+        builder: (context, state) {
+          return Scaffold(
+            extendBody: true,
+            appBar: AppBar(
+              backgroundColor: CustomColors.blueSoso,
+              elevation: 0,
+              title: Text(_titles[state.currentIndex]),
+            ),
+            body: _pages[state.currentIndex],
+            drawer: const CustomDrawer(),
+            resizeToAvoidBottomInset: false,
+            bottomNavigationBar: const CustomBottomNavigationBar(),
+          );
+        },
       ),
     );
   }

@@ -38,23 +38,23 @@ class SaveRecordUpbarButtons extends StatelessWidget {
             icon: const Icon(Icons.more_horiz_rounded),
             itemBuilder: (context) => [
               PopupMenuItem(
-                child: Text('Добавить в подборку'),
+                child: const Text('Добавить в подборку'),
                 value: () {},
               ),
               PopupMenuItem(
-                child: Text('Редактировать название'),
+                child: const Text('Редактировать название'),
                 value: () {},
               ),
               PopupMenuItem(
-                child: Text('Поделиться'),
+                child: const Text('Поделиться'),
                 value: () {},
               ),
               PopupMenuItem(
-                child: Text('Скачать'),
+                child: const Text('Скачать'),
                 value: () {},
               ),
               PopupMenuItem(
-                child: Text('Удалить'),
+                child: const Text('Удалить'),
                 value: () {
                   _mainBloc.add(DeleteAudioEvent(
                       list: _talesListRep,

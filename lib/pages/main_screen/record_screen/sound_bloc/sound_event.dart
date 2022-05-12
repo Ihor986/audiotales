@@ -5,8 +5,9 @@ abstract class SoundEvent {}
 class StartRecordEvent extends SoundEvent {}
 
 class SaveRecordEvent extends SoundEvent {
-  SaveRecordEvent(this.talesListRep);
+  SaveRecordEvent({required this.talesListRep, required this.localUser});
   TalesList talesListRep;
+  LocalUser localUser;
 }
 
 class StopRecordEvent extends SoundEvent {}
