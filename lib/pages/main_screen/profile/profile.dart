@@ -6,6 +6,7 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../repositorys/user_reposytory.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../income_screen/new_user/new_user_page.dart';
 import 'profile_phone_input.dart';
 import 'profile_photo_widget.dart';
 
@@ -21,6 +22,12 @@ class Profile extends StatelessWidget {
         RepositoryProvider.of<TalesListRepository>(context);
     Size screen = MediaQuery.of(context).size;
     FirebaseAuth auth = FirebaseAuth.instance;
+    // if (auth.currentUser == null) {
+    //   Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+    //     NewUserPage.routeName,
+    //     (_) => false,
+    //   );
+    // }
     // print(_user.getDataOnceCustomObjects().then((value) => value?.name));
     // _user.getDataOnce_customObjects();
     return Stack(

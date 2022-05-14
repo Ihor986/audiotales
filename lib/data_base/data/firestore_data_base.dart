@@ -21,7 +21,6 @@ class FirestoreDB {
     final localUserFromFirestore = docSnap.data();
     if (localUserFromFirestore != null) {
       return localUserFromFirestore;
-      // return user;
     } else {
       return user;
     }
@@ -40,13 +39,20 @@ class FirestoreDB {
     final docSnap = await ref.get();
     final audiolistFromFirestore = docSnap.data();
     if (audiolistFromFirestore != null) {
-      print('!!!!!!!!!!');
       return audiolistFromFirestore;
-      // return list;
     } else {
-      print('${id} !!!!!!!!!!!!!!!');
-      // print(audiolistFromFirestore);
       return list;
+    }
+  }
+
+  saveUserToFirebase(LocalUser _user) async {
+    if (_user.isUserRegistered == true) {
+      try {
+        await FirebaseFirestore.instance
+            .collection(_user.id!)
+            .doc('authUser')
+            .set(_user.toJson());
+      } catch (_) {}
     }
   }
 }

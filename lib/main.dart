@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'data_base/data/local_data_base.dart';
+import 'data_base/data_base.dart';
 import 'firebase_options.dart';
 import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/income_screen/new_user/new_user_page.dart';
@@ -20,7 +21,7 @@ import 'repositorys/user_reposytory.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await LocalDB.instance.ensureInitialized();
+  await DataBase.instance.ensureInitialized();
   await Hive.openBox('testBox');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

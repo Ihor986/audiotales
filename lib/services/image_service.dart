@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../data_base/data/local_data_base.dart';
+import '../data_base/data_base.dart';
 
 class ImageServise {
   ImagePicker imagePicker = ImagePicker();
@@ -20,12 +21,12 @@ class ImageServise {
           .child('${LocalDB.instance.getUser().id}/images/avatar')
           .child('${DateTime.now().millisecondsSinceEpoch}');
       await storageRef.putFile(imageFile!);
-      // localUser.photo = await storageRef.getDownloadURL();
+      localUser.photoUrl = await storageRef.getDownloadURL();
     } catch (e) {
       localUser.photo = image.path;
       print(e);
     }
-    localUser.photo = image.path;
-    LocalDB.instance.saveUser(Future.value(localUser));
+    // localUser.photo = image.path;
+    DataBase.instance.saveUser(Future.value(localUser));
   }
 }

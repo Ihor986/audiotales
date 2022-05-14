@@ -95,7 +95,7 @@ class LocalUser {
   updateUser({
     required LocalUser newUser,
   }) {
-    photo = newUser.photo;
+    // photo = photo;
     photoUrl = newUser.photoUrl;
     name = newUser.name;
     phone = newUser.phone;

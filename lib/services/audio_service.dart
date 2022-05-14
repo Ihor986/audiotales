@@ -8,6 +8,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../data_base/data/local_data_base.dart';
+import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
@@ -74,12 +75,12 @@ class SoundService {
         name:
             '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
     fullTalesList.addNewAudio(audioTale!);
-    LocalDB.instance.saveAudioTales(Future.value(fullTalesList));
+    DataBase.instance.saveAudioTales(Future.value(fullTalesList));
   }
 
   checkDeleteAudio({required TalesList list, required AudioTale audio}) {
     audio.isDeleted = true;
-    LocalDB.instance.saveAudioTales(Future.value(list));
+    DataBase.instance.saveAudioTales(Future.value(list));
   }
 
   clickRecorder() async {

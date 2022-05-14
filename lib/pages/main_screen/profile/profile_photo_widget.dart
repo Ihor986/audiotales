@@ -24,12 +24,14 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
       width: screen.width * 0.5,
       height: screen.width * 0.5,
       decoration: BoxDecoration(
-        image: _user.localUser.photo != null
+        image: _user.localUser.photoUrl != null
             ? DecorationImage(
-                image:
-                    MemoryImage(File(_user.localUser.photo!).readAsBytesSync()),
+                image: NetworkImage(_user.localUser.photoUrl!),
+                // image: MemoryImage(
+                //     File(_user.localUser.photoUrl!).readAsBytesSync()),
                 fit: BoxFit.cover)
             : null,
+        // fit: BoxFit.cover
         boxShadow: const [
           BoxShadow(
               color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
@@ -39,7 +41,7 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
           Radius.circular(25),
         ),
       ),
-      child: _user.localUser.photo == null
+      child: _user.localUser.photoUrl == null
           ? IconButton(
               onPressed: () async {
                 await ImageServise().pickImage(_user.localUser);

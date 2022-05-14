@@ -2,6 +2,7 @@ import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data_base/data/local_data_base.dart';
+import '../../../../data_base/data_base.dart';
 import '../../../../models/user.dart';
 import '../../../../repositorys/auth.dart';
 import '../../../../repositorys/user_reposytory.dart';
@@ -47,7 +48,7 @@ class ContinueButtonPhone extends StatelessWidget {
           SizedBox(height: screen.height / 40),
           TextButton(
               onPressed: () {
-                LocalDB.instance.saveUser(Future.value(_user));
+                DataBase.instance.saveUser(Future.value(_user));
                 Navigator.of(context, rootNavigator: true)
                     .pushNamedAndRemoveUntil(
                   MainScreen.routeName,

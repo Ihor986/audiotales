@@ -11,28 +11,6 @@ class LocalDB {
   static const String _userBox = 'userBox';
   static const LocalDB instance = LocalDB._();
 
-  Future<void> _initializeHive() async {
-    Hive.init((await getApplicationDocumentsDirectory()).path);
-    await Hive.openBox<String>(_userBox);
-  }
-
-  Future<void> ensureInitialized() async {
-    await _initializeHive();
-  }
-
-  Future<void> saveUser(Future<LocalUser> user) async {
-    final _user = await user;
-    _user.updateDate = DateTime.now().millisecondsSinceEpoch;
-    final Box<String> userBox = Hive.box(_userBox);
-    await userBox.put('authUser', jsonEncode(_user.toJson()));
-    try {
-      FirebaseFirestore.instance
-          .collection(_user.id!)
-          .doc('authUser')
-          .set(_user.toJson());
-    } catch (_) {}
-  }
-
   void deleteUser() async {
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.delete('authUser');
@@ -48,21 +26,6 @@ class LocalDB {
     );
   }
 
-  Future<void> saveAudioTales(Future<TalesList> talesList) async {
-    final _talesList = await talesList;
-    if (_talesList.fullTalesList != []) {
-      final Box<String> userBox = Hive.box(_userBox);
-      await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
-
-      try {
-        FirebaseFirestore.instance
-            .collection(getUser().id!)
-            .doc('audiolist')
-            .set(_talesList.toFirestore());
-      } catch (_) {}
-    }
-  }
-
   TalesList getAudioTales() {
     final Box<String> userBox = Hive.box(_userBox);
     // userBox.delete('audiolist');
@@ -71,5 +34,11 @@ class LocalDB {
       jsonDecode(userBox.get('audiolist',
           defaultValue: jsonEncode(TalesList(fullTalesList: []).toJson()))!),
     );
+  }
+
+  saveUserToLocalDB(LocalUser _user) async {
+    _user.updateDate = DateTime.now().millisecondsSinceEpoch;
+    final Box<String> userBox = Hive.box(_userBox);
+    await userBox.put('authUser', jsonEncode(_user.toJson()));
   }
 }
