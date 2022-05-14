@@ -25,13 +25,13 @@ class AuthBlockBloc extends Bloc<AuthBlockEvent, AuthBlockState> {
         event.user.updateUser(newUser: DataBase.instance.getUser());
         // event.talesList
         //     .updateTalesList(newTalesList: DataBase.instance.getAudioTales());
-        DataBase.instance.saveUser(Future.value(event.user));
+        DataBase.instance.saveUser(event.user);
         DataBase.instance.saveAudioTales(Future.value(event.talesList));
       } else {
         event.user.phone = event.auth.phoneNumberForVerification;
         event.user.isUserRegistered = true;
         event.user.id = user?.uid;
-        DataBase.instance.saveUser(Future.value(event.user));
+        DataBase.instance.saveUser(event.user);
         DataBase.instance.saveAudioTales(Future.value(event.talesList));
       }
     });

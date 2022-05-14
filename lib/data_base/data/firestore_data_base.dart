@@ -55,4 +55,14 @@ class FirestoreDB {
       } catch (_) {}
     }
   }
+
+  Future<void> saveAudioTalesToFirebase(
+      {required TalesList talesList, required LocalUser user}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(user.id!)
+          .doc('audiolist')
+          .set(talesList.toFirestore());
+    } catch (_) {}
+  }
 }

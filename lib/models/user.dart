@@ -53,21 +53,6 @@ class LocalUser {
         isNewUser = snapshot.data()?['isNewUser'],
         isUserRegistered = snapshot.data()?['isUserRegistered'];
 
-  // static LocalUser fromFirestore(DocumentSnapshot snapshot) {
-  //   return LocalUser(
-  //     photo: snapshot['photo'],
-  //     photoUrl: snapshot['photoUrl'],
-  //     name: snapshot['name'],
-  //     phone: snapshot['phone'],
-  //     id: snapshot['id'],
-  //     updateDate: snapshot['updateDate'],
-  //     isNewUser: snapshot['isNewUser'],
-  //     isUserRegistered: snapshot['isUserRegistered'],
-  //   );
-  // }
-
-  // Future<DocumentSnapshot<Map<String, dynamic>>>
-
   Map<String, dynamic> toJson() => {
         'photo': photo,
         'photoUrl': photoUrl,

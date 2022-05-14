@@ -48,7 +48,7 @@ class ContinueButtonPhone extends StatelessWidget {
           SizedBox(height: screen.height / 40),
           TextButton(
               onPressed: () {
-                DataBase.instance.saveUser(Future.value(_user));
+                DataBase.instance.saveUser(_user);
                 Navigator.of(context, rootNavigator: true)
                     .pushNamedAndRemoveUntil(
                   MainScreen.routeName,

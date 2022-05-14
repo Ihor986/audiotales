@@ -27,6 +27,6 @@ class ImageServise {
       print(e);
     }
     // localUser.photo = image.path;
-    DataBase.instance.saveUser(Future.value(localUser));
+    DataBase.instance.saveUser(localUser);
   }
 }

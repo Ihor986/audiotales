@@ -11,11 +11,6 @@ class LocalDB {
   static const String _userBox = 'userBox';
   static const LocalDB instance = LocalDB._();
 
-  void deleteUser() async {
-    final Box<String> userBox = Hive.box(_userBox);
-    await userBox.delete('authUser');
-  }
-
   LocalUser getUser() {
     final Box<String> userBox = Hive.box(_userBox);
     // userBox.delete('authUser');
@@ -40,5 +35,17 @@ class LocalDB {
     _user.updateDate = DateTime.now().millisecondsSinceEpoch;
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(_user.toJson()));
+  }
+
+  saveAudioTalesToLocalDB(TalesList _talesList) async {
+    if (_talesList.fullTalesList != []) {
+      final Box<String> userBox = Hive.box(_userBox);
+      await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
+    }
+  }
+
+  void deleteUser() async {
+    final Box<String> userBox = Hive.box(_userBox);
+    await userBox.delete('authUser');
   }
 }

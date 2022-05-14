@@ -47,25 +47,16 @@ class DataBase {
     return LocalDB.instance.getAudioTales();
   }
 
-  Future<void> saveUser(Future<LocalUser> user) async {
-    final _user = await user;
-    LocalDB.instance.saveUserToLocalDB(_user);
-    FirestoreDB.instance.saveUserToFirebase(_user);
+  Future<void> saveUser(LocalUser user) async {
+    LocalDB.instance.saveUserToLocalDB(user);
+    FirestoreDB.instance.saveUserToFirebase(user);
   }
 
   Future<void> saveAudioTales(Future<TalesList> talesList) async {
     final _talesList = await talesList;
-    if (_talesList.fullTalesList != []) {
-      final Box<String> userBox = Hive.box(_userBox);
-      await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
-
-      try {
-        FirebaseFirestore.instance
-            .collection(getUser().id!)
-            .doc('audiolist')
-            .set(_talesList.toFirestore());
-      } catch (_) {}
-    }
+    LocalDB.instance.saveAudioTalesToLocalDB(_talesList);
+    FirestoreDB.instance
+        .saveAudioTalesToFirebase(talesList: _talesList, user: getUser());
   }
 
   Future<void> _saveUserForUpDate(
