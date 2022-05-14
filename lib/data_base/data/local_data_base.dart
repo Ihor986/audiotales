@@ -58,7 +58,7 @@ class LocalDB {
         FirebaseFirestore.instance
             .collection(getUser().id!)
             .doc('audiolist')
-            .set(_talesList.toJson());
+            .set(_talesList.toFirestore());
       } catch (_) {}
     }
   }

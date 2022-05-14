@@ -23,8 +23,8 @@ class AuthBlockBloc extends Bloc<AuthBlockEvent, AuthBlockState> {
       User? user = FirebaseAuth.instance.currentUser;
       if (event.auth.isNewUser == false) {
         event.user.updateUser(newUser: DataBase.instance.getUser());
-        event.talesList
-            .updateTalesList(newTalesList: DataBase.instance.getAudioTales());
+        // event.talesList
+        //     .updateTalesList(newTalesList: DataBase.instance.getAudioTales());
         LocalDB.instance.saveUser(Future.value(event.user));
         LocalDB.instance.saveAudioTales(Future.value(event.talesList));
       } else {

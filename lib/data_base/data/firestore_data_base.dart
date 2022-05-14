@@ -40,11 +40,11 @@ class FirestoreDB {
     final docSnap = await ref.get();
     final audiolistFromFirestore = docSnap.data();
     if (audiolistFromFirestore != null) {
-      // print('!!!!!!!!!!');
+      print('!!!!!!!!!!');
       return audiolistFromFirestore;
       // return list;
     } else {
-      // print('${user.id}');
+      print('${id} !!!!!!!!!!!!!!!');
       // print(audiolistFromFirestore);
       return list;
     }

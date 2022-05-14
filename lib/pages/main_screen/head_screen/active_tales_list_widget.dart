@@ -18,8 +18,10 @@ class ActiveTalesListWidget extends StatelessWidget {
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getActiveTalesList();
+    // print(talesList);
     return ListView.builder(
       itemCount: talesList.length,
+      // itemCount: 10,
       itemBuilder: (_, i) {
         return Padding(
           padding: EdgeInsets.all(screen.height * 0.005),
@@ -31,7 +33,7 @@ class ActiveTalesListWidget extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // print('${talesList[i].pathUrl} 11111111111111');
+                        // print('11111111111111');
                         _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                       },
                       icon: ImageIcon(

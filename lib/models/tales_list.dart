@@ -36,25 +36,32 @@ class TalesList {
     );
   }
 
-  TalesList.fromFirestore(
+  // TalesList.fromFirestore(
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
+  //   SnapshotOptions? options,
+  // ) : fullTalesList = snapshot.data()?['talesList'];
+
+  factory TalesList.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
-  ) : fullTalesList = snapshot.data()?['talesList'];
-
-  // static TalesList fromFirestoreu(DocumentSnapshot snapshot) {
-  //   return TalesList(
-  //     fullTalesList: snapshot.data()['data'],
-  //   );
-  // }
+  ) {
+    List listJson = snapshot.data()?['talesList'];
+    List<AudioTale> tList = listJson.map((e) => AudioTale.fromJson(e)).toList();
+    return TalesList(
+      fullTalesList: tList,
+    );
+  }
 
   Map<String, dynamic> toFirestore() {
     return {
-      'talesList': fullTalesList.map((e) => e.toJson()).toList(),
+      'talesList': fullTalesList.map((e) => e.toFirestore()).toList(),
     };
   }
 
   void updateTalesList({required TalesList newTalesList}) {
-    newTalesList.fullTalesList
-        .map((e) => fullTalesList.contains(e) ? null : fullTalesList.add(e));
+    newTalesList.fullTalesList.map((e) =>
+        fullTalesList.contains(e) || e.pathUrl == null
+            ? null
+            : fullTalesList.add(e));
   }
 }
