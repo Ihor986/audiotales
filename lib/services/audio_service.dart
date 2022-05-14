@@ -75,12 +75,12 @@ class SoundService {
         name:
             '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
     fullTalesList.addNewAudio(audioTale!);
-    DataBase.instance.saveAudioTales(Future.value(fullTalesList));
+    DataBase.instance.saveAudioTales(fullTalesList);
   }
 
   checkDeleteAudio({required TalesList list, required AudioTale audio}) {
     audio.isDeleted = true;
-    DataBase.instance.saveAudioTales(Future.value(list));
+    DataBase.instance.saveAudioTales(list);
   }
 
   clickRecorder() async {

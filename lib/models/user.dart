@@ -20,14 +20,6 @@ class LocalUser {
   bool? isNewUser;
   bool? isUserRegistered;
 
-  // void deleteAccount() {
-  //   photo = null;
-  //   photoUrl = null;
-  //   name = null;
-  //   phone = null;
-  //   id = null;
-  // }
-
   factory LocalUser.fromJson(Map<String, dynamic> json) {
     return LocalUser(
       photo: json['photo'],
@@ -80,13 +72,17 @@ class LocalUser {
   updateUser({
     required LocalUser newUser,
   }) {
-    // photo = photo;
-    photoUrl = newUser.photoUrl;
-    name = newUser.name;
-    phone = newUser.phone;
-    id = newUser.id;
-    updateDate = newUser.updateDate;
-    isNewUser = newUser.isNewUser;
-    isUserRegistered = newUser.isUserRegistered;
+    if (updateDate == null || newUser.updateDate == null) {
+      return;
+    }
+    if (updateDate! < newUser.updateDate!) {
+      photoUrl = newUser.photoUrl;
+      name = newUser.name;
+      phone = newUser.phone;
+      id = newUser.id;
+      updateDate = newUser.updateDate;
+      isNewUser = newUser.isNewUser;
+      isUserRegistered = newUser.isUserRegistered;
+    }
   }
 }

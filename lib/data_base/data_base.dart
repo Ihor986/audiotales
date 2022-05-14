@@ -52,8 +52,7 @@ class DataBase {
     FirestoreDB.instance.saveUserToFirebase(user);
   }
 
-  Future<void> saveAudioTales(Future<TalesList> talesList) async {
-    final _talesList = await talesList;
+  Future<void> saveAudioTales(TalesList _talesList) async {
     LocalDB.instance.saveAudioTalesToLocalDB(_talesList);
     FirestoreDB.instance
         .saveAudioTalesToFirebase(talesList: _talesList, user: getUser());
