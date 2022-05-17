@@ -29,8 +29,15 @@ class TextsConst {
   static const String minutes = 'минут';
   static const String minutes1 = 'минута';
   static const String minutes2 = 'минуты';
-// static const String audiofiles = 'Аудиозаписи';
-// static const String head = 'Главная';
+  // static const String profileTextProfile = 'Профиль';
+  static const String profileTextName = 'Имя';
+  static const String profileTextEdite = 'Редактировать';
+  static const String profileTextSubscribe = 'Подписка';
+  static const String profileTextLogout = 'Выйти из приложения';
+  static const String profileTextDeleteAccount = 'Удалить аккаунт';
+// static const String profileText = 'Аудиозаписи';
+// static const String profileText = 'Аудиозаписи';
+// static const String profileText = 'Главная';
 // static const String collections = 'Подбoрки';
 // static const String audiofiles = 'Аудиозаписи';
 // static const String head = 'Главная';

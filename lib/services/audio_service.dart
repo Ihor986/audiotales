@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:audiotales/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -30,7 +31,7 @@ class SoundService {
   Uint8List? url;
   String? path;
   String? pathUrl;
-  String audioname = 'Аудиозапись';
+  String audioname = 'Запись №';
   String recorderTime = '00:00:00';
   double recorderPower = 0;
   int sliderPosition = 0;
@@ -201,6 +202,7 @@ class SoundService {
   }
 
   _startPlayer(AudioTale audio) async {
+    final bool auth = FirebaseAuth.instance.currentUser == null;
     // print('${path.path} && ${path.pathUrl}');
     try {
       if (audio.path != null) {
@@ -212,7 +214,7 @@ class SoundService {
         );
       }
 
-      if (audio.pathUrl != null && audio.path == null) {
+      if (audio.pathUrl != null && audio.path == null && !auth) {
         await audioPlayer.startPlayer(
           fromURI: audio.pathUrl,
           codec: Codec.defaultCodec,

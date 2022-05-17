@@ -62,21 +62,27 @@ class DataBase {
   Future<void> _saveUserForUpDate(
       {required Future<LocalUser> firebaseUser,
       required LocalUser user}) async {
-    final _firebaseUser = await firebaseUser;
-    _firebaseUser.updateDate = DateTime.now().millisecondsSinceEpoch;
-    final Box<String> userBox = Hive.box(_userBox);
-    user.updateUser(newUser: _firebaseUser);
-    await userBox.put('authUser', jsonEncode(user.toJson()));
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      final _firebaseUser = await firebaseUser;
+      _firebaseUser.updateDate = DateTime.now().millisecondsSinceEpoch;
+      final Box<String> userBox = Hive.box(_userBox);
+      user.updateUser(newUser: _firebaseUser);
+      await userBox.put('authUser', jsonEncode(user.toJson()));
+    }
   }
 
   Future<void> _saveAudioTalesForUpDate(
       {required Future<TalesList> firebaseTalesList,
       required TalesList talesList}) async {
-    final _firebaseTalesList = await firebaseTalesList;
-    talesList.updateTalesList(newTalesList: _firebaseTalesList);
-    if (talesList.fullTalesList != []) {
-      final Box<String> userBox = Hive.box(_userBox);
-      await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      final _firebaseTalesList = await firebaseTalesList;
+      talesList.updateTalesList(newTalesList: _firebaseTalesList);
+      if (talesList.fullTalesList != []) {
+        final Box<String> userBox = Hive.box(_userBox);
+        await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+      }
     }
   }
 }

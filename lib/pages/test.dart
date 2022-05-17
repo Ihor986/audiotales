@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../utils/consts/custom_colors.dart';
+import 'main_screen/profile/profile_text.dart';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
   static const routeName = '/test.dart';
-  static const String title = 'Profile';
+  static const ProfileText title = ProfileText();
 
   @override
   State<Test> createState() => _TestState();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/consts/custom_colors.dart';
+import 'head_screen_text.dart';
 import 'selection_buttons.dart';
 import 'audio_draggable_widget.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
@@ -9,7 +10,7 @@ import 'tales_selection_widget.dart';
 class HeadScreen extends StatelessWidget {
   const HeadScreen({Key? key}) : super(key: key);
   static const routeName = '/head_screen.dart';
-  static const String title = '';
+  static const HeadText title = HeadText();
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;

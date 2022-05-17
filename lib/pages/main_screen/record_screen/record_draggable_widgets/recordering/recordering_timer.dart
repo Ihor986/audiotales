@@ -37,7 +37,7 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
         children: [
           ImageIcon(
             CustomIconsImg.ellipseRad,
-            color: CustomColors.rad,
+            color: CustomColors.red,
             size: screen.width * 0.02,
           ),
           SizedBox(

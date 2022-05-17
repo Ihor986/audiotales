@@ -3,32 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data_base/data/local_data_base.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../repositorys/user_reposytory.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import 'bloc/profile_bloc.dart';
 import 'profile_phone_input.dart';
 import 'profile_photo_widget.dart';
+import 'profile_text.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
   static const routeName = '/test.dart';
-  static const String title = 'Profile';
+  static const ProfileText title = ProfileText();
 
   @override
   Widget build(BuildContext context) {
-    final UserRepository _user = RepositoryProvider.of<UserRepository>(context);
     final TalesListRepository _taleList =
         RepositoryProvider.of<TalesListRepository>(context);
     Size screen = MediaQuery.of(context).size;
     FirebaseAuth auth = FirebaseAuth.instance;
-    // if (auth.currentUser == null) {
-    //   Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-    //     NewUserPage.routeName,
-    //     (_) => false,
-    //   );
-    // }
-    // print(_user.getDataOnceCustomObjects().then((value) => value?.name));
-    // _user.getDataOnce_customObjects();
     return Stack(
       children: [
         ClipPath(
@@ -47,9 +39,7 @@ class Profile extends StatelessWidget {
                 const ProfilePhotoWidget(),
                 Padding(
                   padding: EdgeInsets.all(screen.width * 0.03),
-                  child: Text(_user.localUser.name == null
-                      ? 'name'
-                      : _user.localUser.name!),
+                  child: const NameText(),
                 ),
               ],
             ),
@@ -62,17 +52,16 @@ class Profile extends StatelessWidget {
         Align(
           alignment: const Alignment(0, 0),
           child: TextButton(
-            child: const Text('Edite'),
-            onPressed: () {},
+            child: const EditeText(),
+            onPressed: () {
+              context.read<ProfileBloc>().add(ProfileEditingEvent());
+            },
           ),
         ),
         Align(
           alignment: const Alignment(0, 0.2),
           child: TextButton(
-            child: const Text(
-              'Subscribe',
-              style: TextStyle(decoration: TextDecoration.underline),
-            ),
+            child: const SubscribeText(),
             onPressed: () {},
           ),
         ),
@@ -89,13 +78,13 @@ class Profile extends StatelessWidget {
                   onPressed: () {
                     auth.signOut();
                   },
-                  child: const Text('logout')),
+                  child: const LogoutText()),
               TextButton(
                   onPressed: () {
                     LocalDB.instance.deleteUser();
                     auth.signOut();
                   },
-                  child: const Text('delete account')),
+                  child: const DeleteAccountText()),
             ],
           ),
         ),

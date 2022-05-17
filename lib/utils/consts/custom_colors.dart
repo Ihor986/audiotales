@@ -14,7 +14,7 @@ class CustomColors {
   static const Color noTalesText = Color.fromRGBO(58, 58, 85, 0.5);
   static const Color audioBorder = Color.fromRGBO(58, 58, 85, 0.2);
   static const Color openAllAudio = Color.fromRGBO(58, 58, 85, 1);
-  static const Color rad = Color.fromRGBO(226, 119, 119, 1);
+  static const Color red = Color.fromRGBO(226, 119, 119, 1);
   static const Color iconsColorPlayRecUpbar = Color.fromRGBO(95, 95, 117, 1);
 // static const Color greenTalesSelection = Color.fromRGBO(113, 165, 159, 1);
 }

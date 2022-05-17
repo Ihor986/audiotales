@@ -46,7 +46,7 @@ class MainScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: CustomColors.blueSoso,
               elevation: 0,
-              title: Text(_titles[state.currentIndex]),
+              title: _titles[state.currentIndex],
             ),
             body: _pages[state.currentIndex],
             drawer: const CustomDrawer(),
