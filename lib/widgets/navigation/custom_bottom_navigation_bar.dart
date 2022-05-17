@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../pages/income_screen/new_user/registration_page.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../services/audio_service.dart';
 import '../../utils/consts/custom_colors.dart';
@@ -13,7 +15,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
-
+    final FirebaseAuth auth = FirebaseAuth.instance;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return Container(
@@ -109,6 +111,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
               showSelectedLabels: true,
               showUnselectedLabels: true,
               onTap: (int index) {
+                if (auth.currentUser == null && index == 4) {
+                  Navigator.of(context, rootNavigator: true)
+                      .pushNamedAndRemoveUntil(
+                    RegistrationPage.routeName,
+                    (_) => false,
+                  );
+                }
                 if (state.currentIndex != index &&
                     !_sound.recorder.isRecording) {
                   _sound.url = null;

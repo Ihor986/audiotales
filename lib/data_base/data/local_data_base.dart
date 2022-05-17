@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:audiotales/models/user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../models/tales_list.dart';
 
 class LocalDB {

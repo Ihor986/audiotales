@@ -1,10 +1,7 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../models/tales_list.dart';
 import '../models/user.dart';
 import 'data/firestore_data_base.dart';
@@ -49,13 +46,17 @@ class DataBase {
 
   Future<void> saveUser(LocalUser user) async {
     LocalDB.instance.saveUserToLocalDB(user);
-    FirestoreDB.instance.saveUserToFirebase(user);
+    if (user.isUserRegistered == true) {
+      FirestoreDB.instance.saveUserToFirebase(user);
+    }
   }
 
   Future<void> saveAudioTales(TalesList _talesList) async {
     LocalDB.instance.saveAudioTalesToLocalDB(_talesList);
-    FirestoreDB.instance
-        .saveAudioTalesToFirebase(talesList: _talesList, user: getUser());
+    if (getUser().isUserRegistered == true) {
+      FirestoreDB.instance
+          .saveAudioTalesToFirebase(talesList: _talesList, user: getUser());
+    }
   }
 
   Future<void> _saveUserForUpDate(

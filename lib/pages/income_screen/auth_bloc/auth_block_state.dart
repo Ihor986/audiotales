@@ -1,12 +1,11 @@
 part of 'auth_block_bloc.dart';
 
-@immutable
-abstract class AuthBlockState {}
-
-class AuthBlockInitial extends AuthBlockState {
-  // bool isUser = true;
+enum Status {
+  phone,
+  code,
 }
 
-class AuthBlockPhoneInitial extends AuthBlockState {
-  // bool isUser = true;
+class AuthBlockState {
+  AuthBlockState({this.status = Status.phone});
+  Status status;
 }

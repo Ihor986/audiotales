@@ -4,7 +4,7 @@ part 'navigation_event.dart';
 part 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
-  NavigationBloc() : super(NavigationState(currentIndex: 0)) {
+  NavigationBloc() : super(NavigationState()) {
     on<ChangeCurrentIndexEvent>((event, emit) {
       emit(NavigationState(currentIndex: event.currentIndex));
     });

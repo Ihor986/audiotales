@@ -2,7 +2,7 @@ import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/consts/custom_colors.dart';
-import '../registration_phone.dart';
+import '../registration_page.dart';
 
 class ContinueButtonNewUser extends StatelessWidget {
   const ContinueButtonNewUser({Key? key}) : super(key: key);

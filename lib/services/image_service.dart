@@ -11,8 +11,10 @@ class ImageServise {
   ImagePicker imagePicker = ImagePicker();
   File? imageFile;
   Future pickImage(LocalUser localUser) async {
-    final XFile? image =
-        await imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 1,
+    );
     if (image == null) return;
     imageFile = File(image.path);
     try {

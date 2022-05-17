@@ -8,7 +8,7 @@ import 'data_base/data_base.dart';
 import 'firebase_options.dart';
 import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/income_screen/new_user/new_user_page.dart';
-import 'pages/income_screen/new_user/registration_phone.dart';
+import 'pages/income_screen/new_user/registration_page.dart';
 import 'pages/income_screen/new_user/you_super.dart';
 import 'pages/main_screen/head_screen/head_screen.dart';
 import 'pages/main_screen/main_screen.dart';

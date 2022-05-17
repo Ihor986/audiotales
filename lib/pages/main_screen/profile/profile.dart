@@ -6,7 +6,6 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../repositorys/user_reposytory.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../../income_screen/new_user/new_user_page.dart';
 import 'profile_phone_input.dart';
 import 'profile_photo_widget.dart';
 
