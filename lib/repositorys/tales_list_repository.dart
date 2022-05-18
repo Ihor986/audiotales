@@ -37,17 +37,29 @@ class TalesListRepository {
   //   }
   // }
 
-  final TalesList _talesListRep = DataBase.instance.getAudioTales();
+  // final TalesList _talesListRep = DataBase.instance.getAudioTales();
 
   TalesList getTalesListRepository() {
-    TalesList talesListRep = _talesListRep;
+    TalesList talesListRep = DataBase.instance.getAudioTales();
     return talesListRep;
   }
 
   List<AudioTale> getActiveTalesList() {
-    List<AudioTale> activeTalesListRep = _talesListRep.fullTalesList
-        .where((element) => !element.isDeleted)
-        .toList();
-    return activeTalesListRep;
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      List<AudioTale> activeTalesListRep = DataBase.instance
+          .getAudioTales()
+          .fullTalesList
+          .where((element) => !element.isDeleted)
+          .toList();
+      return activeTalesListRep;
+    } else {
+      List<AudioTale> activeTalesListRep = DataBase.instance
+          .getAudioTales()
+          .fullTalesList
+          .where((element) => !element.isDeleted && element.path != null)
+          .toList();
+      return activeTalesListRep;
+    }
   }
 }

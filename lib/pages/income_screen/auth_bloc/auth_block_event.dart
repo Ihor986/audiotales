@@ -8,9 +8,11 @@ class ContinueButtonEvent extends AuthBlockEvent {}
 class ContinueButtonPhoneEvent extends AuthBlockEvent {}
 
 class ContinueButtonCodeEvent extends AuthBlockEvent {
-  ContinueButtonCodeEvent(
-      {required this.auth, required this.user, required this.talesList});
+  ContinueButtonCodeEvent({
+    required this.auth,
+    required this.user,
+  });
   final AuthReposytory auth;
   final LocalUser user;
-  final TalesList talesList;
+  // final TalesList talesList;
 }

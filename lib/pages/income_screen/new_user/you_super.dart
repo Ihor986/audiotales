@@ -42,9 +42,9 @@ class _YouSuperPageState extends State<YouSuperPage> {
         RepositoryProvider.of<UserRepository>(context).localUser;
     Size screen = MediaQuery.of(context).size;
     _authBloc.add(ContinueButtonCodeEvent(
-        auth: RepositoryProvider.of<AuthReposytory>(context),
-        user: _user,
-        talesList: _talesList));
+      auth: RepositoryProvider.of<AuthReposytory>(context),
+      user: _user,
+    ));
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

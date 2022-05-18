@@ -59,12 +59,13 @@ class TalesList {
   }
 
   void updateTalesList({required TalesList newTalesList}) {
-    var list1 = [];
+    List<String> list1 = [];
     for (var e in fullTalesList) {
       list1.add(e.id);
     }
-    var list = newTalesList.fullTalesList
-        .where((e) => list1.contains(e.id) ? false : true);
+    List<AudioTale> list = newTalesList.fullTalesList
+        .where((e) => list1.contains(e.id) ? false : true)
+        .toList();
     fullTalesList.addAll(list);
 
     print('$fullTalesList ??????');

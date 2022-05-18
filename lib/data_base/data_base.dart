@@ -20,29 +20,18 @@ class DataBase {
 
   Future<void> ensureInitialized() async {
     await _initializeHive();
-    await _saveAudioTalesForUpDate();
+    await saveAudioTalesForUpDate();
+    await saveUserForUpDate();
   }
 
   LocalUser getUser() {
     final LocalUser _user = LocalDB.instance.getUser();
-    String? id = FirebaseAuth.instance.currentUser?.uid;
-    _saveUserForUpDate(
-        firebaseUser:
-            FirestoreDB.instance.getUserFromFirestore(user: _user, id: id),
-        user: _user);
+    saveUserForUpDate();
     return _user.isNewUser == null ? LocalUser(isNewUser: false) : _user;
   }
 
   TalesList getAudioTales() {
-    // final TalesList _talesList = LocalDB.instance.getAudioTales();
-    // String? id = FirebaseAuth.instance.currentUser?.uid;
-    // _saveAudioTalesForUpDate(
-    //     firebaseTalesList: FirestoreDB.instance.getAudioTales(
-    //       id: id,
-    //       list: _talesList,
-    //     ),
-    //     talesList: _talesList);
-    // print(LocalDB.instance.getAudioTales().fullTalesList);
+    saveAudioTalesForUpDate();
     return LocalDB.instance.getAudioTales();
   }
 
@@ -61,12 +50,13 @@ class DataBase {
     }
   }
 
-  Future<void> _saveUserForUpDate(
-      {required Future<LocalUser> firebaseUser,
-      required LocalUser user}) async {
+  Future<void> saveUserForUpDate() async {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
-      final _firebaseUser = await firebaseUser;
+      final LocalUser user = LocalDB.instance.getUser();
+      String? id = FirebaseAuth.instance.currentUser?.uid;
+      final _firebaseUser =
+          await FirestoreDB.instance.getUserFromFirestore(user: user, id: id);
       _firebaseUser.updateDate = DateTime.now().millisecondsSinceEpoch;
       final Box<String> userBox = Hive.box(_userBox);
       user.updateUser(newUser: _firebaseUser);
@@ -74,22 +64,19 @@ class DataBase {
     }
   }
 
-  Future<void> _saveAudioTalesForUpDate(
-      // {required Future<TalesList> firebaseTalesList,
-      // required TalesList talesList}) async {
-      ) async {
-    final TalesList talesList = LocalDB.instance.getAudioTales();
-    String? id = FirebaseAuth.instance.currentUser?.uid;
+  Future<void> saveAudioTalesForUpDate() async {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
+      final TalesList talesList = LocalDB.instance.getAudioTales();
+      String? id = FirebaseAuth.instance.currentUser?.uid;
       final _firebaseTalesList = await FirestoreDB.instance.getAudioTales(
         id: id,
         list: talesList,
       );
-      print(_firebaseTalesList.fullTalesList);
       talesList.updateTalesList(newTalesList: _firebaseTalesList);
-      print('${talesList.fullTalesList}' + '!!!!!!!!!!!!!!');
-      // if (talesList.fullTalesList != []) {
+      if (talesList.fullTalesList == []) {
+        return;
+      }
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(talesList.toJson()));
       // }
