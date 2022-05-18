@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -21,11 +22,15 @@ import 'repositorys/user_reposytory.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DataBase.instance.ensureInitialized();
-  await Hive.openBox('testBox');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await DataBase.instance.ensureInitialized();
+  // await Hive.openBox('testBox');
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 

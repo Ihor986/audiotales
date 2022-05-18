@@ -59,9 +59,14 @@ class TalesList {
   }
 
   void updateTalesList({required TalesList newTalesList}) {
-    newTalesList.fullTalesList.map((e) =>
-        fullTalesList.contains(e) || e.pathUrl == null
-            ? null
-            : fullTalesList.add(e));
+    var list1 = [];
+    for (var e in fullTalesList) {
+      list1.add(e.id);
+    }
+    var list = newTalesList.fullTalesList
+        .where((e) => list1.contains(e.id) ? false : true);
+    fullTalesList.addAll(list);
+
+    print('$fullTalesList ??????');
   }
 }

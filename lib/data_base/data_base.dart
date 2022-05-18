@@ -20,6 +20,7 @@ class DataBase {
 
   Future<void> ensureInitialized() async {
     await _initializeHive();
+    await _saveAudioTalesForUpDate();
   }
 
   LocalUser getUser() {
@@ -33,14 +34,15 @@ class DataBase {
   }
 
   TalesList getAudioTales() {
-    final TalesList _talesList = LocalDB.instance.getAudioTales();
-    String? id = FirebaseAuth.instance.currentUser?.uid;
-    _saveAudioTalesForUpDate(
-        firebaseTalesList: FirestoreDB.instance.getAudioTales(
-          id: id,
-          list: _talesList,
-        ),
-        talesList: _talesList);
+    // final TalesList _talesList = LocalDB.instance.getAudioTales();
+    // String? id = FirebaseAuth.instance.currentUser?.uid;
+    // _saveAudioTalesForUpDate(
+    //     firebaseTalesList: FirestoreDB.instance.getAudioTales(
+    //       id: id,
+    //       list: _talesList,
+    //     ),
+    //     talesList: _talesList);
+    // print(LocalDB.instance.getAudioTales().fullTalesList);
     return LocalDB.instance.getAudioTales();
   }
 
@@ -73,16 +75,24 @@ class DataBase {
   }
 
   Future<void> _saveAudioTalesForUpDate(
-      {required Future<TalesList> firebaseTalesList,
-      required TalesList talesList}) async {
+      // {required Future<TalesList> firebaseTalesList,
+      // required TalesList talesList}) async {
+      ) async {
+    final TalesList talesList = LocalDB.instance.getAudioTales();
+    String? id = FirebaseAuth.instance.currentUser?.uid;
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
-      final _firebaseTalesList = await firebaseTalesList;
+      final _firebaseTalesList = await FirestoreDB.instance.getAudioTales(
+        id: id,
+        list: talesList,
+      );
+      print(_firebaseTalesList.fullTalesList);
       talesList.updateTalesList(newTalesList: _firebaseTalesList);
-      if (talesList.fullTalesList != []) {
-        final Box<String> userBox = Hive.box(_userBox);
-        await userBox.put('audiolist', jsonEncode(talesList.toJson()));
-      }
+      print('${talesList.fullTalesList}' + '!!!!!!!!!!!!!!');
+      // if (talesList.fullTalesList != []) {
+      final Box<String> userBox = Hive.box(_userBox);
+      await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+      // }
     }
   }
 }

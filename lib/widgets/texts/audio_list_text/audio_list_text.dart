@@ -15,6 +15,7 @@ class AudioListText extends StatelessWidget {
             .getActiveTalesList();
 
     num time = talesList[index].time.round();
+
     String text = '';
     if (time > 4 && time < 21) {
       text = TextsConst.minutes;
@@ -27,8 +28,9 @@ class AudioListText extends StatelessWidget {
     } else {
       text = TextsConst.minutes;
     }
+
     return Text(
-      '$time ' + text,
+      '$time $text',
       style: const TextStyle(
         color: Colors.black,
         fontStyle: FontStyle.normal,
