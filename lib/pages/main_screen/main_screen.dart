@@ -9,6 +9,7 @@ import 'head_screen/head_screen.dart';
 import 'main_screen_block/main_screen_bloc.dart';
 import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
+import 'selections_screen/selections_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class MainScreen extends StatelessWidget {
     // Size screenHeight = MediaQuery.of(context).size;
     List _pages = [
       const HeadScreen(),
-      const Test(),
+      const SelectionsScreen(),
       const RecordScreen(),
       const Test(),
       const Profile(),
@@ -27,7 +28,7 @@ class MainScreen extends StatelessWidget {
 
     List _titles = [
       HeadScreen.title,
-      Test.title,
+      SelectionsScreen.title,
       RecordScreen.title,
       Test.title,
       Profile.title,
@@ -43,11 +44,14 @@ class MainScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             extendBody: true,
-            appBar: AppBar(
-              backgroundColor: CustomColors.blueSoso,
-              elevation: 0,
-              title: _titles[state.currentIndex],
-            ),
+            appBar: state.currentIndex == 1
+                ? null
+                : AppBar(
+                    backgroundColor: CustomColors.blueSoso,
+                    elevation: 0,
+                    title: _titles[state.currentIndex],
+                    centerTitle: true,
+                  ),
             body: _pages[state.currentIndex],
             drawer: const CustomDrawer(),
             resizeToAvoidBottomInset: false,

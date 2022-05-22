@@ -22,7 +22,7 @@ class Selection {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'photo': photo,
+        // 'photo': photo,
         'photoUrl': photoUrl,
         // 'time': time,
       };

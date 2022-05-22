@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/consts/custom_colors.dart';
 import 'add_selection_button.dart';
 import '../../../widgets/texts/main_screen_text.dart';
 
@@ -20,7 +21,7 @@ class TalesSelectionWidget extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: const Color.fromRGBO(113, 165, 159, 0.85),
+                color: CustomColors.oliveSosoOp,
               ),
               width: screenWidth * 0.45,
               height: screenHeight * 0.27,

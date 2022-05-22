@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data_base/data/local_data_base.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
+import '../../../widgets/navigation/custom_drawer.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'bloc/profile_bloc.dart';
 import 'profile_phone_input.dart';
@@ -21,7 +22,16 @@ class Profile extends StatelessWidget {
         RepositoryProvider.of<TalesListRepository>(context);
     Size screen = MediaQuery.of(context).size;
     FirebaseAuth auth = FirebaseAuth.instance;
-    return Stack(
+    return
+        //  Scaffold(
+        //   extendBody: true,
+        //   appBar: AppBar(
+        //     backgroundColor: CustomColors.blueSoso,
+        //     elevation: 0,
+        //     title: title,
+        //   ),
+        // body:
+        Stack(
       children: [
         ClipPath(
           clipper: OvalBC(),
@@ -89,6 +99,8 @@ class Profile extends StatelessWidget {
           ),
         ),
       ],
+      // ),
+      // drawer: const CustomDrawer(),
     );
   }
 }

@@ -10,8 +10,14 @@ class ProfileText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
-    return const Text(TextsConst.profile);
+    Size screen = MediaQuery.of(context).size;
+    return Text(
+      TextsConst.profile,
+      style: TextStyle(
+          color: CustomColors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: screen.width * 0.09),
+    );
   }
 }
 

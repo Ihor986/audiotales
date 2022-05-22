@@ -21,12 +21,12 @@ class DataBase {
   Future<void> ensureInitialized() async {
     await _initializeHive();
     await saveAudioTalesForUpDate();
-    await saveUserForUpDate();
+    await _saveUserForUpDate();
   }
 
   LocalUser getUser() {
     final LocalUser _user = LocalDB.instance.getUser();
-    saveUserForUpDate();
+    _saveUserForUpDate();
     return _user.isNewUser == null ? LocalUser(isNewUser: false) : _user;
   }
 
@@ -50,7 +50,7 @@ class DataBase {
     }
   }
 
-  Future<void> saveUserForUpDate() async {
+  Future<void> _saveUserForUpDate() async {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
       final LocalUser user = LocalDB.instance.getUser();

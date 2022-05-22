@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/consts/custom_colors.dart';
+import '../../../widgets/navigation/custom_drawer.dart';
 import 'head_screen_text.dart';
 import 'selection_buttons.dart';
 import 'audio_draggable_widget.dart';
@@ -17,13 +18,13 @@ class HeadScreen extends StatelessWidget {
     // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
 
     return
-        // Scaffold(
+        //  Scaffold(
         //   extendBody: true,
         //   appBar: AppBar(
-        //     backgroundColor: blueSoso,
+        //     backgroundColor: CustomColors.blueSoso,
         //     elevation: 0,
         //   ),
-        //   body:
+        // body:
         Stack(
       children: [
         Column(
@@ -43,6 +44,8 @@ class HeadScreen extends StatelessWidget {
         const TalesSelectionWidget(),
         const AudioDraggableWidget(),
       ],
+      // ),
+      // drawer: const CustomDrawer(),
     );
   }
 }

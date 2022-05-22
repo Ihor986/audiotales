@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../services/audio_service.dart';
 import '../../../utils/consts/custom_colors.dart';
+import '../../../widgets/alerts/alert_microphone_permision.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../main_screen_block/main_screen_bloc.dart';
 import 'record_draggable_widgets/record_draggable_widget.dart';
@@ -15,7 +17,8 @@ class RecordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num screenHeight = MediaQuery.of(context).size.height;
+// ?
+    Size screen = MediaQuery.of(context).size;
     final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
     _sound.initRecorder();
     return MultiBlocProvider(
@@ -29,7 +32,7 @@ class RecordScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screenHeight / 4.5,
+                  height: screen.height / 4.5,
                   color: CustomColors.blueSoso,
                 ),
               ),

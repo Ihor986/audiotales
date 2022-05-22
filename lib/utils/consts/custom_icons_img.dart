@@ -42,10 +42,12 @@ class CustomIconsImg {
   static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
   static const AssetImage arrowDownCircle =
       AssetImage("assets/icons/arrowDownCircle.png");
-  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
-  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
-  // static const AssetImage profile = AssetImage("assets/icons/profile.png");
+  static const AssetImage plusPlus = AssetImage("assets/icons/plusPlus.png");
+  static const AssetImage moreHorizRounded =
+      AssetImage("assets/icons/more_horiz_rounded.png");
+  static const AssetImage arrowLeftCircle =
+      AssetImage("assets/icons/arrowLeftCircle.png");
+  static const AssetImage search = AssetImage("assets/icons/Search1.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
 }

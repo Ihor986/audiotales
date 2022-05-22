@@ -13,6 +13,7 @@ import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
+import '../widgets/alerts/alert_microphone_permision.dart';
 
 // enum SaveMetod {
 //   firestore,
@@ -41,6 +42,7 @@ class SoundService {
   num? size;
   AudioTale? audioTale;
   bool saveLocal = false;
+  // bool? isMicrophonePermissionGranted;
 
   saveAudioTale(
       {required TalesList fullTalesList, required LocalUser localUser}) async {
@@ -85,20 +87,30 @@ class SoundService {
   }
 
   clickRecorder() async {
-    if (!recorder.isRecording && url == null && !audioPlayer.isPlaying) {
-      await _startRecord();
+    bool isRedyStartRecord =
+        !recorder.isRecording && url == null && !audioPlayer.isPlaying;
+    bool isReadyStartPlayer =
+        !recorder.isRecording && url != null && !audioPlayer.isPlaying;
+    bool isReadyStopPlayer = !recorder.isRecording && audioPlayer.isPlaying;
+
+    if (isRedyStartRecord) {
+      try {
+        await _startRecord();
+      } catch (e) {
+        print('%%%%%%%%%$e');
+      }
     } else if (recorder.isRecording) {
       await stopRecorder();
       await _startLocalPlayer(
         path ?? '',
       );
       _showPlayerProgres();
-    } else if (!recorder.isRecording && url != null && !audioPlayer.isPlaying) {
+    } else if (isReadyStartPlayer) {
       await _startLocalPlayer(
         path ?? '',
       );
       _showPlayerProgres();
-    } else if (!recorder.isRecording && audioPlayer.isPlaying) {
+    } else if (isReadyStopPlayer) {
       audioPlayer.stopPlayer();
     }
   }
@@ -151,7 +163,11 @@ class SoundService {
     }
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
+      // isMicrophonePermissionGranted = false;
+      openAppSettings();
       throw 'Microphone permission not granted';
+      // return const AlertMicrophonePermision();
+
     }
 
     await recorder.openRecorder();
