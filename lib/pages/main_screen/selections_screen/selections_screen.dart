@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../utils/consts/custom_colors.dart';
 
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
+import 'bloc/selections_bloc.dart';
 import 'selections_text.dart';
 import 'wrap_selections_list.dart';
 
@@ -34,26 +36,7 @@ class SelectionsScreen extends StatelessWidget {
               ),
             ],
           ),
-
           const Align(alignment: Alignment(0, 0), child: WrapSelectionsList()),
-          //   children: [
-          //     for (var item in tags)
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Chip(
-
-          //         label: Text(item),
-          //       ),
-          //     )
-          //   ],
-          // )
-          // const Align(
-          //   alignment: Alignment(0, -1),
-          //   child: SelectionsTextAllInOnePlace(),
-          // ),
-          // const SelectionButtons(),
-          // const TalesSelectionWidget(),
-          // const AudioDraggableWidget(),
         ],
       ),
     );
@@ -61,6 +44,8 @@ class SelectionsScreen extends StatelessWidget {
 }
 
 AppBar _appBar(screen, title, context) {
+  final SelectionsBloc _selectionsBloc =
+      BlocProvider.of<SelectionsBloc>(context);
   return AppBar(
     actions: <Widget>[
       Padding(
@@ -95,6 +80,7 @@ AppBar _appBar(screen, title, context) {
               size: screen.width * 0.06,
             ),
             onPressed: () {
+              _selectionsBloc.add(CreateNewSelectonEvent());
               Navigator.of(context, rootNavigator: true)
                   .pushNamedAndRemoveUntil(
                 AddNewSelectionScreen.routeName,

@@ -10,15 +10,14 @@ import 'select_audio_text.dart';
 class SelectAudioScreen extends StatelessWidget {
   const SelectAudioScreen({Key? key}) : super(key: key);
   static const routeName = '/select_audio_screen.dart';
-  static const SelectAudioText title = SelectAudioText();
+
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
 
     return Scaffold(
       extendBody: true,
-      appBar: _appBar(screen, title, context),
+      appBar: _appBar(context),
       body: Stack(
         children: [
           Column(
@@ -28,46 +27,36 @@ class SelectAudioScreen extends StatelessWidget {
                 child: Container(
                   height: screen.height / 4.5,
                   color: CustomColors.oliveSoso,
-                  // child: const TalesSelectionWidget(),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: AudiolistSelectAudioWidget(),
               ),
-              // Container(
-              //   color: CustomColors.white,
-              //   child: ImageIcon(
-              //     CustomIconsImg.arrowLeftCircle,
-              //     // color: CustomColors.black,
-              //     size: screen.width * 0.2,
-              //   ),
-              // ),
             ],
           ),
           const Align(
             alignment: Alignment(0, -0.9),
             child: SelectAudioSearchWidget(),
           ),
-          // const Align(
-          //     alignment: Alignment(0, 0.5),
-          //     child: AudiolistSelectAudioWidget()),
-
-          // const Align(alignment: Alignment(0, 0), child: WrapSelectionsList()),
         ],
       ),
     );
   }
 }
 
-AppBar _appBar(Size screen, SelectAudioText title, context) {
+AppBar _appBar(BuildContext context) {
+  Size screen = MediaQuery.of(context).size;
+  const SelectAudioText title = SelectAudioText();
   return AppBar(
     actions: <Widget>[
       Padding(
         padding: EdgeInsets.only(right: screen.width * 0.04),
         child: TextButton(
           child: const SelectAudioTextAdd(),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
     ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/navigation/custom_drawer.dart';
 import 'head_screen_text.dart';
 import 'selection_buttons.dart';
 import 'audio_draggable_widget.dart';

@@ -46,7 +46,8 @@ class TalesList {
     SnapshotOptions? options,
   ) {
     List listJson = snapshot.data()?['talesList'];
-    List<AudioTale> tList = listJson.map((e) => AudioTale.fromJson(e)).toList();
+    List<AudioTale> tList =
+        listJson.map((e) => AudioTale.fromFirestore(e)).toList();
     return TalesList(
       fullTalesList: tList,
     );
@@ -67,7 +68,5 @@ class TalesList {
         .where((e) => list1.contains(e.id) ? false : true)
         .toList();
     fullTalesList.addAll(list);
-
-    print('$fullTalesList ??????');
   }
 }

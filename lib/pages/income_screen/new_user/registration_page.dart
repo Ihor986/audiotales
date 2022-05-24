@@ -19,7 +19,6 @@ class RegistrationPage extends StatelessWidget {
 
     return BlocBuilder<AuthBlockBloc, AuthBlockState>(
         builder: (context, state) {
-      print(state.status);
       return Scaffold(
         // resizeToAvoidBottomInset: false,
         appBar: AppBar(

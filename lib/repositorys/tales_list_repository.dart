@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:audiotales/data_base/data_base.dart';
 import 'package:audiotales/models/audio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-import '../data_base/data/firestore_data_base.dart';
-import '../data_base/data/local_data_base.dart';
 import '../models/tales_list.dart';
 
 class TalesListRepository {
@@ -41,6 +36,7 @@ class TalesListRepository {
 
   TalesList getTalesListRepository() {
     TalesList talesListRep = DataBase.instance.getAudioTales();
+
     return talesListRep;
   }
 

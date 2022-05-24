@@ -13,7 +13,6 @@ import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
-import '../widgets/alerts/alert_microphone_permision.dart';
 
 // enum SaveMetod {
 //   firestore,
@@ -75,8 +74,10 @@ class SoundService {
         pathUrl: pathUrl,
         time: endOfSliderPosition / 60000,
         size: size ?? 0,
-        name:
-            '$audioname ${fullTalesList.fullTalesList.where((element) => element.isDeleted != true).length + 1}');
+        name: '$audioname ${fullTalesList.fullTalesList.where((element) {
+              return element.isDeleted != true;
+            }).length + 1}',
+        compilationsId: []);
     fullTalesList.addNewAudio(audioTale!);
     DataBase.instance.saveAudioTales(fullTalesList);
   }

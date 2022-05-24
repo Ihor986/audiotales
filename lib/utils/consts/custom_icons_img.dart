@@ -48,6 +48,14 @@ class CustomIconsImg {
   static const AssetImage arrowLeftCircle =
       AssetImage("assets/icons/arrowLeftCircle.png");
   static const AssetImage search = AssetImage("assets/icons/Search1.png");
+  static const AssetImage check =
+      AssetImage("assets/icons/checkedCheckbox.png");
+  static const AssetImage uncheck =
+      AssetImage("assets/icons/uncheckCheckbox.png");
+  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
+  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
 }

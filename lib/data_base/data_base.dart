@@ -65,6 +65,7 @@ class DataBase {
   }
 
   Future<void> saveAudioTalesForUpDate() async {
+    // print('update');
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
       final TalesList talesList = LocalDB.instance.getAudioTales();
@@ -79,7 +80,6 @@ class DataBase {
       }
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(talesList.toJson()));
-      // }
     }
   }
 }

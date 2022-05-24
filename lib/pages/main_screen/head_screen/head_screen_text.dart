@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/consts/texts_consts.dart';
-
 class HeadText extends StatelessWidget {
   const HeadText({Key? key}) : super(key: key);
 

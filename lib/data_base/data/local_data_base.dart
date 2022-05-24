@@ -23,6 +23,8 @@ class LocalDB {
     final Box<String> userBox = Hive.box(_userBox);
     // userBox.delete('audiolist');
     // return TalesList(fullTalesList: []);
+
+    // print(userBox.get('audiolist'));
     return TalesList.fromJson(
       jsonDecode(userBox.get('audiolist',
           defaultValue: jsonEncode(TalesList(fullTalesList: []).toJson()))!),
@@ -39,6 +41,7 @@ class LocalDB {
     if (_talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
+      // print(_talesList.toJson());
     }
   }
 

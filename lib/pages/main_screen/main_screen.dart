@@ -6,7 +6,6 @@ import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/custom_drawer.dart';
 import '../test.dart';
 import 'head_screen/head_screen.dart';
-import 'main_screen_block/main_screen_bloc.dart';
 import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
 import 'selections_screen/selections_screen.dart';
@@ -36,8 +35,9 @@ class MainScreen extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
+        // BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
+        // BlocProvider<SelectionsBloc>(create: (context) => SelectionsBloc()),
       ],
       // child:
       child: BlocBuilder<NavigationBloc, NavigationState>(

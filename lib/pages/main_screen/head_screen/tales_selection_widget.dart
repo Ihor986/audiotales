@@ -8,13 +8,12 @@ class TalesSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
+    Size screen = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(top: 47),
       child: SizedBox(
-        width: screenWidth,
-        height: screenHeight * 0.25,
+        width: screen.width,
+        height: screen.height * 0.25,
         // color: Colors.black12,
         child: Row(
           children: [
@@ -23,8 +22,8 @@ class TalesSelectionWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: CustomColors.oliveSosoOp,
               ),
-              width: screenWidth * 0.45,
-              height: screenHeight * 0.27,
+              width: screen.width * 0.45,
+              height: screen.height * 0.27,
               child: Column(children: const [
                 SelectionText3(),
                 AddSelectionButton(),
@@ -32,8 +31,8 @@ class TalesSelectionWidget extends StatelessWidget {
             ),
             Column(children: [
               Container(
-                width: screenWidth * 0.45,
-                height: screenHeight * 0.115,
+                width: screen.width * 0.45,
+                height: screen.height * 0.115,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: const Color.fromRGBO(241, 180, 136, 0.85),
@@ -41,8 +40,8 @@ class TalesSelectionWidget extends StatelessWidget {
                 child: const SelectionText4(),
               ),
               Container(
-                width: screenWidth * 0.45,
-                height: screenHeight * 0.115,
+                width: screen.width * 0.45,
+                height: screen.height * 0.115,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: const Color.fromRGBO(103, 139, 210, 0.85),

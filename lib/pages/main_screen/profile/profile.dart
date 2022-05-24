@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data_base/data/local_data_base.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/navigation/custom_drawer.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'bloc/profile_bloc.dart';
 import 'profile_phone_input.dart';

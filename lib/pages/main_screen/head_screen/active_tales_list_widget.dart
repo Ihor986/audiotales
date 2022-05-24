@@ -18,7 +18,7 @@ class ActiveTalesListWidget extends StatelessWidget {
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getActiveTalesList();
-    // print(talesList);
+    // print(talesList.first.compilationsId);
     return ListView.builder(
       itemCount: talesList.length,
       // itemCount: 10,

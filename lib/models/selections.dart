@@ -1,13 +1,17 @@
 class Selection {
-  Selection(
-      {required this.id,
-      required this.name,
-      required this.photo,
-      required this.photoUrl});
+  Selection({
+    required this.id,
+    required this.name,
+    required this.photo,
+    required this.photoUrl,
+    required this.description,
+  });
+
   String id;
   String name;
   String photo;
   String photoUrl;
+  String description;
 
   factory Selection.fromJson(Map<String, dynamic> json) {
     return Selection(
@@ -15,7 +19,7 @@ class Selection {
       name: json['name'] as String,
       photo: json['photo'] as String,
       photoUrl: json['photoUrl'] as String,
-      // time: json['time'] as num,
+      description: json['description'] as String,
     );
   }
 
@@ -24,7 +28,7 @@ class Selection {
         'name': name,
         // 'photo': photo,
         'photoUrl': photoUrl,
-        // 'time': time,
+        'description': description,
       };
 }
 

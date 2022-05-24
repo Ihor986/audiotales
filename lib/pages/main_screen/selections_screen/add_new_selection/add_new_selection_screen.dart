@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../models/tales_list.dart';
+import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons_img.dart';
-import '../../../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../selections_screen.dart';
+import '../bloc/selections_bloc.dart';
 import 'add_new_selection_photo_widget.dart';
 import 'add_new_selections_input.dart';
 import 'add_new_selections_text.dart';
@@ -12,7 +14,7 @@ import 'add_new_selections_text.dart';
 class AddNewSelectionScreen extends StatelessWidget {
   const AddNewSelectionScreen({Key? key}) : super(key: key);
   static const routeName = '/add_new_selection_screen.dart';
-  static const AddNewSelectionsText title = AddNewSelectionsText();
+  // static const AddNewSelectionsText title = AddNewSelectionsText();
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -20,7 +22,7 @@ class AddNewSelectionScreen extends StatelessWidget {
 
     return Scaffold(
       extendBody: true,
-      appBar: _appBar(screen, title, context),
+      appBar: _appBar(context),
       body: Stack(
         children: [
           Column(
@@ -67,14 +69,25 @@ class AddNewSelectionScreen extends StatelessWidget {
   }
 }
 
-AppBar _appBar(Size screen, AddNewSelectionsText title, context) {
+AppBar _appBar(BuildContext context) {
+  const AddNewSelectionsText title = AddNewSelectionsText();
+  Size screen = MediaQuery.of(context).size;
+  final SelectionsBloc _selectionsBloc =
+      BlocProvider.of<SelectionsBloc>(context);
+  final TalesList _taleList =
+      RepositoryProvider.of<TalesListRepository>(context)
+          .getTalesListRepository();
   return AppBar(
     actions: <Widget>[
       Padding(
         padding: EdgeInsets.only(right: screen.width * 0.04),
         child: TextButton(
           child: const AddNewSelectionsTextReady(),
-          onPressed: () {},
+          onPressed: () {
+            _selectionsBloc.add(
+              SaveCreatedSelectionEvent(talesList: _taleList),
+            );
+          },
         ),
       ),
     ],

@@ -55,7 +55,8 @@ class AuthReposytory {
         });
       }
     } catch (_) {
-      print('wrong pass');
+      // print('wrong pass');
+      throw Exception('wrong pass');
     }
 
     // .whenComplete(() {})

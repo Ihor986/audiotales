@@ -69,20 +69,21 @@ class LocalUser {
     };
   }
 
-  updateUser({
-    required LocalUser newUser,
-  }) {
-    if (updateDate == null || newUser.updateDate == null) {
+  updateUser({required LocalUser newUser}) {
+    if (newUser.updateDate == null) {
       return;
     }
-    if (updateDate! < newUser.updateDate!) {
-      photoUrl = newUser.photoUrl;
-      name = newUser.name;
-      phone = newUser.phone;
-      id = newUser.id;
-      updateDate = newUser.updateDate;
-      isNewUser = newUser.isNewUser;
-      isUserRegistered = newUser.isUserRegistered;
+    if (updateDate != null) {
+      if (updateDate! < newUser.updateDate!) {
+        return;
+      }
     }
+    photoUrl = newUser.photoUrl;
+    name = newUser.name;
+    phone = newUser.phone;
+    id = newUser.id;
+    updateDate = newUser.updateDate;
+    isNewUser = newUser.isNewUser;
+    isUserRegistered = newUser.isUserRegistered;
   }
 }

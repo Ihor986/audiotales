@@ -36,11 +36,14 @@ class FirestoreDB {
           toFirestore: (TalesList audiolistFromFirestore, _) =>
               audiolistFromFirestore.toFirestore(),
         );
+
     final docSnap = await ref.get();
     final audiolistFromFirestore = docSnap.data();
     if (audiolistFromFirestore != null) {
+      // print(audiolistFromFirestore.fullTalesList.first.compilationsId);
       return audiolistFromFirestore;
     } else {
+      // print('${list.fullTalesList.first.compilationsId} !!!!!!!!!');
       return list;
     }
   }

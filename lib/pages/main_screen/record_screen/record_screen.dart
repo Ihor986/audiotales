@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../services/audio_service.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/alerts/alert_microphone_permision.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../main_screen_block/main_screen_bloc.dart';
 import 'record_draggable_widgets/record_draggable_widget.dart';

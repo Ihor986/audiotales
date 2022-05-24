@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import 'selection_buttons_audio.dart';
 import '../../../widgets/texts/main_screen_text.dart';
@@ -17,8 +18,10 @@ class AudioDraggableWidget extends StatelessWidget {
 // class _AudioDraggableWidgetState extends State<AudioDraggableWidget> {
   @override
   Widget build(BuildContext context) {
-    final List talesList = RepositoryProvider.of<TalesListRepository>(context)
-        .getActiveTalesList();
+    final List<AudioTale> talesList =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getActiveTalesList();
+    // print('${talesList.first.compilationsId} &&&');
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
