@@ -1,3 +1,4 @@
+import 'package:audiotales/models/user.dart';
 import 'package:audiotales/services/image_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,15 +17,16 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
   @override
   Widget build(BuildContext context) {
     // final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
-    final UserRepository _user = RepositoryProvider.of<UserRepository>(context);
+    final LocalUser _user =
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     Size screen = MediaQuery.of(context).size;
     return Container(
       width: screen.width * 0.5,
       height: screen.width * 0.5,
       decoration: BoxDecoration(
-        image: _user.localUser.photoUrl != null
+        image: _user.photoUrl != null
             ? DecorationImage(
-                image: NetworkImage(_user.localUser.photoUrl!),
+                image: NetworkImage(_user.photoUrl!),
                 // image: MemoryImage(
                 //     File(_user.localUser.photoUrl!).readAsBytesSync()),
                 fit: BoxFit.cover)
@@ -39,10 +41,10 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
           Radius.circular(25),
         ),
       ),
-      child: _user.localUser.photoUrl == null
+      child: _user.photoUrl == null
           ? IconButton(
               onPressed: () async {
-                await ImageServise().pickImage(_user.localUser);
+                await ImageServise().pickImage(_user);
                 setState(() {});
               },
               icon: const ImageIcon(

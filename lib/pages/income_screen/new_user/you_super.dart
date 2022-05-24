@@ -37,7 +37,7 @@ class _YouSuperPageState extends State<YouSuperPage> {
     // TalesList _talesList = RepositoryProvider.of<TalesListRepository>(context)
     //     .getTalesListRepository();
     final LocalUser _user =
-        RepositoryProvider.of<UserRepository>(context).localUser;
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     Size screen = MediaQuery.of(context).size;
     _authBloc.add(ContinueButtonCodeEvent(
       auth: RepositoryProvider.of<AuthReposytory>(context),

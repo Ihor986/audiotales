@@ -16,7 +16,7 @@ class ContinueButtonCode extends StatelessWidget {
   Widget build(BuildContext context) {
     // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     final LocalUser _user =
-        RepositoryProvider.of<UserRepository>(context).localUser;
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);
     // num screenWidth = MediaQuery.of(context).size.width;

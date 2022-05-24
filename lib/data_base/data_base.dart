@@ -13,26 +13,16 @@ class DataBase {
   static const DataBase instance = DataBase._();
   static const String _userBox = 'userBox';
 
-  Future<void> _initializeHive() async {
-    Hive.init((await getApplicationDocumentsDirectory()).path);
-    await Hive.openBox<String>(_userBox);
-  }
-
   Future<void> ensureInitialized() async {
     await _initializeHive();
-    await saveAudioTalesForUpDate();
+    await _saveAudioTalesForUpDate();
     await _saveUserForUpDate();
   }
 
   LocalUser getUser() {
     final LocalUser _user = LocalDB.instance.getUser();
-    _saveUserForUpDate();
+    // _saveUserForUpDate();
     return _user.isNewUser == null ? LocalUser(isNewUser: false) : _user;
-  }
-
-  TalesList getAudioTales() {
-    saveAudioTalesForUpDate();
-    return LocalDB.instance.getAudioTales();
   }
 
   Future<void> saveUser(LocalUser user) async {
@@ -42,12 +32,30 @@ class DataBase {
     }
   }
 
+  Future<void> saveUserWithUpDate() async {
+    _saveUserForUpDate();
+  }
+
+  TalesList getAudioTales() {
+    // _saveAudioTalesForUpDate();
+    return LocalDB.instance.getAudioTales();
+  }
+
   Future<void> saveAudioTales(TalesList _talesList) async {
     LocalDB.instance.saveAudioTalesToLocalDB(_talesList);
     if (getUser().isUserRegistered == true) {
       FirestoreDB.instance
           .saveAudioTalesToFirebase(talesList: _talesList, user: getUser());
     }
+  }
+
+  Future<void> saveAudioTalesWithUpDate() async {
+    await _saveAudioTalesForUpDate();
+  }
+
+  Future<void> _initializeHive() async {
+    Hive.init((await getApplicationDocumentsDirectory()).path);
+    await Hive.openBox<String>(_userBox);
   }
 
   Future<void> _saveUserForUpDate() async {
@@ -64,8 +72,7 @@ class DataBase {
     }
   }
 
-  Future<void> saveAudioTalesForUpDate() async {
-    // print('update');
+  Future<void> _saveAudioTalesForUpDate() async {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
       final TalesList talesList = LocalDB.instance.getAudioTales();

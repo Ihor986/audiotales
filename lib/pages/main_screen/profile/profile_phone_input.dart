@@ -22,7 +22,7 @@ class _ProfilePhoneInputState extends State<ProfilePhoneInput> {
   @override
   Widget build(BuildContext context) {
     final LocalUser _user =
-        RepositoryProvider.of<UserRepository>(context).localUser;
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);

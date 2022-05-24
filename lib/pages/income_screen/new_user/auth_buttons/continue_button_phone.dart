@@ -17,7 +17,7 @@ class ContinueButtonPhone extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     final LocalUser _user =
-        RepositoryProvider.of<UserRepository>(context).localUser;
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);
     Size screen = MediaQuery.of(context).size;

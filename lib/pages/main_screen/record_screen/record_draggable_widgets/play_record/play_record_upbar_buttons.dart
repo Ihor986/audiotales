@@ -18,7 +18,7 @@ class PlayRecordUpbarButtons extends StatelessWidget {
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
     final LocalUser _localUser =
-        RepositoryProvider.of<UserRepository>(context).localUser;
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     Size screen = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,3 +1,4 @@
+import 'package:audiotales/models/user.dart';
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,13 +27,13 @@ class NameText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserRepository _user = RepositoryProvider.of<UserRepository>(context);
+    final LocalUser _user =
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     // num screenHeight = MediaQuery.of(context).size.height;
-    return _user.localUser.name == null
+    return _user.name == null
         ? const Text(TextsConst.profileTextName,
             style: TextStyle(color: CustomColors.black))
-        : Text(_user.localUser.name!,
-            style: const TextStyle(color: CustomColors.black));
+        : Text(_user.name!, style: const TextStyle(color: CustomColors.black));
   }
 }
 
