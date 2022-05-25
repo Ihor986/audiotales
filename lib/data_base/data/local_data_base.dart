@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:audiotales/models/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../models/selections.dart';
 import '../../models/tales_list.dart';
 
 class LocalDB {
@@ -12,7 +13,6 @@ class LocalDB {
   LocalUser getUser() {
     final Box<String> userBox = Hive.box(_userBox);
     // userBox.delete('authUser');
-    // return;
     return LocalUser.fromJson(
       jsonDecode(userBox.get('authUser',
           defaultValue: jsonEncode(LocalUser().toJson()))!),
@@ -22,12 +22,19 @@ class LocalDB {
   TalesList getAudioTales() {
     final Box<String> userBox = Hive.box(_userBox);
     // userBox.delete('audiolist');
-    // return TalesList(fullTalesList: []);
-
-    // print(userBox.get('audiolist'));
     return TalesList.fromJson(
       jsonDecode(userBox.get('audiolist',
           defaultValue: jsonEncode(TalesList(fullTalesList: []).toJson()))!),
+    );
+  }
+
+  SelectionsList getSelectionsList() {
+    final Box<String> userBox = Hive.box(_userBox);
+    // userBox.delete('audiolist');
+    return SelectionsList.fromJson(
+      jsonDecode(userBox.get('selectionsList',
+          defaultValue:
+              jsonEncode(SelectionsList(selectionsList: []).toJson()))!),
     );
   }
 
@@ -41,6 +48,14 @@ class LocalDB {
     if (_talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
+      // print(_talesList.toJson());
+    }
+  }
+
+  saveSelectionsListToLocalDB(SelectionsList _selectionsList) async {
+    if (_selectionsList.selectionsList != []) {
+      final Box<String> userBox = Hive.box(_userBox);
+      await userBox.put('selectionsList', jsonEncode(_selectionsList.toJson()));
       // print(_talesList.toJson());
     }
   }

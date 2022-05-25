@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../models/audio.dart';
-import '../../../repositorys/tales_list_repository.dart';
-import 'selection_buttons_audio.dart';
-import '../../../widgets/texts/main_screen_text.dart';
-import 'active_tales_list_widget.dart';
+import '../../../../models/audio.dart';
+import '../../../../repositorys/tales_list_repository.dart';
+import 'audio_draggable_widgets/selection_buttons_audio.dart';
+import '../../../../widgets/texts/main_screen_text.dart';
+import 'audio_draggable_widgets/active_tales_list_widget.dart';
 
 // class AudioDraggableWidget extends StatefulWidget {
 class AudioDraggableWidget extends StatelessWidget {

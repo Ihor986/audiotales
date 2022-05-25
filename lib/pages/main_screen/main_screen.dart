@@ -5,7 +5,7 @@ import '../../utils/consts/custom_colors.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/custom_drawer.dart';
 import '../test.dart';
-import 'head_screen/head_screen.dart';
+import 'head_screen/head_screen_page.dart';
 import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
 import 'selections_screen/selections_screen.dart';

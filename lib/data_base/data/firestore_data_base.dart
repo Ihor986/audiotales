@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/selections.dart';
 import '../../models/tales_list.dart';
 import '../../models/user.dart';
 
@@ -48,6 +49,26 @@ class FirestoreDB {
     }
   }
 
+  Future<SelectionsList> getSelectionsList(
+      {required SelectionsList list, required String? id}) async {
+    final ref = FirebaseFirestore.instance
+        .collection('$id')
+        .doc('selectionsList')
+        .withConverter(
+          fromFirestore: SelectionsList.fromFirestore,
+          toFirestore: (SelectionsList selectionsListFromFirestore, _) =>
+              selectionsListFromFirestore.toFirestore(),
+        );
+
+    final docSnap = await ref.get();
+    final selectionsListFromFirestore = docSnap.data();
+    if (selectionsListFromFirestore != null) {
+      return selectionsListFromFirestore;
+    } else {
+      return list;
+    }
+  }
+
   saveUserToFirebase(LocalUser _user) async {
     if (_user.isUserRegistered == true) {
       try {
@@ -66,6 +87,16 @@ class FirestoreDB {
           .collection(user.id!)
           .doc('audiolist')
           .set(talesList.toFirestore());
+    } catch (_) {}
+  }
+
+  Future<void> saveSelectionsListToFirebase(
+      {required SelectionsList selectionsList, required LocalUser user}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(user.id!)
+          .doc('selectionsList')
+          .set(selectionsList.toFirestore());
     } catch (_) {}
   }
 }

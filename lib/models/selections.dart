@@ -1,3 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class SelectionsList {
+  SelectionsList({required this.selectionsList});
+  List<Selection> selectionsList;
+
+  addNewAudio(Selection selection) {
+    selectionsList.add(selection);
+  }
+
+  Map<String, dynamic> toJson() => {
+        'talesList': selectionsList.map((e) => e.toJson()).toList(),
+      };
+
+  factory SelectionsList.fromJson(Map<String, dynamic> json) {
+    List listJson = json['talesList'];
+    List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
+
+    return SelectionsList(selectionsList: sList);
+  }
+
+  factory SelectionsList.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    List listJson = snapshot.data()?['talesList'];
+    List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
+
+    return SelectionsList(selectionsList: sList);
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'talesList': selectionsList.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  void updateSelectionsList({required SelectionsList newSelectionsList}) {
+    List<String> list1 = [];
+    for (var e in selectionsList) {
+      list1.add(e.id);
+    }
+    List<Selection> list = newSelectionsList.selectionsList
+        .where((e) => list1.contains(e.id) ? false : true)
+        .toList();
+    selectionsList.addAll(list);
+  }
+}
+
 class Selection {
   Selection({
     required this.id,
@@ -30,24 +79,4 @@ class Selection {
         'photoUrl': photoUrl,
         'description': description,
       };
-}
-
-class SelectionsList {
-  SelectionsList(this.selectionsList);
-  List<Selection> selectionsList;
-
-  addNewAudio(Selection selection) {
-    selectionsList.add(selection);
-  }
-
-  Map<String, dynamic> toJson() => {
-        'talesList': selectionsList.map((e) => e.toJson()).toList(),
-      };
-
-  factory SelectionsList.fromJson(Map<String, dynamic> json) {
-    List listJson = json['talesList'];
-    List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
-
-    return SelectionsList(sList);
-  }
 }

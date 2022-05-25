@@ -6,9 +6,9 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'bloc/profile_bloc.dart';
-import 'profile_phone_input.dart';
-import 'profile_photo_widget.dart';
-import 'profile_text.dart';
+import 'profile_widgets/profile_phone_input.dart';
+import 'profile_widgets/profile_photo_widget.dart';
+import 'profile_widgets/profile_text.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);

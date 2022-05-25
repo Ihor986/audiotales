@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/texts/main_screen_text.dart';
+import '../../../../utils/consts/custom_colors.dart';
+import '../../../../widgets/texts/main_screen_text.dart';
 
 class SelectionButtons extends StatelessWidget {
   const SelectionButtons({Key? key}) : super(key: key);

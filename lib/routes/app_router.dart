@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../pages/income_screen/new_user/new_user_page.dart';
 import '../pages/income_screen/new_user/registration_page.dart';
-import '../pages/income_screen/new_user/you_super.dart';
+import '../pages/income_screen/new_user/you_super_page.dart';
 import '../pages/income_screen/regular_user.dart';
-import '../pages/main_screen/head_screen/head_screen.dart';
+import '../pages/main_screen/head_screen/head_screen_page.dart';
 import '../pages/main_screen/main_screen.dart';
 import '../pages/main_screen/record_screen/record_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/add_new_selection_screen.dart';

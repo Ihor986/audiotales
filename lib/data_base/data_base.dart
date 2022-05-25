@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import '../models/selections.dart';
 import '../models/tales_list.dart';
 import '../models/user.dart';
 import 'data/firestore_data_base.dart';
@@ -53,6 +54,23 @@ class DataBase {
     await _saveAudioTalesForUpDate();
   }
 
+  SelectionsList getSelectionsList() {
+    // _saveAudioTalesForUpDate();
+    return LocalDB.instance.getSelectionsList();
+  }
+
+  Future<void> saveSelectionsList(SelectionsList _selectionsList) async {
+    LocalDB.instance.saveSelectionsListToLocalDB(_selectionsList);
+    if (getUser().isUserRegistered == true) {
+      FirestoreDB.instance.saveSelectionsListToFirebase(
+          selectionsList: _selectionsList, user: getUser());
+    }
+  }
+
+  Future<void> saveSelectionsListWithUpDate() async {
+    await _saveSelectionsListForUpDate();
+  }
+
   Future<void> _initializeHive() async {
     Hive.init((await getApplicationDocumentsDirectory()).path);
     await Hive.openBox<String>(_userBox);
@@ -87,6 +105,27 @@ class DataBase {
       }
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+    }
+  }
+
+  Future<void> _saveSelectionsListForUpDate() async {
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      final SelectionsList selectionsList =
+          LocalDB.instance.getSelectionsList();
+      String? id = FirebaseAuth.instance.currentUser?.uid;
+      final _firebaseSelectionsList =
+          await FirestoreDB.instance.getSelectionsList(
+        id: id,
+        list: selectionsList,
+      );
+      selectionsList.updateSelectionsList(
+          newSelectionsList: _firebaseSelectionsList);
+      if (selectionsList.selectionsList == []) {
+        return;
+      }
+      final Box<String> userBox = Hive.box(_userBox);
+      await userBox.put('selectionsList', jsonEncode(selectionsList.toJson()));
     }
   }
 }

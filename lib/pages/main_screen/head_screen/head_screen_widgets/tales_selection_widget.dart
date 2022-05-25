@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../utils/consts/custom_colors.dart';
-import 'add_selection_button.dart';
-import '../../../widgets/texts/main_screen_text.dart';
+import '../../../../utils/consts/custom_colors.dart';
+import 'tales_selection_widgets/add_selection_button.dart';
+import '../../../../widgets/texts/main_screen_text.dart';
 
 class TalesSelectionWidget extends StatelessWidget {
   const TalesSelectionWidget({Key? key}) : super(key: key);

@@ -19,7 +19,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await DataBase.instance.ensureInitialized();
-  // await Hive.openBox('testBox');
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

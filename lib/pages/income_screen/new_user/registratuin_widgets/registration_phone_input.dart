@@ -1,24 +1,26 @@
-import 'package:audiotales/repositorys/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../../utils/consts/custom_colors.dart';
+import '../../../../repositorys/auth.dart';
+import '../../../../utils/consts/custom_colors.dart';
 
-class RegistrationCodeInput extends StatefulWidget {
-  const RegistrationCodeInput({Key? key}) : super(key: key);
+class RegistrationPhoneInput extends StatefulWidget {
+  const RegistrationPhoneInput({Key? key}) : super(key: key);
 
   @override
-  State<RegistrationCodeInput> createState() => _RegistrationCodeInputState();
+  State<RegistrationPhoneInput> createState() => _RegistrationPhoneInputState();
 }
 
-class _RegistrationCodeInputState extends State<RegistrationCodeInput> {
+class _RegistrationPhoneInputState extends State<RegistrationPhoneInput> {
   final maskFormatter = MaskTextInputFormatter(
-      mask: '######',
+      mask: '+38 (0##) ### ## ##',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
+    // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);
     return Container(
@@ -38,20 +40,24 @@ class _RegistrationCodeInputState extends State<RegistrationCodeInput> {
         child: TextFormField(
           autofocus: true,
           onChanged: (value) {
-            authReposytory.smsCode = maskFormatter.getUnmaskedText();
+            authReposytory.phoneNumberForVerification =
+                '+380${maskFormatter.getUnmaskedText()}';
+            // authReposytory.phoneNumber =
+            // '+380${maskFormatter.getMaskedText()}';
           },
           textAlign: TextAlign.center,
+          // autofillHints: const <String>[AutofillHints.telephoneNumber],
           // style: const TextStyle(
-          //   letterSpacing: 10,
+          //   letterSpacing: 2,
           // ),
           cursorRadius: const Radius.circular(41.0),
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.phone,
           inputFormatters: [
             maskFormatter,
           ],
           decoration: const InputDecoration(
-            // contentPadding: EdgeInsets.symmetric(horizontal: 120, vertical: 20),
-            hintText: 'XXXXXX',
+            // contentPadding: EdgeInsets.symmetric(horizontal: 70, vertical: 20),
+            hintText: '+38(0XX)XXX XX XX',
             hintStyle: TextStyle(color: Colors.black),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(41.0)),

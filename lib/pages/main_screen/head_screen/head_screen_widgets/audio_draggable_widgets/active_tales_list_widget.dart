@@ -1,11 +1,11 @@
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../models/audio.dart';
-import '../../../repositorys/tales_list_repository.dart';
-import '../../../utils/consts/custom_icons_img.dart';
-import '../../../widgets/texts/audio_list_text/audio_list_text.dart';
-import '../main_screen_block/main_screen_bloc.dart';
+import '../../../../../models/audio.dart';
+import '../../../../../repositorys/tales_list_repository.dart';
+import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../widgets/texts/audio_list_text/audio_list_text.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 
 class ActiveTalesListWidget extends StatelessWidget {
   const ActiveTalesListWidget({Key? key}) : super(key: key);

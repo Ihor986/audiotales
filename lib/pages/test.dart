@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/consts/custom_colors.dart';
-import 'main_screen/profile/profile_text.dart';
+import 'main_screen/profile/profile_widgets/profile_text.dart';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
