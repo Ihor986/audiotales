@@ -4,7 +4,7 @@ class SelectionsList {
   SelectionsList({required this.selectionsList});
   List<Selection> selectionsList;
 
-  addNewAudio(Selection selection) {
+  addNewSelection(Selection selection) {
     selectionsList.add(selection);
   }
 
@@ -31,7 +31,7 @@ class SelectionsList {
 
   Map<String, dynamic> toFirestore() {
     return {
-      'talesList': selectionsList.map((e) => e.toJson()).toList(),
+      'talesList': selectionsList.map((e) => e.toFirestore()).toList(),
     };
   }
 
@@ -51,28 +51,35 @@ class Selection {
   Selection({
     required this.id,
     required this.name,
-    required this.photo,
-    required this.photoUrl,
-    required this.description,
+    this.photo,
+    this.photoUrl,
+    this.description,
   });
 
   String id;
   String name;
-  String photo;
-  String photoUrl;
-  String description;
+  String? photo;
+  String? photoUrl;
+  String? description;
 
   factory Selection.fromJson(Map<String, dynamic> json) {
     return Selection(
       id: json['id'] as String,
       name: json['name'] as String,
-      photo: json['photo'] as String,
-      photoUrl: json['photoUrl'] as String,
-      description: json['description'] as String,
+      photo: json['photo'],
+      photoUrl: json['photoUrl'],
+      description: json['description'],
     );
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'photo': photo,
+        'photoUrl': photoUrl,
+        'description': description,
+      };
+  Map<String, dynamic> toFirestore() => {
         'id': id,
         'name': name,
         // 'photo': photo,

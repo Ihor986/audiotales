@@ -82,10 +82,6 @@ class AppRouter {
         builder = (_) => const SelectAudioScreen();
         break;
 
-      // case RegularUserPage.routeName:
-      //   builder = (_) => const RegularUserPage();
-      //   break;
-
       default:
         throw Exception('Invalid route: ${settings.name}');
     }

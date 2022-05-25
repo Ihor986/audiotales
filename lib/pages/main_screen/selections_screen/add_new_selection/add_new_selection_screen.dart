@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../models/selections.dart';
 import '../../../../models/tales_list.dart';
+import '../../../../repositorys/selections_repositiry.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons_img.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../bloc/selections_bloc.dart';
+import 'add_new_selection_name_input.dart';
 import 'add_new_selection_photo_widget.dart';
-import 'add_new_selections_input.dart';
+import 'add_new_selections_description_input.dart';
 import 'add_new_selections_text.dart';
 
 class AddNewSelectionScreen extends StatelessWidget {
   const AddNewSelectionScreen({Key? key}) : super(key: key);
   static const routeName = '/add_new_selection_screen.dart';
-  // static const AddNewSelectionsText title = AddNewSelectionsText();
+
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
 
     return Scaffold(
       extendBody: true,
@@ -32,22 +34,13 @@ class AddNewSelectionScreen extends StatelessWidget {
                 child: Container(
                   height: screen.height / 4.5,
                   color: CustomColors.oliveSoso,
-                  // child: const TalesSelectionWidget(),
                 ),
               ),
-              // Container(
-              //   color: CustomColors.white,
-              //   child: ImageIcon(
-              //     CustomIconsImg.arrowLeftCircle,
-              //     // color: CustomColors.black,
-              //     size: screen.width * 0.2,
-              //   ),
-              // ),
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(screen.width * 0.05),
-            child: const AddNewSelectionsTextName(),
+            padding: EdgeInsets.only(left: screen.width * 0.05),
+            child: const AddNewSelectionsNameInput(),
           ),
 
           const Align(
@@ -77,6 +70,10 @@ AppBar _appBar(BuildContext context) {
   final TalesList _taleList =
       RepositoryProvider.of<TalesListRepository>(context)
           .getTalesListRepository();
+  final SelectionsList _selectionsList =
+      RepositoryProvider.of<SelectionsListRepository>(context)
+          .getSelectionsListRepository();
+
   return AppBar(
     actions: <Widget>[
       Padding(
@@ -85,7 +82,8 @@ AppBar _appBar(BuildContext context) {
           child: const AddNewSelectionsTextReady(),
           onPressed: () {
             _selectionsBloc.add(
-              SaveCreatedSelectionEvent(talesList: _taleList),
+              SaveCreatedSelectionEvent(
+                  talesList: _taleList, selectionsList: _selectionsList),
             );
           },
         ),

@@ -41,19 +41,19 @@ class AddNewSelectionsTextReady extends StatelessWidget {
   }
 }
 
-class AddNewSelectionsTextName extends StatelessWidget {
-  const AddNewSelectionsTextName({Key? key}) : super(key: key);
+// class AddNewSelectionsTextName extends StatelessWidget {
+//   const AddNewSelectionsTextName({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    return Text(
-      TextsConst.addNewSelectionsTextName,
-      style:
-          TextStyle(color: CustomColors.white, fontSize: screen.width * 0.055),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     Size screen = MediaQuery.of(context).size;
+//     return Text(
+//       TextsConst.addNewSelectionsTextName,
+//       style:
+//           TextStyle(color: CustomColors.white, fontSize: screen.width * 0.055),
+//     );
+//   }
+// }
 
 class AddNewSelectionsTextDescription extends StatelessWidget {
   const AddNewSelectionsTextDescription({Key? key}) : super(key: key);

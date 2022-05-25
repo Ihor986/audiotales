@@ -14,9 +14,16 @@ class CheckEvent extends SelectionsEvent {
 }
 
 class SaveCreatedSelectionEvent extends SelectionsEvent {
-  SaveCreatedSelectionEvent({required this.talesList});
+  SaveCreatedSelectionEvent(
+      {required this.talesList, required this.selectionsList});
   TalesList talesList;
-  // String id;
+  SelectionsList selectionsList;
 }
+// String id;
 
 class ClearChekedEvent extends SelectionsEvent {}
+
+class CreateSelectionNameEvent extends SelectionsEvent {
+  CreateSelectionNameEvent({required this.value});
+  String value;
+}

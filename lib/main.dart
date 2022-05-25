@@ -9,6 +9,7 @@ import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import 'repositorys/auth.dart';
+import 'repositorys/selections_repositiry.dart';
 import 'repositorys/tales_list_repository.dart';
 import 'repositorys/user_reposytory.dart';
 import 'routes/app_router.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (context) => UserRepository()),
         RepositoryProvider(create: (context) => AuthReposytory('')),
         RepositoryProvider(create: (context) => TalesListRepository()),
+        RepositoryProvider(create: (context) => SelectionsListRepository()),
       ],
       child: MultiBlocProvider(
         providers: [

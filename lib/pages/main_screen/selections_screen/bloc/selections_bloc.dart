@@ -2,6 +2,7 @@ import 'package:audiotales/data_base/data_base.dart';
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
 
+import '../../../../models/selections.dart';
 import '../../../../services/add_audio_to_selection_service.dart';
 
 part 'selections_event.dart';
@@ -12,7 +13,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       AddAudioToSelectionService();
   SelectionsBloc() : super(SelectionsState()) {
     on<CreateNewSelectonEvent>((event, emit) {
-      addAudioToSelectionService.checkedList = [];
+      addAudioToSelectionService.dispouse();
       emit(SelectionsState());
     });
     on<CheckEvent>((event, emit) {
@@ -21,23 +22,13 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     });
     on<SaveCreatedSelectionEvent>(
       (event, emit) {
-        String _selectionId = DateTime.now().millisecondsSinceEpoch.toString();
-        TalesList _talesList = event.talesList;
-
-        for (String id in addAudioToSelectionService.checkedList) {
-          _talesList.fullTalesList.map(
-            (element) {
-              if (element.id == id) {
-                element.compilationsId.add(_selectionId);
-              }
-              return element;
-            },
-          ).toList();
-        }
-
-        DataBase.instance.saveAudioTales(_talesList);
-        addAudioToSelectionService.checkedList = [];
+        addAudioToSelectionService.saveCreatedSelectionEvent(
+            talesList: event.talesList, selectionsList: event.selectionsList);
       },
     );
+    on<CreateSelectionNameEvent>((event, emit) {
+      addAudioToSelectionService.name = event.value;
+      emit(SelectionsState());
+    });
   }
 }
