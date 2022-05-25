@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../../utils/consts/texts_consts.dart';
+import '../../bloc/selections_bloc.dart';
 
 class SelectAudioSearchWidget extends StatelessWidget {
   const SelectAudioSearchWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final SelectionsBloc _selectionsBloc =
+        BlocProvider.of<SelectionsBloc>(context);
     return Container(
         decoration: BoxDecoration(
           color: CustomColors.white,
@@ -25,10 +29,11 @@ class SelectAudioSearchWidget extends StatelessWidget {
         height: 59,
         child: TextFormField(
           autofocus: false,
-          onChanged: (value) {},
+          onChanged: (value) {
+            _selectionsBloc.add(SearchAudioToAddInSelectionEvent(value: value));
+          },
           textAlign: TextAlign.start,
           cursorRadius: const Radius.circular(41.0),
-          keyboardType: TextInputType.phone,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.all(20),
             hintText: TextsConst.search,

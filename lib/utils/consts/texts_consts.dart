@@ -44,8 +44,8 @@ class TextsConst {
   static const String selectAudioText = 'Выбрать';
   static const String selectAudioTextAdd = 'Добавить';
   static const String search = 'Поиск';
-// static const String head = 'Главная';
-// static const String collections = 'Подбoрки';
+  static const String selectionAudioText = ' аудио';
+  static const String selectionAudioLengthText = ' часа';
 // static const String audiofiles = 'Аудиозаписи';
 // static const String head = 'Главная';
 // static const String collections = 'Подбoрки';

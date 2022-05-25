@@ -13,22 +13,29 @@ class AudiolistSelectAudioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<AudioTale> talesList =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getActiveTalesList();
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
         final Size screen = MediaQuery.of(context).size;
         final SelectionsBloc _selectionsBloc =
             BlocProvider.of<SelectionsBloc>(context);
-        final List<AudioTale> talesList =
-            RepositoryProvider.of<TalesListRepository>(context)
-                .getActiveTalesList();
+        List<AudioTale> _talesList = talesList;
+        if (state.searchValue != null) {
+          _talesList = talesList
+              .where(
+                  (element) => element.name.contains(state.searchValue ?? ''))
+              .toList();
+        }
         List<String> checkedList =
             _selectionsBloc.addAudioToSelectionService.checkedList;
         return SizedBox(
           height: screen.height * 0.5,
           child: ListView.builder(
-            itemCount: talesList.length,
+            itemCount: _talesList.length,
             itemBuilder: (_, i) {
-              bool isChecked = checkedList.contains(talesList[i].id);
+              bool isChecked = checkedList.contains(_talesList[i].id);
               return Padding(
                 padding: EdgeInsets.all(screen.height * 0.005),
                 child: Container(
@@ -54,7 +61,7 @@ class AudiolistSelectAudioWidget extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(talesList[i].name),
+                              Text(_talesList[i].name),
                               AudioListText(index: i),
                             ],
                           ),
@@ -62,12 +69,8 @@ class AudiolistSelectAudioWidget extends StatelessWidget {
                       ),
                       IconButton(
                           onPressed: () {
-                            // isChecked
-                            //     ? checkedList.remove(talesList[i].id)
-                            //     : checkedList.add(talesList[i].id);
-
                             _selectionsBloc.add(CheckEvent(
-                                isChecked: isChecked, id: talesList[i].id));
+                                isChecked: isChecked, id: _talesList[i].id));
                           },
                           icon: isChecked
                               ? const ImageIcon(CustomIconsImg.check)

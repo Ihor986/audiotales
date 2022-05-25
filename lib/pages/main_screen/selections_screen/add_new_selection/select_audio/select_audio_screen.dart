@@ -16,6 +16,7 @@ class SelectAudioScreen extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBody: true,
       appBar: _appBar(context),
       body: Stack(

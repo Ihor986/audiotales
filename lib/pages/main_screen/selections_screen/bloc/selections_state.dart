@@ -4,7 +4,6 @@ part of 'selections_bloc.dart';
 // abstract class SelectionsState {}
 
 class SelectionsState {
-  // SelectionsState(this.addAudioToSelectionService);
-  // AddAudioToSelectionService addAudioToSelectionService;
-  // List<String> checkedList = addAudioToSelectionService.checkedList;
+  SelectionsState({this.searchValue});
+  String? searchValue;
 }

@@ -23,6 +23,7 @@ class AddNewSelectionScreen extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBody: true,
       appBar: _appBar(context),
       body: Stack(
@@ -85,6 +86,7 @@ AppBar _appBar(BuildContext context) {
               SaveCreatedSelectionEvent(
                   talesList: _taleList, selectionsList: _selectionsList),
             );
+            Navigator.pop(context);
           },
         ),
       ),

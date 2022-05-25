@@ -36,7 +36,8 @@ class SelectionsScreen extends StatelessWidget {
               ),
             ],
           ),
-          const Align(alignment: Alignment(0, 0), child: WrapSelectionsList()),
+          const Align(
+              alignment: Alignment(0, -0.6), child: WrapSelectionsList()),
         ],
       ),
     );

@@ -9,11 +9,11 @@ class SelectionsList {
   }
 
   Map<String, dynamic> toJson() => {
-        'talesList': selectionsList.map((e) => e.toJson()).toList(),
+        'selectionsList': selectionsList.map((e) => e.toJson()).toList(),
       };
 
   factory SelectionsList.fromJson(Map<String, dynamic> json) {
-    List listJson = json['talesList'];
+    List listJson = json['selectionsList'];
     List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
 
     return SelectionsList(selectionsList: sList);
@@ -23,7 +23,7 @@ class SelectionsList {
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
-    List listJson = snapshot.data()?['talesList'];
+    List listJson = snapshot.data()?['selectionsList'];
     List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
 
     return SelectionsList(selectionsList: sList);
@@ -31,7 +31,7 @@ class SelectionsList {
 
   Map<String, dynamic> toFirestore() {
     return {
-      'talesList': selectionsList.map((e) => e.toFirestore()).toList(),
+      'selectionsList': selectionsList.map((e) => e.toFirestore()).toList(),
     };
   }
 

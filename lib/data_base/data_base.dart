@@ -17,6 +17,7 @@ class DataBase {
   Future<void> ensureInitialized() async {
     await _initializeHive();
     await _saveAudioTalesForUpDate();
+    await _saveSelectionsListForUpDate();
     await _saveUserForUpDate();
   }
 

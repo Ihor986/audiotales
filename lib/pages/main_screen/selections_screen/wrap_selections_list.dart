@@ -1,56 +1,87 @@
+import 'dart:io';
+
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../models/selections.dart';
+import '../../../repositorys/selections_repositiry.dart';
+import 'bloc/selections_bloc.dart';
+import 'selections_text.dart';
 
 class WrapSelectionsList extends StatelessWidget {
   const WrapSelectionsList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    List<Widget> selections = [
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      _selection(screen),
-      // _selection(screen),
-      // _selection(screen),
-      // _selection(screen),
-    ];
-    return SizedBox(
-      // color: Colors.amber,
-      height: screen.height * 0.75,
-      child: SingleChildScrollView(
-        child: Wrap(
-          direction: Axis.horizontal,
-          children: [
-            for (var selection in selections)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: selection,
-              )
-          ],
-        ),
-      ),
+    return BlocBuilder<SelectionsBloc, SelectionsState>(
+      builder: (context, state) {
+        Size screen = MediaQuery.of(context).size;
+        final List<Selection> _selectionsList =
+            RepositoryProvider.of<SelectionsListRepository>(context)
+                .getSelectionsListRepository()
+                .selectionsList;
+
+        List<Widget> selections = [];
+
+        for (var selection in _selectionsList) {
+          selections.add(
+            _selection(context, selection),
+          );
+        }
+
+        return SizedBox(
+          height: screen.height * 0.75,
+          child: SingleChildScrollView(
+            child: Wrap(
+              direction: Axis.horizontal,
+              children: [
+                for (var selection in selections)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: selection,
+                  )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
 
-_selection(Size screen) {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(15),
-      color: CustomColors.boxShadow,
+Widget _selection(BuildContext context, Selection selection) {
+  Size screen = MediaQuery.of(context).size;
+
+  return GestureDetector(
+    onTap: () {
+      print('tap');
+    },
+    child: Container(
+      decoration: BoxDecoration(
+        image: selection.photo != null || selection.photoUrl != null
+            ? DecorationImage(
+                image: MemoryImage(
+                    File(selection.photo ?? selection.photoUrl ?? '')
+                        .readAsBytesSync()),
+                fit: BoxFit.cover)
+            : null,
+        borderRadius: BorderRadius.circular(15),
+        color: CustomColors.iconsColorBNB,
+      ),
+      width: screen.width * 0.45,
+      height: screen.height * 0.27,
+      child: Padding(
+        padding: EdgeInsets.all(screen.width * 0.04),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            WrapSelectionsListTextName(selection: selection),
+            WrapSelectionsListTextData(selection: selection),
+          ],
+        ),
+      ),
     ),
-    width: screen.width * 0.45,
-    height: screen.height * 0.27,
-    child: Column(children: const [
-      // SelectionText3(),
-      // AddSelectionButton(),
-    ], mainAxisAlignment: MainAxisAlignment.center),
   );
 }

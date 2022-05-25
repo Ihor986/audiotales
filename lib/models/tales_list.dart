@@ -7,19 +7,31 @@ class TalesList {
 
   final List<AudioTale> fullTalesList;
 
-  getCompilation(String value) {
+  List<AudioTale> getCompilation(String value) {
     return fullTalesList
-        .where((element) => element.compilationsId.contains(value));
+        .where((element) =>
+            element.compilationsId.contains(value) &&
+            element.isDeleted == false)
+        .toList();
   }
 
-  getTalesListSize() {
+  num getCompilationTime(value) {
+    return fullTalesList
+        .where((element) =>
+            element.compilationsId.contains(value) &&
+            element.isDeleted == false)
+        .map((e) => e.time)
+        .fold(0, (num previousValue, element) => previousValue + element);
+  }
+
+  num getTalesListSize() {
     return fullTalesList
         .where((element) => element.pathUrl != null)
         .map((e) => e.size)
         .fold(0, (num previousValue, element) => previousValue + element);
   }
 
-  addNewAudio(AudioTale audioTale) {
+  void addNewAudio(AudioTale audioTale) {
     fullTalesList.add(audioTale);
   }
 

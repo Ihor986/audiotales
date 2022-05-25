@@ -1,7 +1,5 @@
-import 'package:audiotales/data_base/data_base.dart';
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
-
 import '../../../../models/selections.dart';
 import '../../../../services/add_audio_to_selection_service.dart';
 
@@ -21,14 +19,30 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       emit(SelectionsState());
     });
     on<SaveCreatedSelectionEvent>(
-      (event, emit) {
-        addAudioToSelectionService.saveCreatedSelectionEvent(
+      (event, emit) async {
+        await addAudioToSelectionService.saveCreatedSelectionEvent(
             talesList: event.talesList, selectionsList: event.selectionsList);
+        emit(SelectionsState());
       },
     );
-    on<CreateSelectionNameEvent>((event, emit) {
-      addAudioToSelectionService.name = event.value;
-      emit(SelectionsState());
-    });
+    on<CreateSelectionNameEvent>(
+      (event, emit) {
+        addAudioToSelectionService.name = event.value;
+        emit(SelectionsState());
+      },
+    );
+
+    on<CreateSelectionDescriptionEvent>(
+      (event, emit) {
+        addAudioToSelectionService.description = event.value;
+        emit(SelectionsState());
+      },
+    );
+
+    on<SearchAudioToAddInSelectionEvent>(
+      (event, emit) {
+        emit(SelectionsState(searchValue: event.value));
+      },
+    );
   }
 }

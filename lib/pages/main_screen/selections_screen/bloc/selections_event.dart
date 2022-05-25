@@ -27,3 +27,13 @@ class CreateSelectionNameEvent extends SelectionsEvent {
   CreateSelectionNameEvent({required this.value});
   String value;
 }
+
+class CreateSelectionDescriptionEvent extends SelectionsEvent {
+  CreateSelectionDescriptionEvent({required this.value});
+  String value;
+}
+
+class SearchAudioToAddInSelectionEvent extends SelectionsEvent {
+  SearchAudioToAddInSelectionEvent({required this.value});
+  String value;
+}

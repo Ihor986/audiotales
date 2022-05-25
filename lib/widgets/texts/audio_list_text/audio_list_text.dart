@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../services/helpers/minuts_text_convert_helper.dart';
 
 class AudioListText extends StatelessWidget {
   const AudioListText({Key? key, required this.index}) : super(key: key);
@@ -14,23 +13,13 @@ class AudioListText extends StatelessWidget {
         RepositoryProvider.of<TalesListRepository>(context)
             .getActiveTalesList();
 
-    num time = talesList[index].time.round();
+    num time = talesList[index].time;
 
-    String text = '';
-    if (time > 4 && time < 21) {
-      text = TextsConst.minutes;
-    } else if ('$time'.substring('$time'.length - 1).contains('1')) {
-      text = TextsConst.minutes1;
-    } else if ('$time'.substring('$time'.length - 1).contains('2') ||
-        '$time'.substring('$time'.length - 1).contains('3') ||
-        '$time'.substring('$time'.length - 1).contains('4')) {
-      text = TextsConst.minutes2;
-    } else {
-      text = TextsConst.minutes;
-    }
+    String text = MinutesTextConvertHelper.instance
+        .getConvertedMinutesText(timeInMinutes: time);
 
     return Text(
-      '$time $text',
+      '${time.round()} $text',
       style: const TextStyle(
         color: Colors.black,
         fontStyle: FontStyle.normal,

@@ -30,7 +30,7 @@ class LocalDB {
 
   SelectionsList getSelectionsList() {
     final Box<String> userBox = Hive.box(_userBox);
-    // userBox.delete('audiolist');
+    // userBox.delete('selectionsList');
     return SelectionsList.fromJson(
       jsonDecode(userBox.get('selectionsList',
           defaultValue:

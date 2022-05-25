@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:audiotales/models/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
 
@@ -30,5 +28,13 @@ class ImageServise {
     }
     // localUser.photo = image.path;
     DataBase.instance.saveUser(localUser);
+  }
+
+  Future<String?> pickImageToSelection() async {
+    final XFile? image = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 1,
+    );
+    return image?.path;
   }
 }
