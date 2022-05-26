@@ -52,6 +52,28 @@ class WrapSelectionsList extends StatelessWidget {
 
 Widget _selection(BuildContext context, Selection selection) {
   Size screen = MediaQuery.of(context).size;
+  DecorationImage? decorationImage() {
+    if (selection.photo != null) {
+      try {
+        print(selection.photo);
+        return DecorationImage(
+            image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
+            fit: BoxFit.cover);
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    if (selection.photoUrl != null) {
+      try {
+        return DecorationImage(
+            image: NetworkImage(selection.photoUrl ?? ''), fit: BoxFit.cover);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  }
 
   return GestureDetector(
     onTap: () {
@@ -59,13 +81,7 @@ Widget _selection(BuildContext context, Selection selection) {
     },
     child: Container(
       decoration: BoxDecoration(
-        image: selection.photo != null || selection.photoUrl != null
-            ? DecorationImage(
-                image: MemoryImage(
-                    File(selection.photo ?? selection.photoUrl ?? '')
-                        .readAsBytesSync()),
-                fit: BoxFit.cover)
-            : null,
+        image: decorationImage(),
         borderRadius: BorderRadius.circular(15),
         color: CustomColors.iconsColorBNB,
       ),

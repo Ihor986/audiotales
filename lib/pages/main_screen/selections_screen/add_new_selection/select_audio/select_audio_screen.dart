@@ -26,7 +26,7 @@ class SelectAudioScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screen.height / 4.5,
+                  height: screen.height / 7,
                   color: CustomColors.oliveSoso,
                 ),
               ),
