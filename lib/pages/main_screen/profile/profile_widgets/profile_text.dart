@@ -12,12 +12,21 @@ class ProfileText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    return Text(
-      TextsConst.profile,
-      style: TextStyle(
-          color: CustomColors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: screen.width * 0.09),
+    return Column(
+      children: [
+        Text(
+          TextsConst.profile,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+        Text(
+          TextsConst.profileTextPeace,
+          style: TextStyle(
+              color: CustomColors.white, fontSize: screen.width * 0.03),
+        )
+      ],
     );
   }
 }

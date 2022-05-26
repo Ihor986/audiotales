@@ -11,7 +11,8 @@ class ImageServise {
   Future pickImage(LocalUser localUser) async {
     final XFile? image = await imagePicker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 1,
+      maxWidth: 400,
+      // imageQuality: 1,
     );
     if (image == null) return;
     imageFile = File(image.path);
@@ -32,8 +33,9 @@ class ImageServise {
 
   Future<String?> pickImageToSelection() async {
     final XFile? image = await imagePicker.pickImage(
+      maxWidth: 400,
       source: ImageSource.gallery,
-      imageQuality: 1,
+      // imageQuality: 1,
     );
     return image?.path;
   }

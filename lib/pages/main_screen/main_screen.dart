@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../routes/app_router.dart';
 import '../../utils/consts/custom_colors.dart';
+import '../../utils/consts/custom_icons_img.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/custom_drawer.dart';
-import '../test.dart';
+import 'audios_screen/audios_screen.dart.dart';
 import 'head_screen/head_screen_page.dart';
 import 'profile/bloc/profile_bloc.dart';
 import 'profile/profile.dart';
@@ -23,15 +24,15 @@ class MainScreen extends StatelessWidget {
       const HeadScreen(),
       const SelectionsScreen(),
       const RecordScreen(),
-      const Test(),
+      const AudiosScreen(),
       const Profile(),
     ];
 
-    List _titles = [
+    List<Widget> _titles = [
       HeadScreen.title,
       SelectionsScreen.title,
       RecordScreen.title,
-      Test.title,
+      AudiosScreen.title,
       Profile.title,
     ];
 
@@ -46,15 +47,8 @@ class MainScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             extendBody: true,
-            appBar: state.currentIndex == 1
-                ? null
-                : AppBar(
-                    backgroundColor: CustomColors.blueSoso,
-                    elevation: 0,
-                    title: _titles[state.currentIndex],
-                    centerTitle: true,
-                  ),
-            // body: _pages[state.currentIndex],
+            appBar: _appBar(
+                index: state.currentIndex, titles: _titles, context: context),
             body: Navigator(
               key: GlobalKey<NavigatorState>(),
               onGenerateInitialRoutes: (route, string) {
@@ -72,4 +66,43 @@ class MainScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+AppBar? _appBar(
+    {required int index,
+    required List<Widget> titles,
+    required BuildContext context}) {
+  Size screen = MediaQuery.of(context).size;
+  if (index == 0 || index == 2 || index == 4) {
+    return AppBar(
+      backgroundColor: CustomColors.blueSoso,
+      elevation: 0,
+      title: titles[index],
+      centerTitle: true,
+    );
+  }
+  if (index == 3) {
+    return AppBar(
+      actions: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(right: screen.width * 0.04),
+          child: Column(
+            children: [
+              IconButton(
+                icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
+                // tooltip: 'Open shopping cart',
+                onPressed: () {},
+              ),
+              const SizedBox(),
+            ],
+          ),
+        ),
+      ],
+      backgroundColor: CustomColors.audiotalesHeadColorBlue,
+      elevation: 0,
+      title: titles[index],
+      centerTitle: true,
+    );
+  }
+  return null;
 }

@@ -11,6 +11,7 @@ class AudioListText extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository()
             .getActiveTalesList();
 
     num time = talesList[index].time;

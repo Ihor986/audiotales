@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../widgets/texts/main_screen_text.dart';
 
@@ -17,12 +19,24 @@ class SelectionButtons extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(onPressed: () {}, child: const SelectionText1()),
+            TextButton(
+                onPressed: () {
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 1));
+                },
+                child: const SelectionText1()),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(),
-                TextButton(onPressed: () {}, child: const SelectionText2()),
+                TextButton(
+                    onPressed: () {
+                      context
+                          .read<NavigationBloc>()
+                          .add(ChangeCurrentIndexEvent(currentIndex: 3));
+                    },
+                    child: const SelectionText2()),
               ],
             ),
           ],

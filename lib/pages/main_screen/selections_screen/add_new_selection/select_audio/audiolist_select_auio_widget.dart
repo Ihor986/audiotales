@@ -15,6 +15,7 @@ class AudiolistSelectAudioWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository()
             .getActiveTalesList();
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
@@ -31,7 +32,7 @@ class AudiolistSelectAudioWidget extends StatelessWidget {
         List<String> checkedList =
             _selectionsBloc.addAudioToSelectionService.checkedList;
         return SizedBox(
-          height: screen.height * 0.5,
+          height: screen.height * 0.7,
           child: ListView.builder(
             itemCount: _talesList.length,
             itemBuilder: (_, i) {

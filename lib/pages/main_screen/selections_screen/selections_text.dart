@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../models/selections.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/tales_list_repository.dart';
+import '../../../services/helpers/minuts_text_convert_helper.dart';
 import '../../../utils/consts/texts_consts.dart';
 
 class SelectionsText extends StatelessWidget {
@@ -20,12 +21,12 @@ class SelectionsText extends StatelessWidget {
           style: TextStyle(
               color: CustomColors.white,
               fontWeight: FontWeight.bold,
-              fontSize: screen.width * 0.09),
+              fontSize: screen.width * 0.07),
         ),
         Text(
           TextsConst.selectionsTextAllInOnePlace,
           style: TextStyle(
-              color: CustomColors.white, fontSize: screen.width * 0.035),
+              color: CustomColors.white, fontSize: screen.width * 0.03),
         )
       ],
     );
@@ -33,9 +34,9 @@ class SelectionsText extends StatelessWidget {
 }
 
 class WrapSelectionsListTextName extends StatelessWidget {
-  WrapSelectionsListTextName({Key? key, required this.selection})
+  const WrapSelectionsListTextName({Key? key, required this.selection})
       : super(key: key);
-  Selection selection;
+  final Selection selection;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -53,9 +54,9 @@ class WrapSelectionsListTextName extends StatelessWidget {
 }
 
 class WrapSelectionsListTextData extends StatelessWidget {
-  WrapSelectionsListTextData({Key? key, required this.selection})
+  const WrapSelectionsListTextData({Key? key, required this.selection})
       : super(key: key);
-  Selection selection;
+  final Selection selection;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -74,7 +75,9 @@ class WrapSelectionsListTextData extends StatelessWidget {
         _talesList.getCompilation(selection.id).length.toString() +
             TextsConst.selectionAudioText;
 
-    String textTime = _selectionFullTime + TextsConst.selectionAudioLengthText;
+    String textTime = _selectionFullTime +
+        MinutesTextConvertHelper.instance.getConvertedHouresText(
+            timeInHoures: _millisecondsCompilationTime / 3600000);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,

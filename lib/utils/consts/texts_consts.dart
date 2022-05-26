@@ -35,6 +35,7 @@ class TextsConst {
   static const String profileTextSubscribe = 'Подписка';
   static const String profileTextLogout = 'Выйти из приложения';
   static const String profileTextDeleteAccount = 'Удалить аккаунт';
+  static const String profileTextPeace = 'Твоя частичка';
   static const String addNewSelectionsTextCreate = 'Создание';
   static const String addNewSelectionsTextReady = 'Готово';
   static const String addNewSelectionsTextName = 'Название';
@@ -46,6 +47,8 @@ class TextsConst {
   static const String search = 'Поиск';
   static const String selectionAudioText = ' аудио';
   static const String selectionAudioLengthText = ' часа';
+  static const String selectionAudioLengthText2 = ' часов';
+  // static const String selectionAudioLengthText3 = ' час';
 // static const String audiofiles = 'Аудиозаписи';
 // static const String head = 'Главная';
 // static const String collections = 'Подбoрки';

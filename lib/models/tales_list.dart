@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'audio.dart';
 
@@ -6,6 +7,20 @@ class TalesList {
   TalesList({required this.fullTalesList});
 
   final List<AudioTale> fullTalesList;
+
+  List<AudioTale> getActiveTalesList() {
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      List<AudioTale> activeTalesListRep =
+          fullTalesList.where((element) => !element.isDeleted).toList();
+      return activeTalesListRep;
+    } else {
+      List<AudioTale> activeTalesListRep = fullTalesList
+          .where((element) => !element.isDeleted && element.path != null)
+          .toList();
+      return activeTalesListRep;
+    }
+  }
 
   List<AudioTale> getCompilation(String value) {
     return fullTalesList
@@ -15,11 +30,18 @@ class TalesList {
         .toList();
   }
 
-  num getCompilationTime(value) {
+  num getCompilationTime(String value) {
     return fullTalesList
         .where((element) =>
             element.compilationsId.contains(value) &&
             element.isDeleted == false)
+        .map((e) => e.time)
+        .fold(0, (num previousValue, element) => previousValue + element);
+  }
+
+  num getActiveTalesFullTime() {
+    return fullTalesList
+        .where((element) => element.isDeleted == false)
         .map((e) => e.time)
         .fold(0, (num previousValue, element) => previousValue + element);
   }

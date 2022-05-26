@@ -55,12 +55,12 @@ Widget _selection(BuildContext context, Selection selection) {
   DecorationImage? decorationImage() {
     if (selection.photo != null) {
       try {
-        print(selection.photo);
+        // print(selection.photo);
         return DecorationImage(
             image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
             fit: BoxFit.cover);
       } catch (e) {
-        print(e);
+        // print(e);
       }
     }
 

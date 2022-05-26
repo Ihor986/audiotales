@@ -10,7 +10,7 @@ import '../pages/main_screen/record_screen/record_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/select_audio/select_audio_screen.dart';
 import '../pages/main_screen/selections_screen/selections_screen.dart';
-import '../pages/test.dart';
+import '../pages/main_screen/audios_screen/audios_screen.dart.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -29,8 +29,8 @@ class AppRouter {
     WidgetBuilder builder;
 
     switch (settings.name) {
-      case Test.routeName:
-        builder = (_) => const Test();
+      case AudiosScreen.routeName:
+        builder = (_) => const AudiosScreen();
         break;
 
       case RegularUserPage.routeName:

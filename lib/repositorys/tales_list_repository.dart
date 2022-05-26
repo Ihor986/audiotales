@@ -10,22 +10,22 @@ class TalesListRepository {
     return talesListRep;
   }
 
-  List<AudioTale> getActiveTalesList() {
-    final bool auth = FirebaseAuth.instance.currentUser != null;
-    if (auth) {
-      List<AudioTale> activeTalesListRep = DataBase.instance
-          .getAudioTales()
-          .fullTalesList
-          .where((element) => !element.isDeleted)
-          .toList();
-      return activeTalesListRep;
-    } else {
-      List<AudioTale> activeTalesListRep = DataBase.instance
-          .getAudioTales()
-          .fullTalesList
-          .where((element) => !element.isDeleted && element.path != null)
-          .toList();
-      return activeTalesListRep;
-    }
-  }
+  // List<AudioTale> getActiveTalesList() {
+  //   final bool auth = FirebaseAuth.instance.currentUser != null;
+  //   if (auth) {
+  //     List<AudioTale> activeTalesListRep = DataBase.instance
+  //         .getAudioTales()
+  //         .fullTalesList
+  //         .where((element) => !element.isDeleted)
+  //         .toList();
+  //     return activeTalesListRep;
+  //   } else {
+  //     List<AudioTale> activeTalesListRep = DataBase.instance
+  //         .getAudioTales()
+  //         .fullTalesList
+  //         .where((element) => !element.isDeleted && element.path != null)
+  //         .toList();
+  //     return activeTalesListRep;
+  //   }
+  // }
 }

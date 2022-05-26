@@ -5,7 +5,7 @@ import '../../../../models/audio.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import 'audio_draggable_widgets/selection_buttons_audio.dart';
 import '../../../../widgets/texts/main_screen_text.dart';
-import 'audio_draggable_widgets/active_tales_list_widget.dart';
+import '../../active_tales_list_widget.dart';
 
 // class AudioDraggableWidget extends StatefulWidget {
 class AudioDraggableWidget extends StatelessWidget {
@@ -20,6 +20,7 @@ class AudioDraggableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository()
             .getActiveTalesList();
     // print('${talesList.first.compilationsId} &&&');
     return Center(

@@ -47,8 +47,11 @@ class SaveRecord extends StatelessWidget {
                           child: Text('Название подборки')),
                       Align(
                           alignment: const Alignment(0, 0.15),
-                          child: Text(
-                              _talesListRep.getActiveTalesList().last.name)),
+                          child: Text(_talesListRep
+                              .getTalesListRepository()
+                              .getActiveTalesList()
+                              .last
+                              .name)),
                       const Align(
                           alignment: Alignment(0, 0.4),
                           child: PlayRecordProgres()),
