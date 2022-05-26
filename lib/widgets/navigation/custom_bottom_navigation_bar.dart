@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../pages/income_screen/new_user/registration_page.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
-import '../../services/audio_service.dart';
+import '../../services/sound_service.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../../utils/consts/texts_consts.dart';
@@ -119,6 +119,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               showSelectedLabels: true,
               showUnselectedLabels: true,
               onTap: (int index) {
+                //  context.read<NavigationBloc>().add(
+                //           NavigateTab(
+                //             tabIndex: index,
+                //             route: _pages[index],
+                //           ),
+                //         );
+
                 if (auth.currentUser == null && index == 4) {
                   Navigator.of(context, rootNavigator: true)
                       .pushNamedAndRemoveUntil(

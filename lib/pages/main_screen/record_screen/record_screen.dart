@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../services/audio_service.dart';
+import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../main_screen_block/main_screen_bloc.dart';
@@ -18,7 +18,7 @@ class RecordScreen extends StatelessWidget {
 // ?
     Size screen = MediaQuery.of(context).size;
     final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
-    _sound.initRecorder();
+    // _sound.initRecorder();
     return MultiBlocProvider(
       providers: [
         BlocProvider<SoundBloc>(create: (context) => SoundBloc(_sound)),

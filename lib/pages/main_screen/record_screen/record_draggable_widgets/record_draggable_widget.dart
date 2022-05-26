@@ -21,7 +21,9 @@ class RecordDraggableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SoundBloc, SoundInitial>(
       builder: (context, state) {
-        return pages[state.indexPage];
+        // int index;
+        // if(.isRecoderReady){}
+        return pages[context.read<SoundBloc>().sound.soundIndex];
 
         // return SaveRecord();
       },

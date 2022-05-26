@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../routes/app_router.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/custom_drawer.dart';
 import '../test.dart';
 import 'head_screen/head_screen_page.dart';
+import 'profile/bloc/profile_bloc.dart';
 import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
 import 'selections_screen/selections_screen.dart';
@@ -37,7 +39,7 @@ class MainScreen extends StatelessWidget {
       providers: [
         // BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
-        // BlocProvider<SelectionsBloc>(create: (context) => SelectionsBloc()),
+        BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
       ],
       // child:
       child: BlocBuilder<NavigationBloc, NavigationState>(
@@ -52,7 +54,16 @@ class MainScreen extends StatelessWidget {
                     title: _titles[state.currentIndex],
                     centerTitle: true,
                   ),
-            body: _pages[state.currentIndex],
+            // body: _pages[state.currentIndex],
+            body: Navigator(
+              key: GlobalKey<NavigatorState>(),
+              onGenerateInitialRoutes: (route, string) {
+                return [
+                  MaterialPageRoute(builder: (_) => _pages[state.currentIndex]),
+                ];
+              },
+              onGenerateRoute: AppRouter.generateRoute,
+            ),
             drawer: const CustomDrawer(),
             resizeToAvoidBottomInset: false,
             bottomNavigationBar: const CustomBottomNavigationBar(),

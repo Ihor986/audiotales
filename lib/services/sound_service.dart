@@ -88,8 +88,10 @@ class SoundService {
   }
 
   clickRecorder() async {
-    bool isRedyStartRecord =
-        !recorder.isRecording && url == null && !audioPlayer.isPlaying;
+    bool isRedyStartRecord = !recorder.isRecording &&
+        url == null &&
+        !audioPlayer.isPlaying &&
+        soundIndex == 0;
     bool isReadyStartPlayer =
         !recorder.isRecording && url != null && !audioPlayer.isPlaying;
     bool isReadyStopPlayer = !recorder.isRecording && audioPlayer.isPlaying;
@@ -97,21 +99,23 @@ class SoundService {
     if (isRedyStartRecord) {
       try {
         await _startRecord();
-      } catch (e) {
-        print('%%%%%%%%%$e');
-      }
+      } catch (_) {}
     } else if (recorder.isRecording) {
+      soundIndex = 1;
       await stopRecorder();
       await _startLocalPlayer(
         path ?? '',
       );
+
       _showPlayerProgres();
     } else if (isReadyStartPlayer) {
+      soundIndex = 1;
       await _startLocalPlayer(
         path ?? '',
       );
       _showPlayerProgres();
     } else if (isReadyStopPlayer) {
+      soundIndex = 1;
       audioPlayer.stopPlayer();
     }
   }

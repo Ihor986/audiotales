@@ -77,10 +77,7 @@ class AddNewSelectionsTextAddAudio extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
     return TextButton(
       onPressed: () {
-        Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-          SelectAudioScreen.routeName,
-          (_) => true,
-        );
+        Navigator.pushNamed(context, SelectAudioScreen.routeName);
       },
       child: Text(
         TextsConst.addNewSelectionsTextAddAudio,

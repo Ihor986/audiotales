@@ -82,11 +82,7 @@ AppBar _appBar(screen, title, context) {
             ),
             onPressed: () {
               _selectionsBloc.add(CreateNewSelectonEvent());
-              Navigator.of(context, rootNavigator: true)
-                  .pushNamedAndRemoveUntil(
-                AddNewSelectionScreen.routeName,
-                (_) => true,
-              );
+              Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
             },
           ),
           const SizedBox(),

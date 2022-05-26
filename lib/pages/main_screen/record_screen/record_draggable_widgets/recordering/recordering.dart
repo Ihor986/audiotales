@@ -18,7 +18,7 @@ class Recordering extends StatelessWidget {
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
     final NavigationBloc _navigationBloc =
         BlocProvider.of<NavigationBloc>(context);
-
+    _soundBloc.sound.initRecorder();
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
