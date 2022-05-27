@@ -4,7 +4,6 @@ import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../active_tales_list_widget.dart';
 import 'widgets/audios_screen_text.dart';
-import 'widgets/audios_screen_text.dart';
 import 'widgets/play_all_widget.dart';
 
 class AudiosScreen extends StatefulWidget {

@@ -73,7 +73,7 @@ AppBar? _appBar(
     required List<Widget> titles,
     required BuildContext context}) {
   Size screen = MediaQuery.of(context).size;
-  if (index == 0 || index == 2 || index == 4) {
+  if (index == 2 || index == 4) {
     return AppBar(
       backgroundColor: CustomColors.blueSoso,
       elevation: 0,

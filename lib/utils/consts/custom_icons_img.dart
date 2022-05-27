@@ -52,7 +52,8 @@ class CustomIconsImg {
       AssetImage("assets/icons/checkedCheckbox.png");
   static const AssetImage uncheck =
       AssetImage("assets/icons/uncheckCheckbox.png");
-  static const AssetImage repeat = AssetImage("assets/icons/repeat.svg");
+  static const String repeat = "assets/icons/repeat.svg";
+  // static const AssetImage repeat = AssetImage("assets/icons/repeat.svg");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");

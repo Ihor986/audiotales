@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/consts/custom_colors.dart';
+import '../../../widgets/navigation/custom_drawer.dart';
 import 'head_screen_widgets/head_screen_text.dart';
 import 'head_screen_widgets/selection_buttons.dart';
 import 'head_screen_widgets/audio_draggable_widget.dart';
@@ -16,35 +17,33 @@ class HeadScreen extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
     // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
 
-    return
-        //  Scaffold(
-        //   extendBody: true,
-        //   appBar: AppBar(
-        //     backgroundColor: CustomColors.blueSoso,
-        //     elevation: 0,
-        //   ),
-        // body:
-        Stack(
-      children: [
-        Column(
-          children: [
-            ClipPath(
-              clipper: OvalBC(),
-              child: Container(
-                height: screen.height / 4.5,
-                color: CustomColors.blueSoso,
-                // child: const TalesSelectionWidget(),
+    return Scaffold(
+      extendBody: true,
+      appBar: AppBar(
+        backgroundColor: CustomColors.blueSoso,
+        elevation: 0,
+      ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              ClipPath(
+                clipper: OvalBC(),
+                child: Container(
+                  height: screen.height / 4.5,
+                  color: CustomColors.blueSoso,
+                  // child: const TalesSelectionWidget(),
+                ),
               ),
-            ),
-            // const Text('test'),
-          ],
-        ),
-        const SelectionButtons(),
-        const TalesSelectionWidget(),
-        const AudioDraggableWidget(),
-      ],
-      // ),
-      // drawer: const CustomDrawer(),
+              // const Text('test'),
+            ],
+          ),
+          const SelectionButtons(),
+          const TalesSelectionWidget(),
+          const AudioDraggableWidget(),
+        ],
+      ),
+      drawer: const CustomDrawer(),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../models/selections.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../services/helpers/minuts_text_convert_helper.dart';
+import '../../../services/minuts_text_convert_service.dart';
 import '../../../utils/consts/texts_consts.dart';
 
 class SelectionsText extends StatelessWidget {
@@ -76,7 +76,7 @@ class WrapSelectionsListTextData extends StatelessWidget {
             TextsConst.selectionAudioText;
 
     String textTime = _selectionFullTime +
-        MinutesTextConvertHelper.instance.getConvertedHouresText(
+        MinutesTextConvertService.instance.getConvertedHouresText(
             timeInHoures: _millisecondsCompilationTime / 3600000);
 
     return Column(

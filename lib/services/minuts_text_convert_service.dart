@@ -1,9 +1,10 @@
-import '../../utils/consts/texts_consts.dart';
+import '../utils/consts/texts_consts.dart';
 
-class MinutesTextConvertHelper {
-  const MinutesTextConvertHelper._();
+class MinutesTextConvertService {
+  const MinutesTextConvertService._();
 
-  static const MinutesTextConvertHelper instance = MinutesTextConvertHelper._();
+  static const MinutesTextConvertService instance =
+      MinutesTextConvertService._();
   String getConvertedMinutesText({required num timeInMinutes}) {
     num time = timeInMinutes.round();
 

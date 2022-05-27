@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../services/helpers/minuts_text_convert_helper.dart';
+import '../../../services/minuts_text_convert_service.dart';
 
 class AudioListText extends StatelessWidget {
   const AudioListText({Key? key, required this.index}) : super(key: key);
@@ -16,7 +16,7 @@ class AudioListText extends StatelessWidget {
 
     num time = talesList[index].time;
 
-    String text = MinutesTextConvertHelper.instance
+    String text = MinutesTextConvertService.instance
         .getConvertedMinutesText(timeInMinutes: time);
 
     return Text(

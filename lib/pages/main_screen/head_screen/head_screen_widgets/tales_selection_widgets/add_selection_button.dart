@@ -18,11 +18,11 @@ class AddSelectionButton extends StatelessWidget {
           //     .add(ChangeCurrentIndexEvent(currentIndex: 1));
 
           _selectionsBloc.add(CreateNewSelectonEvent());
-          // Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
-          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-            AddNewSelectionScreen.routeName,
-            (_) => true,
-          );
+          Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
+          // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+          //   AddNewSelectionScreen.routeName,
+          //   (_) => true,
+          // );
         },
         child: const SelectionText6());
   }
