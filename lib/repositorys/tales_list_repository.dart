@@ -1,12 +1,11 @@
 import 'package:audiotales/data_base/data_base.dart';
-import 'package:audiotales/models/audio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/tales_list.dart';
 
 class TalesListRepository {
+  final DataBase db = DataBase.instance;
   TalesList getTalesListRepository() {
-    TalesList talesListRep = DataBase.instance.getAudioTales();
+    TalesList talesListRep = db.getAudioTales();
     return talesListRep;
   }
 

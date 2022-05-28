@@ -48,7 +48,8 @@ class TextsConst {
   static const String selectionAudioText = ' аудио';
   static const String selectionAudioLengthText = ' часа';
   static const String selectionAudioLengthText2 = ' часов';
-  // static const String selectionAudioLengthText3 = ' час';
+  static const String audioScreenPlayAllT = ' Запустить все';
+  static const String audioScreenPlayAllF = ' Остановить';
 // static const String audiofiles = 'Аудиозаписи';
 // static const String head = 'Главная';
 // static const String collections = 'Подбoрки';

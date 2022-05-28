@@ -51,7 +51,7 @@ class AudiosScreenListTextData extends StatelessWidget {
         TextsConst.selectionAudioText;
 
     String textTime = _selectionFullTime +
-        MinutesTextConvertService.instance.getConvertedHouresText(
+        TimeTextConvertService.instance.getConvertedHouresText(
             timeInHoures: _millisecondsListTime / 3600000);
 
     return Column(
@@ -78,5 +78,27 @@ class AudiosScreenListTextData extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class AudioScreenPlayAllTextT extends StatelessWidget {
+  const AudioScreenPlayAllTextT({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // num screenHeight = MediaQuery.of(context).size.height;
+    return const Text(TextsConst.audioScreenPlayAllT,
+        style: TextStyle(color: CustomColors.blueSoso));
+  }
+}
+
+class AudioScreenPlayAllTextF extends StatelessWidget {
+  const AudioScreenPlayAllTextF({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // num screenHeight = MediaQuery.of(context).size.height;
+    return const Text(TextsConst.audioScreenPlayAllF,
+        style: TextStyle(color: CustomColors.blueSoso));
   }
 }

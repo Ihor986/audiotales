@@ -76,7 +76,7 @@ class WrapSelectionsListTextData extends StatelessWidget {
             TextsConst.selectionAudioText;
 
     String textTime = _selectionFullTime +
-        MinutesTextConvertService.instance.getConvertedHouresText(
+        TimeTextConvertService.instance.getConvertedHouresText(
             timeInHoures: _millisecondsCompilationTime / 3600000);
 
     return Column(

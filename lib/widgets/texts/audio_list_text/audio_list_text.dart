@@ -16,7 +16,7 @@ class AudioListText extends StatelessWidget {
 
     num time = talesList[index].time;
 
-    String text = MinutesTextConvertService.instance
+    String text = TimeTextConvertService.instance
         .getConvertedMinutesText(timeInMinutes: time);
 
     return Text(

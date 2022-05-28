@@ -41,6 +41,7 @@ class SoundService {
   num? size;
   AudioTale? audioTale;
   bool saveLocal = false;
+  bool isRepeatAllList = false;
   // bool? isMicrophonePermissionGranted;
 
   saveAudioTale(
@@ -125,6 +126,16 @@ class SoundService {
       await _initPlayer();
       _startPlayer(audio);
       _showPlayerProgres();
+    } else if (audioPlayer.isPlaying) {
+      audioPlayer.stopPlayer();
+    }
+  }
+
+  playAllPlayer(List<AudioTale> audioList) async {
+    if (!audioPlayer.isPlaying) {
+      await _initPlayer();
+      await _startAllAudioPlayer(audioList, 0);
+      // await _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
       audioPlayer.stopPlayer();
     }
@@ -218,7 +229,7 @@ class SoundService {
     recorder.onProgress!.listen((event) {}).cancel();
     recorder.closeRecorder();
     limit = 0;
-    recorder.onProgress!.listen((event) {}).cancel();
+    // recorder.onProgress!.listen((event) {}).cancel();
     recorderTime = '00:00:00';
   }
 
@@ -259,11 +270,59 @@ class SoundService {
     }
   }
 
+  _startAllAudioPlayer(List<AudioTale> audioList, int index) async {
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    final int length = audioList.length;
+    int listIndex = index;
+    final audio = audioList[listIndex];
+
+    try {
+      if (audio.path != null) {
+        final audiofile = File(audio.path!);
+        url = audiofile.readAsBytesSync();
+        await audioPlayer.startPlayer(
+            fromDataBuffer: url,
+            codec: Codec.defaultCodec,
+            whenFinished: () {
+              listIndex++;
+              if (listIndex < length) {
+                _startAllAudioPlayer(audioList, listIndex);
+              }
+              if (listIndex == length && isRepeatAllList) {
+                listIndex = 0;
+                _startAllAudioPlayer(audioList, listIndex);
+              }
+            });
+      }
+
+      if (audio.pathUrl != null && audio.path == null && auth) {
+        await audioPlayer.startPlayer(
+            fromURI: audio.pathUrl,
+            codec: Codec.defaultCodec,
+            whenFinished: () {
+              listIndex++;
+              if (listIndex < length) {
+                _startAllAudioPlayer(audioList, listIndex);
+              }
+              if (listIndex == length && isRepeatAllList) {
+                listIndex = 0;
+                _startAllAudioPlayer(audioList, listIndex);
+              }
+            });
+      }
+    } catch (e) {
+      listIndex++;
+      _startAllAudioPlayer(audioList, listIndex);
+      print(audio.name); // alert
+    }
+    print(audio.name);
+    print(length);
+  }
+
   _showPlayerProgres() {
     audioPlayer.onProgress!.listen(
       (event) {
         endOfSliderPosition = event.duration.inMilliseconds;
-        // audioDuration = event.duration.abs().inMinutes;
         sliderPosition = event.position.inMilliseconds;
         endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(
                 event.duration.abs().inMilliseconds - 1000,
@@ -305,10 +364,13 @@ class SoundService {
     }
   }
 
-  forwardPlayerWithSlider(num d) {
+  forwardPlayerWithSlider(num d) async {
     sliderPosition = d.floor();
     if (audioPlayer.isPlaying || audioPlayer.isPaused) {
-      audioPlayer.seekToPlayer(Duration(milliseconds: d.floor()));
+      await audioPlayer.seekToPlayer(Duration(milliseconds: d.floor()));
+      if (audioPlayer.isStopped || audioPlayer.isPaused) {
+        await clickRecorder();
+      }
     }
   }
 }

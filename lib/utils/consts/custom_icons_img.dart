@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomIconsImg {
   CustomIconsImg._();
@@ -53,7 +54,7 @@ class CustomIconsImg {
   static const AssetImage uncheck =
       AssetImage("assets/icons/uncheckCheckbox.png");
   static const String repeat = "assets/icons/repeat.svg";
-  // static const AssetImage repeat = AssetImage("assets/icons/repeat.svg");
+  static const String pauseAll = "assets/icons/pauseAll.svg";
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
