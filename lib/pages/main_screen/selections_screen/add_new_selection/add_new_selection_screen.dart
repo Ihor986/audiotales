@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,13 +7,12 @@ import '../../../../models/selections.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/selections_repositiry.dart';
 import '../../../../repositorys/tales_list_repository.dart';
+import '../../../../services/image_service.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons_img.dart';
+import '../../../../utils/consts/texts_consts.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../bloc/selections_bloc.dart';
-import 'add_new_selection_name_input.dart';
-import 'add_new_selection_photo_widget.dart';
-import 'add_new_selections_description_input.dart';
 import 'add_new_selections_text.dart';
 
 class AddNewSelectionScreen extends StatelessWidget {
@@ -41,22 +42,19 @@ class AddNewSelectionScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: screen.width * 0.05),
-            child: const AddNewSelectionsNameInput(),
+            child: const _AddNewSelectionsNameInput(),
           ),
-
           const Align(
               alignment: Alignment(0, -0.8),
-              child: AddNewSelectionPhotoWidget()),
+              child: _AddNewSelectionPhotoWidget()),
           const Align(
               alignment: Alignment(-0.85, -0.2),
               child: AddNewSelectionsTextDescription()),
           const Align(
-              alignment: Alignment(0, 0), child: AddNewSelectionsInput()),
+              alignment: Alignment(0, 0), child: _AddNewSelectionsInput()),
           const Align(
               alignment: Alignment(0, 0.4),
               child: AddNewSelectionsTextAddAudio()),
-
-          // const Align(alignment: Alignment(0, 0), child: WrapSelectionsList()),
         ],
       ),
     );
@@ -105,8 +103,6 @@ AppBar _appBar(BuildContext context) {
           borderRadius: BorderRadius.circular(15),
           color: CustomColors.white,
         ),
-        // height: screen.height * 0.0004,
-        // width: screen.width * 0.000004,
         child: IconButton(
           icon: const ImageIcon(
             CustomIconsImg.arrowLeftCircle,
@@ -120,4 +116,132 @@ AppBar _appBar(BuildContext context) {
     ),
     title: title,
   );
+}
+
+class _AddNewSelectionsInput extends StatefulWidget {
+  const _AddNewSelectionsInput({Key? key}) : super(key: key);
+
+  @override
+  State<_AddNewSelectionsInput> createState() => _AddNewSelectionsInputState();
+}
+
+class _AddNewSelectionsInputState extends State<_AddNewSelectionsInput> {
+  bool readOnly = false;
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    final SelectionsBloc _selectionsBloc =
+        BlocProvider.of<SelectionsBloc>(context);
+    return SizedBox(
+      height: 100,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: screen.width * 0.04, right: screen.width * 0.04),
+            child: TextFormField(
+              readOnly: readOnly,
+              onChanged: (value) {
+                _selectionsBloc
+                    .add(CreateSelectionDescriptionEvent(value: value));
+              },
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                readOnly = !readOnly;
+              });
+            },
+            child: Text(
+              TextsConst.addNewSelectionsTextReady,
+              style: TextStyle(
+                  color: CustomColors.black, fontSize: screen.width * 0.03),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AddNewSelectionPhotoWidget extends StatefulWidget {
+  const _AddNewSelectionPhotoWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_AddNewSelectionPhotoWidget> createState() =>
+      _AddNewSelectionPhotoWidgetState();
+}
+
+class _AddNewSelectionPhotoWidgetState
+    extends State<_AddNewSelectionPhotoWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final SelectionsBloc _selectionsBloc =
+        BlocProvider.of<SelectionsBloc>(context);
+
+    Size screen = MediaQuery.of(context).size;
+    return Container(
+      width: screen.width * 0.92,
+      height: screen.height * 0.25,
+      decoration: BoxDecoration(
+        image: _selectionsBloc.addAudioToSelectionService.photo != null
+            ? DecorationImage(
+                image: MemoryImage(
+                    File(_selectionsBloc.addAudioToSelectionService.photo!)
+                        .readAsBytesSync()),
+                fit: BoxFit.cover)
+            : null,
+        boxShadow: const [
+          BoxShadow(
+              color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
+        ],
+        color: CustomColors.whiteOp,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      child: _selectionsBloc.addAudioToSelectionService.photo == null
+          ? IconButton(
+              onPressed: () async {
+                _selectionsBloc.addAudioToSelectionService.photo =
+                    await ImageServise().pickImageToSelection();
+                setState(() {});
+              },
+              icon: const ImageIcon(
+                CustomIconsImg.emptyfoto,
+                color: CustomColors.iconsColorPlayRecUpbar,
+                size: 50,
+              ),
+            )
+          : null,
+    );
+  }
+}
+
+class _AddNewSelectionsNameInput extends StatelessWidget {
+  const _AddNewSelectionsNameInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final SelectionsBloc _selectionsBloc =
+        BlocProvider.of<SelectionsBloc>(context);
+    Size screen = MediaQuery.of(context).size;
+    return TextFormField(
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+      ),
+      initialValue: _selectionsBloc.addAudioToSelectionService.name,
+      onChanged: (value) {
+        _selectionsBloc.add(CreateSelectionNameEvent(value: value));
+      },
+      style: TextStyle(
+        color: CustomColors.white,
+        fontSize: screen.width * 0.055,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
 }

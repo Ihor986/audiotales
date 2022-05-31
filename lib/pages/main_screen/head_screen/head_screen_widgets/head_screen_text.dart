@@ -5,7 +5,6 @@ class HeadText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return const Text('');
   }
 }
