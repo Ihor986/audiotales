@@ -127,7 +127,7 @@ class SoundService {
       _startPlayer(audio);
       _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
-      audioPlayer.stopPlayer();
+      await audioPlayer.stopPlayer();
     }
   }
 
@@ -137,7 +137,7 @@ class SoundService {
       await _startAllAudioPlayer(audioList, 0);
       // await _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
-      audioPlayer.stopPlayer();
+      await audioPlayer.stopPlayer();
     }
   }
 

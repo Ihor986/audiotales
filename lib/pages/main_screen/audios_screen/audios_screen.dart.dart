@@ -105,6 +105,7 @@ class _PlayAllTalesButtonWidget extends StatelessWidget {
                 ),
               ),
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   context
                       .read<AudioScreenBloc>()
