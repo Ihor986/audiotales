@@ -3,6 +3,7 @@ import 'package:audiotales/models/user.dart';
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../repositorys/user_reposytory.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
@@ -48,9 +49,9 @@ class PlayRecordUpbarButtons extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const ImageIcon(
+                  icon: SvgPicture.asset(
                     CustomIconsImg.delete,
-                    size: 25,
+                    height: 25,
                     color: CustomColors.iconsColorPlayRecUpbar,
                   ),
                 ),

@@ -50,11 +50,12 @@ class TextsConst {
   static const String selectionAudioLengthText2 = ' часов';
   static const String audioScreenPlayAllT = ' Запустить все';
   static const String audioScreenPlayAllF = ' Остановить';
-// static const String audiofiles = 'Аудиозаписи';
-// static const String head = 'Главная';
-// static const String collections = 'Подбoрки';
-// static const String audiofiles = 'Аудиозаписи';
-// static const String head = 'Главная';
-// static const String collections = 'Подбoрки';
+  static const String audioTales = 'Аудиосказки';
+  static const String menu = 'Меню';
+  static const String allAudioFiles = 'Все аудиофайлы';
+  static const String deletedDrower = 'Недавно удаленные';
+  static const String subscribe = 'Подписка';
+  static const String support = 'Написать в';
+  static const String supportTwo = ' поддержку ';
 // static const String audiofiles = 'Аудиозаписи';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../models/audio.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
@@ -207,21 +208,21 @@ class _SelectAudioSearchWidget extends StatelessWidget {
           },
           textAlign: TextAlign.start,
           cursorRadius: const Radius.circular(41.0),
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.all(20),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(20),
             hintText: TextsConst.search,
-            hintStyle: TextStyle(color: CustomColors.noTalesText),
-            enabledBorder: OutlineInputBorder(
+            hintStyle: const TextStyle(color: CustomColors.noTalesText),
+            enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(41.0)),
                 borderSide: BorderSide(
                     color: Color.fromRGBO(246, 246, 246, 1), width: 2.0)),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(41.0)),
                 borderSide: BorderSide(
                     color: Color.fromRGBO(246, 246, 246, 1), width: 2.0)),
             suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: ImageIcon(
+              padding: const EdgeInsets.only(right: 20),
+              child: SvgPicture.asset(
                 CustomIconsImg.search,
                 // size: 1,
                 color: CustomColors.black,

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../pages/income_screen/new_user/registration_page.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
@@ -53,61 +54,61 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             ),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
-                    activeIcon: ImageIcon(
+                    activeIcon: SvgPicture.asset(
                       CustomIconsImg.home,
-                      size: 25,
+                      height: 25,
                       color: CustomColors.blueSoso,
                     ),
-                    icon: ImageIcon(
+                    icon: SvgPicture.asset(
                       CustomIconsImg.home,
-                      size: 25,
+                      height: 25,
                       color: CustomColors.iconsColorBNB,
                     ),
                     label: TextsConst.head),
                 BottomNavigationBarItem(
-                    backgroundColor: Colors.green,
-                    activeIcon: ImageIcon(
+                    // backgroundColor: Colors.green,
+                    activeIcon: SvgPicture.asset(
                       CustomIconsImg.menu,
-                      size: 25,
+                      height: 25,
                       color: CustomColors.blueSoso,
                     ),
-                    icon: ImageIcon(
+                    icon: SvgPicture.asset(
                       CustomIconsImg.menu,
-                      size: 25,
+                      height: 25,
                       color: CustomColors.iconsColorBNB,
                     ),
                     label: TextsConst.collections),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(
                     Icons.mic,
-                    color: CustomColors.white,
+                    color: CustomColors.invisible,
                   ),
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  activeIcon: ImageIcon(
+                  activeIcon: SvgPicture.asset(
                     CustomIconsImg.list,
-                    size: 25,
+                    height: 25,
                     color: CustomColors.blueSoso,
                   ),
-                  icon: ImageIcon(
+                  icon: SvgPicture.asset(
                     CustomIconsImg.list,
-                    size: 25,
+                    height: 25,
                     color: CustomColors.iconsColorBNB,
                   ),
                   label: TextsConst.audiofiles,
                 ),
                 BottomNavigationBarItem(
-                  activeIcon: ImageIcon(
+                  activeIcon: SvgPicture.asset(
                     CustomIconsImg.profile,
-                    size: 25,
+                    height: 25,
                     color: CustomColors.blueSoso,
                   ),
-                  icon: ImageIcon(
+                  icon: SvgPicture.asset(
                     CustomIconsImg.profile,
-                    size: 25,
+                    height: 25,
                     color: CustomColors.iconsColorBNB,
                   ),
                   label: TextsConst.profile,

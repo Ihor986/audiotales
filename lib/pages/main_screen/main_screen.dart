@@ -5,7 +5,7 @@ import '../../routes/app_router.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
-import '../../widgets/navigation/custom_drawer.dart';
+import '../../widgets/navigation/drower/custom_drawer.dart';
 import 'audios_screen/audios_screen.dart.dart';
 import 'head_screen/head_screen_page.dart';
 import 'profile/bloc/profile_bloc.dart';
@@ -73,7 +73,10 @@ AppBar? _appBar(
     required List<Widget> titles,
     required BuildContext context}) {
   Size screen = MediaQuery.of(context).size;
-  if (index == 2 || index == 4) {
+  bool isBlueSoloAppbar = index == 0 || index == 2 || index == 4;
+  bool isBlueAppbar = index == 3;
+  bool isGreenAppbar = index == 1;
+  if (isBlueSoloAppbar) {
     return AppBar(
       backgroundColor: CustomColors.blueSoso,
       elevation: 0,
@@ -81,7 +84,7 @@ AppBar? _appBar(
       centerTitle: true,
     );
   }
-  if (index == 3) {
+  if (isBlueAppbar) {
     return AppBar(
       actions: <Widget>[
         Padding(
@@ -90,7 +93,6 @@ AppBar? _appBar(
             children: [
               IconButton(
                 icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
-                // tooltip: 'Open shopping cart',
                 onPressed: () {},
               ),
               const SizedBox(),
@@ -103,6 +105,9 @@ AppBar? _appBar(
       title: titles[index],
       centerTitle: true,
     );
+  }
+  if (isGreenAppbar) {
+    return null;
   }
   return null;
 }

@@ -7,7 +7,6 @@ import '../../../models/selections.dart';
 import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/navigation/custom_drawer.dart';
 import '../../../widgets/texts/main_screen_text.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
@@ -24,31 +23,33 @@ class HeadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
 
-    return Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        backgroundColor: CustomColors.blueSoso,
-        elevation: 0,
-      ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              ClipPath(
-                clipper: OvalBC(),
-                child: Container(
-                  height: screen.height / 4.5,
-                  color: CustomColors.blueSoso,
-                ),
+    return
+        // Scaffold(
+        //   extendBody: true,
+        //   appBar: AppBar(
+        //     backgroundColor: CustomColors.blueSoso,
+        //     elevation: 0,
+        //   ),
+        //   body:
+        Stack(
+      children: [
+        Column(
+          children: [
+            ClipPath(
+              clipper: OvalBC(),
+              child: Container(
+                height: screen.height / 4.5,
+                color: CustomColors.blueSoso,
               ),
-            ],
-          ),
-          const _SelectionButtons(),
-          const _TalesSelectionWidget(),
-          const _AudioDraggableWidget(),
-        ],
-      ),
-      drawer: const CustomDrawer(),
+            ),
+          ],
+        ),
+        const _SelectionButtons(),
+        const _TalesSelectionWidget(),
+        const _AudioDraggableWidget(),
+      ],
+      // ),
+      // drawer: const CustomDrawer(),
     );
   }
 }

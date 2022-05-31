@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomIconsImg {
   CustomIconsImg._();
   static const AssetImage mic3 = AssetImage("assets/icons/mic-3.png");
   static const AssetImage mic2 = AssetImage("assets/icons/mic-2.png");
   static const AssetImage mic = AssetImage("assets/icons/mic.png");
-  static const AssetImage home = AssetImage("assets/icons/home.png");
-  static const AssetImage menu = AssetImage("assets/icons/menu.png");
-  static const AssetImage list = AssetImage("assets/icons/list.png");
-  static const AssetImage profile = AssetImage("assets/icons/profile.png");
+  static const String home = "assets/icons/home.svg";
+  static const String menu = "assets/icons/menu.svg";
+  static const String list = "assets/icons/list.svg";
+  static const String profile = "assets/icons/profile.svg";
   static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   static const AssetImage pause2 = AssetImage("assets/icons/pause.png");
   static const AssetImage play = AssetImage("assets/icons/Play.png");
@@ -37,7 +36,7 @@ class CustomIconsImg {
   static const AssetImage power1 = AssetImage("assets/icons/power1.png");
   static const AssetImage power2 = AssetImage("assets/icons/power2.png");
   static const AssetImage power3 = AssetImage("assets/icons/power3.png");
-  static const AssetImage delete = AssetImage("assets/icons/delete.png");
+  static const String delete = "assets/icons/delete.svg";
   static const AssetImage share = AssetImage("assets/icons/share.png");
   static const AssetImage download = AssetImage("assets/icons/download.png");
   static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
@@ -48,13 +47,15 @@ class CustomIconsImg {
       AssetImage("assets/icons/more_horiz_rounded.png");
   static const AssetImage arrowLeftCircle =
       AssetImage("assets/icons/arrowLeftCircle.png");
-  static const AssetImage search = AssetImage("assets/icons/Search1.png");
+  static const String search = "assets/icons/search.svg";
   static const AssetImage check =
       AssetImage("assets/icons/checkedCheckbox.png");
   static const AssetImage uncheck =
       AssetImage("assets/icons/uncheckCheckbox.png");
   static const String repeat = "assets/icons/repeat.svg";
   static const String pauseAll = "assets/icons/pauseAll.svg";
+  static const String wallet = "assets/icons/wallet.svg";
+  static const String support = "assets/icons/support.svg";
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
