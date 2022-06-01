@@ -2,24 +2,18 @@ import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/audio.dart';
-import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 
-class ActiveTalesListWidget extends StatelessWidget {
-  const ActiveTalesListWidget({Key? key}) : super(key: key);
-
+class TalesListWidget extends StatelessWidget {
+  const TalesListWidget({Key? key, required this.talesList}) : super(key: key);
+  final List<AudioTale> talesList;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     final MainScreenBloc _mainScreenBloc =
         BlocProvider.of<MainScreenBloc>(context);
-    final List<AudioTale> talesList =
-        RepositoryProvider.of<TalesListRepository>(context)
-            .getTalesListRepository()
-            .getActiveTalesList();
-    // print(talesList.first.compilationsId);
     return ListView.builder(
       itemCount: talesList.length,
       // itemCount: 10,

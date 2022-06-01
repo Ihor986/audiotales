@@ -20,6 +20,7 @@ class CustomDrawer extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
     return FractionallySizedBox(
       widthFactor: 0.66,
+      // heightFactor: screen.height,
       child: Container(
         height: screen.height,
         decoration: const BoxDecoration(

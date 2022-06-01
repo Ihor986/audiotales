@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../models/selections.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/selections_repositiry.dart';
@@ -47,11 +45,11 @@ class AddNewSelectionScreen extends StatelessWidget {
           const Align(
               alignment: Alignment(0, -0.8),
               child: _AddNewSelectionPhotoWidget()),
+          // const Align(
+          //     alignment: Alignment(-0.85, -0.2),
+          //     child: AddNewSelectionsTextDescription()),
           const Align(
-              alignment: Alignment(-0.85, -0.2),
-              child: AddNewSelectionsTextDescription()),
-          const Align(
-              alignment: Alignment(0, 0), child: _AddNewSelectionsInput()),
+              alignment: Alignment(0, -0.05), child: _AddNewSelectionsInput()),
           const Align(
               alignment: Alignment(0, 0.4),
               child: AddNewSelectionsTextAddAudio()),
@@ -133,32 +131,43 @@ class _AddNewSelectionsInputState extends State<_AddNewSelectionsInput> {
     final SelectionsBloc _selectionsBloc =
         BlocProvider.of<SelectionsBloc>(context);
     return SizedBox(
-      height: 100,
+      height: screen.height * 0.20,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        // crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
             padding: EdgeInsets.only(
                 left: screen.width * 0.04, right: screen.width * 0.04),
             child: TextFormField(
+              decoration: InputDecoration(
+                hintText: TextsConst.addNewSelectionsTextEnterDescription,
+                hintStyle: TextStyle(
+                    color: CustomColors.black, fontSize: screen.width * 0.033),
+                // isDense: false,
+              ),
               readOnly: readOnly,
               onChanged: (value) {
                 _selectionsBloc
                     .add(CreateSelectionDescriptionEvent(value: value));
               },
+              keyboardType: TextInputType.multiline, //
+              maxLines: 4,
             ),
           ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                readOnly = !readOnly;
-              });
-            },
-            child: Text(
-              TextsConst.addNewSelectionsTextReady,
-              style: TextStyle(
-                  color: CustomColors.black, fontSize: screen.width * 0.03),
+          Align(
+            alignment: const Alignment(1, 0),
+            child: TextButton(
+              onPressed: () {
+                setState(() {
+                  readOnly = !readOnly;
+                });
+              },
+              child: Text(
+                TextsConst.addNewSelectionsTextReady,
+                style: TextStyle(
+                    color: CustomColors.black, fontSize: screen.width * 0.03),
+              ),
             ),
           ),
         ],

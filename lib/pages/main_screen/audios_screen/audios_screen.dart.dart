@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../../../widgets/uncategorized/active_tales_list_widget.dart';
+import '../../../widgets/uncategorized/play_all_button.dart';
+import '../../../widgets/uncategorized/tales_list_widget.dart';
 import '../main_screen_block/main_screen_bloc.dart';
 import 'bloc/audio_screen_bloc.dart';
 import 'widgets/audios_screen_text.dart';
@@ -25,6 +25,10 @@ class AudiosScreen extends StatefulWidget {
 class _AudiosScreen extends State<AudiosScreen> {
   @override
   Widget build(BuildContext context) {
+    final List<AudioTale> talesList =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository()
+            .getActiveTalesList();
     Size screen = MediaQuery.of(context).size;
 
     return Stack(
@@ -42,10 +46,11 @@ class _AudiosScreen extends State<AudiosScreen> {
             height: screen.height * 0.05,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                AudiosScreenListTextData(),
-                _PlayAllTalesButtonWidget(),
+              children: [
+                const AudiosScreenListTextData(),
+                _PlayAllTalesButtonWidget(
+                  talesList: talesList,
+                ),
               ],
             ),
           ),
@@ -54,22 +59,23 @@ class _AudiosScreen extends State<AudiosScreen> {
             alignment: const Alignment(0, 1),
             child: SizedBox(
                 height: screen.height * 0.65,
-                child: const ActiveTalesListWidget())),
+                child: TalesListWidget(
+                  talesList: talesList,
+                ))),
       ],
     );
   }
 }
 
 class _PlayAllTalesButtonWidget extends StatelessWidget {
-  const _PlayAllTalesButtonWidget({Key? key}) : super(key: key);
+  const _PlayAllTalesButtonWidget({Key? key, required this.talesList})
+      : super(key: key);
+  final List<AudioTale> talesList;
   @override
   Widget build(BuildContext context) {
     final SoundService _soundService =
         BlocProvider.of<MainScreenBloc>(context).sound;
-    final List<AudioTale> talesList =
-        RepositoryProvider.of<TalesListRepository>(context)
-            .getTalesListRepository()
-            .getActiveTalesList();
+
     Size screen = MediaQuery.of(context).size;
 
     return MultiBlocProvider(
@@ -104,42 +110,10 @@ class _PlayAllTalesButtonWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  context
-                      .read<AudioScreenBloc>()
-                      .add(AudioScreenPlayAllEvent(talesList: talesList));
-                },
-                child: Container(
-                  height: screen.height * 0.05,
-                  width: screen.width * 0.41,
-                  decoration: BoxDecoration(
-                    color: CustomColors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(screen.height * 0.005),
-                        child: _soundService.audioPlayer.isPlaying
-                            ? SvgPicture.asset(
-                                CustomIconsImg.pauseAll,
-                                color: CustomColors.blueSoso,
-                                height: screen.height * 0.04,
-                              )
-                            : ImageIcon(
-                                CustomIconsImg.playBlueSolo,
-                                color: CustomColors.blueSoso,
-                                size: screen.height * 0.04,
-                              ),
-                      ),
-                      _soundService.audioPlayer.isPlaying
-                          ? const AudioScreenPlayAllTextF()
-                          : const AudioScreenPlayAllTextT(),
-                    ],
-                  ),
-                ),
+              PlayAllTalesButtonWidget(
+                talesList: talesList,
+                textColor: CustomColors.blueSoso,
+                backgroundColor: CustomColors.white,
               ),
             ],
           );

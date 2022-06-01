@@ -100,6 +100,7 @@ class SoundService {
     if (isRedyStartRecord) {
       try {
         await _startRecord();
+        isRepeatAllList = false;
       } catch (_) {}
     } else if (recorder.isRecording) {
       soundIndex = 1;
@@ -128,6 +129,7 @@ class SoundService {
       _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
       await audioPlayer.stopPlayer();
+      isRepeatAllList = false;
     }
   }
 
@@ -138,6 +140,7 @@ class SoundService {
       // await _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
       await audioPlayer.stopPlayer();
+      isRepeatAllList = false;
     }
   }
 

@@ -8,9 +8,10 @@ import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/texts/main_screen_text.dart';
-import '../../../widgets/uncategorized/active_tales_list_widget.dart';
+import '../../../widgets/uncategorized/tales_list_widget.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../selections_screen/bloc/selections_bloc.dart';
+import '../selections_screen/selection_screen.dart/selection_screen.dart';
 import '../selections_screen/selections_text.dart';
 import 'head_screen_widgets/head_screen_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
@@ -22,7 +23,7 @@ class HeadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-
+    // Scaffold.of(context).
     return
         // Scaffold(
         //   extendBody: true,
@@ -218,7 +219,20 @@ class _Selection extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        print('tap');
+        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => SelectionScreen(
+              selection: selection,
+            ),
+          ),
+          (_) => true,
+        );
+
+        // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+        //   SelectionScreen.routeName,
+        //   (_) => true,
+        // );
+        // print('tap');
       },
       child: Container(
         decoration: BoxDecoration(
@@ -257,7 +271,11 @@ class _AddSelectionButton extends StatelessWidget {
     return TextButton(
         onPressed: () {
           _selectionsBloc.add(CreateNewSelectonEvent());
-          Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
+          // Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
+          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+            AddNewSelectionScreen.routeName,
+            (_) => true,
+          );
         },
         child: const SelectionText6());
   }
@@ -272,6 +290,7 @@ class _AudioDraggableWidget extends StatelessWidget {
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository()
             .getActiveTalesList();
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -298,7 +317,7 @@ class _AudioDraggableWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 50),
                     child: talesList.isNotEmpty
-                        ? const ActiveTalesListWidget()
+                        ? TalesListWidget(talesList: talesList)
                         : const SelectionText9(),
                   )
                 ],

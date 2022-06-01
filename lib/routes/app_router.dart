@@ -9,6 +9,7 @@ import '../pages/main_screen/main_screen.dart';
 import '../pages/main_screen/record_screen/record_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/select_audio/select_audio_screen.dart';
+import '../pages/main_screen/selections_screen/selection_screen.dart/selection_screen.dart';
 import '../pages/main_screen/selections_screen/selections_screen.dart';
 import '../pages/main_screen/audios_screen/audios_screen.dart.dart';
 
@@ -24,7 +25,7 @@ class AppRouter {
   }
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // final Object? arguments = settings.arguments;
+    final Object? arguments = settings.arguments;
 
     WidgetBuilder builder;
 
@@ -76,6 +77,14 @@ class AppRouter {
 
       case AddNewSelectionScreen.routeName:
         builder = (_) => const AddNewSelectionScreen();
+        break;
+
+      case SelectionScreen.routeName:
+        final SelectionScreenPageArguments args =
+            arguments as SelectionScreenPageArguments;
+        builder = (_) => SelectionScreen(
+              selection: args.selection,
+            );
         break;
 
       case SelectAudioScreen.routeName:
