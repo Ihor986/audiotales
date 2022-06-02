@@ -125,9 +125,11 @@ class _AddNewSelectionsInput extends StatefulWidget {
 
 class _AddNewSelectionsInputState extends State<_AddNewSelectionsInput> {
   bool readOnly = false;
+  TextEditingController? _controller;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
+
     final SelectionsBloc _selectionsBloc =
         BlocProvider.of<SelectionsBloc>(context);
     return SizedBox(
@@ -140,6 +142,8 @@ class _AddNewSelectionsInputState extends State<_AddNewSelectionsInput> {
             padding: EdgeInsets.only(
                 left: screen.width * 0.04, right: screen.width * 0.04),
             child: TextFormField(
+              controller: _controller,
+              // maxLength: 500,
               decoration: InputDecoration(
                 hintText: TextsConst.addNewSelectionsTextEnterDescription,
                 hintStyle: TextStyle(
@@ -212,20 +216,22 @@ class _AddNewSelectionPhotoWidgetState
           Radius.circular(15),
         ),
       ),
-      child: _selectionsBloc.addAudioToSelectionService.photo == null
-          ? IconButton(
-              onPressed: () async {
-                _selectionsBloc.addAudioToSelectionService.photo =
-                    await ImageServise().pickImageToSelection();
-                setState(() {});
-              },
-              icon: const ImageIcon(
-                CustomIconsImg.emptyfoto,
-                color: CustomColors.iconsColorPlayRecUpbar,
-                size: 50,
-              ),
-            )
-          : null,
+      child:
+          //  _selectionsBloc.addAudioToSelectionService.photo == null
+          //     ?
+          IconButton(
+        onPressed: () async {
+          _selectionsBloc.addAudioToSelectionService.photo =
+              await ImageServise().pickImageToSelection();
+          setState(() {});
+        },
+        icon: const ImageIcon(
+          CustomIconsImg.emptyfoto,
+          color: CustomColors.iconsColorPlayRecUpbar,
+          size: 50,
+        ),
+      ),
+      // : null,
     );
   }
 }

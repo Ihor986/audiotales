@@ -134,6 +134,9 @@ class SoundService {
   }
 
   playAllPlayer(List<AudioTale> audioList) async {
+    if (audioList.isEmpty) {
+      return;
+    }
     if (!audioPlayer.isPlaying) {
       await _initPlayer();
       await _startAllAudioPlayer(audioList, 0);

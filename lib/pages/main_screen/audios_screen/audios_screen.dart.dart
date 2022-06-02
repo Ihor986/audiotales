@@ -48,9 +48,11 @@ class _AudiosScreen extends State<AudiosScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 const AudiosScreenListTextData(),
-                _PlayAllTalesButtonWidget(
-                  talesList: talesList,
-                ),
+                talesList.isNotEmpty
+                    ? _PlayAllTalesButtonWidget(
+                        talesList: talesList,
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

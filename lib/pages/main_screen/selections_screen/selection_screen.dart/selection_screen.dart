@@ -243,11 +243,13 @@ class _SelectionPhotoWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   WrapSelectionsListTextData(selection: selection),
-                  PlayAllTalesButtonWidget(
-                    talesList: talesList,
-                    textColor: CustomColors.white,
-                    backgroundColor: CustomColors.playAllButtonDisactive,
-                  ),
+                  talesList.isNotEmpty
+                      ? PlayAllTalesButtonWidget(
+                          talesList: talesList,
+                          textColor: CustomColors.white,
+                          backgroundColor: CustomColors.playAllButtonDisactive,
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),
