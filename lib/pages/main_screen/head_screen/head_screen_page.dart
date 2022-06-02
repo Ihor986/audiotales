@@ -108,6 +108,30 @@ class _TalesSelectionWidget extends StatelessWidget {
             RepositoryProvider.of<SelectionsListRepository>(context)
                 .getSelectionsListRepository()
                 .selectionsList;
+        bool _isMoreThenTwo = _selectionsList.length > 2;
+        bool _isMoreThenOne = _selectionsList.length > 1;
+        bool _isNotEmpty = _selectionsList.isNotEmpty;
+        int _selectionNumber(int value) {
+          if (_isMoreThenTwo && value == 1) {
+            return 0;
+          }
+          if (_isMoreThenOne && _selectionsList.length == 2 && value == 2) {
+            return 0;
+          } else if (_isMoreThenOne &&
+              _selectionsList.length > 2 &&
+              value == 2) {
+            return 1;
+          }
+          if (_isNotEmpty && _selectionsList.length == 1 && value == 3) {
+            return 0;
+          } else if (_isNotEmpty && _selectionsList.length == 2 && value == 3) {
+            return 1;
+          } else if (_isNotEmpty && _selectionsList.length > 2 && value == 3) {
+            return 2;
+          }
+          return 0;
+        }
+
         return Padding(
           padding: const EdgeInsets.only(top: 47),
           child: SizedBox(
@@ -115,9 +139,9 @@ class _TalesSelectionWidget extends StatelessWidget {
             height: screen.height * 0.25,
             child: Row(
               children: [
-                _selectionsList.length > 2
+                _isMoreThenTwo
                     ? _Selection(
-                        selection: _selectionsList[_selectionsList.length - 3],
+                        selection: _selectionsList[_selectionNumber(1)],
                         width: 0.45,
                         height: 0.27,
                       )
@@ -138,10 +162,9 @@ class _TalesSelectionWidget extends StatelessWidget {
                       ),
                 Column(
                   children: [
-                    _selectionsList.length > 1
+                    _isMoreThenOne
                         ? _Selection(
-                            selection:
-                                _selectionsList[_selectionsList.length - 2],
+                            selection: _selectionsList[_selectionNumber(2)],
                             width: 0.45,
                             height: 0.115,
                           )
@@ -154,10 +177,9 @@ class _TalesSelectionWidget extends StatelessWidget {
                             ),
                             child: const SelectionText4(),
                           ),
-                    _selectionsList.isNotEmpty
+                    _isNotEmpty
                         ? _Selection(
-                            selection:
-                                _selectionsList[_selectionsList.length - 1],
+                            selection: _selectionsList[_selectionNumber(3)],
                             width: 0.45,
                             height: 0.115,
                           )

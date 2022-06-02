@@ -5,7 +5,7 @@ class SelectionsList {
   List<Selection> selectionsList;
 
   addNewSelection(Selection selection) {
-    selectionsList.add(selection);
+    selectionsList.insert(0, selection);
   }
 
   Map<String, dynamic> toJson() => {
