@@ -28,6 +28,7 @@ class AddAudioToSelectionService {
       {required TalesList talesList,
       required SelectionsList selectionsList}) async {
     String _selectionId = DateTime.now().millisecondsSinceEpoch.toString();
+    String _date = DateTime.now().millisecondsSinceEpoch.toString();
 
     TalesList _talesList = talesList;
     SelectionsList _selectionsList = selectionsList;
@@ -60,6 +61,7 @@ class AddAudioToSelectionService {
     Selection selection = Selection(
         id: _selectionId,
         name: name,
+        date: _date,
         description: description,
         photo: photo,
         photoUrl: photoUrl);

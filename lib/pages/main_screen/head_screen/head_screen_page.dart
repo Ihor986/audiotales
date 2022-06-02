@@ -101,78 +101,84 @@ class _TalesSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    final List<Selection> _selectionsList =
-        RepositoryProvider.of<SelectionsListRepository>(context)
-            .getSelectionsListRepository()
-            .selectionsList;
-    return Padding(
-      padding: const EdgeInsets.only(top: 47),
-      child: SizedBox(
-        width: screen.width,
-        height: screen.height * 0.25,
-        child: Row(
-          children: [
-            _selectionsList.length > 2
-                ? _Selection(
-                    selection: _selectionsList[2],
-                    width: 0.45,
-                    height: 0.27,
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: CustomColors.oliveSosoOp,
-                    ),
-                    width: screen.width * 0.45,
-                    height: screen.height * 0.27,
-                    child: Column(
-                      children: const [
-                        SelectionText3(),
-                        _AddSelectionButton(),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ),
-                  ),
-            Column(
+    return BlocBuilder<SelectionsBloc, SelectionsState>(
+      builder: (context, state) {
+        Size screen = MediaQuery.of(context).size;
+        final List<Selection> _selectionsList =
+            RepositoryProvider.of<SelectionsListRepository>(context)
+                .getSelectionsListRepository()
+                .selectionsList;
+        return Padding(
+          padding: const EdgeInsets.only(top: 47),
+          child: SizedBox(
+            width: screen.width,
+            height: screen.height * 0.25,
+            child: Row(
               children: [
-                _selectionsList.length > 1
+                _selectionsList.length > 2
                     ? _Selection(
-                        selection: _selectionsList[1],
+                        selection: _selectionsList[_selectionsList.length - 3],
                         width: 0.45,
-                        height: 0.115,
+                        height: 0.27,
                       )
                     : Container(
-                        width: screen.width * 0.45,
-                        height: screen.height * 0.115,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: const Color.fromRGBO(241, 180, 136, 0.85),
+                          color: CustomColors.oliveSosoOp,
                         ),
-                        child: const SelectionText4(),
-                      ),
-                _selectionsList.isNotEmpty
-                    ? _Selection(
-                        selection: _selectionsList[0],
-                        width: 0.45,
-                        height: 0.115,
-                      )
-                    : Container(
                         width: screen.width * 0.45,
-                        height: screen.height * 0.115,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: const Color.fromRGBO(103, 139, 210, 0.85),
+                        height: screen.height * 0.27,
+                        child: Column(
+                          children: const [
+                            SelectionText3(),
+                            _AddSelectionButton(),
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.center,
                         ),
-                        child: const SelectionText5(),
                       ),
+                Column(
+                  children: [
+                    _selectionsList.length > 1
+                        ? _Selection(
+                            selection:
+                                _selectionsList[_selectionsList.length - 2],
+                            width: 0.45,
+                            height: 0.115,
+                          )
+                        : Container(
+                            width: screen.width * 0.45,
+                            height: screen.height * 0.115,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromRGBO(241, 180, 136, 0.85),
+                            ),
+                            child: const SelectionText4(),
+                          ),
+                    _selectionsList.isNotEmpty
+                        ? _Selection(
+                            selection:
+                                _selectionsList[_selectionsList.length - 1],
+                            width: 0.45,
+                            height: 0.115,
+                          )
+                        : Container(
+                            width: screen.width * 0.45,
+                            height: screen.height * 0.115,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromRGBO(103, 139, 210, 0.85),
+                            ),
+                            child: const SelectionText5(),
+                          ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
               ],
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
             ),
-          ],
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

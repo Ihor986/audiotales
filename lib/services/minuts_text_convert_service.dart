@@ -40,4 +40,14 @@ class TimeTextConvertService {
     }
     return text;
   }
+
+  String dayMonthYear(String value) {
+    int idToInt = int.parse(value);
+    DateTime fullDate = DateTime.fromMillisecondsSinceEpoch(idToInt);
+    String d = '0${fullDate.day}'.substring('0${fullDate.day}'.length - 2);
+    String m = '0${fullDate.month}'.substring('0${fullDate.month}'.length - 2);
+    String y = '0${fullDate.year}'.substring('0${fullDate.year}'.length - 2);
+    String result = '$d.$m.$y';
+    return result;
+  }
 }

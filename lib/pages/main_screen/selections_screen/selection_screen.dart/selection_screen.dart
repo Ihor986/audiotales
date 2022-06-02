@@ -215,7 +215,7 @@ class _SelectionPhotoWidget extends StatelessWidget {
           BoxShadow(
               color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
         ],
-        color: CustomColors.whiteOp,
+        color: CustomColors.iconsColorBNB,
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
@@ -230,9 +230,9 @@ class _SelectionPhotoWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('data'),
-                  SizedBox(),
+                children: [
+                  DateSelectionScreen(selection: selection),
+                  const SizedBox(),
                 ],
               ),
             ),

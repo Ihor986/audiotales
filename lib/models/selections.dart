@@ -51,6 +51,7 @@ class Selection {
   Selection({
     required this.id,
     required this.name,
+    required this.date,
     this.photo,
     this.photoUrl,
     this.description,
@@ -58,6 +59,7 @@ class Selection {
 
   String id;
   String name;
+  String date;
   String? photo;
   String? photoUrl;
   String? description;
@@ -66,6 +68,7 @@ class Selection {
     return Selection(
       id: json['id'] as String,
       name: json['name'] as String,
+      date: json['date'] as String,
       photo: json['photo'],
       photoUrl: json['photoUrl'],
       description: json['description'],
@@ -75,6 +78,7 @@ class Selection {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
+        'date': date,
         'photo': photo,
         'photoUrl': photoUrl,
         'description': description,
@@ -82,6 +86,7 @@ class Selection {
   Map<String, dynamic> toFirestore() => {
         'id': id,
         'name': name,
+        'date': date,
         // 'photo': photo,
         'photoUrl': photoUrl,
         'description': description,

@@ -35,28 +35,6 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
         builder: (context, state) {
           return Stack(
             children: [
-              // Container(
-              //   height: screen.height * 0.05,
-              //   width: screen.width * 0.54,
-              //   decoration: BoxDecoration(
-              //     color: _soundService.isRepeatAllList
-              //         ? CustomColors.playAllButtonActiveRepeat
-              //         : CustomColors.playAllButtonDisactiveRepeat,
-              //     borderRadius: BorderRadius.circular(50),
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: [
-              //       IconButton(
-              //           onPressed: () {
-              //             context
-              //                 .read<AudioScreenBloc>()
-              //                 .add(AudioScreenChangeRepeatEvent());
-              //           },
-              //           icon: SvgPicture.asset(CustomIconsImg.repeat)),
-              //     ],
-              //   ),
-              // ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
@@ -109,7 +87,6 @@ class _AudioScreenPlayAllTextT extends StatelessWidget {
   final Color color;
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Text(TextsConst.audioScreenPlayAllT, style: TextStyle(color: color));
   }
 }
@@ -122,7 +99,8 @@ class _AudioScreenPlayAllTextF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
-    return Text(TextsConst.audioScreenPlayAllF, style: TextStyle(color: color));
+    Size screen = MediaQuery.of(context).size;
+    return Text(TextsConst.audioScreenPlayAllF,
+        style: TextStyle(color: color, fontSize: screen.height * 0.01));
   }
 }

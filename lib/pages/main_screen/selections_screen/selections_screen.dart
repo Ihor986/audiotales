@@ -1,17 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/selections.dart';
 import '../../../repositorys/selections_repositiry.dart';
-import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
-
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../main_screen_block/main_screen_bloc.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
 import 'selection_screen.dart/selection_screen.dart';
