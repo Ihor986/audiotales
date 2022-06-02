@@ -54,7 +54,7 @@ class TalesList {
   }
 
   void addNewAudio(AudioTale audioTale) {
-    fullTalesList.add(audioTale);
+    fullTalesList.insert(0, audioTale);
   }
 
   Map<String, dynamic> toJson() => {
