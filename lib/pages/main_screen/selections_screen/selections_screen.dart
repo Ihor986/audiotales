@@ -169,6 +169,7 @@ class _Selection extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        context.read<SelectionsBloc>().changeSelectionService.readOnly = true;
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -178,11 +179,6 @@ class _Selection extends StatelessWidget {
           ),
           (_) => true,
         );
-        // Navigator.pushNamed(
-        //   context,
-        //   SelectionScreen.routeName,
-        // );
-        // print('tap');
       },
       child: Container(
         decoration: BoxDecoration(

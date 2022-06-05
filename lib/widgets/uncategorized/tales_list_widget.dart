@@ -7,8 +7,13 @@ import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 
 class TalesListWidget extends StatelessWidget {
-  const TalesListWidget({Key? key, required this.talesList}) : super(key: key);
+  const TalesListWidget({
+    Key? key,
+    required this.talesList,
+    this.isDisactive,
+  }) : super(key: key);
   final List<AudioTale> talesList;
+  final bool? isDisactive;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -28,6 +33,9 @@ class TalesListWidget extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
+                        if (isDisactive == true) {
+                          return;
+                        }
                         // print('11111111111111');
                         _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                       },
@@ -50,7 +58,11 @@ class TalesListWidget extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (isDisactive == true) {
+                        return;
+                      }
+                    },
                     icon: const Icon(Icons.more_horiz_rounded)),
               ],
             ),
@@ -59,6 +71,13 @@ class TalesListWidget extends StatelessWidget {
               border: Border.all(color: CustomColors.audioBorder),
               borderRadius: const BorderRadius.all(Radius.circular(41)),
             ),
+            foregroundDecoration: isDisactive == true
+                ? BoxDecoration(
+                    color: CustomColors.disactive,
+                    border: Border.all(color: CustomColors.audioBorder),
+                    borderRadius: const BorderRadius.all(Radius.circular(41)),
+                  )
+                : null,
           ),
         );
       },

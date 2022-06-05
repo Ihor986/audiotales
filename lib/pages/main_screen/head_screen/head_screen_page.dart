@@ -69,13 +69,15 @@ class _SelectionButtons extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-                onPressed: () {
-                  context
-                      .read<NavigationBloc>()
-                      .add(ChangeCurrentIndexEvent(currentIndex: 1));
-                },
-                child: const SelectionText1()),
+            // TextButton(
+            //     onPressed: () {
+            //       context
+            //           .read<NavigationBloc>()
+            //           .add(ChangeCurrentIndexEvent(currentIndex: 1));
+            //     },
+            //     child:
+            const SelectionText1(),
+            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -84,7 +86,7 @@ class _SelectionButtons extends StatelessWidget {
                     onPressed: () {
                       context
                           .read<NavigationBloc>()
-                          .add(ChangeCurrentIndexEvent(currentIndex: 3));
+                          .add(ChangeCurrentIndexEvent(currentIndex: 1));
                     },
                     child: const SelectionText2()),
               ],
@@ -247,6 +249,7 @@ class _Selection extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
+        context.read<SelectionsBloc>().changeSelectionService.readOnly = true;
         Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => SelectionScreen(
@@ -370,12 +373,20 @@ class _SelectionButtonsAudio extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(onPressed: () {}, child: const SelectionText7()),
+            // TextButton(onPressed: () {}, child:
+            const SelectionText7(),
+            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(),
-                TextButton(onPressed: () {}, child: const SelectionText8()),
+                TextButton(
+                    onPressed: () {
+                      context
+                          .read<NavigationBloc>()
+                          .add(ChangeCurrentIndexEvent(currentIndex: 3));
+                    },
+                    child: const SelectionText8()),
               ],
             ),
           ],

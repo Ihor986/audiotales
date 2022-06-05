@@ -35,6 +35,9 @@ class SaveRecordUpbarButtons extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(screen.width * 0.04),
           child: PopupMenuButton(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
             icon: const Icon(Icons.more_horiz_rounded),
             itemBuilder: (context) => [
               PopupMenuItem(

@@ -8,6 +8,16 @@ class SelectionsList {
     selectionsList.insert(0, selection);
   }
 
+  replaceSelection({
+    required Selection selection,
+  }) {
+    for (var sel in selectionsList) {
+      if (sel.id == selection.id) {
+        sel.replace(selection);
+      }
+    }
+  }
+
   Map<String, dynamic> toJson() => {
         'selectionsList': selectionsList.map((e) => e.toJson()).toList(),
       };
@@ -63,6 +73,15 @@ class Selection {
   String? photo;
   String? photoUrl;
   String? description;
+
+  void replace(Selection selection) {
+    id = selection.id;
+    date = selection.date;
+    photo = selection.photo;
+    photoUrl = selection.photoUrl;
+    description = selection.description;
+    name = selection.name;
+  }
 
   factory Selection.fromJson(Map<String, dynamic> json) {
     return Selection(

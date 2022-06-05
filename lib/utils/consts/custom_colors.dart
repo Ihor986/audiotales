@@ -26,4 +26,5 @@ class CustomColors {
       Color.fromRGBO(246, 246, 246, 0.5);
   static const Color playAllButtonDisactive =
       Color.fromRGBO(246, 246, 246, 0.16);
+  static const Color disactive = Color.fromRGBO(229, 229, 229, 0.4);
 }

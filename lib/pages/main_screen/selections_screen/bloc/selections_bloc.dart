@@ -7,41 +7,70 @@ part 'selections_event.dart';
 part 'selections_state.dart';
 
 class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
-  final AddAudioToSelectionService addAudioToSelectionService =
-      AddAudioToSelectionService();
+  final ChangeSelectionService changeSelectionService =
+      ChangeSelectionService();
   SelectionsBloc() : super(SelectionsState()) {
     on<CreateNewSelectonEvent>((event, emit) {
-      addAudioToSelectionService.dispouse();
+      changeSelectionService.dispouse();
+      changeSelectionService.readOnly = false;
       emit(SelectionsState());
     });
-    on<CheckEvent>((event, emit) {
-      addAudioToSelectionService.checkEvent(event.isChecked, event.id);
-      emit(SelectionsState());
-    });
-    on<SaveCreatedSelectionEvent>(
-      (event, emit) async {
-        await addAudioToSelectionService.saveCreatedSelectionEvent(
-            talesList: event.talesList, selectionsList: event.selectionsList);
+    on<EditAllSelection>(
+      (event, emit) {
+        changeSelectionService.dispouse();
+        changeSelectionService.name = event.selection.name;
+        changeSelectionService.description = event.selection.description;
+        changeSelectionService.photo = event.selection.photo;
+        changeSelectionService.photoUrl = event.selection.photoUrl;
+        changeSelectionService.readOnly = false;
         emit(SelectionsState());
       },
     );
-    on<CreateSelectionNameEvent>(
+    on<CheckEvent>((event, emit) {
+      changeSelectionService.checkEvent(event.isChecked, event.id);
+      changeSelectionService.readOnly = false;
+      emit(SelectionsState());
+    });
+
+    on<ChangeSelectionNameEvent>(
       (event, emit) {
-        addAudioToSelectionService.name = event.value;
+        changeSelectionService.name = event.value;
+      },
+    );
+
+    on<ChangeSelectionDescriptionEvent>(
+      (event, emit) {
+        changeSelectionService.description = event.value;
+      },
+    );
+
+    on<SaveCreatedSelectionEvent>(
+      (event, emit) async {
+        await changeSelectionService.saveCreatedSelectionEvent(
+            talesList: event.talesList, selectionsList: event.selectionsList);
+        changeSelectionService.readOnly = false;
         emit(SelectionsState());
       },
     );
 
-    on<CreateSelectionDescriptionEvent>(
-      (event, emit) {
-        addAudioToSelectionService.description = event.value;
+    on<SaveChangedSelectionEvent>(
+      (event, emit) async {
+        await changeSelectionService.saveChangedSelectionEvent(
+          // talesList: event.talesList,
+          selectionsList: event.selectionsList,
+          selection: event.selection,
+        );
+        changeSelectionService.readOnly = true;
         emit(SelectionsState());
       },
     );
 
     on<SearchAudioToAddInSelectionEvent>(
       (event, emit) {
-        emit(SelectionsState(searchValue: event.value));
+        changeSelectionService.readOnly = false;
+        emit(SelectionsState(
+          searchValue: event.value,
+        ));
       },
     );
   }

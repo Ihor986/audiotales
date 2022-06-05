@@ -11,7 +11,10 @@ class SelectionText1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // num screenHeight = MediaQuery.of(context).size.height;
-    return selections();
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: selections(),
+    );
   }
 }
 
@@ -83,7 +86,10 @@ class SelectionText7 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // num screenHeight = MediaQuery.of(context).size.height;
-    return selectionsAudio();
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: selectionsAudio(),
+    );
   }
 }
 
@@ -191,6 +197,7 @@ Text selectionsAudio() => const Text(
       TextsConst.selectionsAudio,
       style: TextStyle(
         color: CustomColors.openAllAudio,
+        fontWeight: FontWeight.w400,
         fontStyle: FontStyle.normal,
         fontSize: 20,
       ),

@@ -7,10 +7,33 @@ class CreateNewSelectonEvent extends SelectionsEvent {
   // List<String> checkedList;
 }
 
+class EditAllSelection extends SelectionsEvent {
+  EditAllSelection({required this.selection});
+  final Selection selection;
+}
+
 class CheckEvent extends SelectionsEvent {
   CheckEvent({required this.isChecked, required this.id});
   bool isChecked;
   String id;
+}
+// String id;
+
+class ClearChekedEvent extends SelectionsEvent {}
+
+class ChangeSelectionNameEvent extends SelectionsEvent {
+  ChangeSelectionNameEvent({required this.value});
+  String value;
+}
+
+class EditSelectionNameEvent extends SelectionsEvent {
+  EditSelectionNameEvent({required this.value});
+  String value;
+}
+
+class ChangeSelectionDescriptionEvent extends SelectionsEvent {
+  ChangeSelectionDescriptionEvent({required this.value});
+  String value;
 }
 
 class SaveCreatedSelectionEvent extends SelectionsEvent {
@@ -19,18 +42,14 @@ class SaveCreatedSelectionEvent extends SelectionsEvent {
   TalesList talesList;
   SelectionsList selectionsList;
 }
-// String id;
 
-class ClearChekedEvent extends SelectionsEvent {}
-
-class CreateSelectionNameEvent extends SelectionsEvent {
-  CreateSelectionNameEvent({required this.value});
-  String value;
-}
-
-class CreateSelectionDescriptionEvent extends SelectionsEvent {
-  CreateSelectionDescriptionEvent({required this.value});
-  String value;
+class SaveChangedSelectionEvent extends SelectionsEvent {
+  SaveChangedSelectionEvent({
+    required this.selectionsList,
+    required this.selection,
+  });
+  final Selection selection;
+  final SelectionsList selectionsList;
 }
 
 class SearchAudioToAddInSelectionEvent extends SelectionsEvent {

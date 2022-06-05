@@ -1,8 +1,8 @@
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../models/selections.dart';
-import '../../../../services/minuts_text_convert_service.dart';
+import '../../../../../models/selections.dart';
+import '../../../../../services/minuts_text_convert_service.dart';
 
 class TitleSelectionScreen extends StatelessWidget {
   const TitleSelectionScreen({Key? key}) : super(key: key);

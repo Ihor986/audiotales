@@ -117,7 +117,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
               .toList();
         }
         List<String> checkedList =
-            _selectionsBloc.addAudioToSelectionService.checkedList;
+            _selectionsBloc.changeSelectionService.checkedList;
         return SizedBox(
           height: screen.height * 0.7,
           child: ListView.builder(

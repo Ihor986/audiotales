@@ -8,13 +8,14 @@ import '../models/selections.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/texts_consts.dart';
 
-class AddAudioToSelectionService {
-  AddAudioToSelectionService();
+class ChangeSelectionService {
+  ChangeSelectionService();
   String name = TextsConst.addNewSelectionsTextName;
   String? description;
   String? photo;
   String? photoUrl;
   List<String> checkedList = [];
+  bool readOnly = true;
 
   void checkEvent(bool isChecked, String id) {
     if (isChecked) {
@@ -73,11 +74,33 @@ class AddAudioToSelectionService {
     dispouse();
   }
 
+  saveChangedSelectionEvent({
+    // required TalesList talesList,
+    required SelectionsList selectionsList,
+    required Selection selection,
+  }) {
+    // TalesList _talesList = talesList;
+    SelectionsList _selectionsList = selectionsList;
+    Selection _selection = selection;
+
+    _selection.name = name;
+    _selection.description = description;
+    _selection.photo = photo;
+    _selection.photoUrl = photoUrl;
+
+    _selectionsList.replaceSelection(selection: _selection);
+
+    // DataBase.instance.saveAudioTales(_talesList);
+    DataBase.instance.saveSelectionsList(_selectionsList);
+    dispouse();
+  }
+
   void dispouse() {
     name = TextsConst.addNewSelectionsTextName;
     description = null;
     photo = null;
     photoUrl = null;
     checkedList = [];
+    readOnly = true;
   }
 }
