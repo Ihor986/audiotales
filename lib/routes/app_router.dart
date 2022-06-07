@@ -12,6 +12,7 @@ import '../pages/main_screen/selections_screen/add_new_selection/select_audio/se
 import '../pages/main_screen/selections_screen/selection_screen.dart/selection_screen.dart';
 import '../pages/main_screen/selections_screen/selections_screen.dart';
 import '../pages/main_screen/audios_screen/audios_screen.dart.dart';
+import '../pages/outher/deleted_screen/deleted_screen.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -89,6 +90,9 @@ class AppRouter {
 
       case SelectAudioScreen.routeName:
         builder = (_) => const SelectAudioScreen();
+        break;
+      case DeletedScreen.routeName:
+        builder = (_) => const DeletedScreen();
         break;
 
       default:

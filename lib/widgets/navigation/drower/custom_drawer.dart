@@ -139,6 +139,13 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.deletedDrower,
                 onClick: () {
+                  if (state.currentIndex != 5 && !_sound.recorder.isRecording) {
+                    _sound.url = null;
+                    _sound.soundIndex = 0;
+                    context
+                        .read<NavigationBloc>()
+                        .add(ChangeCurrentIndexEvent(currentIndex: 5));
+                  }
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.delete,

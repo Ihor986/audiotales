@@ -6,6 +6,7 @@ import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/drower/custom_drawer.dart';
+import '../outher/deleted_screen/deleted_screen.dart';
 import 'audios_screen/audios_screen.dart.dart';
 import 'head_screen/head_screen_page.dart';
 import 'profile/bloc/profile_bloc.dart';
@@ -26,6 +27,7 @@ class MainScreen extends StatelessWidget {
       const RecordScreen(),
       const AudiosScreen(),
       const Profile(),
+      const DeletedScreen(),
     ];
 
     List<Widget> _titles = [
@@ -53,7 +55,9 @@ class MainScreen extends StatelessWidget {
               key: GlobalKey<NavigatorState>(),
               onGenerateInitialRoutes: (route, string) {
                 return [
-                  MaterialPageRoute(builder: (_) => _pages[state.currentIndex]),
+                  MaterialPageRoute(
+                    builder: (_) => _pages[state.currentIndex],
+                  ),
                 ];
               },
               onGenerateRoute: AppRouter.generateRoute,

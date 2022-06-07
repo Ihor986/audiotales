@@ -57,5 +57,6 @@ class TextsConst {
   static const String subscribe = 'Подписка';
   static const String support = 'Написать в';
   static const String supportTwo = ' поддержку ';
-// static const String audiofiles = 'Аудиозаписи';
+  static const String deletedTitleFirst = 'Недавно';
+  static const String deletedTitleSecond = 'удаленные';
 }
