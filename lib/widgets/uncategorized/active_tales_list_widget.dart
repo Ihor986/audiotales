@@ -9,19 +9,12 @@ import '../../utils/consts/custom_icons_img.dart';
 import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 
-class TalesListWidget extends StatelessWidget {
-  const TalesListWidget({
+class ActiveTalesListWidget extends StatelessWidget {
+  const ActiveTalesListWidget({
     Key? key,
-    required this.talesList,
     required this.color,
-    required this.icon,
-    required this.onTap,
-    this.isDisactive,
   }) : super(key: key);
-  final List<AudioTale> talesList;
-  final bool? isDisactive;
-  final void Function() onTap;
-  final String icon;
+
   final Color color;
   @override
   Widget build(BuildContext context) {
@@ -31,10 +24,11 @@ class TalesListWidget extends StatelessWidget {
         final TalesList _talesListRep =
             RepositoryProvider.of<TalesListRepository>(context)
                 .getTalesListRepository();
+        final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
         final MainScreenBloc _mainScreenBloc =
             BlocProvider.of<MainScreenBloc>(context);
         return ListView.builder(
-          itemCount: talesList.length,
+          itemCount: _talesList.length,
           // itemCount: 10,
           itemBuilder: (_, i) {
             return Padding(
@@ -47,11 +41,7 @@ class TalesListWidget extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            if (isDisactive == true) {
-                              return;
-                            }
-                            // print('11111111111111');
-                            _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
+                            _mainScreenBloc.add(ClickPlayEvent(_talesList[i]));
                           },
                           icon: ImageIcon(
                             CustomIconsImg.playBlueSolo,
@@ -65,8 +55,8 @@ class TalesListWidget extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(talesList[i].name),
-                            AudioListText(time: talesList[i].time),
+                            Text(_talesList[i].name),
+                            AudioListText(time: _talesList[i].time),
                           ],
                         ),
                       ],
@@ -83,20 +73,16 @@ class TalesListWidget extends StatelessWidget {
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           child: const Text('Удалить'),
-                          value: () {},
+                          value: () {
+                            _mainScreenBloc.add(DeleteAudioEvent(
+                                id: _talesList[i].id,
+                                talesList: _talesListRep));
+                          },
                         ),
                         PopupMenuItem(
                           child: const Text('Подробнее об аудиозаписи'),
                           value: () {},
                         ),
-                        // PopupMenuItem(
-                        //   child: const Text('Удалить подборку'),
-                        //   value: () {},
-                        // ),
-                        // PopupMenuItem(
-                        //   child: const Text('Поделиться'),
-                        //   value: () {},
-                        // ),
                       ],
                       onSelected: (Function value) {
                         value();
@@ -109,14 +95,6 @@ class TalesListWidget extends StatelessWidget {
                   border: Border.all(color: CustomColors.audioBorder),
                   borderRadius: const BorderRadius.all(Radius.circular(41)),
                 ),
-                foregroundDecoration: isDisactive == true
-                    ? BoxDecoration(
-                        color: CustomColors.disactive,
-                        border: Border.all(color: CustomColors.audioBorder),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(41)),
-                      )
-                    : null,
               ),
             );
           },

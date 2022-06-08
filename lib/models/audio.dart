@@ -8,6 +8,7 @@ class AudioTale {
     required this.size,
     required this.compilationsId,
     this.isDeleted = false,
+    this.deletedDate,
   });
 
   final String id;
@@ -18,6 +19,7 @@ class AudioTale {
   final num size;
   final List compilationsId;
   bool isDeleted;
+  String? deletedDate;
 
   factory AudioTale.fromJson(Map<String, dynamic> json) {
     // List i = json['compilationsId'];
@@ -34,6 +36,7 @@ class AudioTale {
       size: json['size'],
       compilationsId: json['compilationsId'],
       isDeleted: json['isDeleted'],
+      deletedDate: json['deletedDate'],
     );
   }
 
@@ -47,6 +50,7 @@ class AudioTale {
       size: json['size'],
       compilationsId: json['compilationsId'],
       isDeleted: json['isDeleted'],
+      deletedDate: json['deletedDate'],
     );
   }
 
@@ -60,6 +64,7 @@ class AudioTale {
       'size': size,
       'compilationsId': compilationsId.map((e) => e).toList(),
       'isDeleted': isDeleted,
+      'deletedDate': deletedDate,
     };
   }
 
@@ -72,5 +77,15 @@ class AudioTale {
         'size': size,
         'compilationsId': compilationsId,
         'isDeleted': isDeleted,
+        'deletedDate': deletedDate,
       };
+
+  deleteAudio() {
+    isDeleted = true;
+    deletedDate = DateTime.now().millisecondsSinceEpoch.toString();
+  }
+
+  String getDeleteDate() {
+    return deletedDate ?? '';
+  }
 }

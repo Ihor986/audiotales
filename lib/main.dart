@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/navigation_bloc/navigation_bloc.dart';
 import 'data_base/data/local_data_base.dart';
 import 'data_base/data_base.dart';
 import 'firebase_options.dart';
@@ -49,8 +50,11 @@ class MyApp extends StatelessWidget {
           BlocProvider<AuthBlockBloc>(create: (context) => AuthBlockBloc()),
           BlocProvider<SelectionsBloc>(create: (context) => SelectionsBloc()),
           BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
+          BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         ],
         child: MaterialApp(
+          // builder: BotToastInit(),
+          // navigatorObservers: [BotToastNavigatorObserver()],
           debugShowCheckedModeBanner: true,
           onGenerateInitialRoutes: (route) {
             return AppRouter.generateInitialRoute(isNewUser);

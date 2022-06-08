@@ -22,6 +22,24 @@ class TalesList {
     }
   }
 
+  List<AudioTale> getDelitedTalesList() {
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      List<AudioTale> delitedTalesListRep =
+          fullTalesList.where((element) => element.isDeleted).toList();
+      delitedTalesListRep
+          .sort((a, b) => a.deletedDate!.compareTo(b.deletedDate!));
+      return delitedTalesListRep.reversed.toList();
+    } else {
+      List<AudioTale> delitedTalesListRep = fullTalesList
+          .where((element) => element.isDeleted && element.path != null)
+          .toList();
+      delitedTalesListRep
+          .sort((a, b) => a.deletedDate!.compareTo(b.deletedDate!));
+      return delitedTalesListRep.reversed.toList();
+    }
+  }
+
   List<AudioTale> getCompilation(String value) {
     return fullTalesList
         .where((element) =>
@@ -102,5 +120,15 @@ class TalesList {
         .where((e) => list1.contains(e.id) ? false : true)
         .toList();
     fullTalesList.addAll(list);
+  }
+
+  deleteAudio({
+    required String id,
+  }) {
+    for (var audio in fullTalesList) {
+      if (audio.id == id) {
+        audio.deleteAudio();
+      }
+    }
   }
 }

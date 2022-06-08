@@ -515,11 +515,17 @@ class _TalesListWidget extends StatelessWidget {
     if (readOnly) {
       return TalesListWidget(
         talesList: talesList,
+        color: CustomColors.blueSoso,
+        icon: CustomIconsImg.moreHorizontRounded,
+        onTap: () {},
       );
     } else {
       return TalesListWidget(
         talesList: talesList,
         isDisactive: true,
+        color: CustomColors.blueSoso,
+        icon: CustomIconsImg.moreHorizontRounded,
+        onTap: () {},
       );
     }
   }

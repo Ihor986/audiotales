@@ -6,6 +6,7 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
+import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/play_all_button.dart';
 import '../../../widgets/uncategorized/tales_list_widget.dart';
@@ -36,7 +37,7 @@ class _AudiosScreen extends State<AudiosScreen> {
         ClipPath(
           clipper: OvalBC(),
           child: Container(
-            height: screen.height / 4.5,
+            height: screen.height / 5,
             color: CustomColors.audiotalesHeadColorBlue,
           ),
         ),
@@ -58,12 +59,14 @@ class _AudiosScreen extends State<AudiosScreen> {
           ),
         ),
         Align(
-            alignment: const Alignment(0, 1),
-            child: SizedBox(
-                height: screen.height * 0.65,
-                child: TalesListWidget(
-                  talesList: talesList,
-                ))),
+          alignment: const Alignment(0, 1),
+          child: SizedBox(
+            height: screen.height * 0.65,
+            child: const ActiveTalesListWidget(
+              color: CustomColors.blueSoso,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -80,47 +83,49 @@ class _PlayAllTalesButtonWidget extends StatelessWidget {
 
     Size screen = MediaQuery.of(context).size;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AudioScreenBloc>(
-          create: (_) => AudioScreenBloc(_soundService),
-        ),
-      ],
-      child: BlocBuilder<AudioScreenBloc, AudioScreenState>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              Container(
-                height: screen.height * 0.05,
-                width: screen.width * 0.54,
-                decoration: BoxDecoration(
-                  color: _soundService.isRepeatAllList
-                      ? CustomColors.playAllButtonActiveRepeat
-                      : CustomColors.playAllButtonDisactiveRepeat,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          context
-                              .read<AudioScreenBloc>()
-                              .add(AudioScreenChangeRepeatEvent());
-                        },
-                        icon: SvgPicture.asset(CustomIconsImg.repeat)),
-                  ],
-                ),
+    return
+        //  MultiBlocProvider(
+        //   providers: [
+        //     BlocProvider<AudioScreenBloc>(
+        //       create: (_) => AudioScreenBloc(_soundService),
+        //     ),
+        //   ],
+        //   child:
+        BlocBuilder<AudioScreenBloc, AudioScreenState>(
+      builder: (context, state) {
+        return Stack(
+          children: [
+            Container(
+              height: screen.height * 0.05,
+              width: screen.width * 0.54,
+              decoration: BoxDecoration(
+                color: _soundService.isRepeatAllList
+                    ? CustomColors.playAllButtonActiveRepeat
+                    : CustomColors.playAllButtonDisactiveRepeat,
+                borderRadius: BorderRadius.circular(50),
               ),
-              PlayAllTalesButtonWidget(
-                talesList: talesList,
-                textColor: CustomColors.blueSoso,
-                backgroundColor: CustomColors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        context
+                            .read<AudioScreenBloc>()
+                            .add(AudioScreenChangeRepeatEvent());
+                      },
+                      icon: SvgPicture.asset(CustomIconsImg.repeat)),
+                ],
               ),
-            ],
-          );
-        },
-      ),
+            ),
+            PlayAllTalesButtonWidget(
+              talesList: talesList,
+              textColor: CustomColors.blueSoso,
+              backgroundColor: CustomColors.white,
+            ),
+          ],
+        );
+      },
+      // ),
     );
   }
 }

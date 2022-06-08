@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/selections.dart';
 import '../../../repositorys/selections_repositiry.dart';
+import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../main_screen_block/main_screen_bloc.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
 import 'selection_screen.dart/selection_screen.dart';
@@ -22,7 +25,7 @@ class SelectionsScreen extends StatelessWidget {
 
     return Scaffold(
       extendBody: true,
-      appBar: _appBar(screen, title, context),
+      appBar: const _SelectionsScreenAppBar(),
       body: Stack(
         children: [
           Column(
@@ -30,7 +33,7 @@ class SelectionsScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screen.height / 4.5,
+                  height: screen.height / 5,
                   color: CustomColors.oliveSoso,
                 ),
               ),
@@ -44,52 +47,68 @@ class SelectionsScreen extends StatelessWidget {
   }
 }
 
-AppBar _appBar(screen, title, context) {
-  final SelectionsBloc _selectionsBloc =
-      BlocProvider.of<SelectionsBloc>(context);
-  return AppBar(
-    actions: <Widget>[
-      Padding(
-        padding: EdgeInsets.only(right: screen.width * 0.04),
+class _SelectionsScreenAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _SelectionsScreenAppBar({Key? key}) : super(key: key);
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  @override
+  Widget build(BuildContext context) {
+    final SelectionsBloc _selectionsBloc =
+        BlocProvider.of<SelectionsBloc>(context);
+    Size screen = MediaQuery.of(context).size;
+    return AppBar(
+      actions: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(right: screen.width * 0.04),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
+                onPressed: () {},
+              ),
+              // const SizedBox(),
+            ],
+          ),
+        ),
+      ],
+      backgroundColor: CustomColors.oliveSoso,
+
+      elevation: 0,
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: const [
+          SizedBox(),
+          SelectionsScreen.title,
+          // SizedBox(),
+        ],
+      ),
+
+      // title: SelectionsScreen.title,
+      leading: Padding(
+        padding: EdgeInsets.only(
+          left: screen.width * 0.04,
+        ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             IconButton(
-              icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
-              // tooltip: 'Open shopping cart',
-              onPressed: () {},
+              icon: ImageIcon(
+                CustomIconsImg.plusPlus,
+                color: CustomColors.white,
+                size: screen.width * 0.06,
+              ),
+              onPressed: () {
+                _selectionsBloc.add(CreateNewSelectonEvent());
+                Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
+              },
             ),
-            const SizedBox(),
           ],
         ),
       ),
-    ],
-    backgroundColor: CustomColors.oliveSoso,
-    centerTitle: true,
-    elevation: 0,
-    title: title,
-    leading: Padding(
-      padding: EdgeInsets.only(
-        left: screen.width * 0.04,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: ImageIcon(
-              CustomIconsImg.plusPlus,
-              color: CustomColors.white,
-              size: screen.width * 0.06,
-            ),
-            onPressed: () {
-              _selectionsBloc.add(CreateNewSelectonEvent());
-              Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
-            },
-          ),
-          const SizedBox(),
-        ],
-      ),
-    ),
-  );
+    );
+  }
 }
 
 class _WrapSelectionsList extends StatelessWidget {
@@ -141,6 +160,7 @@ class _Selection extends StatelessWidget {
   final Selection selection;
   @override
   Widget build(BuildContext context) {
+    final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
     Size screen = MediaQuery.of(context).size;
     DecorationImage? decorationImage() {
       if (selection.photo != null) {
@@ -170,6 +190,11 @@ class _Selection extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.read<SelectionsBloc>().changeSelectionService.readOnly = true;
+        // _sound.url = null;
+        // _sound.soundIndex = 0;
+        // context
+        //     .read<NavigationBloc>()
+        //     .add(ChangeCurrentIndexEvent(currentIndex: 6));
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

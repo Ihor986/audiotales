@@ -26,12 +26,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     Size screen = MediaQuery.of(context).size;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
+        bool isIconActive = state.pageIndex < 5;
         return Container(
           height: screen.height * 0.107,
           foregroundDecoration: BoxDecoration(
             image: DecorationImage(
               alignment: Alignment.center,
-              image: state.currentIndex == 2
+              image: state.pageIndex == 2
                   ? _sound.getNavImg()
                   : CustomIconsImg.mic,
               fit: BoxFit.fitHeight,
@@ -59,7 +60,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     activeIcon: SvgPicture.asset(
                       CustomIconsImg.home,
                       height: 25,
-                      color: CustomColors.blueSoso,
+                      color: isIconActive
+                          ? CustomColors.blueSoso
+                          : CustomColors.iconsColorBNB,
                     ),
                     icon: SvgPicture.asset(
                       CustomIconsImg.home,
@@ -72,7 +75,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     activeIcon: SvgPicture.asset(
                       CustomIconsImg.menu,
                       height: 25,
-                      color: CustomColors.blueSoso,
+                      color: isIconActive
+                          ? CustomColors.blueSoso
+                          : CustomColors.iconsColorBNB,
                     ),
                     icon: SvgPicture.asset(
                       CustomIconsImg.menu,
@@ -91,7 +96,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   activeIcon: SvgPicture.asset(
                     CustomIconsImg.list,
                     height: 25,
-                    color: CustomColors.blueSoso,
+                    color: isIconActive
+                        ? CustomColors.blueSoso
+                        : CustomColors.iconsColorBNB,
                   ),
                   icon: SvgPicture.asset(
                     CustomIconsImg.list,
@@ -104,7 +111,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   activeIcon: SvgPicture.asset(
                     CustomIconsImg.profile,
                     height: 25,
-                    color: CustomColors.blueSoso,
+                    color: isIconActive
+                        ? CustomColors.blueSoso
+                        : CustomColors.iconsColorBNB,
                   ),
                   icon: SvgPicture.asset(
                     CustomIconsImg.profile,
@@ -114,8 +123,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   label: TextsConst.profile,
                 ),
               ],
-              currentIndex: state.currentIndex,
-              selectedItemColor: CustomColors.blueSoso,
+              currentIndex: state.getCurentIndex(),
+              selectedItemColor: isIconActive
+                  ? CustomColors.blueSoso
+                  : CustomColors.iconsColorBNB,
               unselectedItemColor: CustomColors.black,
               showSelectedLabels: true,
               showUnselectedLabels: true,
@@ -134,8 +145,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     (_) => false,
                   );
                 }
-                if (state.currentIndex != index &&
-                    !_sound.recorder.isRecording) {
+                if (state.pageIndex != index && !_sound.recorder.isRecording) {
                   _sound.url = null;
                   _sound.soundIndex = 0;
                   context

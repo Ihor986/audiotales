@@ -68,7 +68,7 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.head,
                 onClick: () {
-                  if (state.currentIndex != 0 && !_sound.recorder.isRecording) {
+                  if (state.pageIndex != 0 && !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
                     context
@@ -89,7 +89,7 @@ class _BodyMenu extends StatelessWidget {
                       RegistrationPage.routeName,
                       (_) => false,
                     );
-                  } else if (state.currentIndex != 4 &&
+                  } else if (state.pageIndex != 4 &&
                       !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
@@ -104,7 +104,7 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.collections,
                 onClick: () {
-                  if (state.currentIndex != 1 && !_sound.recorder.isRecording) {
+                  if (state.pageIndex != 1 && !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
                     context
@@ -118,7 +118,7 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.allAudioFiles,
                 onClick: () {
-                  if (state.currentIndex != 3 && !_sound.recorder.isRecording) {
+                  if (state.pageIndex != 3 && !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
                     context
@@ -139,7 +139,7 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.deletedDrower,
                 onClick: () {
-                  if (state.currentIndex != 5 && !_sound.recorder.isRecording) {
+                  if (state.pageIndex != 5 && !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
                     context

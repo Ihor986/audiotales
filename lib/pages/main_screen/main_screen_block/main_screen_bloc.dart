@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import '../../../data_base/data_base.dart';
 import '../../../models/audio.dart';
 import '../../../models/tales_list.dart';
 import '../../../services/sound_service.dart';
@@ -22,10 +23,18 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       },
     );
     on<DeleteAudioEvent>(
-      (event, emit) {
-        sound.checkDeleteAudio(list: event.list, audio: event.audio);
+      (event, emit) async {
+        TalesList _talesList = event.talesList;
+        _talesList.deleteAudio(id: event.id);
+        await DataBase.instance.saveAudioTales(_talesList);
         emit(MainScreenState());
       },
     );
+    // on<DeleteAudioEvent>(
+    //   (event, emit) {
+    //     sound.checkDeleteAudio(list: event.list, audio: event.audio);
+    //     emit(MainScreenState());
+    //   },
+    // );
   }
 }

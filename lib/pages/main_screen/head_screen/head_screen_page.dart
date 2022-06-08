@@ -7,7 +7,9 @@ import '../../../models/selections.dart';
 import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
+import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/texts/main_screen_text.dart';
+import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/tales_list_widget.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../selections_screen/bloc/selections_bloc.dart';
@@ -348,7 +350,9 @@ class _AudioDraggableWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 50),
                     child: talesList.isNotEmpty
-                        ? TalesListWidget(talesList: talesList)
+                        ? const ActiveTalesListWidget(
+                            color: CustomColors.blueSoso,
+                          )
                         : const SelectionText9(),
                   )
                 ],

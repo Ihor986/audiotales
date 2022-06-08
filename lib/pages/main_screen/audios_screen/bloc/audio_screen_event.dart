@@ -14,3 +14,9 @@ class AudioScreenContinueEvent extends AudioScreenEvent {
   AudioScreenContinueEvent({required this.talesList});
   final List<AudioTale> talesList;
 }
+
+// class DeleteAudioEvent extends AudioScreenEvent {
+//   DeleteAudioEvent({required this.id, required this.talesList});
+//   final String id;
+//   final TalesList talesList;
+// }

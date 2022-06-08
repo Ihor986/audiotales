@@ -56,8 +56,9 @@ class CustomIconsImg {
   static const String pauseAll = "assets/icons/pauseAll.svg";
   static const String wallet = "assets/icons/wallet.svg";
   static const String support = "assets/icons/support.svg";
-  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
-  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+  static const String drawer = "assets/icons/drawer.svg";
+  static const String moreHorizontRounded =
+      "assets/icons/moreHorizontRounded.svg";
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");

@@ -5,17 +5,10 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/minuts_text_convert_service.dart';
 
 class AudioListText extends StatelessWidget {
-  const AudioListText({Key? key, required this.index}) : super(key: key);
-  final int index;
+  const AudioListText({Key? key, required this.time}) : super(key: key);
+  final num time;
   @override
   Widget build(BuildContext context) {
-    final List<AudioTale> talesList =
-        RepositoryProvider.of<TalesListRepository>(context)
-            .getTalesListRepository()
-            .getActiveTalesList();
-
-    num time = talesList[index].time;
-
     String text = TimeTextConvertService.instance
         .getConvertedMinutesText(timeInMinutes: time);
 

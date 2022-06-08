@@ -60,8 +60,8 @@ class SaveRecordUpbarButtons extends StatelessWidget {
                 child: const Text('Удалить'),
                 value: () {
                   _mainBloc.add(DeleteAudioEvent(
-                      list: _talesListRep,
-                      audio: _talesListRep.fullTalesList.last));
+                      talesList: _talesListRep,
+                      id: _talesListRep.fullTalesList.last.id));
                   _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
                 },
               ),

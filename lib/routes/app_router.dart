@@ -57,7 +57,7 @@ class AppRouter {
         break;
 
       case MainScreen.routeName:
-        builder = (_) => const MainScreen();
+        builder = (_) => MainScreen();
         break;
 
       case RegistrationPage.routeName:

@@ -6,4 +6,6 @@ class SelectionsListRepository {
     SelectionsList selectionsListRep = DataBase.instance.getSelectionsList();
     return selectionsListRep;
   }
+
+  // Selection? transmittedSelection;
 }
