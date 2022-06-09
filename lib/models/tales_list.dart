@@ -122,13 +122,19 @@ class TalesList {
     fullTalesList.addAll(list);
   }
 
-  deleteAudio({
+  removeAudioToDeleted({
     required String id,
   }) {
     for (var audio in fullTalesList) {
       if (audio.id == id) {
-        audio.deleteAudio();
+        audio.removeAudioToDeleted();
       }
     }
+  }
+
+  deleteAudio({
+    required String id,
+  }) {
+    fullTalesList.removeWhere((element) => element.id == id);
   }
 }

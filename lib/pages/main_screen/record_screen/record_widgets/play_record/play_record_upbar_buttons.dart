@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../repositorys/user_reposytory.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../sound_bloc/sound_bloc.dart';
 import '../recordering/record_screen_text.dart';
 
@@ -65,7 +66,9 @@ class PlayRecordUpbarButtons extends StatelessWidget {
               onPressed: () {
                 context.read<SoundBloc>().add(
                       SaveRecordEvent(
-                          talesListRep: _fullTalesList, localUser: _localUser),
+                        talesListRep: _fullTalesList,
+                        localUser: _localUser,
+                      ),
                     );
               },
               child: const PlayRecordText()),

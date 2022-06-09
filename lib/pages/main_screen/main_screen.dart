@@ -12,8 +12,10 @@ import '../../utils/consts/custom_icons_img.dart';
 
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/drawer/custom_drawer.dart';
-import '../outher/deleted_screen/deleted_screen.dart';
-import '../outher/deleted_screen/deleted_screen_text.dart';
+import '../deleted_screen/bloc/delete_bloc.dart';
+import '../deleted_screen/deleted_screen.dart';
+
+import '../deleted_screen/widgets/deleted_screen_text.dart';
 import 'audios_screen/audios_screen.dart.dart';
 import 'audios_screen/bloc/audio_screen_bloc.dart';
 import 'head_screen/head_screen_page.dart';
@@ -54,7 +56,6 @@ class MainScreen extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
         BlocProvider<AudioScreenBloc>(
           create: (_) => AudioScreenBloc(_soundService),
         ),

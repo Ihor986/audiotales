@@ -3,6 +3,7 @@ import '../../../data_base/data_base.dart';
 import '../../../models/audio.dart';
 import '../../../models/tales_list.dart';
 import '../../../services/sound_service.dart';
+import '../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 
 part 'main_screen_event.dart';
 part 'main_screen_state.dart';
@@ -22,17 +23,18 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
         emit(MainScreenState());
       },
     );
-    on<DeleteAudioEvent>(
+    on<RemoveToDeleteAudioEvent>(
       (event, emit) async {
         TalesList _talesList = event.talesList;
-        _talesList.deleteAudio(id: event.id);
+        _talesList.removeAudioToDeleted(id: event.id);
         await DataBase.instance.saveAudioTales(_talesList);
         emit(MainScreenState());
       },
     );
     // on<DeleteAudioEvent>(
-    //   (event, emit) {
-    //     sound.checkDeleteAudio(list: event.list, audio: event.audio);
+    //   (event, emit) async {
+    //     await DataBase.instance
+    //         .deleteAudioTaleFromDB(event.id, event.talesList);
     //     emit(MainScreenState());
     //   },
     // );

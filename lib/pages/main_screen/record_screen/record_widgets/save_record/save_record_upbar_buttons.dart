@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
 
 class SaveRecordUpbarButtons extends StatelessWidget {
@@ -12,7 +13,6 @@ class SaveRecordUpbarButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
-    final MainScreenBloc _mainBloc = BlocProvider.of<MainScreenBloc>(context);
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
@@ -59,10 +59,14 @@ class SaveRecordUpbarButtons extends StatelessWidget {
               PopupMenuItem(
                 child: const Text('Удалить'),
                 value: () {
-                  _mainBloc.add(DeleteAudioEvent(
-                      talesList: _talesListRep,
-                      id: _talesListRep.fullTalesList.last.id));
-                  _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
+                  RemoveToDeletedConfirm.instance.deletedConfirm(
+                    screen: screen,
+                    context: context,
+                    id: _talesListRep.fullTalesList.first.id,
+                    talesList: _talesListRep,
+                  );
+
+                  // _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
                 },
               ),
             ],

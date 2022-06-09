@@ -4,8 +4,8 @@ import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../main_screen_block/main_screen_bloc.dart';
-import 'record_draggable_widgets/record_draggable_widget.dart';
-import 'record_screen_text.dart';
+import 'record_widgets/record_draggable_widget.dart';
+import 'record_widgets/record_screen_text.dart';
 import 'sound_bloc/sound_bloc.dart';
 
 class RecordScreen extends StatelessWidget {

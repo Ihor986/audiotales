@@ -50,7 +50,7 @@ class SaveRecord extends StatelessWidget {
                           child: Text(_talesListRep
                               .getTalesListRepository()
                               .getActiveTalesList()
-                              .last
+                              .first
                               .name)),
                       const Align(
                           alignment: Alignment(0, 0.4),

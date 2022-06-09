@@ -17,11 +17,10 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     );
     on<SaveRecordEvent>(
       (event, emit) async {
-        emit(SoundInitial());
-        sound.soundIndex = 2;
+        emit(SoundInitial(isProgress: true));
         await sound.saveAudioTale(
             fullTalesList: event.talesListRep, localUser: event.localUser);
-        // emit(SoundInitial(indexPage: 2));
+        sound.soundIndex = 2;
         emit(SoundInitial());
       },
     );

@@ -40,7 +40,7 @@ class SoundService {
   String endOfSliderPositionText = '00:00:01';
   num? size;
   AudioTale? audioTale;
-  bool saveLocal = false;
+  bool? saveLocal;
   bool isRepeatAllList = false;
   // bool? isMicrophonePermissionGranted;
 
@@ -83,10 +83,10 @@ class SoundService {
     DataBase.instance.saveAudioTales(fullTalesList);
   }
 
-  checkDeleteAudio({required TalesList list, required AudioTale audio}) {
-    audio.isDeleted = true;
-    DataBase.instance.saveAudioTales(list);
-  }
+  // checkDeleteAudio({required TalesList list, required AudioTale audio}) {
+  //   audio.isDeleted = true;
+  //   DataBase.instance.saveAudioTales(list);
+  // }
 
   clickRecorder() async {
     bool isRedyStartRecord = !recorder.isRecording &&

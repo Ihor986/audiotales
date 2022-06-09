@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../pages/deleted_screen/deleted_screen.dart';
 import '../pages/income_screen/new_user/new_user_page.dart';
 import '../pages/income_screen/new_user/registration_page.dart';
 import '../pages/income_screen/new_user/you_super_page.dart';
@@ -12,7 +13,6 @@ import '../pages/main_screen/selections_screen/add_new_selection/select_audio/se
 import '../pages/main_screen/selections_screen/selection_screen.dart/selection_screen.dart';
 import '../pages/main_screen/selections_screen/selections_screen.dart';
 import '../pages/main_screen/audios_screen/audios_screen.dart.dart';
-import '../pages/outher/deleted_screen/deleted_screen.dart';
 
 class AppRouter {
   const AppRouter._();

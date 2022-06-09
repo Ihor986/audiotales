@@ -39,8 +39,10 @@ class SavePagePlayRecordButtons extends StatelessWidget {
             ),
             IconButton(
               onPressed: () async {
-                _player.add(ClickPlayEvent(
-                    _talesListRep.getTalesListRepository().fullTalesList.last));
+                _player.add(ClickPlayEvent(_talesListRep
+                    .getTalesListRepository()
+                    .fullTalesList
+                    .first));
               },
               icon: const Icon(Icons.pause, color: CustomColors.invisible),
             ),

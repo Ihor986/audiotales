@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:audiotales/models/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../models/audio.dart';
 import '../../models/selections.dart';
 import '../../models/tales_list.dart';
 
@@ -63,5 +65,12 @@ class LocalDB {
   void deleteUser() async {
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.delete('authUser');
+  }
+
+  void deleteAudioTaleFromLocalDB(AudioTale audioTale) {
+    if (audioTale.path == null) {
+      return;
+    }
+    File(audioTale.path!).delete();
   }
 }

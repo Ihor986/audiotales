@@ -1,4 +1,6 @@
+import 'package:audiotales/models/audio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../models/selections.dart';
 import '../../models/tales_list.dart';
@@ -98,5 +100,14 @@ class FirestoreDB {
           .doc('selectionsList')
           .set(selectionsList.toFirestore());
     } catch (_) {}
+  }
+
+  Future<void> deleteAudioTaleFromFireBase(
+      {required AudioTale audioTale, required String? userId}) async {
+    FirebaseStorage.instance
+        .ref()
+        .child('$userId/audio/')
+        .child(audioTale.id)
+        .delete();
   }
 }

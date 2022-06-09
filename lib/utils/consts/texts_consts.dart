@@ -59,4 +59,18 @@ class TextsConst {
   static const String supportTwo = ' поддержку ';
   static const String deletedTitleFirst = 'Недавно';
   static const String deletedTitleSecond = 'удаленные';
+  static const String deleteConfirm = 'Подтверждаете удаление?';
+  static const String remuveForDelete1 = 'Ваш файл перенесется в папку';
+  static const String remuveForDelete2 = '“Недавно удаленные”.';
+  static const String remuveForDelete3 = 'Через 15 дней он исчезнет.';
+  // static const String audioScreenPlayAllF = ' Остановить';
+  // static const String audioTales = 'Аудиосказки';
+  // static const String menu = 'Меню';
+  // static const String allAudioFiles = 'Все аудиофайлы';
+  // static const String deletedDrower = 'Недавно удаленные';
+  // static const String subscribe = 'Подписка';
+  // static const String support = 'Написать в';
+  // static const String supportTwo = ' поддержку ';
+  // static const String deletedTitleFirst = 'Недавно';
+  // static const String deletedTitleSecond = 'удаленные';
 }

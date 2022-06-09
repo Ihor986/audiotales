@@ -4,6 +4,6 @@ part of 'sound_bloc.dart';
 // abstract class SoundState {}
 
 class SoundInitial {
-  // SoundInitial({required this.indexPage});
-  // int indexPage;
+  SoundInitial({this.isProgress = false});
+  bool isProgress;
 }

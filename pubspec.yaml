@@ -50,6 +50,7 @@ dependencies:
   permission_handler: ^9.2.0
   image_picker: ^0.8.5
   flutter_svg: any
+  bot_toast: ^4.0.2
 
 dev_dependencies:
   flutter_test:

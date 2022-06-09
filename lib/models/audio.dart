@@ -80,7 +80,7 @@ class AudioTale {
         'deletedDate': deletedDate,
       };
 
-  deleteAudio() {
+  removeAudioToDeleted() {
     isDeleted = true;
     deletedDate = DateTime.now().millisecondsSinceEpoch.toString();
   }

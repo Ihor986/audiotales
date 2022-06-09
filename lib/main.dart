@@ -6,14 +6,17 @@ import 'bloc/navigation_bloc/navigation_bloc.dart';
 import 'data_base/data/local_data_base.dart';
 import 'data_base/data_base.dart';
 import 'firebase_options.dart';
+import 'pages/deleted_screen/bloc/delete_bloc.dart';
 import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/main_screen/main_screen_block/main_screen_bloc.dart';
+import 'pages/main_screen/profile/bloc/profile_bloc.dart';
 import 'pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import 'repositorys/auth.dart';
 import 'repositorys/selections_repositiry.dart';
 import 'repositorys/tales_list_repository.dart';
 import 'repositorys/user_reposytory.dart';
 import 'routes/app_router.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,10 +54,12 @@ class MyApp extends StatelessWidget {
           BlocProvider<SelectionsBloc>(create: (context) => SelectionsBloc()),
           BlocProvider<MainScreenBloc>(create: (context) => MainScreenBloc()),
           BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
+          BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
+          BlocProvider<DeleteBloc>(create: (context) => DeleteBloc()),
         ],
         child: MaterialApp(
-          // builder: BotToastInit(),
-          // navigatorObservers: [BotToastNavigatorObserver()],
+          builder: BotToastInit(),
+          navigatorObservers: [BotToastNavigatorObserver()],
           debugShowCheckedModeBanner: true,
           onGenerateInitialRoutes: (route) {
             return AppRouter.generateInitialRoute(isNewUser);

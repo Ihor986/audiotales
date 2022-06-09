@@ -12,11 +12,14 @@ class Rewind15Event extends MainScreenEvent {
   int time;
 }
 
-class DeleteAudioEvent extends MainScreenEvent {
-  DeleteAudioEvent({required this.id, required this.talesList});
+class RemoveToDeleteAudioEvent extends MainScreenEvent {
+  RemoveToDeleteAudioEvent({required this.id, required this.talesList});
   final String id;
   final TalesList talesList;
-  // DeleteAudioEvent({required this.audio, required this.list});
-  // AudioTale audio;
-  // TalesList list;
 }
+
+// class DeleteAudioEvent extends MainScreenEvent {
+//   DeleteAudioEvent({required this.id, required this.talesList});
+//   final String id;
+//   final TalesList talesList;
+// }

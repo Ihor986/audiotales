@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import '../models/audio.dart';
 import '../models/selections.dart';
 import '../models/tales_list.dart';
 import '../models/user.dart';
@@ -49,6 +50,17 @@ class DataBase {
       FirestoreDB.instance
           .saveAudioTalesToFirebase(talesList: _talesList, user: getUser());
     }
+  }
+
+  Future<void> deleteAudioTaleFromDB(String id, TalesList talesList) async {
+    TalesList _talesList = talesList;
+    AudioTale _audioTale =
+        _talesList.fullTalesList.firstWhere((element) => element.id == id);
+    await FirestoreDB.instance.deleteAudioTaleFromFireBase(
+        audioTale: _audioTale, userId: LocalDB.instance.getUser().id);
+    LocalDB.instance.deleteAudioTaleFromLocalDB(_audioTale);
+    _talesList.deleteAudio(id: id);
+    await saveAudioTales(_talesList);
   }
 
   Future<void> saveAudioTalesWithUpDate() async {
