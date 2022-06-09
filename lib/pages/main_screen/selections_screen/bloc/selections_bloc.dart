@@ -28,7 +28,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     );
     on<CheckEvent>((event, emit) {
       changeSelectionService.checkEvent(event.isChecked, event.id);
-      changeSelectionService.readOnly = false;
+      // changeSelectionService.readOnly = false;
       emit(SelectionsState());
     });
 

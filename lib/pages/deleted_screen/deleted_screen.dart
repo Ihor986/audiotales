@@ -20,40 +20,58 @@ class DeletedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-
-    return
-        // Scaffold(
-        // extendBody: true,
-        // appBar: _appBar(screen, title, context),
-        // body:
-        Stack(
-      children: [
-        Column(
+    final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
+    return BlocBuilder<DeleteBloc, DeleteState>(
+      builder: (context, state) {
+        return
+            // Scaffold(
+            // extendBody: true,
+            // appBar: _appBar(screen, title, context),
+            // body:
+            Stack(
           children: [
-            ClipPath(
-              clipper: OvalBC(),
-              child: Container(
-                height: screen.height / 7,
-                color: CustomColors.audiotalesHeadColorBlue,
-              ),
+            Column(
+              children: [
+                ClipPath(
+                  clipper: OvalBC(),
+                  child: Container(
+                    height: screen.height / 7,
+                    color: CustomColors.audiotalesHeadColorBlue,
+                  ),
+                ),
+              ],
+            ),
+            _deleteBloc.selectAudioToDeleteService.isChosen
+                ? Align(
+                    alignment: const Alignment(0.95, -0.9),
+                    child: TextButton(
+                      onPressed: () {
+                        _deleteBloc.add(SelectDeletedAudioEvent());
+                      },
+                      child: const Text(
+                        'Cansel',
+                        style: TextStyle(
+                          color: CustomColors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            Column(
+              children: [
+                SizedBox(
+                  height: screen.height * 0.15,
+                ),
+                const Expanded(
+                  child: _DeletedTalesListWidget(),
+                ),
+              ],
             ),
           ],
-        ),
-        Column(
-          children: [
-            SizedBox(
-              height: screen.height * 0.15,
-            ),
-            const Expanded(
-              child: _DeletedTalesListWidget(),
-            ),
-          ],
-        ),
-      ],
-      // ),
+          // ),
+        );
+      },
     );
-    //   },
-    // );
   }
 }
 
@@ -122,18 +140,7 @@ class _DeletedTalesListWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        IconButton(
-                          onPressed: () {
-                            DeleteFromDBConfirm.instance.deletedConfirm(
-                                screen: screen,
-                                context: context,
-                                id: talesList[i].id);
-                          },
-                          icon: SvgPicture.asset(
-                            CustomIconsImg.delete,
-                            color: CustomColors.black,
-                          ),
-                        ),
+                        _iconButton(id: talesList[i].id),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -149,5 +156,42 @@ class _DeletedTalesListWidget extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class _iconButton extends StatelessWidget {
+  const _iconButton({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
+    Size screen = MediaQuery.of(context).size;
+    List<String> _checkedList =
+        _deleteBloc.selectAudioToDeleteService.checkedList;
+    bool isChecked = _checkedList.contains(id);
+
+    final bool isChosen = _deleteBloc.selectAudioToDeleteService.isChosen;
+    return isChosen
+        ? IconButton(
+            onPressed: () {
+              _deleteBloc.add(CheckEvent(isChecked: isChecked, id: id));
+            },
+            icon: isChecked
+                ? const ImageIcon(CustomIconsImg.check)
+                : const ImageIcon(CustomIconsImg.uncheck))
+        : IconButton(
+            onPressed: () {
+              DeleteFromDBConfirm.instance
+                  .deletedConfirm(screen: screen, context: context, id: id);
+            },
+            icon: SvgPicture.asset(
+              CustomIconsImg.delete,
+              color: CustomColors.black,
+            ),
+          );
   }
 }

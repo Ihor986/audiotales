@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../models/audio.dart';
 import '../../models/selections.dart';
+import '../../models/tales_list.dart';
 import '../../repositorys/selections_repositiry.dart';
+import '../../repositorys/tales_list_repository.dart';
 import '../../routes/app_router.dart';
 import '../../services/sound_service.dart';
 import '../../utils/consts/custom_colors.dart';
@@ -360,6 +363,10 @@ class _DeletedScreenAppBar extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
   @override
   Widget build(BuildContext context) {
+    final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
+    final TalesList _talesList =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository();
     Size screen = MediaQuery.of(context).size;
     return AppBar(
       actions: <Widget>[
@@ -367,10 +374,42 @@ class _DeletedScreenAppBar extends StatelessWidget
           padding: EdgeInsets.only(right: screen.width * 0.04),
           child: Column(
             children: [
-              IconButton(
-                icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
-                onPressed: () {},
+              PopupMenuButton(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                icon: SvgPicture.asset(
+                  CustomIconsImg.moreHorizontRounded,
+                  // height: 3,
+                  // color: CustomColors.black,
+                ),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: const Text('Выбрать несколько'),
+                    value: () {
+                      _deleteBloc.add(SelectDeletedAudioEvent());
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: const Text('Удалить все'),
+                    value: () {
+                      _deleteBloc
+                          .add(DeleteSelectedAudioEvent(talesList: _talesList));
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: const Text('Восстановить все'),
+                    value: () {
+                      _deleteBloc.add(
+                          RestoreSelectedAudioEvent(talesList: _talesList));
+                    },
+                  ),
+                ],
+                onSelected: (Function value) {
+                  value();
+                },
               ),
+
               // const SizedBox(),
             ],
           ),
