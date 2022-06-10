@@ -29,7 +29,7 @@ class CustomDrawer extends StatelessWidget {
             color: CustomColors.white),
         child: Stack(
           children: const [
-            Align(alignment: Alignment(0, -0.8), child: _Header()),
+            Align(alignment: Alignment(0, -0.85), child: _Header()),
             Align(alignment: Alignment(0, 0.2), child: _BodyMenu()),
           ],
         ),
@@ -62,7 +62,7 @@ class _BodyMenu extends StatelessWidget {
       builder: (context, state) {
         return Container(
           // color: Colors.amberAccent,
-          height: screen.height * 0.55,
+          height: screen.height * 0.7,
           child: Column(
             children: [
               _MenuButtonRow(
@@ -132,12 +132,12 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.search,
                 onClick: () {
-                  if (state.pageIndex != 6 && !_sound.recorder.isRecording) {
+                  if (state.pageIndex != 5 && !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
                     context
                         .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 6));
+                        .add(ChangeCurrentIndexEvent(currentIndex: 5));
                   }
                   Scaffold.of(context).openEndDrawer();
                 },
@@ -146,12 +146,12 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.deletedDrower,
                 onClick: () {
-                  if (state.pageIndex != 5 && !_sound.recorder.isRecording) {
+                  if (state.pageIndex != 6 && !_sound.recorder.isRecording) {
                     _sound.url = null;
                     _sound.soundIndex = 0;
                     context
                         .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 5));
+                        .add(ChangeCurrentIndexEvent(currentIndex: 6));
                   }
                   Scaffold.of(context).openEndDrawer();
                 },
@@ -163,6 +163,13 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.subscribe,
                 onClick: () {
+                  if (state.pageIndex != 7 && !_sound.recorder.isRecording) {
+                    _sound.url = null;
+                    _sound.soundIndex = 0;
+                    context
+                        .read<NavigationBloc>()
+                        .add(ChangeCurrentIndexEvent(currentIndex: 7));
+                  }
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.wallet,
@@ -222,7 +229,7 @@ class _MenuButtonRow extends StatelessWidget {
         children: [
           SvgPicture.asset(
             icon,
-            height: screen.height * 0.03,
+            height: screen.height * 0.025,
             color: CustomColors.black,
           ),
           textTwo == null

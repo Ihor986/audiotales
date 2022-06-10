@@ -13,8 +13,8 @@ import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../widgets/uncategorized/custom_popup_menu_active_playlist.dart';
 import '../main_screen/main_screen_block/main_screen_bloc.dart';
 
-class SelectAudioScreen extends StatelessWidget {
-  const SelectAudioScreen({Key? key}) : super(key: key);
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({Key? key}) : super(key: key);
   static const routeName = '/select_audio_screen.dart';
 
   @override

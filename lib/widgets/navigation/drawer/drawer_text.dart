@@ -18,7 +18,7 @@ class HeaderText extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: screen.height * 0.07,
+          height: screen.height * 0.05,
         ),
         Text(
           TextsConst.menu,

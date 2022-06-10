@@ -17,6 +17,8 @@ import '../deleted_screen/deleted_screen.dart';
 import '../deleted_screen/widgets/deleted_screen_text.dart';
 import '../search_screen/search_page.dart';
 import '../search_screen/widgets/search_text.dart';
+import '../subscribe_screen/subscribe_page.dart';
+import '../subscribe_screen/widgets/subscribe_text_widget.dart';
 import 'audios_screen/audios_screen.dart.dart';
 import 'audios_screen/bloc/audio_screen_bloc.dart';
 import 'head_screen/head_screen_page.dart';
@@ -40,8 +42,9 @@ class MainScreen extends StatelessWidget {
       const RecordScreen(),
       const AudiosScreen(),
       const Profile(),
+      const SearchScreen(),
       const DeletedScreen(),
-      const SelectAudioScreen(),
+      const SubscribeScreen(),
     ];
 
     List<PreferredSizeWidget?> _appBars = [
@@ -50,8 +53,9 @@ class MainScreen extends StatelessWidget {
       const _RecordScreenAppBar(),
       const _AudioScreenAppBar(),
       const _ProfileScreenAppBar(),
-      const _DeletedScreenAppBar(),
       const _SearchScreenAppBar(),
+      const _DeletedScreenAppBar(),
+      const _SubscribeScreenAppBar(),
     ];
 
     return MultiBlocProvider(
@@ -64,7 +68,7 @@ class MainScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             extendBody: true,
-            appBar: state.pageIndex < 7 ? _appBars[state.pageIndex] : null,
+            appBar: state.pageIndex < 8 ? _appBars[state.pageIndex] : null,
             body: Navigator(
               key: GlobalKey<NavigatorState>(),
               onGenerateInitialRoutes: (route, string) {
@@ -528,6 +532,52 @@ class _SearchScreenAppBar extends StatelessWidget
         children: const [
           SizedBox(),
           SearchAppBarText(),
+        ],
+      ),
+      leading: Padding(
+        padding: EdgeInsets.only(
+          left: screen.width * 0.04,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                CustomIconsImg.drawer,
+                height: 25,
+                color: CustomColors.white,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+            const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SubscribeScreenAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _SubscribeScreenAppBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return AppBar(
+      backgroundColor: CustomColors.blueSoso,
+      elevation: 0,
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          SizedBox(),
+          SubscribeScreenTitleText(),
         ],
       ),
       leading: Padding(

@@ -2,16 +2,19 @@ import 'dart:io';
 import 'package:audiotales/pages/main_screen/selections_screen/selection_screen.dart/selection_screen_widgets/text_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../models/audio.dart';
 import '../../../../../models/selections.dart';
+import '../../../../../models/tales_list.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../services/image_service.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../../utils/consts/texts_consts.dart';
+import '../../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../../widgets/uncategorized/play_all_button.dart';
-import '../../../../../widgets/uncategorized/tales_list_widget.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../add_new_selection/add_new_selections_text.dart';
 import '../../bloc/selections_bloc.dart';
 import '../../selections_text.dart';
@@ -89,7 +92,9 @@ class BodySelectionScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: _TalesListWidget(
                         talesList: talesList,
-                        readOnly: readOnly,
+                        isDisactive: !readOnly,
+                        color: CustomColors.oliveSoso,
+                        icon: CustomIconsImg.moreHorizontRounded,
                       ),
                     ),
                   ),
@@ -500,33 +505,160 @@ class _FullTextInput extends StatelessWidget {
   }
 }
 
+// class _TalesListWidget extends StatelessWidget {
+//   const _TalesListWidget({
+//     Key? key,
+//     required this.talesList,
+//     required this.readOnly,
+//   }) : super(key: key);
+
+//   final bool readOnly;
+//   final List<AudioTale> talesList;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (readOnly) {
+//       return _TalesListWidget(
+//         talesList: talesList,
+//         color: CustomColors.blueSoso,
+//         icon: CustomIconsImg.moreHorizontRounded,
+//         onTap: () {},
+//       );
+//     } else {
+//       return _TalesListWidget(
+//         talesList: talesList,
+//         isDisactive: true,
+//         color: CustomColors.blueSoso,
+//         icon: CustomIconsImg.moreHorizontRounded,
+//         onTap: () {},
+//       );
+//     }
+//   }
+// }
+
 class _TalesListWidget extends StatelessWidget {
   const _TalesListWidget({
     Key? key,
     required this.talesList,
-    required this.readOnly,
+    required this.color,
+    required this.icon,
+    // required this.onTap,
+    this.isDisactive,
   }) : super(key: key);
-
-  final bool readOnly;
   final List<AudioTale> talesList;
-
+  final bool? isDisactive;
+  // final void Function() onTap;
+  final String icon;
+  final Color color;
   @override
   Widget build(BuildContext context) {
-    if (readOnly) {
-      return TalesListWidget(
-        talesList: talesList,
-        color: CustomColors.blueSoso,
-        icon: CustomIconsImg.moreHorizontRounded,
-        onTap: () {},
-      );
-    } else {
-      return TalesListWidget(
-        talesList: talesList,
-        isDisactive: true,
-        color: CustomColors.blueSoso,
-        icon: CustomIconsImg.moreHorizontRounded,
-        onTap: () {},
-      );
-    }
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      builder: (context, state) {
+        Size screen = MediaQuery.of(context).size;
+        final TalesList _talesListRep =
+            RepositoryProvider.of<TalesListRepository>(context)
+                .getTalesListRepository();
+        final MainScreenBloc _mainScreenBloc =
+            BlocProvider.of<MainScreenBloc>(context);
+        return ListView.builder(
+          itemCount: talesList.length,
+          // itemCount: 10,
+          itemBuilder: (_, i) {
+            return Padding(
+              padding: EdgeInsets.all(screen.height * 0.005),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            if (isDisactive == true) {
+                              return;
+                            }
+                            // print('11111111111111');
+                            _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
+                          },
+                          icon: ImageIcon(
+                            CustomIconsImg.playBlueSolo,
+                            color: color,
+                            size: screen.height,
+                          ),
+                        ),
+                        SizedBox(
+                          width: screen.width * 0.05,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(talesList[i].name),
+                            AudioListText(time: talesList[i].time),
+                          ],
+                        ),
+                      ],
+                    ),
+                    isDisactive == false
+                        ? PopupMenuButton(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                            icon: SvgPicture.asset(
+                              CustomIconsImg.moreHorizontRounded,
+                              height: 3,
+                              color: CustomColors.black,
+                            ),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: const Text('Переименовать'),
+                                value: () {},
+                              ),
+                              PopupMenuItem(
+                                child: const Text('Добавить в подборку'),
+                                value: () {},
+                              ),
+                              PopupMenuItem(
+                                child: const Text('Удалить '),
+                                value: () {},
+                              ),
+                              PopupMenuItem(
+                                child: const Text('Поделиться'),
+                                value: () {},
+                              ),
+                            ],
+                            onSelected: (Function value) {
+                              value();
+                            },
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: SvgPicture.asset(
+                              CustomIconsImg.moreHorizontRounded,
+                              height: 3,
+                              color: CustomColors.black,
+                            ),
+                          ),
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  color: CustomColors.white,
+                  border: Border.all(color: CustomColors.audioBorder),
+                  borderRadius: const BorderRadius.all(Radius.circular(41)),
+                ),
+                foregroundDecoration: isDisactive == true
+                    ? BoxDecoration(
+                        color: CustomColors.disactive,
+                        border: Border.all(color: CustomColors.audioBorder),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(41)),
+                      )
+                    : null,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

@@ -65,7 +65,7 @@ class TextsConst {
   static const String remuveForDelete3 = 'Через 15 дней он исчезнет.';
   static const String searchTittle = 'Поиск';
   static const String searchTittle2 = 'Найди потеряшку';
-  // static const String menu = 'Меню';
+  static const String subscribe2 = 'Расширь возможности';
   // static const String allAudioFiles = 'Все аудиофайлы';
   // static const String deletedDrower = 'Недавно удаленные';
   // static const String subscribe = 'Подписка';

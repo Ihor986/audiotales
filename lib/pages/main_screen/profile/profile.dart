@@ -39,7 +39,7 @@ class Profile extends StatelessWidget {
         ClipPath(
           clipper: OvalBC(),
           child: Container(
-            height: screen.height / 4.5,
+            height: screen.height * 0.22,
             color: CustomColors.blueSoso,
           ),
         ),
@@ -59,11 +59,11 @@ class Profile extends StatelessWidget {
           ),
         ),
         const Align(
-          alignment: Alignment(0, -0.2),
+          alignment: Alignment(0, -0.1),
           child: _ProfilePhoneInput(),
         ),
         Align(
-          alignment: const Alignment(0, 0),
+          alignment: const Alignment(0, 0.1),
           child: TextButton(
             child: const EditeText(),
             onPressed: () {
@@ -72,14 +72,14 @@ class Profile extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: const Alignment(0, 0.2),
+          alignment: const Alignment(0, 0.3),
           child: TextButton(
             child: const SubscribeText(),
             onPressed: () {},
           ),
         ),
         Align(
-          alignment: const Alignment(0, 0.35),
+          alignment: const Alignment(0, 0.45),
           child: _CustomProgressIndicator(taleList: _taleList),
         ),
         Align(
