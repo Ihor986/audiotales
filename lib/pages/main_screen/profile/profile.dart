@@ -44,9 +44,10 @@ class Profile extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: const Alignment(0, -0.9),
-          child: SizedBox(
-            height: screen.width * 0.7,
+          alignment: const Alignment(0, -0.98),
+          child: Container(
+            // color: CustomColors.blueSoso,
+            height: screen.height * 0.35,
             child: Column(
               children: [
                 const _ProfilePhotoWidget(),
@@ -59,11 +60,11 @@ class Profile extends StatelessWidget {
           ),
         ),
         const Align(
-          alignment: Alignment(0, -0.1),
+          alignment: Alignment(0, -0.2),
           child: _ProfilePhoneInput(),
         ),
         Align(
-          alignment: const Alignment(0, 0.1),
+          alignment: const Alignment(0, 0),
           child: TextButton(
             child: const EditeText(),
             onPressed: () {
@@ -179,8 +180,8 @@ class _ProfilePhotoWidgetState extends State<_ProfilePhotoWidget> {
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
     Size screen = MediaQuery.of(context).size;
     return Container(
-      width: screen.width * 0.5,
-      height: screen.width * 0.5,
+      width: screen.height * 0.25,
+      height: screen.height * 0.25,
       decoration: BoxDecoration(
         image: _user.photoUrl != null
             ? DecorationImage(

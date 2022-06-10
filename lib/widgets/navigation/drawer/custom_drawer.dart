@@ -30,7 +30,7 @@ class CustomDrawer extends StatelessWidget {
         child: Stack(
           children: const [
             Align(alignment: Alignment(0, -0.85), child: _Header()),
-            Align(alignment: Alignment(0, 0.2), child: _BodyMenu()),
+            Align(alignment: Alignment(0, 1), child: _BodyMenu()),
           ],
         ),
       ),
@@ -62,7 +62,7 @@ class _BodyMenu extends StatelessWidget {
       builder: (context, state) {
         return Container(
           // color: Colors.amberAccent,
-          height: screen.height * 0.7,
+          height: screen.height * 0.75,
           child: Column(
             children: [
               _MenuButtonRow(
