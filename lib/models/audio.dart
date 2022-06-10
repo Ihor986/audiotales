@@ -9,17 +9,19 @@ class AudioTale {
     required this.compilationsId,
     this.isDeleted = false,
     this.deletedDate,
+    this.updateDate,
   });
 
   final String id;
-  final String name;
+  String name;
   final String? path;
-  final String? pathUrl;
+  String? pathUrl;
   final num time;
   final num size;
-  final List compilationsId;
+  List compilationsId;
   bool isDeleted;
   String? deletedDate;
+  String? updateDate;
 
   factory AudioTale.fromJson(Map<String, dynamic> json) {
     // List i = json['compilationsId'];
@@ -37,6 +39,7 @@ class AudioTale {
       compilationsId: json['compilationsId'],
       isDeleted: json['isDeleted'],
       deletedDate: json['deletedDate'],
+      updateDate: json['updateDate'],
     );
   }
 
@@ -51,6 +54,7 @@ class AudioTale {
       compilationsId: json['compilationsId'],
       isDeleted: json['isDeleted'],
       deletedDate: json['deletedDate'],
+      updateDate: json['updateDate'],
     );
   }
 
@@ -65,6 +69,7 @@ class AudioTale {
       'compilationsId': compilationsId.map((e) => e).toList(),
       'isDeleted': isDeleted,
       'deletedDate': deletedDate,
+      'updateDate': updateDate,
     };
   }
 
@@ -78,6 +83,7 @@ class AudioTale {
         'compilationsId': compilationsId,
         'isDeleted': isDeleted,
         'deletedDate': deletedDate,
+        'updateDate': updateDate,
       };
 
   removeAudioToDeleted() {
@@ -87,5 +93,14 @@ class AudioTale {
 
   String getDeleteDate() {
     return deletedDate ?? '';
+  }
+
+  void updateFromFB(AudioTale newAudio) {
+    name = newAudio.name;
+    pathUrl = newAudio.pathUrl;
+    compilationsId = newAudio.compilationsId;
+    isDeleted = newAudio.isDeleted;
+    deletedDate = newAudio.deletedDate;
+    updateDate = newAudio.updateDate;
   }
 }

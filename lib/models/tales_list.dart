@@ -114,6 +114,14 @@ class TalesList {
   void updateTalesList({required TalesList newTalesList}) {
     List<String> list1 = [];
     for (var e in fullTalesList) {
+      final int oldUpdate = int.parse(e.updateDate ?? '0');
+      final AudioTale newAudio = newTalesList.fullTalesList
+          .firstWhere((element) => element.id == e.id);
+      final int newUpdate = int.parse(newAudio.updateDate ?? '0');
+      if (newUpdate > oldUpdate) {
+        e.updateFromFB(newAudio);
+      }
+
       list1.add(e.id);
     }
     List<AudioTale> list = newTalesList.fullTalesList

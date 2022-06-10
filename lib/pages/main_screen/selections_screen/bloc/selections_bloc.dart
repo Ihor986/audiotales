@@ -50,16 +50,21 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         await changeSelectionService.saveCreatedSelectionEvent(
             talesList: event.talesList, selectionsList: event.selectionsList);
         changeSelectionService.readOnly = false;
+
         emit(SelectionsState());
       },
     );
 
     on<SaveChangedSelectionEvent>(
       (event, emit) async {
+        final Selection _selection = event.selection;
+        _selection.updateDate =
+            DateTime.now().millisecondsSinceEpoch.toString();
+        print('!!!!!!!!!!!');
         await changeSelectionService.saveChangedSelectionEvent(
           // talesList: event.talesList,
           selectionsList: event.selectionsList,
-          selection: event.selection,
+          selection: _selection,
         );
         changeSelectionService.readOnly = true;
         emit(SelectionsState());

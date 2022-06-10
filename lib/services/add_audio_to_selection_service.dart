@@ -51,21 +51,23 @@ class ChangeSelectionService {
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('${LocalDB.instance.getUser().id}/images/selections_photo')
-            .child('${DateTime.now().millisecondsSinceEpoch}');
+            .child(_date);
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
+        print(photoUrl);
       } catch (e) {
         print(e);
       }
     }
-
+    print('photoUrl');
     Selection selection = Selection(
-        id: _selectionId,
-        name: name,
-        date: _date,
-        description: description,
-        photo: photo,
-        photoUrl: photoUrl);
+      id: _selectionId,
+      name: name,
+      date: _date,
+      description: description,
+      photo: photo,
+      photoUrl: photoUrl,
+    );
 
     _selectionsList.addNewSelection(selection);
 
@@ -78,10 +80,25 @@ class ChangeSelectionService {
     // required TalesList talesList,
     required SelectionsList selectionsList,
     required Selection selection,
-  }) {
+  }) async {
     // TalesList _talesList = talesList;
     SelectionsList _selectionsList = selectionsList;
     Selection _selection = selection;
+
+    if (photo != null) {
+      File imageFile = File(photo!);
+      try {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('${LocalDB.instance.getUser().id}/images/selections_photo')
+            .child(_selection.date);
+        await storageRef.putFile(imageFile);
+        photoUrl = await storageRef.getDownloadURL();
+        print(photoUrl);
+      } catch (e) {
+        print(e);
+      }
+    }
 
     _selection.name = name;
     _selection.description = description;

@@ -48,6 +48,13 @@ class SelectionsList {
   void updateSelectionsList({required SelectionsList newSelectionsList}) {
     List<String> list1 = [];
     for (var e in selectionsList) {
+      final int oldUpdate = int.parse(e.updateDate ?? '0');
+      final Selection newSelection = newSelectionsList.selectionsList
+          .firstWhere((element) => element.id == e.id);
+      final int newUpdate = int.parse(newSelection.updateDate ?? '0');
+      if (newUpdate >= oldUpdate) {
+        e.updateFromFB(newSelection);
+      }
       list1.add(e.id);
     }
     List<Selection> list = newSelectionsList.selectionsList
@@ -58,14 +65,14 @@ class SelectionsList {
 }
 
 class Selection {
-  Selection({
-    required this.id,
-    required this.name,
-    required this.date,
-    this.photo,
-    this.photoUrl,
-    this.description,
-  });
+  Selection(
+      {required this.id,
+      required this.name,
+      required this.date,
+      this.photo,
+      this.photoUrl,
+      this.description,
+      this.updateDate});
 
   String id;
   String name;
@@ -73,6 +80,7 @@ class Selection {
   String? photo;
   String? photoUrl;
   String? description;
+  String? updateDate;
 
   void replace(Selection selection) {
     id = selection.id;
@@ -80,7 +88,14 @@ class Selection {
     photo = selection.photo;
     photoUrl = selection.photoUrl;
     description = selection.description;
+    updateDate = selection.updateDate;
+  }
+
+  void updateFromFB(Selection selection) {
     name = selection.name;
+    photoUrl = selection.photoUrl;
+    description = selection.description;
+    updateDate = selection.updateDate;
   }
 
   factory Selection.fromJson(Map<String, dynamic> json) {
@@ -91,6 +106,7 @@ class Selection {
       photo: json['photo'],
       photoUrl: json['photoUrl'],
       description: json['description'],
+      updateDate: json['updateDate'],
     );
   }
 
@@ -101,6 +117,7 @@ class Selection {
         'photo': photo,
         'photoUrl': photoUrl,
         'description': description,
+        'updateDate': updateDate,
       };
   Map<String, dynamic> toFirestore() => {
         'id': id,
@@ -109,5 +126,6 @@ class Selection {
         // 'photo': photo,
         'photoUrl': photoUrl,
         'description': description,
+        'updateDate': updateDate,
       };
 }
