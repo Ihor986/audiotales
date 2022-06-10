@@ -27,9 +27,10 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       },
     );
     on<CheckEvent>((event, emit) {
+      String? searchValue = state.searchValue;
       changeSelectionService.checkEvent(event.isChecked, event.id);
       // changeSelectionService.readOnly = false;
-      emit(SelectionsState());
+      emit(SelectionsState(searchValue: searchValue));
     });
 
     on<ChangeSelectionNameEvent>(
@@ -67,7 +68,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<SearchAudioToAddInSelectionEvent>(
       (event, emit) {
-        changeSelectionService.readOnly = false;
+        // changeSelectionService.readOnly = false;
         emit(SelectionsState(
           searchValue: event.value,
         ));

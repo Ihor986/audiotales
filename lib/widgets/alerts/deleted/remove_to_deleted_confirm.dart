@@ -136,6 +136,7 @@ class _ConfirmButtonYes extends StatelessWidget {
       onTap: () {
         _mainScreenBloc
             .add(RemoveToDeleteAudioEvent(id: id, talesList: talesList));
+        print('object');
         Navigator.pop(context);
       },
       child: Container(

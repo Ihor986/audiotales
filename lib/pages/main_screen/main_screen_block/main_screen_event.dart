@@ -18,6 +18,11 @@ class RemoveToDeleteAudioEvent extends MainScreenEvent {
   final TalesList talesList;
 }
 
+class SearchAudioEvent extends MainScreenEvent {
+  SearchAudioEvent({required this.value});
+  String value;
+}
+
 // class DeleteAudioEvent extends MainScreenEvent {
 //   DeleteAudioEvent({required this.id, required this.talesList});
 //   final String id;

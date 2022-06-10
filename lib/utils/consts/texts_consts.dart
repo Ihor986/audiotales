@@ -63,8 +63,8 @@ class TextsConst {
   static const String remuveForDelete1 = 'Ваш файл перенесется в папку';
   static const String remuveForDelete2 = '“Недавно удаленные”.';
   static const String remuveForDelete3 = 'Через 15 дней он исчезнет.';
-  // static const String audioScreenPlayAllF = ' Остановить';
-  // static const String audioTales = 'Аудиосказки';
+  static const String searchTittle = 'Поиск';
+  static const String searchTittle2 = 'Найди потеряшку';
   // static const String menu = 'Меню';
   // static const String allAudioFiles = 'Все аудиофайлы';
   // static const String deletedDrower = 'Недавно удаленные';

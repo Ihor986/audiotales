@@ -9,6 +9,7 @@ import '../../utils/consts/custom_icons_img.dart';
 import '../alerts/deleted/remove_to_deleted_confirm.dart';
 import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
+import 'custom_popup_menu_active_playlist.dart';
 
 class ActiveTalesListWidget extends StatelessWidget {
   const ActiveTalesListWidget({
@@ -62,39 +63,42 @@ class ActiveTalesListWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    PopupMenuButton(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      icon: SvgPicture.asset(
-                        CustomIconsImg.moreHorizontRounded,
-                        height: 3,
-                        color: CustomColors.black,
-                      ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: const Text('Удалить'),
-                          value: () {
-                            RemoveToDeletedConfirm.instance.deletedConfirm(
-                              screen: screen,
-                              context: context,
-                              id: _talesList[i].id,
-                              talesList: _talesListRep,
-                            );
-                            // _mainScreenBloc.add(DeleteAudioEvent(
-                            //     id: _talesList[i].id,
-                            //     talesList: _talesListRep));
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: const Text('Подробнее об аудиозаписи'),
-                          value: () {},
-                        ),
-                      ],
-                      onSelected: (Function value) {
-                        value();
-                      },
+                    CustomPopUpMenu(
+                      id: _talesList[i].id,
                     ),
+                    // PopupMenuButton(
+                    //   shape: const RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.all(Radius.circular(15)),
+                    //   ),
+                    //   icon: SvgPicture.asset(
+                    //     CustomIconsImg.moreHorizontRounded,
+                    //     height: 3,
+                    //     color: CustomColors.black,
+                    //   ),
+                    //   itemBuilder: (context) => [
+                    //     PopupMenuItem(
+                    //       child: const Text('Удалить'),
+                    //       value: () {
+                    //         RemoveToDeletedConfirm.instance.deletedConfirm(
+                    //           screen: screen,
+                    //           context: context,
+                    //           id: _talesList[i].id,
+                    //           talesList: _talesListRep,
+                    //         );
+                    //         // _mainScreenBloc.add(DeleteAudioEvent(
+                    //         //     id: _talesList[i].id,
+                    //         //     talesList: _talesListRep));
+                    //       },
+                    //     ),
+                    //     PopupMenuItem(
+                    //       child: const Text('Подробнее об аудиозаписи'),
+                    //       value: () {},
+                    //     ),
+                    //   ],
+                    //   onSelected: (Function value) {
+                    //     value();
+                    //   },
+                    // ),
                   ],
                 ),
                 decoration: BoxDecoration(
