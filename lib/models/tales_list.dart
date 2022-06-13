@@ -116,7 +116,7 @@ class TalesList {
     for (var e in fullTalesList) {
       final int oldUpdate = int.parse(e.updateDate ?? '0');
       final AudioTale newAudio = newTalesList.fullTalesList
-          .firstWhere((element) => element.id == e.id);
+          .firstWhere((element) => element.id == e.id, orElse: () => e);
       final int newUpdate = int.parse(newAudio.updateDate ?? '0');
       if (newUpdate > oldUpdate) {
         e.updateFromFB(newAudio);

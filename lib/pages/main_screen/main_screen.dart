@@ -25,24 +25,27 @@ import 'head_screen/head_screen_page.dart';
 import 'main_screen_block/main_screen_bloc.dart';
 import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
-import 'record_screen/sound_bloc/sound_bloc.dart';
 import 'selections_screen/selections_screen.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
   static const routeName = '/main_screen.dart';
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    //  selectAudioToDeleteService.deleteOldAudio(talesList: event.talesList);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final SoundService _soundService =
         BlocProvider.of<MainScreenBloc>(context).sound;
-    final TalesList talesListRep =
-        RepositoryProvider.of<TalesListRepository>(context)
-            .getTalesListRepository();
-    context
-        .read<DeleteBloc>()
-        .add(DeleteOldAudioEvent(talesList: talesListRep));
-    // Size screenHeight = MediaQuery.of(context).size;
     List _pages = [
       const HeadScreen(),
       const SelectionsScreen(),

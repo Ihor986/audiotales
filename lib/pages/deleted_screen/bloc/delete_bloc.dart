@@ -46,9 +46,9 @@ class DeleteBloc extends Bloc<DeleteEvent, DeleteState> {
       emit(DeleteState());
     });
 
-    on<DeleteOldAudioEvent>((event, emit) {
-      selectAudioToDeleteService.deleteOldAudio(talesList: event.talesList);
-      emit(DeleteState());
-    });
+    // on<DeleteOldAudioEvent>((event, emit) {
+    //   selectAudioToDeleteService.deleteOldAudio(talesList: event.talesList);
+    //   emit(DeleteState());
+    // });
   }
 }

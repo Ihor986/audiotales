@@ -37,9 +37,9 @@ class RestoreSelectedAudioEvent extends DeleteEvent {
   final TalesList talesList;
 }
 
-class DeleteOldAudioEvent extends DeleteEvent {
-  DeleteOldAudioEvent({
-    required this.talesList,
-  });
-  final TalesList talesList;
-}
+// class DeleteOldAudioEvent extends DeleteEvent {
+//   DeleteOldAudioEvent({
+//     required this.talesList,
+//   });
+//   final TalesList talesList;
+// }

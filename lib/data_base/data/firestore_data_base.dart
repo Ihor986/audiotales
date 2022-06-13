@@ -104,7 +104,10 @@ class FirestoreDB {
 
   Future<void> deleteAudioTaleFromFireBase(
       {required AudioTale audioTale, required String? userId}) async {
-    FirebaseStorage.instance
+    if (audioTale.pathUrl == null) {
+      return;
+    }
+    await FirebaseStorage.instance
         .ref()
         .child('$userId/audio/')
         .child(audioTale.id)

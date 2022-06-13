@@ -54,8 +54,19 @@ class DataBase {
 
   Future<void> deleteAudioTaleFromDB(String id, TalesList talesList) async {
     TalesList _talesList = talesList;
-    AudioTale _audioTale =
-        _talesList.fullTalesList.firstWhere((element) => element.id == id);
+    AudioTale _audioTale = _talesList.fullTalesList.firstWhere(
+      (element) => element.id == id,
+      orElse: () {
+        return AudioTale(
+            id: id,
+            path: null,
+            pathUrl: null,
+            name: 'null',
+            time: 0,
+            size: 0,
+            compilationsId: []);
+      },
+    );
     await FirestoreDB.instance.deleteAudioTaleFromFireBase(
         audioTale: _audioTale, userId: LocalDB.instance.getUser().id);
     LocalDB.instance.deleteAudioTaleFromLocalDB(_audioTale);

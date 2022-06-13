@@ -90,7 +90,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                             },
                             icon: ImageIcon(
                               CustomIconsImg.playBlueSolo,
-                              color: CustomColors.blueSoso,
+                              color: CustomColors.audiotalesHeadColorBlue,
                               size: screen.height,
                             ),
                           ),
