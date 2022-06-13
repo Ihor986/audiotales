@@ -10,6 +10,7 @@ import 'pages/deleted_screen/bloc/delete_bloc.dart';
 import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'pages/main_screen/profile/bloc/profile_bloc.dart';
+import 'pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
 import 'pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import 'repositorys/auth.dart';
 import 'repositorys/selections_repositiry.dart';

@@ -25,6 +25,7 @@ import 'head_screen/head_screen_page.dart';
 import 'main_screen_block/main_screen_bloc.dart';
 import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
+import 'record_screen/sound_bloc/sound_bloc.dart';
 import 'selections_screen/selections_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -35,6 +36,12 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final SoundService _soundService =
         BlocProvider.of<MainScreenBloc>(context).sound;
+    final TalesList talesListRep =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository();
+    context
+        .read<DeleteBloc>()
+        .add(DeleteOldAudioEvent(talesList: talesListRep));
     // Size screenHeight = MediaQuery.of(context).size;
     List _pages = [
       const HeadScreen(),
@@ -64,6 +71,11 @@ class MainScreen extends StatelessWidget {
           create: (_) => AudioScreenBloc(_soundService),
         ),
       ],
+      // child: MultiBlocProvider(
+      //   providers: [
+      //     BlocProvider<SoundBloc>(
+      //         create: (context) => SoundBloc(_soundService)),
+      //   ],
       child: BlocBuilder<NavigationBloc, NavigationState>(
         builder: (context, state) {
           return Scaffold(
@@ -86,6 +98,7 @@ class MainScreen extends StatelessWidget {
           );
         },
       ),
+      // ),
     );
   }
 }

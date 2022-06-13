@@ -1,4 +1,5 @@
 // import 'dart:async';
+// import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:audiotales/models/user.dart';
@@ -40,12 +41,15 @@ class SoundService {
   String endOfSliderPositionText = '00:00:01';
   num? size;
   AudioTale? audioTale;
-  bool? saveLocal;
+  // bool? saveLocal;
   bool isRepeatAllList = false;
   // bool? isMicrophonePermissionGranted;
 
-  saveAudioTale(
-      {required TalesList fullTalesList, required LocalUser localUser}) async {
+  saveAudioTale({
+    required TalesList fullTalesList,
+    required LocalUser localUser,
+    required bool? isAutosaveLocal,
+  }) async {
     if (url == null) {
       return;
     }
@@ -60,7 +64,7 @@ class SoundService {
         pathUrl = await storageRef.getDownloadURL();
         FullMetadata sizeFromMD = await storageRef.getMetadata();
         size = sizeFromMD.size;
-        if (saveLocal != true) {
+        if (isAutosaveLocal != true) {
           File(path!).delete();
           path = null;
         }
@@ -237,6 +241,18 @@ class SoundService {
     limit = 0;
     // recorder.onProgress!.listen((event) {}).cancel();
     recorderTime = '00:00:00';
+  }
+
+  deleteUnsavedAudio() {
+    if (path == null) {
+      return;
+    }
+    if (audioPlayer.isPlaying) {
+      audioPlayer.closePlayer();
+    }
+    File(path!).delete();
+    url = null;
+    path = null;
   }
 
   _startPlayer(AudioTale audio) async {

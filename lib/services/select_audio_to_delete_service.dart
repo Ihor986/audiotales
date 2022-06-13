@@ -36,6 +36,27 @@ class SelectAudioToDeleteService {
     dispouse();
   }
 
+  deleteOldAudio({
+    required TalesList talesList,
+  }) {
+    int today = DateTime.now().millisecondsSinceEpoch.toInt();
+    int howMenyDays = 86400000 * 15;
+    TalesList _talesList = talesList;
+    _talesList.fullTalesList.map(
+      (element) {
+        if (element.deletedDate == null) {
+          return element;
+        }
+        if (int.parse(element.deletedDate ?? '0') < today - howMenyDays) {
+          DataBase.instance.deleteAudioTaleFromDB(element.id, _talesList);
+        }
+        return element;
+      },
+    ).toList();
+    DataBase.instance.saveAudioTales(_talesList);
+    dispouse();
+  }
+
   restoreSelectedAudioEvent({
     required TalesList talesList,
   }) {

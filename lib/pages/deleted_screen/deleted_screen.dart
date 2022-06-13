@@ -8,6 +8,7 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/minuts_text_convert_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
+import '../../models/tales_list.dart';
 import '../../widgets/alerts/deleted/delete_from_db_confirm.dart';
 import '../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
@@ -84,13 +85,15 @@ class _DeletedTalesListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DeleteBloc, DeleteState>(
       builder: (context, state) {
-        final List<AudioTale> talesList =
+        final TalesList talesListRep =
             RepositoryProvider.of<TalesListRepository>(context)
-                .getTalesListRepository()
-                .getDelitedTalesList();
+                .getTalesListRepository();
+        final List<AudioTale> talesList = talesListRep.getDelitedTalesList();
         Size screen = MediaQuery.of(context).size;
-        // final MainScreenBloc _mainScreenBloc =
-        //     BlocProvider.of<MainScreenBloc>(context);
+
+        // context
+        //     .read<DeleteBloc>()
+        //     .add(DeleteOldAudioEvent(talesList: talesListRep));
 
         return ListView.builder(
           itemCount: talesList.length,
@@ -140,7 +143,7 @@ class _DeletedTalesListWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        _iconButton(id: talesList[i].id),
+                        _IconButton(id: talesList[i].id),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -159,8 +162,8 @@ class _DeletedTalesListWidget extends StatelessWidget {
   }
 }
 
-class _iconButton extends StatelessWidget {
-  const _iconButton({
+class _IconButton extends StatelessWidget {
+  const _IconButton({
     Key? key,
     required this.id,
   }) : super(key: key);

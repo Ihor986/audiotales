@@ -23,6 +23,8 @@ class SearchAudioEvent extends MainScreenEvent {
   String value;
 }
 
+class DeleteUnsavedAudioEvent extends MainScreenEvent {}
+
 // class DeleteAudioEvent extends MainScreenEvent {
 //   DeleteAudioEvent({required this.id, required this.talesList});
 //   final String id;

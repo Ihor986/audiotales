@@ -24,20 +24,20 @@ class TalesList {
 
   List<AudioTale> getDelitedTalesList() {
     final bool auth = FirebaseAuth.instance.currentUser != null;
+    List<AudioTale> delitedTalesListRep;
     if (auth) {
-      List<AudioTale> delitedTalesListRep =
+      delitedTalesListRep =
           fullTalesList.where((element) => element.isDeleted).toList();
       delitedTalesListRep
           .sort((a, b) => a.deletedDate!.compareTo(b.deletedDate!));
-      return delitedTalesListRep.reversed.toList();
     } else {
-      List<AudioTale> delitedTalesListRep = fullTalesList
+      delitedTalesListRep = fullTalesList
           .where((element) => element.isDeleted && element.path != null)
           .toList();
       delitedTalesListRep
           .sort((a, b) => a.deletedDate!.compareTo(b.deletedDate!));
-      return delitedTalesListRep.reversed.toList();
     }
+    return delitedTalesListRep.reversed.toList();
   }
 
   List<AudioTale> getCompilation(String value) {

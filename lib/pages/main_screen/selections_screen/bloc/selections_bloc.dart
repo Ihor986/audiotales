@@ -1,7 +1,7 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
 import '../../../../models/selections.dart';
-import '../../../../services/add_audio_to_selection_service.dart';
+import '../../../../services/change_selection_service.dart';
 
 part 'selections_event.dart';
 part 'selections_state.dart';

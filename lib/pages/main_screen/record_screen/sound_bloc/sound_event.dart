@@ -8,10 +8,11 @@ class SaveRecordEvent extends SoundEvent {
   SaveRecordEvent({
     required this.talesListRep,
     required this.localUser,
-    // required this.context,
+    required this.isAutosaveLocal,
   });
   TalesList talesListRep;
   LocalUser localUser;
+  bool isAutosaveLocal;
   // BuildContext context;
 }
 

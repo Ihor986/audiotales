@@ -54,12 +54,11 @@ class ChangeSelectionService {
             .child(_date);
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
-        print(photoUrl);
       } catch (e) {
         print(e);
       }
     }
-    print('photoUrl');
+
     Selection selection = Selection(
       id: _selectionId,
       name: name,
@@ -94,7 +93,6 @@ class ChangeSelectionService {
             .child(_selection.date);
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
-        print(photoUrl);
       } catch (e) {
         print(e);
       }

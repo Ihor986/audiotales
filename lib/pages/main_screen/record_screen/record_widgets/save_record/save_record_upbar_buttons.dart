@@ -64,6 +64,7 @@ class SaveRecordUpbarButtons extends StatelessWidget {
                     context: context,
                     id: _talesListRep.fullTalesList.first.id,
                     talesList: _talesListRep,
+                    isClosePage: true,
                   );
 
                   // _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));

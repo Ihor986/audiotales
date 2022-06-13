@@ -18,6 +18,7 @@ class RecordScreen extends StatelessWidget {
 // ?
     Size screen = MediaQuery.of(context).size;
     final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
+
     // _sound.initRecorder();
     return MultiBlocProvider(
       providers: [
