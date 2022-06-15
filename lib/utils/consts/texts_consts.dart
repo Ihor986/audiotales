@@ -66,11 +66,24 @@ class TextsConst {
   static const String searchTittle = 'Поиск';
   static const String searchTittle2 = 'Найди потеряшку';
   static const String subscribe2 = 'Расширь возможности';
-  // static const String allAudioFiles = 'Все аудиофайлы';
-  // static const String deletedDrower = 'Недавно удаленные';
-  // static const String subscribe = 'Подписка';
-  // static const String support = 'Написать в';
-  // static const String supportTwo = ' поддержку ';
-  // static const String deletedTitleFirst = 'Недавно';
+  static const String subscribeForMonth = 'Подписаться на месяц';
+  static const String whatDoesTheSubscriptionGive = 'Что дает подписка:';
+  static const String unlimitedMemory = 'Неограниченая память';
+  static const String allFilesAreStoredInTheCloud =
+      'Все файлы хранятся в облаке';
+  static const String abilityToDownloadWithoutRestrictions =
+      'Возможность скачивать без ограничений';
+  static const String selectNotyfi = 'Выбери подписку';
+  static const String monthCoast = '300р';
+  static const String monthCoast2 = 'в месяц';
+  static const String yearCoast = '1800р';
+  static const String yearCoast2 = 'в год';
   // static const String deletedTitleSecond = 'удаленные';
+  // static const String deleteConfirm = 'Подтверждаете удаление?';
+  // static const String remuveForDelete1 = 'Ваш файл перенесется в папку';
+  // static const String remuveForDelete2 = '“Недавно удаленные”.';
+  // static const String remuveForDelete3 = 'Через 15 дней он исчезнет.';
+  // static const String searchTittle = 'Поиск';
+  // static const String searchTittle2 = 'Найди потеряшку';
+  // static const String subscribe2 = 'Расширь возможности';
 }

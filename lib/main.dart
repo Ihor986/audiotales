@@ -11,6 +11,7 @@ import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'pages/main_screen/profile/bloc/profile_bloc.dart';
 import 'pages/main_screen/selections_screen/bloc/selections_bloc.dart';
+import 'pages/subscribe_screen/bloc/subscribe_bloc.dart';
 import 'repositorys/auth.dart';
 import 'repositorys/selections_repositiry.dart';
 import 'repositorys/tales_list_repository.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
           BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
           BlocProvider<DeleteBloc>(create: (context) => DeleteBloc()),
+          BlocProvider<SubscribeBloc>(create: (context) => SubscribeBloc()),
         ],
         child: MaterialApp(
           builder: BotToastInit(),

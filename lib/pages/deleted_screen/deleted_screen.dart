@@ -184,8 +184,17 @@ class _IconButton extends StatelessWidget {
               _deleteBloc.add(CheckEvent(isChecked: isChecked, id: id));
             },
             icon: isChecked
-                ? const ImageIcon(CustomIconsImg.check)
-                : const ImageIcon(CustomIconsImg.uncheck))
+                ? SvgPicture.asset(
+                    CustomIconsImg.check,
+                    height: screen.height * 0.055,
+                    color: CustomColors.black,
+                  )
+                : SvgPicture.asset(
+                    CustomIconsImg.uncheck,
+                    height: screen.height * 0.055,
+                    color: CustomColors.black,
+                  ),
+          )
         : IconButton(
             onPressed: () {
               DeleteFromDBConfirm.instance

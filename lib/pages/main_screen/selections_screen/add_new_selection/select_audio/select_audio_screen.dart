@@ -156,13 +156,22 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                         ],
                       ),
                       IconButton(
-                          onPressed: () {
-                            _selectionsBloc.add(CheckEvent(
-                                isChecked: isChecked, id: _talesList[i].id));
-                          },
-                          icon: isChecked
-                              ? const ImageIcon(CustomIconsImg.check)
-                              : const ImageIcon(CustomIconsImg.uncheck)),
+                        onPressed: () {
+                          _selectionsBloc.add(CheckEvent(
+                              isChecked: isChecked, id: _talesList[i].id));
+                        },
+                        icon: isChecked
+                            ? SvgPicture.asset(
+                                CustomIconsImg.check,
+                                height: screen.height * 0.055,
+                                color: CustomColors.black,
+                              )
+                            : SvgPicture.asset(
+                                CustomIconsImg.uncheck,
+                                height: screen.height * 0.055,
+                                color: CustomColors.black,
+                              ),
+                      ),
                     ],
                   ),
                   decoration: BoxDecoration(

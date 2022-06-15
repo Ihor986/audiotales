@@ -48,10 +48,7 @@ class CustomIconsImg {
   static const AssetImage arrowLeftCircle =
       AssetImage("assets/icons/arrowLeftCircle.png");
   static const String search = "assets/icons/search.svg";
-  static const AssetImage check =
-      AssetImage("assets/icons/checkedCheckbox.png");
-  static const AssetImage uncheck =
-      AssetImage("assets/icons/uncheckCheckbox.png");
+
   static const String repeat = "assets/icons/repeat.svg";
   static const String pauseAll = "assets/icons/pauseAll.svg";
   static const String wallet = "assets/icons/wallet.svg";
@@ -59,7 +56,11 @@ class CustomIconsImg {
   static const String drawer = "assets/icons/drawer.svg";
   static const String moreHorizontRounded =
       "assets/icons/moreHorizontRounded.svg";
-  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
+  static const String vector = "assets/icons/vector.svg";
+  static const String downloadIcon = "assets/icons/downloadIcon.svg";
+  static const String cloud = "assets/icons/cloud.svg";
+  static const String check = "assets/icons/check.svg";
+  static const String uncheck = "assets/icons/uncheck.svg";
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
 }
