@@ -41,7 +41,7 @@ class RemoveToDeletedConfirm {
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
             content: const SizedBox(
-              height: 60,
+              height: 80,
               child: _DeleteWarningText(),
             ),
           );
