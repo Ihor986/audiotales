@@ -269,7 +269,7 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
           : IconButton(
               onPressed: () async {
                 _selectionsBloc.changeSelectionService.photo =
-                    await ImageServise().pickImageToSelection();
+                    await ImageServise().pickImageToCasheMemory();
                 setState(() {});
               },
               icon: const ImageIcon(

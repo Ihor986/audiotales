@@ -31,7 +31,7 @@ class ImageServise {
     DataBase.instance.saveUser(localUser);
   }
 
-  Future<String?> pickImageToSelection() async {
+  Future<String?> pickImageToCasheMemory() async {
     final XFile? image = await imagePicker.pickImage(
       maxWidth: 400,
       source: ImageSource.gallery,

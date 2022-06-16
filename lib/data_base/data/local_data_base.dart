@@ -41,7 +41,7 @@ class LocalDB {
   }
 
   saveUserToLocalDB(LocalUser _user) async {
-    _user.updateDate = DateTime.now().millisecondsSinceEpoch;
+    // _user.updateDate = DateTime.now().millisecondsSinceEpoch;
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(_user.toJson()));
   }

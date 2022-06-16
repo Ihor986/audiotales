@@ -29,6 +29,7 @@ class DataBase {
   }
 
   Future<void> saveUser(LocalUser user) async {
+    user.updateDate = DateTime.now().millisecondsSinceEpoch;
     LocalDB.instance.saveUserToLocalDB(user);
     if (user.isUserRegistered == true) {
       FirestoreDB.instance.saveUserToFirebase(user);

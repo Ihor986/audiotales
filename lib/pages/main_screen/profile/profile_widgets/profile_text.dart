@@ -31,21 +31,6 @@ class ProfileText extends StatelessWidget {
   }
 }
 
-class NameText extends StatelessWidget {
-  const NameText({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final LocalUser _user =
-        RepositoryProvider.of<UserRepository>(context).getLocalUser();
-    // num screenHeight = MediaQuery.of(context).size.height;
-    return _user.name == null
-        ? const Text(TextsConst.profileTextName,
-            style: TextStyle(color: CustomColors.black))
-        : Text(_user.name!, style: const TextStyle(color: CustomColors.black));
-  }
-}
-
 class EditeText extends StatelessWidget {
   const EditeText({Key? key}) : super(key: key);
 
@@ -53,6 +38,17 @@ class EditeText extends StatelessWidget {
   Widget build(BuildContext context) {
     // num screenHeight = MediaQuery.of(context).size.height;
     return const Text(TextsConst.profileTextEdite,
+        style: TextStyle(color: CustomColors.black));
+  }
+}
+
+class SaveText extends StatelessWidget {
+  const SaveText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // num screenHeight = MediaQuery.of(context).size.height;
+    return const Text(TextsConst.save,
         style: TextStyle(color: CustomColors.black));
   }
 }
