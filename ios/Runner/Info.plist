@@ -73,6 +73,12 @@
 		<key>UIBackgroundModes</key>
 		<array>
     	<string>audio</string>
-	</array>
+		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+		<string>https</string>
+		<string>http</string>
+		<string>mailto</string>
+		</array>
 	</dict>
 </plist>

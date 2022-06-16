@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../pages/income_screen/new_user/registration_page.dart';
 import '../../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
+import '../../../services/mailto_service.dart';
 import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../utils/consts/texts_consts.dart';
@@ -181,7 +182,8 @@ class _BodyMenu extends StatelessWidget {
                 text: TextsConst.support,
                 textTwo: TextsConst.supportTwo,
                 onClick: () {
-                  Scaffold.of(context).openEndDrawer();
+                  // Scaffold.of(context).openEndDrawer();
+                  MailToService.instance.forwardToEMail();
                 },
                 icon: CustomIconsImg.support,
               ),
