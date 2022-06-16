@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CangeProfileService {
   bool readOnly = true;
+  bool isChangeNumber = false;
   String? nameController;
   String? photo;
   String? photoUrl;
@@ -12,21 +13,29 @@ class CangeProfileService {
   String verificationCode = '';
   String smsCode = '';
   FirebaseAuth auth = FirebaseAuth.instance;
+  String? e;
   // bool? isNewUser;
 
   void dispouse() {
     readOnly = true;
+    isChangeNumber = false;
     nameController = null;
     photo = null;
     photoUrl = null;
     phone = null;
+    e = null;
+    verificationCode = '';
+    smsCode = '';
   }
 
 ///////////////////////////
 
-  void changePhoneNumber(phoneNumberForVerification) async {
+  void changePhoneNumber() async {
+    if (phone == null) {
+      return;
+    }
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumberForVerification,
+      phoneNumber: phone!,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.currentUser
             ?.updatePhoneNumber(credential)
@@ -50,13 +59,14 @@ class CangeProfileService {
     );
   }
 
-  void sendCodeToFirebaseChangeNumber(context) async {
+  void sendCodeToFirebaseChangeNumber() async {
     try {
       if (verificationCode != '' && smsCode.length == 6) {
         var credential = PhoneAuthProvider.credential(
             verificationId: verificationCode, smsCode: smsCode);
 
         await auth.currentUser?.updatePhoneNumber(credential).then((value) {
+          // print(value);
           // isNewUser = value.additionalUserInfo?.isNewUser;
           // print('4'+value. .toString());
           // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
@@ -68,6 +78,7 @@ class CangeProfileService {
       }
     } catch (_) {
       // print('wrong pass');
+      e = "wrong pass";
       throw Exception('wrong pass');
     }
   }

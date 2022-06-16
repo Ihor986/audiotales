@@ -30,13 +30,13 @@ class Profile extends StatelessWidget {
       builder: (context, state) {
         final TalesListRepository _taleList =
             context.read<TalesListRepository>();
-        final bool _readOnly =
-            context.read<ProfileBloc>().cangeProfileService.readOnly;
+        final CangeProfileService _cangeProfileService =
+            context.read<ProfileBloc>().cangeProfileService;
         final LocalUser _user = context.read<UserRepository>().getLocalUser();
         Size screen = MediaQuery.of(context).size;
         FirebaseAuth auth = FirebaseAuth.instance;
-        String _name =
-            _user.name == null ? TextsConst.profileTextName : _user.name!;
+        String _name = _user.name ?? TextsConst.profileTextName;
+        // bool isPhoneNotChanged = true;
 
         return Stack(
           children: [
@@ -55,7 +55,7 @@ class Profile extends StatelessWidget {
                 child: Column(
                   children: [
                     _ProfilePhotoWidget(
-                      readOnly: _readOnly,
+                      readOnly: _cangeProfileService.readOnly,
                     ),
                     Padding(
                       padding: EdgeInsets.all(screen.width * 0.03),
@@ -68,36 +68,71 @@ class Profile extends StatelessWidget {
                 ),
               ),
             ),
+            _cangeProfileService.isChangeNumber
+                ? const Align(
+                    alignment: Alignment(0, -0.1),
+                    child: Text('Введи код из смс'),
+                  )
+                : const SizedBox(),
             Align(
-              alignment: _readOnly
+              alignment: _cangeProfileService.readOnly
                   ? const Alignment(0, -0.2)
                   : const Alignment(0, 0.1),
-              child: _ProfilePhoneInput(
-                readOnly: _readOnly,
-              ),
+              child: _cangeProfileService.isChangeNumber
+                  ? const _CodeInput()
+                  : _ProfilePhoneInput(
+                      readOnly: _cangeProfileService.readOnly,
+                    ),
             ),
             Align(
-              alignment:
-                  _readOnly ? const Alignment(0, 0) : const Alignment(0, 0.3),
+              alignment: _cangeProfileService.readOnly
+                  ? const Alignment(0, 0)
+                  : const Alignment(0, 0.3),
               child: TextButton(
-                child: _readOnly ? const EditeText() : const SaveText(),
+                child: _cangeProfileService.readOnly
+                    ? const EditeText()
+                    : const SaveText(),
                 onPressed: () {
-                  if (_readOnly) {
-                    context
-                        .read<ProfileBloc>()
-                        .add(ProfileEditingEvent(newName: _name));
-                  } else {
-                    context
-                        .read<ProfileBloc>()
-                        .add(SaveEditingEvent(user: _user));
-                    // if(_user.phone != context.read<ProfileBloc>().cangeProfileService.phone){
-
-                    // }
+                  if (_cangeProfileService.readOnly &&
+                      !_cangeProfileService.isChangeNumber) {
+                    context.read<ProfileBloc>().add(
+                          ProfileEditingEvent(newName: _name, user: _user),
+                        );
+                    print('ProfileEditingEvent');
+                  }
+                  if (_cangeProfileService.phone == null) {
+                    return;
+                  }
+                  if (_cangeProfileService.phone!.length < 13) {
+                    return;
+                  }
+                  if (!_cangeProfileService.isChangeNumber &&
+                      !_cangeProfileService.readOnly) {
+                    context.read<ProfileBloc>().add(
+                          SaveEditingEvent(user: _user),
+                        );
+                    print('SaveEditingEvent');
+                  }
+                  if (!_cangeProfileService.readOnly &&
+                      _cangeProfileService.isChangeNumber &&
+                      _cangeProfileService.smsCode.length < 6) {
+                    context.read<ProfileBloc>().add(
+                          SaveChangedPhoneEvent(),
+                        );
+                    print('SaveChangedPhoneEvent');
+                  }
+                  if (!_cangeProfileService.readOnly &&
+                      _cangeProfileService.isChangeNumber &&
+                      _cangeProfileService.smsCode.length == 6) {
+                    context.read<ProfileBloc>().add(
+                          SaveEditingWithPhoneEvent(user: _user),
+                        );
+                    print('SaveEditingWithPhoneEvent');
                   }
                 },
               ),
             ),
-            _readOnly
+            _cangeProfileService.readOnly
                 ? Align(
                     alignment: const Alignment(0, 0.3),
                     child: TextButton(
@@ -106,13 +141,13 @@ class Profile extends StatelessWidget {
                     ),
                   )
                 : const SizedBox(),
-            _readOnly
+            _cangeProfileService.readOnly
                 ? Align(
                     alignment: const Alignment(0, 0.45),
                     child: _CustomProgressIndicator(taleList: _taleList),
                   )
                 : const SizedBox(),
-            _readOnly
+            _cangeProfileService.readOnly
                 ? Align(
                     alignment: const Alignment(0, 0.7),
                     child: Row(
@@ -382,8 +417,8 @@ class _ProfilePhoneInputState extends State<_ProfilePhoneInput> {
           // autofocus: true,
           onChanged: (value) {
             context.read<ProfileBloc>().add(ChangePhoneEvent(
-                newPhone: '+380${maskFormatter.getUnmaskedText()}'));
-            // user.updatePhoneNumber(phoneCredential);
+                newPhone: '+38${maskFormatter.getUnmaskedText()}',
+                user: _user));
             // authReposytory.phoneNumberForVerification =
             //     '+380${maskFormatter.getUnmaskedText()}';
           },
@@ -394,6 +429,70 @@ class _ProfilePhoneInputState extends State<_ProfilePhoneInput> {
             maskFormatter,
           ],
           decoration: const InputDecoration(
+            hintStyle: TextStyle(color: Colors.black),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(41.0)),
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(246, 246, 246, 1), width: 2.0)),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(41.0)),
+                borderSide: BorderSide(
+                    color: Color.fromRGBO(246, 246, 246, 1), width: 2.0)),
+          ),
+        ));
+  }
+}
+
+class _CodeInput extends StatefulWidget {
+  const _CodeInput({Key? key}) : super(key: key);
+
+  @override
+  State<_CodeInput> createState() => _CodeInputState();
+}
+
+class _CodeInputState extends State<_CodeInput> {
+  final maskFormatter = MaskTextInputFormatter(
+      mask: '######',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+  @override
+  Widget build(BuildContext context) {
+    // final AuthReposytory authReposytory =
+    //     RepositoryProvider.of<AuthReposytory>(context);
+    return Container(
+        decoration: BoxDecoration(
+          color: CustomColors.white,
+          boxShadow: const [
+            BoxShadow(
+              color: CustomColors.boxShadow,
+              offset: Offset(0, 5),
+              blurRadius: 6,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(41),
+        ),
+        width: 309,
+        height: 59,
+        child: TextFormField(
+          autofocus: false,
+          onChanged: (value) {
+            context.read<ProfileBloc>().add(ChangeCodeEvent(
+                  code: maskFormatter.getUnmaskedText(),
+                ));
+            // authReposytory.smsCode = maskFormatter.getUnmaskedText();
+          },
+          textAlign: TextAlign.center,
+          // style: const TextStyle(
+          //   letterSpacing: 10,
+          // ),
+          cursorRadius: const Radius.circular(41.0),
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            maskFormatter,
+          ],
+          decoration: const InputDecoration(
+            // contentPadding: EdgeInsets.symmetric(horizontal: 120, vertical: 20),
+            hintText: 'XXXXXX',
             hintStyle: TextStyle(color: Colors.black),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(41.0)),

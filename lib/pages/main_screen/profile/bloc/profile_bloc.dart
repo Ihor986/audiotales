@@ -15,6 +15,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
     on<ProfileEditingEvent>((event, emit) {
       cangeProfileService.dispouse();
       cangeProfileService.readOnly = false;
+      cangeProfileService.phone = event.user.phone;
       cangeProfileService.nameController = event.newName;
       emit(ProfileInitialState());
     });
@@ -33,6 +34,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
       emit(ProfileInitialState());
     });
 
+    on<SaveEditingWithPhoneEvent>((event, emit) async {
+      cangeProfileService.sendCodeToFirebaseChangeNumber();
+      if (cangeProfileService.e == null) {
+        LocalUser _user = event.user;
+        _user.changeUserFields(
+          nPhoto: cangeProfileService.photo,
+          nName: cangeProfileService.nameController,
+          nPhotoUrl: cangeProfileService.photoUrl,
+          nPhone: cangeProfileService.phone,
+        );
+        DataBase.instance.saveUser(_user);
+        cangeProfileService.dispouse();
+      }
+
+      emit(ProfileInitialState());
+    });
+
     on<ChangeNameEvent>((event, emit) {
       cangeProfileService.nameController = event.newName;
       // emit(ProfileInitialState());
@@ -40,6 +58,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
 
     on<ChangePhoneEvent>((event, emit) {
       cangeProfileService.phone = event.newPhone;
+      if (cangeProfileService.phone != event.user.phone) {
+        cangeProfileService.isChangeNumber = true;
+      }
+      // emit(ProfileInitialState());
+    });
+
+    on<SaveChangedPhoneEvent>((event, emit) {
+      cangeProfileService.changePhoneNumber();
+      cangeProfileService.isChangeNumber = true;
+      // cangeProfileService.phone = event.newPhone;
+      emit(ProfileInitialState());
+    });
+
+    on<ChangeCodeEvent>((event, emit) {
+      cangeProfileService.smsCode = event.code;
       // emit(ProfileInitialState());
     });
   }
