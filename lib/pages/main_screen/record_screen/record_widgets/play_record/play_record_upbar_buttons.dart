@@ -77,7 +77,7 @@ class PlayRecordUpbarButtons extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(screen.width * 0.04),
+          padding: const EdgeInsets.all(16),
           child: TextButton(
               onPressed: () {
                 context.read<SoundBloc>().add(

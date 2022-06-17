@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../data_base/data/local_data_base.dart';
 import '../../../models/user.dart';
-import '../../../repositorys/auth.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../repositorys/user_reposytory.dart';
 import '../../../services/change_profile_servise.dart';
@@ -14,8 +13,8 @@ import '../../../services/image_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../utils/consts/texts_consts.dart';
+import '../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../../income_screen/auth_bloc/auth_block_bloc.dart';
 import 'bloc/profile_bloc.dart';
 import 'profile_widgets/profile_text.dart';
 
@@ -36,144 +35,154 @@ class Profile extends StatelessWidget {
         Size screen = MediaQuery.of(context).size;
         FirebaseAuth auth = FirebaseAuth.instance;
         String _name = _user.name ?? TextsConst.profileTextName;
-        // bool isPhoneNotChanged = true;
 
-        return Stack(
-          children: [
-            ClipPath(
-              clipper: OvalBC(),
-              child: Container(
-                height: screen.height * 0.22,
-                color: CustomColors.blueSoso,
-              ),
-            ),
-            Align(
-              alignment: const Alignment(0, -0.98),
-              child: Container(
-                // color: CustomColors.blueSoso,
-                height: screen.height * 0.35,
-                child: Column(
-                  children: [
-                    _ProfilePhotoWidget(
-                      readOnly: _cangeProfileService.readOnly,
+        return state.isProgress
+            ? const ProgresWidget()
+            : Stack(
+                children: [
+                  ClipPath(
+                    clipper: OvalBC(),
+                    child: Container(
+                      height: screen.height * 0.22,
+                      color: CustomColors.blueSoso,
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(screen.width * 0.03),
-                      child: _NameTextField(
-                        name: _name,
-                        // readOnly: _readOnly,
+                  ),
+                  Align(
+                    alignment: const Alignment(0, -0.98),
+                    child: SizedBox(
+                      height: screen.height * 0.35,
+                      child: Column(
+                        children: [
+                          _ProfilePhotoWidget(
+                            readOnly: _cangeProfileService.readOnly,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(screen.width * 0.03),
+                            child: _NameTextField(
+                              name: _name,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            _cangeProfileService.isChangeNumber
-                ? const Align(
-                    alignment: Alignment(0, -0.1),
-                    child: Text('Введи код из смс'),
-                  )
-                : const SizedBox(),
-            Align(
-              alignment: _cangeProfileService.readOnly
-                  ? const Alignment(0, -0.2)
-                  : const Alignment(0, 0.1),
-              child: _cangeProfileService.isChangeNumber
-                  ? const _CodeInput()
-                  : _ProfilePhoneInput(
-                      readOnly: _cangeProfileService.readOnly,
-                    ),
-            ),
-            Align(
-              alignment: _cangeProfileService.readOnly
-                  ? const Alignment(0, 0)
-                  : const Alignment(0, 0.3),
-              child: TextButton(
-                child: _cangeProfileService.readOnly
-                    ? const EditeText()
-                    : const SaveText(),
-                onPressed: () {
-                  if (_cangeProfileService.readOnly &&
-                      !_cangeProfileService.isChangeNumber) {
-                    context.read<ProfileBloc>().add(
-                          ProfileEditingEvent(newName: _name, user: _user),
-                        );
-                    print('ProfileEditingEvent');
-                  }
-                  if (_cangeProfileService.phone == null) {
-                    return;
-                  }
-                  if (_cangeProfileService.phone!.length < 13) {
-                    return;
-                  }
-                  if (!_cangeProfileService.isChangeNumber &&
-                      !_cangeProfileService.readOnly) {
-                    context.read<ProfileBloc>().add(
-                          SaveEditingEvent(user: _user),
-                        );
-                    print('SaveEditingEvent');
-                  }
-                  if (!_cangeProfileService.readOnly &&
-                      _cangeProfileService.isChangeNumber &&
-                      _cangeProfileService.smsCode.length < 6) {
-                    context.read<ProfileBloc>().add(
-                          SaveChangedPhoneEvent(),
-                        );
-                    print('SaveChangedPhoneEvent');
-                  }
-                  if (!_cangeProfileService.readOnly &&
-                      _cangeProfileService.isChangeNumber &&
-                      _cangeProfileService.smsCode.length == 6) {
-                    context.read<ProfileBloc>().add(
-                          SaveEditingWithPhoneEvent(user: _user),
-                        );
-                    print('SaveEditingWithPhoneEvent');
-                  }
-                },
-              ),
-            ),
-            _cangeProfileService.readOnly
-                ? Align(
-                    alignment: const Alignment(0, 0.3),
+                  ),
+                  _cangeProfileService.isChangeNumber
+                      ? const Align(
+                          alignment: Alignment(0, -0.1),
+                          child: Text('Введи код из смс'),
+                        )
+                      : const SizedBox(),
+                  Align(
+                    alignment: _cangeProfileService.readOnly
+                        ? const Alignment(0, -0.1)
+                        : const Alignment(0, 0.1),
+                    child: _cangeProfileService.isChangeNumber
+                        ? const _CodeInput()
+                        : _ProfilePhoneInput(
+                            readOnly: _cangeProfileService.readOnly,
+                          ),
+                  ),
+                  Align(
+                    alignment: _cangeProfileService.readOnly
+                        ? const Alignment(0, 0.1)
+                        : const Alignment(0, 0.3),
                     child: TextButton(
-                      child: const SubscribeText(),
-                      onPressed: () {},
+                      child: _cangeProfileService.readOnly
+                          ? const EditeText()
+                          : const SaveText(),
+                      onPressed: () {
+                        _pressEditing(
+                          cangeProfileService: _cangeProfileService,
+                          name: _name,
+                          user: _user,
+                          context: context,
+                        );
+                      },
                     ),
-                  )
-                : const SizedBox(),
-            _cangeProfileService.readOnly
-                ? Align(
-                    alignment: const Alignment(0, 0.45),
-                    child: _CustomProgressIndicator(taleList: _taleList),
-                  )
-                : const SizedBox(),
-            _cangeProfileService.readOnly
-                ? Align(
-                    alignment: const Alignment(0, 0.7),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              auth.signOut();
-                            },
-                            child: const LogoutText()),
-                        TextButton(
-                            onPressed: () {
-                              LocalDB.instance.deleteUser();
-                              auth.signOut();
-                            },
-                            child: const DeleteAccountText()),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-          ],
-          // ),
-          // drawer: const CustomDrawer(),
-        );
+                  ),
+                  _cangeProfileService.readOnly
+                      ? Align(
+                          alignment: const Alignment(0, 0.3),
+                          child: TextButton(
+                            child: const SubscribeText(),
+                            onPressed: () {},
+                          ),
+                        )
+                      : const SizedBox(),
+                  _cangeProfileService.readOnly
+                      ? Align(
+                          alignment: const Alignment(0, 0.45),
+                          child: _CustomProgressIndicator(taleList: _taleList),
+                        )
+                      : const SizedBox(),
+                  _cangeProfileService.readOnly
+                      ? Align(
+                          alignment: const Alignment(0, 0.7),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    auth.signOut();
+                                  },
+                                  child: const LogoutText()),
+                              TextButton(
+                                  onPressed: () {
+                                    LocalDB.instance.deleteUser();
+                                    auth.signOut();
+                                  },
+                                  child: const DeleteAccountText()),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
+              );
       },
     );
+  }
+}
+
+void _pressEditing({
+  required CangeProfileService cangeProfileService,
+  required BuildContext context,
+  required LocalUser user,
+  required String name,
+}) {
+  bool _isProfileEditingEvent = cangeProfileService.readOnly;
+  bool _isSaveEditingEvent =
+      !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
+  bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
+      cangeProfileService.isChangeNumber &&
+      cangeProfileService.smsCode.length < 6;
+  bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
+      cangeProfileService.isChangeNumber &&
+      cangeProfileService.smsCode.length == 6;
+  if (_isProfileEditingEvent) {
+    context.read<ProfileBloc>().add(
+          ProfileEditingEvent(newName: name, user: user),
+        );
+  }
+  if (cangeProfileService.phone == null) {
+    return;
+  }
+  if (cangeProfileService.phone!.length < 13) {
+    return;
+  }
+  if (_isSaveEditingEvent) {
+    context.read<ProfileBloc>().add(
+          SaveEditingEvent(user: user),
+        );
+  }
+  if (_isSaveChangedPhoneEvent) {
+    context.read<ProfileBloc>().add(
+          SaveChangedPhoneEvent(),
+        );
+  }
+  if (_isSaveEditingWithPhoneEvent) {
+    context.read<ProfileBloc>().add(
+          SaveEditingWithPhoneEvent(user: user),
+        );
   }
 }
 
@@ -285,56 +294,17 @@ class _SelectionPhotoWidgetState extends State<_ProfilePhotoWidget> {
     final LocalUser _user =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
     Size screen = MediaQuery.of(context).size;
-    DecorationImage? _decorationImageReadOnly() {
-      if (_user.photo != null) {
-        try {
-          return DecorationImage(
-              image: MemoryImage(File(_user.photo ?? '').readAsBytesSync()),
-              fit: BoxFit.cover);
-        } catch (_) {}
-      }
-
-      if (_user.photoUrl != null) {
-        try {
-          return DecorationImage(
-            image: NetworkImage(_user.photoUrl ?? ''),
-            fit: BoxFit.cover,
-          );
-        } catch (_) {
-          return null;
-        }
-      }
-      return null;
-    }
-
-    DecorationImage? _decorationImage() {
-      if (_profile.cangeProfileService.photo != null) {
-        try {
-          return DecorationImage(
-              image: MemoryImage(
-                  File(_profile.cangeProfileService.photo!).readAsBytesSync()),
-              fit: BoxFit.cover);
-        } catch (_) {}
-      }
-      if (_profile.cangeProfileService.photoUrl != null) {
-        try {
-          return DecorationImage(
-            image: NetworkImage(_profile.cangeProfileService.photoUrl ?? ''),
-            fit: BoxFit.cover,
-          );
-        } catch (_) {
-          return _decorationImageReadOnly();
-        }
-      }
-      return _decorationImageReadOnly();
-    }
 
     return Container(
       width: screen.height * 0.25,
       height: screen.height * 0.25,
       decoration: BoxDecoration(
-        image:
-            widget.readOnly ? _decorationImageReadOnly() : _decorationImage(),
+        image: widget.readOnly
+            ? _decorationImageReadOnly(user: _user)
+            : _decorationImage(
+                cangeProfileService: _profile.cangeProfileService,
+                user: _user,
+              ),
         boxShadow: const [
           BoxShadow(
             color: CustomColors.boxShadow,
@@ -365,6 +335,55 @@ class _SelectionPhotoWidgetState extends State<_ProfilePhotoWidget> {
   }
 }
 
+DecorationImage? _decorationImageReadOnly({
+  required LocalUser user,
+}) {
+  if (user.photo != null) {
+    try {
+      return DecorationImage(
+          image: MemoryImage(File(user.photo ?? '').readAsBytesSync()),
+          fit: BoxFit.cover);
+    } catch (_) {}
+  }
+
+  if (user.photoUrl != null) {
+    try {
+      return DecorationImage(
+        image: NetworkImage(user.photoUrl ?? ''),
+        fit: BoxFit.cover,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+  return null;
+}
+
+DecorationImage? _decorationImage({
+  required CangeProfileService cangeProfileService,
+  required LocalUser user,
+}) {
+  if (cangeProfileService.photo != null) {
+    try {
+      return DecorationImage(
+          image:
+              MemoryImage(File(cangeProfileService.photo!).readAsBytesSync()),
+          fit: BoxFit.cover);
+    } catch (_) {}
+  }
+  if (cangeProfileService.photoUrl != null) {
+    try {
+      return DecorationImage(
+        image: NetworkImage(cangeProfileService.photoUrl ?? ''),
+        fit: BoxFit.cover,
+      );
+    } catch (_) {
+      return _decorationImageReadOnly(user: user);
+    }
+  }
+  return _decorationImageReadOnly(user: user);
+}
+
 class _ProfilePhoneInput extends StatefulWidget {
   const _ProfilePhoneInput({
     Key? key,
@@ -387,15 +406,6 @@ class _ProfilePhoneInputState extends State<_ProfilePhoneInput> {
   Widget build(BuildContext context) {
     final LocalUser _user =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
-    // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
-    User? user = FirebaseAuth.instance.currentUser;
-    final AuthReposytory authReposytory =
-        RepositoryProvider.of<AuthReposytory>(context);
-    //  getUser(UserRepository _user) async {
-    //   final user = await _user.localUser;
-    //   return user;
-    // }
-
     return Container(
         decoration: BoxDecoration(
           color: CustomColors.white,
@@ -419,8 +429,6 @@ class _ProfilePhoneInputState extends State<_ProfilePhoneInput> {
             context.read<ProfileBloc>().add(ChangePhoneEvent(
                 newPhone: '+38${maskFormatter.getUnmaskedText()}',
                 user: _user));
-            // authReposytory.phoneNumberForVerification =
-            //     '+380${maskFormatter.getUnmaskedText()}';
           },
           textAlign: TextAlign.center,
           cursorRadius: const Radius.circular(41.0),

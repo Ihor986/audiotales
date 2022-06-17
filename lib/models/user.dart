@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LocalUser {
@@ -74,9 +76,14 @@ class LocalUser {
       return;
     }
     if (updateDate != null) {
-      if (updateDate! < newUser.updateDate!) {
+      if (updateDate! > newUser.updateDate!) {
         return;
       }
+    }
+
+    if (photo != null) {
+      File(photo!).delete();
+      photo = null;
     }
     photoUrl = newUser.photoUrl;
     name = newUser.name;
@@ -88,17 +95,9 @@ class LocalUser {
   }
 
   changeUserFields({
-    String? nPhoto,
-    String? nPhotoUrl,
     String? nName,
     String? nPhone,
-    // String? id,
-    // int? updateDate, ??????????
-    // bool? isNewUser,
-    // bool? isUserRegistered,
   }) {
-    photo = nPhoto ?? photo;
-    photoUrl = nPhotoUrl ?? photoUrl;
     name = nName ?? name;
     phone = nPhone ?? phone;
   }
