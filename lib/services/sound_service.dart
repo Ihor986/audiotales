@@ -79,9 +79,7 @@ class SoundService {
         pathUrl: pathUrl,
         time: endOfSliderPosition / 60000,
         size: size ?? 0,
-        name: '$audioname ${fullTalesList.fullTalesList.where((element) {
-              return element.isDeleted != true;
-            }).length + 1}',
+        name: '$audioname ${fullTalesList.fullTalesList.length + 1}',
         compilationsId: []);
     fullTalesList.addNewAudio(audioTale!);
     DataBase.instance.saveAudioTales(fullTalesList);

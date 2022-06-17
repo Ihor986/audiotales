@@ -1,22 +1,23 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LocalUser {
   LocalUser({
-    this.photo,
+    // this.photo,
     this.photoUrl,
     this.name,
-    this.phone,
+    // this.phone,
     this.id,
     this.updateDate,
     this.isNewUser,
     this.isUserRegistered,
   });
-  String? photo;
+
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  // String? photo;
   String? photoUrl;
   String? name;
-  String? phone;
+  // String? phone;
   String? id;
   int? updateDate;
   bool? isNewUser;
@@ -24,10 +25,10 @@ class LocalUser {
 
   factory LocalUser.fromJson(Map<String, dynamic> json) {
     return LocalUser(
-      photo: json['photo'],
+      // photo: json['photo'],
       photoUrl: json['photoUrl'],
       name: json['name'],
-      phone: json['phone'],
+      // phone: json['phone'],
       id: json['id'],
       updateDate: json['updateDate'],
       isNewUser: json['isNewUser'],
@@ -38,20 +39,21 @@ class LocalUser {
   LocalUser.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
-  )   : photo = snapshot.data()?['photo'],
+  )   :
+        // photo = snapshot.data()?['photo'],
         photoUrl = snapshot.data()?['photoUrl'],
         name = snapshot.data()?['name'],
-        phone = snapshot.data()?['phone'],
+        // phone = snapshot.data()?['phone'],
         id = snapshot.data()?['id'],
         updateDate = snapshot.data()?['updateDate'],
         isNewUser = snapshot.data()?['isNewUser'],
         isUserRegistered = snapshot.data()?['isUserRegistered'];
 
   Map<String, dynamic> toJson() => {
-        'photo': photo,
+        // 'photo': photo,
         'photoUrl': photoUrl,
         'name': name,
-        'phone': phone,
+        // 'phone': phone,
         'id': id,
         'updateDate': updateDate,
         'isNewUser': isNewUser,
@@ -60,10 +62,10 @@ class LocalUser {
 
   Map<String, dynamic> toFirestore() {
     return {
-      'photo': photo,
+      // 'photo': photo,
       'photoUrl': photoUrl,
       'name': name,
-      'phone': phone,
+      // 'phone': phone,
       'id': id,
       'updateDate': updateDate,
       'isNewUser': isNewUser,
@@ -81,13 +83,13 @@ class LocalUser {
       }
     }
 
-    if (photo != null) {
-      File(photo!).delete();
-      photo = null;
-    }
+    // if (photo != null) {
+    //   File(photo!).delete();
+    //   photo = null;
+    // }
     photoUrl = newUser.photoUrl;
     name = newUser.name;
-    phone = newUser.phone;
+    // phone = newUser.phone;
     id = newUser.id;
     updateDate = newUser.updateDate;
     isNewUser = newUser.isNewUser;
@@ -99,6 +101,6 @@ class LocalUser {
     String? nPhone,
   }) {
     name = nName ?? name;
-    phone = nPhone ?? phone;
+    // phone = nPhone ?? phone;
   }
 }

@@ -11,13 +11,18 @@ class TalesList {
   List<AudioTale> getActiveTalesList() {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     if (auth) {
-      List<AudioTale> activeTalesListRep =
-          fullTalesList.where((element) => !element.isDeleted).toList();
+      List<AudioTale> activeTalesListRep = fullTalesList.where((element) {
+        bool isPath = element.path != null || element.pathUrl != null;
+        bool isNotDeleted = !element.isDeleted;
+        return isPath && isNotDeleted;
+      }).toList();
       return activeTalesListRep;
     } else {
-      List<AudioTale> activeTalesListRep = fullTalesList
-          .where((element) => !element.isDeleted && element.path != null)
-          .toList();
+      List<AudioTale> activeTalesListRep = fullTalesList.where((element) {
+        bool isPath = element.path != null;
+        bool isNotDeleted = !element.isDeleted;
+        return isPath && isNotDeleted;
+      }).toList();
       return activeTalesListRep;
     }
   }

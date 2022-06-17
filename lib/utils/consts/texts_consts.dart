@@ -78,11 +78,11 @@ class TextsConst {
   static const String monthCoast2 = 'в месяц';
   static const String yearCoast = '1800р';
   static const String yearCoast2 = 'в год';
-  // static const String deletedTitleSecond = 'удаленные';
-  // static const String deleteConfirm = 'Подтверждаете удаление?';
-  // static const String remuveForDelete1 = 'Ваш файл перенесется в папку';
-  // static const String remuveForDelete2 = '“Недавно удаленные”.';
-  // static const String remuveForDelete3 = 'Через 15 дней он исчезнет.';
+  static const String deleteAccountConfirm = 'Точно удалить аккаунт?';
+  static const String deleteAccount = 'Удалить';
+  static const String remuveForUserDelete1 = 'Все аудиофайлы исчезнут и';
+  static const String remuveForUserDelete2 = 'восстановить аккаунт будет';
+  static const String remuveForUserDelete3 = 'невозможно';
   // static const String searchTittle = 'Поиск';
   // static const String searchTittle2 = 'Найди потеряшку';
   // static const String subscribe2 = 'Расширь возможности';

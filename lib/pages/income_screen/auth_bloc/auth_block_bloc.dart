@@ -23,7 +23,7 @@ class AuthBlockBloc extends Bloc<AuthBlockEvent, AuthBlockState> {
       if (event.auth.isNewUser == false) {
         DataBase.instance.saveUserWithUpDate();
       } else {
-        event.user.phone = event.auth.phoneNumberForVerification;
+        // event.user.phone = event.auth.phoneNumberForVerification;
         event.user.isUserRegistered = true;
         event.user.isNewUser = false;
         event.user.id = user?.uid;

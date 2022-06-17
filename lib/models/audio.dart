@@ -24,11 +24,6 @@ class AudioTale {
   String? updateDate;
 
   factory AudioTale.fromJson(Map<String, dynamic> json) {
-    // List i = json['compilationsId'];
-    // List<String> y = i.map((e) => e.toString()).toList();
-
-    // List _compilationsId = i.
-    // print('$i iiiiiiiiiii');
     return AudioTale(
       id: json['id'],
       name: json['name'],
@@ -47,7 +42,7 @@ class AudioTale {
     return AudioTale(
       id: json['id'],
       name: json['name'],
-      path: json['path'],
+      path: null,
       pathUrl: json['pathUrl'],
       time: json['time'],
       size: json['size'],
@@ -76,7 +71,7 @@ class AudioTale {
   Map<String, dynamic> toFirestore() => {
         'id': id,
         'name': name,
-        'path': path,
+        // 'path': path,
         'pathUrl': pathUrl,
         'time': time,
         'size': size,

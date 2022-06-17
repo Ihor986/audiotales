@@ -141,6 +141,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                 if (index == 4) {
                   context.read<ProfileBloc>().cangeProfileService.dispouse();
                   if (auth.currentUser == null) {
+                    index = 0;
                     Navigator.of(context, rootNavigator: true)
                         .pushNamedAndRemoveUntil(
                       RegistrationPage.routeName,

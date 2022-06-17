@@ -113,4 +113,59 @@ class FirestoreDB {
         .child(audioTale.id)
         .delete();
   }
+
+  Future<void> deleteUser({required LocalUser user}) async {
+    try {
+      await FirebaseStorage.instance.ref('${user.id}/audio/').listAll().then(
+        (value) {
+          value.items.forEach(
+            (element) {
+              FirebaseStorage.instance.ref(element.fullPath).delete();
+            },
+          );
+        },
+      );
+
+      await FirebaseStorage.instance
+          .ref('${user.id}/images/avatar')
+          .listAll()
+          .then(
+        (value) {
+          value.items.forEach(
+            (element) {
+              FirebaseStorage.instance.ref(element.fullPath).delete();
+            },
+          );
+        },
+      );
+
+      await FirebaseStorage.instance
+          .ref('${user.id}/images/selections_photo')
+          .listAll()
+          .then(
+        (value) {
+          value.items.forEach(
+            (element) {
+              FirebaseStorage.instance.ref(element.fullPath).delete();
+            },
+          );
+        },
+      );
+    } catch (_) {}
+
+    try {
+      await FirebaseFirestore.instance
+          .collection(user.id!)
+          .get()
+          .then((snapshot) {
+        for (DocumentSnapshot ds in snapshot.docs) {
+          ds.reference.delete();
+        }
+      });
+    } catch (_) {}
+
+    try {
+      await user.currentUser?.delete();
+    } catch (_) {}
+  }
 }

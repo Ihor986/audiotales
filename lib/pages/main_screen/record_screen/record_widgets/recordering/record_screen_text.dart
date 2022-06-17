@@ -35,11 +35,13 @@ class AudioNameText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List talesList = RepositoryProvider.of<TalesListRepository>(context)
+    final int length = RepositoryProvider.of<TalesListRepository>(context)
         .getTalesListRepository()
-        .getActiveTalesList();
+        .fullTalesList
+        .length;
+    // .getActiveTalesList()
     final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
-    return Text(_soundBloc.sound.audioname + ' ${talesList.length + 1}',
+    return Text(_soundBloc.sound.audioname + ' ${length + 1}',
         style: const TextStyle(
           color: Colors.black,
           fontSize: 20,

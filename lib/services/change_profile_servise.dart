@@ -38,13 +38,13 @@ class CangeProfileService {
 
   Future saveImage(LocalUser localUser) async {
     if (photo == null) return;
-    localUser.photo = photo;
+    // localUser.photo = photo;
     imageFile = File(photo!);
     try {
       final storageRef = FirebaseStorage.instance
           .ref()
           .child('${LocalDB.instance.getUser().id}/images/avatar')
-          .child('${DateTime.now().millisecondsSinceEpoch}');
+          .child('avatar');
       await storageRef.putFile(imageFile!);
       localUser.photoUrl = await storageRef.getDownloadURL();
     } catch (e) {

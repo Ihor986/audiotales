@@ -13,7 +13,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
     on<ProfileEditingEvent>((event, emit) {
       cangeProfileService.dispouse();
       cangeProfileService.readOnly = false;
-      cangeProfileService.phone = event.user.phone;
+      cangeProfileService.phone =
+          event.user.currentUser?.phoneNumber ?? '0000000000000'.substring(3);
       cangeProfileService.nameController = event.newName;
       emit(ProfileInitialState());
     });
@@ -51,7 +52,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
 
     on<ChangePhoneEvent>((event, emit) {
       cangeProfileService.phone = event.newPhone;
-      if (cangeProfileService.phone != event.user.phone) {
+      // print(cangeProfileService.phone);
+      // print(event.user.phone);
+      if (cangeProfileService.phone != event.user.currentUser?.phoneNumber) {
         cangeProfileService.isChangeNumber = true;
       }
     });

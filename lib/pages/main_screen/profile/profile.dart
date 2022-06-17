@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import '../../../data_base/data/local_data_base.dart';
+import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/user.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../repositorys/user_reposytory.dart';
@@ -14,7 +14,9 @@ import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../utils/consts/texts_consts.dart';
 import '../../../widgets/alerts/progres/show_circular_progress.dart';
+import '../../../widgets/alerts/user/delete_user_confirm.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../income_screen/new_user/registration_page.dart';
 import 'bloc/profile_bloc.dart';
 import 'profile_widgets/profile_text.dart';
 
@@ -47,98 +49,139 @@ class Profile extends StatelessWidget {
                       color: CustomColors.blueSoso,
                     ),
                   ),
-                  Align(
-                    alignment: const Alignment(0, -0.98),
-                    child: SizedBox(
-                      height: screen.height * 0.35,
-                      child: Column(
-                        children: [
-                          _ProfilePhotoWidget(
-                            readOnly: _cangeProfileService.readOnly,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(screen.width * 0.03),
-                            child: _NameTextField(
-                              name: _name,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _cangeProfileService.isChangeNumber
-                      ? const Align(
-                          alignment: Alignment(0, -0.1),
-                          child: Text('Введи код из смс'),
-                        )
-                      : const SizedBox(),
-                  Align(
-                    alignment: _cangeProfileService.readOnly
-                        ? const Alignment(0, -0.1)
-                        : const Alignment(0, 0.1),
-                    child: _cangeProfileService.isChangeNumber
-                        ? const _CodeInput()
-                        : _ProfilePhoneInput(
-                            readOnly: _cangeProfileService.readOnly,
-                          ),
-                  ),
-                  Align(
-                    alignment: _cangeProfileService.readOnly
-                        ? const Alignment(0, 0.1)
-                        : const Alignment(0, 0.3),
-                    child: TextButton(
-                      child: _cangeProfileService.readOnly
-                          ? const EditeText()
-                          : const SaveText(),
-                      onPressed: () {
-                        _pressEditing(
-                          cangeProfileService: _cangeProfileService,
-                          name: _name,
-                          user: _user,
-                          context: context,
-                        );
-                      },
-                    ),
-                  ),
-                  _cangeProfileService.readOnly
-                      ? Align(
-                          alignment: const Alignment(0, 0.3),
-                          child: TextButton(
-                            child: const SubscribeText(),
-                            onPressed: () {},
-                          ),
-                        )
-                      : const SizedBox(),
-                  _cangeProfileService.readOnly
-                      ? Align(
-                          alignment: const Alignment(0, 0.45),
-                          child: _CustomProgressIndicator(taleList: _taleList),
-                        )
-                      : const SizedBox(),
-                  _cangeProfileService.readOnly
-                      ? Align(
-                          alignment: const Alignment(0, 0.7),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  SizedBox(
+                    height: screen.height * 0.8,
+                    child: Stack(
+                      children: [
+                        Container(
+                          alignment: const Alignment(0, 0),
+                          height: screen.height * 0.35,
+                          child: Column(
                             children: [
-                              TextButton(
-                                  onPressed: () {
-                                    auth.signOut();
-                                  },
-                                  child: const LogoutText()),
-                              TextButton(
-                                  onPressed: () {
-                                    LocalDB.instance.deleteUser();
-                                    auth.signOut();
-                                  },
-                                  child: const DeleteAccountText()),
+                              _ProfilePhotoWidget(
+                                readOnly: _cangeProfileService.readOnly,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(screen.width * 0.03),
+                                child: _NameTextField(
+                                  name: _name,
+                                ),
+                              ),
                             ],
                           ),
-                        )
-                      : const SizedBox(),
+                        ),
+                        _cangeProfileService.isChangeNumber
+                            ? const Align(
+                                alignment: Alignment(0, -0.1),
+                                child: Text('Введи код из смс'),
+                              )
+                            : const SizedBox(),
+                        Align(
+                          alignment: _cangeProfileService.readOnly
+                              ? const Alignment(0, -0.1)
+                              : const Alignment(0, 0.1),
+                          child: _cangeProfileService.isChangeNumber
+                              ? const _CodeInput()
+                              : _ProfilePhoneInput(
+                                  readOnly: _cangeProfileService.readOnly,
+                                ),
+                        ),
+                        Align(
+                          alignment: _cangeProfileService.readOnly
+                              ? const Alignment(0, 0.1)
+                              : const Alignment(0, 0.3),
+                          child: TextButton(
+                            child: _cangeProfileService.readOnly
+                                ? const EditeText()
+                                : const SaveText(),
+                            onPressed: () {
+                              _pressEditing(
+                                cangeProfileService: _cangeProfileService,
+                                name: _name,
+                                user: _user,
+                                context: context,
+                              );
+                            },
+                          ),
+                        ),
+                        _cangeProfileService.readOnly
+                            ? Align(
+                                alignment: const Alignment(0, 0.3),
+                                child: TextButton(
+                                  child: const SubscribeText(),
+                                  onPressed: () {
+                                    context.read<NavigationBloc>().add(
+                                        ChangeCurrentIndexEvent(
+                                            currentIndex: 7));
+                                  },
+                                ),
+                              )
+                            : const SizedBox(),
+                        _cangeProfileService.readOnly
+                            ? Align(
+                                alignment: const Alignment(0, 0.45),
+                                child: _CustomProgressIndicator(
+                                    taleList: _taleList),
+                              )
+                            : const SizedBox(),
+                        _cangeProfileService.readOnly
+                            ? Align(
+                                alignment: const Alignment(0, 0.7),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () {
+                                          auth.signOut();
+                                          context.read<NavigationBloc>().add(
+                                                ChangeCurrentIndexEvent(
+                                                    currentIndex: 0),
+                                              );
+                                        },
+                                        child: const LogoutText()),
+                                    TextButton(
+                                        onPressed: () async {
+                                          _pressDelete(
+                                            context: context,
+                                            user: _user,
+                                          );
+                                        },
+                                        child: const DeleteAccountText()),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
                 ],
               );
       },
+    );
+  }
+}
+
+void _pressDelete({
+  required BuildContext context,
+  required LocalUser user,
+}) {
+  Size screen = MediaQuery.of(context).size;
+  int now = DateTime.now().millisecondsSinceEpoch.toInt();
+  int loginTime = user
+          .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
+          .toInt() ??
+      0;
+  bool isNeedSignIn = now - 300000 > loginTime;
+  if (isNeedSignIn) {
+    Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+      RegistrationPage.routeName,
+      (_) => false,
+    );
+  } else {
+    DeleteUserConfirm.instance.deletedConfirm(
+      screen: screen,
+      context: context,
     );
   }
 }
@@ -338,13 +381,13 @@ class _SelectionPhotoWidgetState extends State<_ProfilePhotoWidget> {
 DecorationImage? _decorationImageReadOnly({
   required LocalUser user,
 }) {
-  if (user.photo != null) {
-    try {
-      return DecorationImage(
-          image: MemoryImage(File(user.photo ?? '').readAsBytesSync()),
-          fit: BoxFit.cover);
-    } catch (_) {}
-  }
+  // if (user.photo != null) {
+  //   try {
+  //     return DecorationImage(
+  //         image: MemoryImage(File(user.photo ?? '').readAsBytesSync()),
+  //         fit: BoxFit.cover);
+  //   } catch (_) {}
+  // }
 
   if (user.photoUrl != null) {
     try {
@@ -421,8 +464,8 @@ class _ProfilePhoneInputState extends State<_ProfilePhoneInput> {
         width: 309,
         height: 59,
         child: TextFormField(
-          initialValue: maskFormatter
-              .maskText(_user.phone ?? '0000000000000'.substring(3)),
+          initialValue: maskFormatter.maskText(
+              _user.currentUser?.phoneNumber ?? '0000000000000'.substring(3)),
           readOnly: widget.readOnly,
           // autofocus: true,
           onChanged: (value) {

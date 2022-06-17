@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,12 +38,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNewUser = LocalDB.instance.getUser().isNewUser == null;
-    // bool isNewUser = true;
+    bool isNewUser = LocalDB.instance.getUser().isNewUser == null &&
+        FirebaseAuth.instance.currentUser == null;
 
-    // User? user = FirebaseAuth.instance.currentUser;
-    // isNewUser = user == null ? isNewUser : true;
-    // user == null ? print('no user') : print('${user.phoneNumber}');
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => UserRepository()),

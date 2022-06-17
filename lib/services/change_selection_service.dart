@@ -51,7 +51,7 @@ class ChangeSelectionService {
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('${LocalDB.instance.getUser().id}/images/selections_photo')
-            .child(_date);
+            .child(_selectionId);
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
       } catch (e) {
@@ -90,7 +90,7 @@ class ChangeSelectionService {
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('${LocalDB.instance.getUser().id}/images/selections_photo')
-            .child(_selection.date);
+            .child(_selection.id);
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
       } catch (e) {

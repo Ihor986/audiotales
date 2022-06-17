@@ -24,7 +24,6 @@ class DataBase {
 
   LocalUser getUser() {
     final LocalUser _user = LocalDB.instance.getUser();
-    // _saveUserForUpDate();
     return _user.isNewUser == null ? LocalUser(isNewUser: false) : _user;
   }
 
@@ -34,6 +33,12 @@ class DataBase {
     if (user.isUserRegistered == true) {
       FirestoreDB.instance.saveUserToFirebase(user);
     }
+  }
+
+  Future<void> deleteUser() async {
+    print('start');
+    await FirestoreDB.instance.deleteUser(user: getUser());
+    LocalDB.instance.deleteUser();
   }
 
   Future<void> saveUserWithUpDate() async {

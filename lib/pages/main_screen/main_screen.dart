@@ -82,7 +82,6 @@ class _MainScreenState extends State<MainScreen> {
       child: BlocBuilder<NavigationBloc, NavigationState>(
         builder: (context, state) {
           return Scaffold(
-            extendBody: true,
             appBar: state.pageIndex < 8 ? _appBars[state.pageIndex] : null,
             body: Navigator(
               key: GlobalKey<NavigatorState>(),
@@ -95,9 +94,10 @@ class _MainScreenState extends State<MainScreen> {
               },
               onGenerateRoute: AppRouter.generateRoute,
             ),
-            drawer: const CustomDrawer(),
-            resizeToAvoidBottomInset: false,
             bottomNavigationBar: const CustomBottomNavigationBar(),
+            drawer: const CustomDrawer(),
+            extendBody: true,
+            resizeToAvoidBottomInset: false,
           );
         },
       ),

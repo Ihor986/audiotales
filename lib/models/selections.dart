@@ -34,7 +34,8 @@ class SelectionsList {
     SnapshotOptions? options,
   ) {
     List listJson = snapshot.data()?['selectionsList'];
-    List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
+    List<Selection> sList =
+        listJson.map((e) => Selection.fromFirestore(e)).toList();
 
     return SelectionsList(selectionsList: sList);
   }
@@ -50,7 +51,7 @@ class SelectionsList {
     for (var e in selectionsList) {
       final int oldUpdate = int.parse(e.updateDate ?? '0');
       final Selection newSelection = newSelectionsList.selectionsList
-          .firstWhere((element) => element.id == e.id);
+          .firstWhere((element) => element.id == e.id, orElse: () => e);
       final int newUpdate = int.parse(newSelection.updateDate ?? '0');
       if (newUpdate >= oldUpdate) {
         e.updateFromFB(newSelection);
@@ -119,6 +120,19 @@ class Selection {
         'description': description,
         'updateDate': updateDate,
       };
+
+  factory Selection.fromFirestore(Map<String, dynamic> json) {
+    return Selection(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      date: json['date'] as String,
+      photo: null,
+      photoUrl: json['photoUrl'],
+      description: json['description'],
+      updateDate: json['updateDate'],
+    );
+  }
+
   Map<String, dynamic> toFirestore() => {
         'id': id,
         'name': name,
