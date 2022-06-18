@@ -7,23 +7,25 @@ import 'recordering/recordering.dart';
 import 'save_record/save_record.dart';
 
 class RecordDraggableWidget extends StatelessWidget {
-  RecordDraggableWidget({Key? key}) : super(key: key);
-
-  final List<Widget> pages = [
-    const Recordering(),
-    const PlayRecord(),
-    const SaveRecord(),
-    // const SaveRecord(),
-    // const SaveRecord(),
-  ];
+  const RecordDraggableWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
+    final List<Widget> pages = [
+      Recordering(
+        soundBloc: _soundBloc,
+      ),
+      const PlayRecord(),
+      const SaveRecord(),
+      // const SaveRecord(),
+      // const SaveRecord(),
+    ];
     return BlocBuilder<SoundBloc, SoundInitial>(
       builder: (context, state) {
         // int index;
         // if(.isRecoderReady){}
-        return pages[context.read<SoundBloc>().sound.soundIndex];
+        return pages[_soundBloc.sound.soundIndex];
 
         // return SaveRecord();
       },

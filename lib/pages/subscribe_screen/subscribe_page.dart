@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../../utils/consts/texts_consts.dart';
 import 'bloc/subscribe_bloc.dart';
@@ -348,7 +349,11 @@ class _SubscribeButton extends StatelessWidget {
             height: screen.height * 0.05,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              context
+                  .read<NavigationBloc>()
+                  .add(ChangeCurrentIndexEvent(currentIndex: 0));
+            },
             child: const Text(
               TextsConst.subscribeForMonth,
               style: TextStyle(fontSize: 18),

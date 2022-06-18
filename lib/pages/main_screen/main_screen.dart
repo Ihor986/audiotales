@@ -5,6 +5,7 @@ import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../models/tales_list.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../routes/app_router.dart';
+import '../../services/select_audio_to_delete_service.dart';
 import '../../services/sound_service.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
@@ -27,20 +28,22 @@ import 'profile/profile.dart';
 import 'record_screen/record_screen.dart';
 import 'selections_screen/selections_screen.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class MainScreen extends StatelessWidget {
+  const MainScreen({
+    Key? key,
+  }) : super(key: key);
   static const routeName = '/main_screen.dart';
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
+//   @override
+//   State<MainScreen> createState() => _MainScreenState();
+// }
 
-class _MainScreenState extends State<MainScreen> {
-  @override
-  void initState() {
-    //  selectAudioToDeleteService.deleteOldAudio(talesList: event.talesList);
-    super.initState();
-  }
+// class _MainScreenState extends State<MainScreen> {
+//   @override
+//   void initState() {
+
+//     super.initState();
+//   }
 
   @override
   Widget build(BuildContext context) {
