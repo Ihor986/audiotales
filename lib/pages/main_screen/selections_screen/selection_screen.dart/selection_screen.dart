@@ -6,7 +6,7 @@ import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
-import 'selection_screen_widgets/selection_screen_data.dart';
+import '../wiget/selection_screen_body.dart';
 import 'selection_screen_widgets/text_selection_screen.dart';
 
 class SelectionScreenPageArguments {

@@ -156,6 +156,17 @@ class TalesList {
     }
   }
 
+  updateAudioSelectionsId({
+    required String id,
+    required List selectionsId,
+  }) {
+    for (var audio in fullTalesList) {
+      if (audio.id == id) {
+        audio.updateAudio(nCompilationsId: selectionsId);
+      }
+    }
+  }
+
   deleteAudio({
     required String id,
   }) {

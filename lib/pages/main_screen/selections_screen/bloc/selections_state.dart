@@ -8,10 +8,10 @@ class SelectionsState {
     this.searchValue,
     this.heightDescriptionInput = 0.15,
     this.maxLinesDescriptionInput = 3,
-    // required this.readOnly,
+    this.readOnly = true,
   });
   String? searchValue;
   double heightDescriptionInput;
   int maxLinesDescriptionInput;
-  // bool readOnly;
+  bool readOnly;
 }

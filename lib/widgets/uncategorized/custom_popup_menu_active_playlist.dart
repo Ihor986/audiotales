@@ -1,16 +1,22 @@
+import 'package:audiotales/models/audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../models/tales_list.dart';
+import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../alerts/deleted/remove_to_deleted_confirm.dart';
 
 class CustomPopUpMenu extends StatelessWidget {
-  const CustomPopUpMenu({Key? key, required this.id}) : super(key: key);
-  final String id;
+  const CustomPopUpMenu({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -28,21 +34,35 @@ class CustomPopUpMenu extends StatelessWidget {
       ),
       itemBuilder: (context) => [
         PopupMenuItem(
+          child: const Text('Переименовать'),
+          value: () {},
+        ),
+        PopupMenuItem(
+          child: const Text('Добавить в подборку'),
+          value: () {
+            //  _sound.url = null;
+            //         _sound.soundIndex = 0;
+            context
+                .read<SelectionsBloc>()
+                .add(SelectSelectionsEvent(audio: audio));
+            context
+                .read<NavigationBloc>()
+                .add(ChangeCurrentIndexEvent(currentIndex: 1));
+          },
+        ),
+        PopupMenuItem(
           child: const Text('Удалить'),
           value: () {
             RemoveToDeletedConfirm.instance.deletedConfirm(
               screen: screen,
               context: context,
-              id: id,
+              id: audio.id,
               talesList: _talesListRep,
             );
-            // _mainScreenBloc.add(DeleteAudioEvent(
-            //     id: _talesList[i].id,
-            //     talesList: _talesListRep));
           },
         ),
         PopupMenuItem(
-          child: const Text('Подробнее об аудиозаписи'),
+          child: const Text('Поделиться'),
           value: () {},
         ),
       ],

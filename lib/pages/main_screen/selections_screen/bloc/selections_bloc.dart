@@ -1,7 +1,9 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
+import '../../../../models/audio.dart';
 import '../../../../models/selections.dart';
 import '../../../../services/change_selection_service.dart';
+import '../../../../services/select_selections_service.dart';
 
 part 'selections_event.dart';
 part 'selections_state.dart';
@@ -9,6 +11,8 @@ part 'selections_state.dart';
 class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   final ChangeSelectionService changeSelectionService =
       ChangeSelectionService();
+  final SelectSelectionsService selectSelectionsService =
+      SelectSelectionsService();
   SelectionsBloc() : super(SelectionsState()) {
     on<CreateNewSelectonEvent>((event, emit) {
       changeSelectionService.dispouse();
@@ -77,6 +81,36 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         emit(SelectionsState(
           searchValue: event.value,
         ));
+      },
+    );
+
+    on<SelectSelectionsEvent>(
+      (event, emit) {
+        selectSelectionsService.dispose();
+        selectSelectionsService.audio = event.audio;
+        selectSelectionsService.selectionsIdList
+            .addAll(event.audio.compilationsId);
+        emit(SelectionsState(
+          readOnly: false,
+        ));
+      },
+    );
+
+    on<CheckSelectionEvent>(
+      (event, emit) {
+        selectSelectionsService.changeIDList(event.id);
+        emit(SelectionsState(
+          readOnly: false,
+        ));
+      },
+    );
+
+    on<SaveAudioWithSelectionsListEvent>(
+      (event, emit) async {
+        await selectSelectionsService.addSelectionsToAudio(
+          fullTalesList: event.talesList,
+        );
+        emit(SelectionsState());
       },
     );
   }

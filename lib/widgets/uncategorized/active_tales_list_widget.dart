@@ -64,41 +64,8 @@ class ActiveTalesListWidget extends StatelessWidget {
                       ],
                     ),
                     CustomPopUpMenu(
-                      id: _talesList[i].id,
+                      audio: _talesList[i],
                     ),
-                    // PopupMenuButton(
-                    //   shape: const RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.all(Radius.circular(15)),
-                    //   ),
-                    //   icon: SvgPicture.asset(
-                    //     CustomIconsImg.moreHorizontRounded,
-                    //     height: 3,
-                    //     color: CustomColors.black,
-                    //   ),
-                    //   itemBuilder: (context) => [
-                    //     PopupMenuItem(
-                    //       child: const Text('Удалить'),
-                    //       value: () {
-                    //         RemoveToDeletedConfirm.instance.deletedConfirm(
-                    //           screen: screen,
-                    //           context: context,
-                    //           id: _talesList[i].id,
-                    //           talesList: _talesListRep,
-                    //         );
-                    //         // _mainScreenBloc.add(DeleteAudioEvent(
-                    //         //     id: _talesList[i].id,
-                    //         //     talesList: _talesListRep));
-                    //       },
-                    //     ),
-                    //     PopupMenuItem(
-                    //       child: const Text('Подробнее об аудиозаписи'),
-                    //       value: () {},
-                    //     ),
-                    //   ],
-                    //   onSelected: (Function value) {
-                    //     value();
-                    //   },
-                    // ),
                   ],
                 ),
                 decoration: BoxDecoration(

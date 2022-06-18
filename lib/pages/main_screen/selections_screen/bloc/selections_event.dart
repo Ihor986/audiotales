@@ -56,3 +56,24 @@ class SearchAudioToAddInSelectionEvent extends SelectionsEvent {
   SearchAudioToAddInSelectionEvent({required this.value});
   String value;
 }
+
+class SelectSelectionsEvent extends SelectionsEvent {
+  SelectSelectionsEvent({
+    required this.audio,
+  });
+  final AudioTale audio;
+}
+
+class CheckSelectionEvent extends SelectionsEvent {
+  CheckSelectionEvent({
+    required this.id,
+  });
+  final String id;
+}
+
+class SaveAudioWithSelectionsListEvent extends SelectionsEvent {
+  SaveAudioWithSelectionsListEvent({
+    required this.talesList,
+  });
+  final TalesList talesList;
+}

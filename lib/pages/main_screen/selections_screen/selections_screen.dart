@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../models/selections.dart';
+import '../../../models/tales_list.dart';
 import '../../../repositorys/selections_repositiry.dart';
+import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
@@ -20,42 +22,57 @@ class SelectionsScreen extends StatelessWidget {
   static const SelectionsText title = SelectionsText();
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
+    return BlocBuilder<SelectionsBloc, SelectionsState>(
+      builder: (context, state) {
+        Size screen = MediaQuery.of(context).size;
+        // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
 
-    return Scaffold(
-      extendBody: true,
-      appBar: const _SelectionsScreenAppBar(),
-      body: Stack(
-        children: [
-          Column(
+        return Scaffold(
+          extendBody: true,
+          appBar: _SelectionsScreenAppBar(
+            readOnly: state.readOnly,
+          ),
+          body: Stack(
             children: [
-              ClipPath(
-                clipper: OvalBC(),
-                child: Container(
-                  height: screen.height / 5,
-                  color: CustomColors.oliveSoso,
-                ),
+              Column(
+                children: [
+                  ClipPath(
+                    clipper: OvalBC(),
+                    child: Container(
+                      height: screen.height / 5,
+                      color: CustomColors.oliveSoso,
+                    ),
+                  ),
+                ],
               ),
+              Align(
+                  alignment: const Alignment(0, -0.6),
+                  child: _WrapSelectionsList(
+                    readOnly: state.readOnly,
+                  )),
             ],
           ),
-          const Align(
-              alignment: Alignment(0, -0.6), child: _WrapSelectionsList()),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class _SelectionsScreenAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const _SelectionsScreenAppBar({Key? key}) : super(key: key);
+  const _SelectionsScreenAppBar({
+    Key? key,
+    required this.readOnly,
+  }) : super(key: key);
+  final bool readOnly;
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
   Widget build(BuildContext context) {
-    final SelectionsBloc _selectionsBloc =
-        BlocProvider.of<SelectionsBloc>(context);
+    final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
+    final TalesList _talesListRep =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository();
     Size screen = MediaQuery.of(context).size;
     return AppBar(
       actions: <Widget>[
@@ -64,11 +81,20 @@ class _SelectionsScreenAppBar extends StatelessWidget
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              IconButton(
-                icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
-                onPressed: () {},
-              ),
-              // const SizedBox(),
+              readOnly
+                  ? const SizedBox()
+                  // IconButton(
+                  //     icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
+                  //     onPressed: () {},
+                  //   )
+                  : TextButton(
+                      onPressed: () {
+                        _selectionsBloc.add(
+                          SaveAudioWithSelectionsListEvent(
+                              talesList: _talesListRep),
+                        );
+                      },
+                      child: Text('Add')),
             ],
           ),
         ),
@@ -112,7 +138,11 @@ class _SelectionsScreenAppBar extends StatelessWidget
 }
 
 class _WrapSelectionsList extends StatelessWidget {
-  const _WrapSelectionsList({Key? key}) : super(key: key);
+  const _WrapSelectionsList({
+    Key? key,
+    required this.readOnly,
+  }) : super(key: key);
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +158,10 @@ class _WrapSelectionsList extends StatelessWidget {
 
         for (var selection in _selectionsList) {
           selections.add(
-            _Selection(selection: selection),
+            _Selection(
+              selection: selection,
+              readOnly: readOnly,
+            ),
           );
         }
 
@@ -156,11 +189,17 @@ class _Selection extends StatelessWidget {
   const _Selection({
     Key? key,
     required this.selection,
+    required this.readOnly,
   }) : super(key: key);
+  final bool readOnly;
   final Selection selection;
   @override
   Widget build(BuildContext context) {
-    final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
+    // SelectionsBloc
+    // final SoundService _sound = context.read<MainScreenBloc>().sound;
+    final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
+    bool _isCheked = _selectionsBloc.selectSelectionsService.selectionsIdList
+        .contains(selection.id);
     Size screen = MediaQuery.of(context).size;
     DecorationImage? decorationImage() {
       if (selection.photo != null) {
@@ -189,41 +228,69 @@ class _Selection extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.read<SelectionsBloc>().changeSelectionService.readOnly = true;
-        // _sound.url = null;
-        // _sound.soundIndex = 0;
-        // context
-        //     .read<NavigationBloc>()
-        //     .add(ChangeCurrentIndexEvent(currentIndex: 6));
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SelectionScreen(
-              selection: selection,
+        if (readOnly) {
+          _selectionsBloc.changeSelectionService.readOnly = true;
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SelectionScreen(
+                selection: selection,
+              ),
+            ),
+            (_) => true,
+          );
+        } else {
+          _selectionsBloc.add(CheckSelectionEvent(id: selection.id));
+        }
+      },
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: decorationImage(),
+              borderRadius: BorderRadius.circular(15),
+              color: CustomColors.iconsColorBNB,
+            ),
+            width: screen.width * 0.45,
+            height: screen.height * 0.27,
+            child: Padding(
+              padding: EdgeInsets.all(screen.width * 0.04),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  WrapSelectionsListTextName(selection: selection),
+                  WrapSelectionsListTextData(selection: selection),
+                ],
+              ),
             ),
           ),
-          (_) => true,
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          image: decorationImage(),
-          borderRadius: BorderRadius.circular(15),
-          color: CustomColors.iconsColorBNB,
-        ),
-        width: screen.width * 0.45,
-        height: screen.height * 0.27,
-        child: Padding(
-          padding: EdgeInsets.all(screen.width * 0.04),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              WrapSelectionsListTextName(selection: selection),
-              WrapSelectionsListTextData(selection: selection),
-            ],
-          ),
-        ),
+          readOnly
+              ? const SizedBox()
+              : Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: CustomColors.disactive,
+                  ),
+                  width: screen.width * 0.45,
+                  height: screen.height * 0.27,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: screen.width * 0.15,
+                      right: screen.width * 0.15,
+                    ),
+                    child: _isCheked
+                        ? SvgPicture.asset(
+                            CustomIconsImg.check,
+                            color: CustomColors.white,
+                          )
+                        : SvgPicture.asset(
+                            CustomIconsImg.uncheck,
+                            color: CustomColors.white,
+                          ),
+                  ),
+                ),
+        ],
       ),
     );
   }

@@ -107,7 +107,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                         ],
                       ),
                       CustomPopUpMenu(
-                        id: _talesList[i].id,
+                        audio: _talesList[i],
                       ),
                     ],
                   ),

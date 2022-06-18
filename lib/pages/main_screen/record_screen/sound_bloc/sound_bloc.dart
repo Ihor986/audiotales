@@ -1,6 +1,5 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
-import '../../../../data_base/data_base.dart';
 import '../../../../models/audio.dart';
 import '../../../../models/user.dart';
 import '../../../../services/change_audio_servise.dart';
@@ -16,7 +15,6 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
       (event, emit) async {
         await sound.clickRecorder();
         emit(SoundInitial());
-        // emit(SoundInitial(indexPage: sound.url == null ? 0 : 1));
       },
     );
     on<SaveRecordEvent>(
@@ -34,7 +32,6 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     on<StopRecordEvent>(
       (event, emit) async {
         await sound.stopRecorder();
-        // emit(SoundInitial(indexPage: 0));
         emit(SoundInitial());
       },
     );

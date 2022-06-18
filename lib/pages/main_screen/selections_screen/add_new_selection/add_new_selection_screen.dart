@@ -11,7 +11,7 @@ import '../../../../utils/consts/custom_icons_img.dart';
 import '../../../../utils/consts/texts_consts.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../bloc/selections_bloc.dart';
-import '../selection_screen.dart/selection_screen_widgets/selection_screen_data.dart';
+import '../wiget/selection_screen_body.dart';
 import 'add_new_selections_text.dart';
 
 class AddNewSelectionScreen extends StatelessWidget {
