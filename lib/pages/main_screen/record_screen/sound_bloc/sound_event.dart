@@ -19,3 +19,22 @@ class SaveRecordEvent extends SoundEvent {
 class StopRecordEvent extends SoundEvent {}
 
 class StartPlaydEvent extends SoundEvent {}
+
+class ChangeAudioNameEvent extends SoundEvent {
+  ChangeAudioNameEvent({required this.name});
+  final String name;
+}
+
+class SaveChangedAudioNameEvent extends SoundEvent {
+  SaveChangedAudioNameEvent({
+    required this.audio,
+    required this.fullTalesList,
+  });
+  final AudioTale audio;
+  final TalesList fullTalesList;
+}
+
+class EditingAudioNameEvent extends SoundEvent {
+  EditingAudioNameEvent({required this.value});
+  final String value;
+}

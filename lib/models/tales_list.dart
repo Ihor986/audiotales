@@ -140,7 +140,18 @@ class TalesList {
   }) {
     for (var audio in fullTalesList) {
       if (audio.id == id) {
-        audio.removeAudioToDeleted();
+        audio.updateAudio(nIsDeleted: true);
+      }
+    }
+  }
+
+  changeAudioName({
+    required String id,
+    required String name,
+  }) {
+    for (var audio in fullTalesList) {
+      if (audio.id == id) {
+        audio.updateAudio(nName: name);
       }
     }
   }

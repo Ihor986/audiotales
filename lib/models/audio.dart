@@ -81,11 +81,6 @@ class AudioTale {
         'updateDate': updateDate,
       };
 
-  removeAudioToDeleted() {
-    isDeleted = true;
-    deletedDate = DateTime.now().millisecondsSinceEpoch.toString();
-  }
-
   String getDeleteDate() {
     return deletedDate ?? '';
   }
@@ -98,4 +93,34 @@ class AudioTale {
     deletedDate = newAudio.deletedDate;
     updateDate = newAudio.updateDate;
   }
+
+  void updateAudio({
+    String? nName,
+    List? nCompilationsId,
+    bool? nIsDeleted,
+    String? nDeletedDate,
+    String? nUpdateDate,
+    // String? nPath,
+    // String? nPathUrl,
+    // num? nTime,
+    // num? nSize,
+  }) {
+    name = nName ?? name;
+    compilationsId = nCompilationsId ?? compilationsId;
+    isDeleted = nIsDeleted ?? isDeleted;
+    deletedDate = nIsDeleted == true
+        ? DateTime.now().millisecondsSinceEpoch.toString()
+        : deletedDate;
+    updateDate = DateTime.now().millisecondsSinceEpoch.toString();
+    // final String? path;
+    // pathUrl = nPathUrl ?? pathUrl;
+    // final num time;
+    // final num size;
+  }
+
+  // removeAudioToDeleted() {
+  //   isDeleted = true;
+  //   deletedDate = DateTime.now().millisecondsSinceEpoch.toString();
+  // }
+
 }

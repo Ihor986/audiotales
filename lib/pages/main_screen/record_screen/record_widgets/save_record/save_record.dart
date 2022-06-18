@@ -1,12 +1,18 @@
+import 'dart:io';
+
+import 'package:audiotales/models/selections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
+import '../../../../../models/audio.dart';
 import '../../../../../models/tales_list.dart';
+import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
+import '../../sound_bloc/sound_bloc.dart';
 import '../play_record/play_record_progress.dart';
 
 class SaveRecord extends StatelessWidget {
@@ -14,66 +20,97 @@ class SaveRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TalesListRepository _talesListRep =
-        RepositoryProvider.of<TalesListRepository>(context);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
-        child: DraggableScrollableSheet(
-            initialChildSize: 1,
-            maxChildSize: 1,
-            minChildSize: 1,
-            builder: (context, scrollController) {
-              return Container(
-                  decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: CustomColors.boxShadow,
-                            spreadRadius: 3,
-                            blurRadius: 10)
-                      ],
-                      color: CustomColors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Stack(
-                    children: [
-                      const Align(
-                          alignment: Alignment(-1, -1),
-                          child: _SaveRecordUpbarButtons()),
-                      const Align(
-                          alignment: Alignment(0, -0.7),
-                          child: _SaveRecordPhotoWidget()),
-                      const Align(
-                          alignment: Alignment(0, 0.05),
-                          child: Text('Название подборки')),
-                      Align(
-                          alignment: const Alignment(0, 0.15),
-                          child: Text(_talesListRep
-                              .getTalesListRepository()
-                              .getActiveTalesList()
-                              .first
-                              .name)),
-                      const Align(
-                          alignment: Alignment(0, 0.4),
-                          child: PlayRecordProgres()),
-                      const Align(
-                          alignment: Alignment(0, 1),
-                          child: _SavePagePlayRecordButtons()),
-                    ],
-                  ));
-            }),
-      ),
+    return BlocBuilder<SoundBloc, SoundInitial>(
+      builder: (context, state) {
+        final AudioTale _audio =
+            RepositoryProvider.of<TalesListRepository>(context)
+                .getTalesListRepository()
+                .getActiveTalesList()
+                .first;
+        final SelectionsList _selectionsRep =
+            RepositoryProvider.of<SelectionsListRepository>(context)
+                .getSelectionsListRepository();
+
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5, right: 5),
+            child: DraggableScrollableSheet(
+                initialChildSize: 1,
+                maxChildSize: 1,
+                minChildSize: 1,
+                builder: (context, scrollController) {
+                  return Container(
+                      decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: CustomColors.boxShadow,
+                                spreadRadius: 3,
+                                blurRadius: 10)
+                          ],
+                          color: CustomColors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      child: Stack(
+                        children: [
+                          Align(
+                              alignment: const Alignment(-1, -1),
+                              child: _SaveRecordUpbarButtons(
+                                readOnly: state.readOnly,
+                                audio: _audio,
+                              )),
+                          Align(
+                            alignment: const Alignment(0, -0.7),
+                            child: _SaveRecordPhotoWidget(
+                              readOnly: state.readOnly,
+                              selection:
+                                  _selectionsRep.getSelectionById(_audio.id),
+                            ),
+                          ),
+                          Align(
+                            alignment: const Alignment(0, 0.05),
+                            child: _SelectionName(
+                                readOnly: state.readOnly,
+                                selection:
+                                    _selectionsRep.getSelectionById(_audio.id)),
+                          ),
+                          Align(
+                            alignment: const Alignment(0, 0.15),
+                            child: _AudioName(
+                              audio: _audio,
+                              readOnly: state.readOnly,
+                            ),
+                          ),
+                          const Align(
+                              alignment: Alignment(0, 0.4),
+                              child: PlayRecordProgres()),
+                          const Align(
+                              alignment: Alignment(0, 1),
+                              child: _SavePagePlayRecordButtons()),
+                        ],
+                      ));
+                }),
+          ),
+        );
+      },
     );
   }
 }
 
 class _SaveRecordUpbarButtons extends StatelessWidget {
-  const _SaveRecordUpbarButtons({Key? key}) : super(key: key);
+  const _SaveRecordUpbarButtons({
+    Key? key,
+    required this.audio,
+    required this.readOnly,
+  }) : super(key: key);
+
+  final AudioTale audio;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
-    final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
+    final NavigationBloc _navdBloc = context.read<NavigationBloc>();
+    final _soundBloc = context.read<SoundBloc>();
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
@@ -95,89 +132,134 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.all(screen.width * 0.04),
-          child: PopupMenuButton(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            icon: const Icon(Icons.more_horiz_rounded),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: const Text('Добавить в подборку'),
-                value: () {},
-              ),
-              PopupMenuItem(
-                child: const Text('Редактировать название'),
-                value: () {},
-              ),
-              PopupMenuItem(
-                child: const Text('Поделиться'),
-                value: () {},
-              ),
-              PopupMenuItem(
-                child: const Text('Скачать'),
-                value: () {},
-              ),
-              PopupMenuItem(
-                child: const Text('Удалить'),
-                value: () {
-                  RemoveToDeletedConfirm.instance.deletedConfirm(
-                    screen: screen,
-                    context: context,
-                    id: _talesListRep.fullTalesList.first.id,
-                    talesList: _talesListRep,
-                    isClosePage: true,
-                  );
+          child: readOnly
+              ? PopupMenuButton(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  icon: const Icon(Icons.more_horiz_rounded),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: const Text('Добавить в подборку'),
+                      value: () {},
+                    ),
+                    PopupMenuItem(
+                      child: const Text('Редактировать название'),
+                      value: () {
+                        _soundBloc.add(ChangeAudioNameEvent(
+                          name: audio.name,
+                        ));
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: const Text('Поделиться'),
+                      value: () {},
+                    ),
+                    PopupMenuItem(
+                      child: const Text('Скачать'),
+                      value: () {},
+                    ),
+                    PopupMenuItem(
+                      child: const Text('Удалить'),
+                      value: () {
+                        RemoveToDeletedConfirm.instance.deletedConfirm(
+                          screen: screen,
+                          context: context,
+                          id: _talesListRep.fullTalesList.first.id,
+                          talesList: _talesListRep,
+                          isClosePage: true,
+                        );
 
-                  // _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
-                },
-              ),
-            ],
-            onSelected: (Function value) {
-              value();
-            },
-          ),
+                        _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
+                      },
+                    ),
+                  ],
+                  onSelected: (Function value) {
+                    value();
+                  },
+                )
+              : TextButton(
+                  onPressed: () {
+                    _soundBloc.add(SaveChangedAudioNameEvent(
+                      audio: audio,
+                      fullTalesList: _talesListRep,
+                    ));
+                  },
+                  child: const Text('Ready'),
+                ),
         )
-
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: IconButton(
-        //       onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
-        // ),
       ],
     );
   }
 }
 
 class _SaveRecordPhotoWidget extends StatelessWidget {
-  const _SaveRecordPhotoWidget({Key? key}) : super(key: key);
+  const _SaveRecordPhotoWidget({
+    Key? key,
+    required this.selection,
+    required this.readOnly,
+  }) : super(key: key);
+
+  final bool readOnly;
+  final Selection? selection;
 
   @override
   Widget build(BuildContext context) {
-    // final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
     Size screen = MediaQuery.of(context).size;
+    DecorationImage? _image =
+        selection == null ? null : _decorationImageReadOnly(selection!);
     return Container(
-      width: screen.width * 0.6,
-      height: screen.width * 0.6,
-      decoration: const BoxDecoration(
-        boxShadow: [
+      width: screen.height * 0.34,
+      height: screen.height * 0.34,
+      decoration: BoxDecoration(
+        image: _image,
+        boxShadow: const [
           BoxShadow(
               color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
         ],
-        color: CustomColors.white,
-        borderRadius: BorderRadius.all(
+        // color: CustomColors.iconsColorBNB,
+        borderRadius: const BorderRadius.all(
           Radius.circular(25),
         ),
       ),
-      child: IconButton(
-        onPressed: () {},
-        icon: const ImageIcon(
-          CustomIconsImg.emptyfoto,
-          color: CustomColors.iconsColorPlayRecUpbar,
-          size: 50,
-        ),
-      ),
+      foregroundDecoration: readOnly
+          ? null
+          : const BoxDecoration(
+              color: CustomColors.disactive,
+            ),
+      // child:
+      //  IconButton(
+      //   onPressed: () {},
+      //   icon: const ImageIcon(
+      //     CustomIconsImg.emptyfoto,
+      //     color: CustomColors.iconsColorPlayRecUpbar,
+      //     size: 50,
+      //   ),
+      // ),
     );
   }
+}
+
+DecorationImage? _decorationImageReadOnly(Selection selection) {
+  if (selection.photo != null) {
+    try {
+      return DecorationImage(
+          image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
+          fit: BoxFit.cover);
+    } catch (_) {}
+  }
+
+  if (selection.photoUrl != null) {
+    try {
+      return DecorationImage(
+        image: NetworkImage(selection.photoUrl ?? ''),
+        fit: BoxFit.cover,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+  return null;
 }
 
 class _SavePagePlayRecordButtons extends StatelessWidget {
@@ -234,6 +316,63 @@ class _SavePagePlayRecordButtons extends StatelessWidget {
         ),
       ),
       height: screen.height * 0.25,
+    );
+  }
+}
+
+class _AudioName extends StatelessWidget {
+  const _AudioName({
+    Key? key,
+    required this.audio,
+    required this.readOnly,
+  }) : super(key: key);
+
+  final AudioTale audio;
+  final bool readOnly;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screen = MediaQuery.of(context).size;
+    return TextFormField(
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+      ),
+      initialValue: audio.name,
+      onChanged: (value) {
+        context.read<SoundBloc>().add(
+              EditingAudioNameEvent(value: value),
+            );
+      },
+      readOnly: readOnly,
+      style: TextStyle(
+        color: CustomColors.black,
+        fontSize: screen.height * 0.015,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+class _SelectionName extends StatelessWidget {
+  const _SelectionName({
+    Key? key,
+    required this.selection,
+    required this.readOnly,
+  }) : super(key: key);
+
+  final bool readOnly;
+  final Selection? selection;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screen = MediaQuery.of(context).size;
+    final String text = selection?.name ?? 'Название подборки';
+    return Text(
+      text,
+      style: TextStyle(
+        color: readOnly ? CustomColors.black : CustomColors.noTalesText,
+        fontSize: screen.height * 0.027,
+      ),
     );
   }
 }

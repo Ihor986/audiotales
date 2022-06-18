@@ -18,6 +18,13 @@ class SelectionsList {
     }
   }
 
+  Selection? getSelectionById(String id) {
+    List<Selection> _selectionsList =
+        selectionsList.where((element) => element.id == id).toList();
+
+    return _selectionsList.isNotEmpty ? _selectionsList.first : null;
+  }
+
   Map<String, dynamic> toJson() => {
         'selectionsList': selectionsList.map((e) => e.toJson()).toList(),
       };
