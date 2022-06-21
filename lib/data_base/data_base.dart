@@ -147,21 +147,20 @@ class DataBase {
   }
 
   Future<void> _saveAudioTalesForUpDate() async {
-    final bool auth = FirebaseAuth.instance.currentUser != null;
-    if (auth) {
-      final TalesList talesList = LocalDB.instance.getAudioTales();
-      String? id = FirebaseAuth.instance.currentUser?.uid;
-      final _firebaseTalesList = await FirestoreDB.instance.getAudioTales(
-        id: id,
-        list: talesList,
-      );
-      talesList.updateTalesList(newTalesList: _firebaseTalesList);
-      if (talesList.fullTalesList == []) {
-        return;
-      }
-      final Box<String> userBox = Hive.box(_userBox);
-      await userBox.put('audiolist', jsonEncode(talesList.toJson()));
+    final bool noAuth = FirebaseAuth.instance.currentUser == null;
+    if (noAuth) return;
+    final TalesList talesList = LocalDB.instance.getAudioTales();
+    String? id = FirebaseAuth.instance.currentUser?.uid;
+    final _firebaseTalesList = await FirestoreDB.instance.getAudioTales(
+      id: id,
+      list: talesList,
+    );
+    talesList.updateTalesList(newTalesList: _firebaseTalesList);
+    if (talesList.fullTalesList == []) {
+      return;
     }
+    final Box<String> userBox = Hive.box(_userBox);
+    await userBox.put('audiolist', jsonEncode(talesList.toJson()));
   }
 
   Future<void> _saveSelectionsListForUpDate() async {
