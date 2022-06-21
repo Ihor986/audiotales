@@ -6,11 +6,9 @@ import '../../../models/selections.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../main_screen_block/main_screen_bloc.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
 import 'selection_screen.dart/selection_screen.dart';
@@ -216,7 +214,7 @@ class _Selection extends StatelessWidget {
       if (selection.photoUrl != null) {
         try {
           return DecorationImage(
-            image: NetworkImage(selection.photoUrl ?? ''),
+            image: NetworkImage(selection.photoUrl ?? ''), // cash network image
             fit: BoxFit.cover,
           );
         } catch (e) {

@@ -37,8 +37,9 @@ class DataBase {
 
   Future<void> deleteUser() async {
     print('start');
-    await FirestoreDB.instance.deleteUser(user: getUser());
+    // await FirestoreDB.instance.deleteUser(user: getUser());
     LocalDB.instance.deleteUser();
+    print('finish');
   }
 
   Future<void> saveUserWithUpDate() async {

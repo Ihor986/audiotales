@@ -63,7 +63,19 @@ class LocalDB {
   }
 
   void deleteUser() async {
+    final TalesList _talesList = getAudioTales();
+    final SelectionsList _selectionsList = getSelectionsList();
     final Box<String> userBox = Hive.box(_userBox);
+    for (var item in _talesList.fullTalesList) {
+      item.pathUrl = null;
+      print(item.pathUrl);
+    }
+    saveAudioTalesToLocalDB(_talesList);
+    for (var item in _selectionsList.selectionsList) {
+      item.photoUrl = null;
+      print(item.photoUrl);
+    }
+    saveSelectionsListToLocalDB(_selectionsList);
     await userBox.delete('authUser');
   }
 
