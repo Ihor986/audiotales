@@ -61,7 +61,7 @@ class _BodyMenu extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
-        return Container(
+        return SizedBox(
           // color: Colors.amberAccent,
           height: screen.height * 0.75,
           child: Column(

@@ -99,7 +99,7 @@ class _AudioScreenPlayAllTextF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    // Size screen = MediaQuery.of(context).size;
     return Text(TextsConst.audioScreenPlayAllF, style: TextStyle(color: color));
   }
 }

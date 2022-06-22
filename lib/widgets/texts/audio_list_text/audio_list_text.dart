@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../models/audio.dart';
-import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/minuts_text_convert_service.dart';
 
 class AudioListText extends StatelessWidget {

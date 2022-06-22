@@ -1,15 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../models/selections.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/selections_repositiry.dart';
 import '../../../../repositorys/tales_list_repository.dart';
-import '../../../../services/image_service.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons_img.dart';
-import '../../../../utils/consts/texts_consts.dart';
-import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../bloc/selections_bloc.dart';
 import '../wiget/selection_screen_body.dart';
 import 'add_new_selections_text.dart';
@@ -20,7 +16,7 @@ class AddNewSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    // Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

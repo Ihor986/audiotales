@@ -1,9 +1,6 @@
-import 'package:audiotales/models/user.dart';
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../repositorys/user_reposytory.dart';
 import '../../../../utils/consts/texts_consts.dart';
 
 class ProfileText extends StatelessWidget {

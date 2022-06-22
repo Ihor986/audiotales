@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/tales_list.dart';
 import '../../../pages/deleted_screen/bloc/delete_bloc.dart';
 import '../../../repositorys/tales_list_repository.dart';
@@ -102,7 +101,7 @@ class _ConfirmButtonYes extends StatelessWidget {
     final TalesList talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
-    final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
+    // final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
     return GestureDetector(
       onTap: () {
         _deleteBlocBloc.add(DeleteAudioEvent(id: id, talesList: talesList));

@@ -118,11 +118,9 @@ class FirestoreDB {
     try {
       await FirebaseStorage.instance.ref('${user.id}/audio/').listAll().then(
         (value) {
-          value.items.forEach(
-            (element) {
-              FirebaseStorage.instance.ref(element.fullPath).delete();
-            },
-          );
+          for (var element in value.items) {
+            FirebaseStorage.instance.ref(element.fullPath).delete();
+          }
         },
       );
 
@@ -131,11 +129,9 @@ class FirestoreDB {
           .listAll()
           .then(
         (value) {
-          value.items.forEach(
-            (element) {
-              FirebaseStorage.instance.ref(element.fullPath).delete();
-            },
-          );
+          for (var element in value.items) {
+            FirebaseStorage.instance.ref(element.fullPath).delete();
+          }
         },
       );
 
@@ -144,11 +140,9 @@ class FirestoreDB {
           .listAll()
           .then(
         (value) {
-          value.items.forEach(
-            (element) {
-              FirebaseStorage.instance.ref(element.fullPath).delete();
-            },
-          );
+          for (var element in value.items) {
+            FirebaseStorage.instance.ref(element.fullPath).delete();
+          }
         },
       );
     } catch (_) {}

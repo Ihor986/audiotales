@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import '../../../../data_base/data_base.dart';
 import '../../../../models/audio.dart';
-import '../../../../models/tales_list.dart';
 import '../../../../services/sound_service.dart';
 
 part 'audio_screen_event.dart';

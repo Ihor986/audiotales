@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../models/audio.dart';
 import '../../../../models/selections.dart';
-import '../../../../models/tales_list.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
 import '../../../../utils/consts/custom_colors.dart';
@@ -555,9 +554,9 @@ class _TalesListWidget extends StatelessWidget {
     return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
         Size screen = MediaQuery.of(context).size;
-        final TalesList _talesListRep =
-            RepositoryProvider.of<TalesListRepository>(context)
-                .getTalesListRepository();
+        // final TalesList _talesListRep =
+        //     RepositoryProvider.of<TalesListRepository>(context)
+        //         .getTalesListRepository();
         final MainScreenBloc _mainScreenBloc =
             BlocProvider.of<MainScreenBloc>(context);
         return ListView.builder(

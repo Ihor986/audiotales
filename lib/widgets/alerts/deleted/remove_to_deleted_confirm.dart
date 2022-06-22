@@ -155,7 +155,7 @@ class _ConfirmButtonYes extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: CustomColors.blueSoso),
           color: CustomColors.blueSoso,
-          borderRadius: const BorderRadius.all(const Radius.circular(51)),
+          borderRadius: const BorderRadius.all(Radius.circular(51)),
         ),
         child: const Center(
             child: Text(

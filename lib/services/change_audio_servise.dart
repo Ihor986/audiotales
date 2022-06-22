@@ -1,7 +1,5 @@
 import 'package:audiotales/models/audio.dart';
-import 'package:audiotales/pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
 
-import '../data_base/data_base.dart';
 import '../data_base/data_base.dart';
 import '../models/tales_list.dart';
 

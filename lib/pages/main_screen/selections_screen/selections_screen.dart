@@ -105,7 +105,7 @@ class _SelectionsScreenAppBar extends StatelessWidget
                               talesList: _talesListRep),
                         );
                       },
-                      child: Text('Add')),
+                      child: const Text('Add')),
             ],
           ),
         ),
