@@ -17,11 +17,8 @@ class RecordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-// ?
-    Size screen = MediaQuery.of(context).size;
-    final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
-
-    // _sound.initRecorder();
+    final Size screen = MediaQuery.of(context).size;
+    // final SoundService _sound = context.read<MainScreenBloc>().sound;
     return Scaffold(
       appBar: _RecordScreenAppBar(
         onAction: () {
@@ -30,7 +27,7 @@ class RecordScreen extends StatelessWidget {
       ),
       body: MultiBlocProvider(
         providers: [
-          BlocProvider<SoundBloc>(create: (context) => SoundBloc(_sound)),
+          BlocProvider<SoundBloc>(create: (context) => SoundBloc()),
         ],
         child: Stack(
           children: [

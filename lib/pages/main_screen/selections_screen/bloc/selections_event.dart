@@ -77,3 +77,5 @@ class SaveAudioWithSelectionsListEvent extends SelectionsEvent {
   });
   final TalesList talesList;
 }
+
+class DisposeEvent extends SelectionsEvent {}

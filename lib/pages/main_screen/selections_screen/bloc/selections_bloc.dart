@@ -14,11 +14,17 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   final SelectSelectionsService selectSelectionsService =
       SelectSelectionsService();
   SelectionsBloc() : super(SelectionsState()) {
+    on<DisposeEvent>((event, emit) {
+      selectSelectionsService.dispose();
+      emit(SelectionsState());
+    });
+
     on<CreateNewSelectonEvent>((event, emit) {
       changeSelectionService.dispouse();
       changeSelectionService.readOnly = false;
       emit(SelectionsState());
     });
+
     on<EditAllSelection>(
       (event, emit) {
         changeSelectionService.dispouse();
@@ -30,10 +36,10 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         emit(SelectionsState());
       },
     );
+
     on<CheckEvent>((event, emit) {
       String? searchValue = state.searchValue;
       changeSelectionService.checkEvent(event.isChecked, event.id);
-      // changeSelectionService.readOnly = false;
       emit(SelectionsState(searchValue: searchValue));
     });
 
@@ -64,9 +70,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         final Selection _selection = event.selection;
         _selection.updateDate =
             DateTime.now().millisecondsSinceEpoch.toString();
-        print('!!!!!!!!!!!');
         await changeSelectionService.saveChangedSelectionEvent(
-          // talesList: event.talesList,
           selectionsList: event.selectionsList,
           selection: _selection,
         );
@@ -77,7 +81,6 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<SearchAudioToAddInSelectionEvent>(
       (event, emit) {
-        // changeSelectionService.readOnly = false;
         emit(SelectionsState(
           searchValue: event.value,
         ));

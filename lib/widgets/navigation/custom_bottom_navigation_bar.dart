@@ -24,7 +24,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
-    // final FirebaseAuth auth = FirebaseAuth.instance;
     Size screen = MediaQuery.of(context).size;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {

@@ -8,9 +8,9 @@ part 'sound_event.dart';
 part 'sound_state.dart';
 
 class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
-  final SoundService sound;
+  final SoundService sound = SoundService.instance;
   final ChangeAudioServise changeAudioServise = ChangeAudioServise();
-  SoundBloc(this.sound) : super(SoundInitial()) {
+  SoundBloc() : super(SoundInitial()) {
     on<StartRecordEvent>(
       (event, emit) async {
         await sound.clickRecorder();

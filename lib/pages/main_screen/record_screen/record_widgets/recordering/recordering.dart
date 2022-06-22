@@ -12,26 +12,25 @@ import 'recordering_timer.dart';
 class Recordering extends StatefulWidget {
   const Recordering({
     Key? key,
-    required this.soundBloc,
   }) : super(key: key);
-
-  final SoundBloc soundBloc;
+  // static const String routeName = '/record';
 
   @override
   State<Recordering> createState() => _RecorderingState();
 }
 
 class _RecorderingState extends State<Recordering> {
+  SoundBloc? soundBloc;
   @override
   void initState() {
-    widget.soundBloc.sound.initRecorder();
+    soundBloc = context.read<SoundBloc>();
+    soundBloc!.sound.initRecorder();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    // final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
     final NavigationBloc _navigationBloc = context.read<NavigationBloc>();
 
     return Center(
@@ -79,7 +78,7 @@ class _RecorderingState extends State<Recordering> {
                       ),
                       child: IconButton(
                         onPressed: () async {
-                          widget.soundBloc.add(StartRecordEvent());
+                          soundBloc!.add(StartRecordEvent());
                           _navigationBloc.add(StartRecordNavEvent());
                         },
                         icon: const Icon(Icons.pause,

@@ -10,6 +10,7 @@ import 'play_record_progress.dart';
 
 class PlayRecord extends StatelessWidget {
   const PlayRecord({Key? key}) : super(key: key);
+  // static const String routeName = '/play';
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +64,6 @@ class PlayRecord extends StatelessWidget {
                 }),
           ),
         );
-        // } catch (e) {
-        //   return const CircularProgressIndicator();
-        // }
       },
     );
   }

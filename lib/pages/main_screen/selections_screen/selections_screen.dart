@@ -24,9 +24,10 @@ class SelectionsScreen extends StatefulWidget {
 }
 
 class _SelectionsScreenState extends State<SelectionsScreen> {
+  SelectionsBloc? bloc;
   @override
   void initState() {
-    // context.read<SelectionsBloc>().add(InitEvent);
+    bloc = context.read<SelectionsBloc>();
     super.initState();
   }
 
@@ -35,9 +36,6 @@ class _SelectionsScreenState extends State<SelectionsScreen> {
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
         Size screen = MediaQuery.of(context).size;
-        print(state.readOnly);
-        // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
-
         return Scaffold(
           extendBody: true,
           appBar: _SelectionsScreenAppBar(
@@ -66,6 +64,12 @@ class _SelectionsScreenState extends State<SelectionsScreen> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    bloc?.add(DisposeEvent());
+    super.dispose();
   }
 }
 

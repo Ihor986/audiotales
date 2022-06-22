@@ -21,7 +21,8 @@ import '../utils/consts/custom_icons_img.dart';
 // }
 
 class SoundService {
-  SoundService();
+  SoundService._();
+  static final SoundService instance = SoundService._();
 
   final FlutterSoundRecorder recorder = FlutterSoundRecorder();
   final FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
@@ -41,9 +42,7 @@ class SoundService {
   String endOfSliderPositionText = '00:00:01';
   num? size;
   AudioTale? audioTale;
-  // bool? saveLocal;
   bool isRepeatAllList = false;
-  // bool? isMicrophonePermissionGranted;
 
   saveAudioTale({
     required TalesList fullTalesList,
@@ -83,12 +82,8 @@ class SoundService {
         compilationsId: []);
     fullTalesList.addNewAudio(audioTale!);
     DataBase.instance.saveAudioTales(fullTalesList);
+    // dispouse();
   }
-
-  // checkDeleteAudio({required TalesList list, required AudioTale audio}) {
-  //   audio.isDeleted = true;
-  //   DataBase.instance.saveAudioTales(list);
-  // }
 
   clickRecorder() async {
     bool isRedyStartRecord = !recorder.isRecording &&
@@ -148,18 +143,6 @@ class SoundService {
       isRepeatAllList = false;
     }
   }
-
-  // disposeRecorder() {
-  //   if (recorder.isRecording) {
-  //     _stopRecorder();
-  //   }
-  //   if (audioPlayer.isPlaying || audioPlayer.isPaused) {
-  //     audioPlayer.stopPlayer();
-  //   }
-
-  //   recorder.closeRecorder();
-  //   audioPlayer.closePlayer();
-  // }
 
   _startRecord() async {
     await _record();
@@ -358,7 +341,7 @@ class SoundService {
     );
   }
 
-  getNavImg() {
+  AssetImage getNavImg() {
     AssetImage mic;
     if (soundIndex == 0) {
       mic = CustomIconsImg.mic2;
@@ -367,6 +350,13 @@ class SoundService {
     }
     return mic;
   }
+
+  // int getSoundIndex() {
+  //   if (recorder.isRecording) {
+  //     return 0;
+  //   }
+  //   return 0;
+  // }
 
   forwardPlayer(int i) {
     if (i > 0) {
@@ -392,5 +382,25 @@ class SoundService {
         await clickRecorder();
       }
     }
+  }
+
+  void dispouse() {
+    id = null;
+    isRecoderReady = false;
+    limit = 0;
+    soundIndex = 0;
+    url = null;
+    path = null;
+    pathUrl = null;
+    audioname = 'Запись №';
+    recorderTime = '00:00:00';
+    recorderPower = 0;
+    sliderPosition = 0;
+    endOfSliderPosition = 1;
+    sliderPositionText = '00:00:00';
+    endOfSliderPositionText = '00:00:01';
+    size = null;
+    audioTale = null;
+    isRepeatAllList = false;
   }
 }

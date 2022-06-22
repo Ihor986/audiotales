@@ -68,9 +68,7 @@ class MainScreen extends StatelessWidget {
                 _onTap(
                   index: index,
                   auth: auth,
-                  soundService: _soundService,
                   context: context,
-                  state: state,
                 );
               },
             ),
@@ -88,12 +86,9 @@ class MainScreen extends StatelessWidget {
 
 void _onTap({
   required int index,
-  required NavigationState state,
   required FirebaseAuth auth,
   required BuildContext context,
-  required SoundService soundService,
 }) {
-  if (state.pageIndex == index || soundService.recorder.isRecording) return;
   if (auth.currentUser == null && index == 4) {
     index = 0;
     Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(

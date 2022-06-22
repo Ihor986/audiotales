@@ -8,7 +8,7 @@ part 'main_screen_event.dart';
 part 'main_screen_state.dart';
 
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
-  final SoundService sound = SoundService();
+  final SoundService sound = SoundService.instance;
   MainScreenBloc() : super(MainScreenState()) {
     on<ClickPlayEvent>(
       (event, emit) {

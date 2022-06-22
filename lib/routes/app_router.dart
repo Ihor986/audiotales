@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../pages/deleted_screen/deleted_screen.dart';
 import '../pages/income_screen/new_user/new_user_page.dart';
 import '../pages/income_screen/new_user/registration_page.dart';

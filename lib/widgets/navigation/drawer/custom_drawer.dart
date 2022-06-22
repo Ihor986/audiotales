@@ -69,13 +69,10 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.head,
                 onClick: () {
-                  if (state.pageIndex != 0 && !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
-                    context
-                        .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 0));
-                  }
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 0));
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.home,
@@ -90,14 +87,12 @@ class _BodyMenu extends StatelessWidget {
                       RegistrationPage.routeName,
                       (_) => false,
                     );
-                  } else if (state.pageIndex != 4 &&
-                      !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
+                  } else {
                     context
                         .read<NavigationBloc>()
                         .add(ChangeCurrentIndexEvent(currentIndex: 4));
                   }
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.profile,
@@ -105,13 +100,10 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.collections,
                 onClick: () {
-                  if (state.pageIndex != 1 && !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
-                    context
-                        .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 1));
-                  }
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 1));
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.menu,
@@ -119,13 +111,10 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.allAudioFiles,
                 onClick: () {
-                  if (state.pageIndex != 3 && !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
-                    context
-                        .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 3));
-                  }
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 3));
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.list,
@@ -133,13 +122,10 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.search,
                 onClick: () {
-                  if (state.pageIndex != 5 && !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
-                    context
-                        .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 5));
-                  }
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 5));
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.search,
@@ -147,13 +133,10 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.deletedDrower,
                 onClick: () {
-                  if (state.pageIndex != 6 && !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
-                    context
-                        .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 6));
-                  }
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 6));
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.delete,
@@ -164,13 +147,10 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.subscribe,
                 onClick: () {
-                  if (state.pageIndex != 7 && !_sound.recorder.isRecording) {
-                    _sound.url = null;
-                    _sound.soundIndex = 0;
-                    context
-                        .read<NavigationBloc>()
-                        .add(ChangeCurrentIndexEvent(currentIndex: 7));
-                  }
+                  context
+                      .read<NavigationBloc>()
+                      .add(ChangeCurrentIndexEvent(currentIndex: 7));
+
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: CustomIconsImg.wallet,
@@ -182,7 +162,7 @@ class _BodyMenu extends StatelessWidget {
                 text: TextsConst.support,
                 textTwo: TextsConst.supportTwo,
                 onClick: () {
-                  // Scaffold.of(context).openEndDrawer();
+                  Scaffold.of(context).openEndDrawer();
                   MailToService.instance.forwardToEMail();
                 },
                 icon: CustomIconsImg.support,

@@ -20,6 +20,8 @@ import 'repositorys/user_reposytory.dart';
 import 'routes/app_router.dart';
 import 'package:bot_toast/bot_toast.dart';
 
+import 'services/sound_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNewUser = LocalDB.instance.getUser().isNewUser == null &&
+    bool _isNewUser = LocalDB.instance.getUser().isNewUser == null &&
         FirebaseAuth.instance.currentUser == null;
 
     return MultiRepositoryProvider(
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
           navigatorObservers: [BotToastNavigatorObserver()],
           debugShowCheckedModeBanner: true,
           onGenerateInitialRoutes: (route) {
-            return AppRouter.generateInitialRoute(isNewUser);
+            return AppRouter.generateInitialRoute(_isNewUser);
           },
           onGenerateRoute: AppRouter.generateRoute,
         ),
