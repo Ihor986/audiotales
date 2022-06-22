@@ -12,7 +12,11 @@ import '../../utils/consts/custom_icons_img.dart';
 import '../../utils/consts/texts_consts.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({Key? key}) : super(key: key);
+  const CustomBottomNavigationBar({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
+  final void Function(int index)? onTap;
 
   @override
   State<CustomBottomNavigationBar> createState() =>
@@ -23,7 +27,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
-    final FirebaseAuth auth = FirebaseAuth.instance;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
     Size screen = MediaQuery.of(context).size;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
@@ -131,33 +135,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               unselectedItemColor: CustomColors.black,
               showSelectedLabels: true,
               showUnselectedLabels: true,
-              onTap: (int index) {
-                //  context.read<NavigationBloc>().add(
-                //           NavigateTab(
-                //             tabIndex: index,
-                //             route: _pages[index],
-                //           ),
-                //         );
-                if (index == 4) {
-                  context.read<ProfileBloc>().cangeProfileService.dispouse();
-                  if (auth.currentUser == null) {
-                    index = 0;
-                    Navigator.of(context, rootNavigator: true)
-                        .pushNamedAndRemoveUntil(
-                      RegistrationPage.routeName,
-                      (_) => false,
-                    );
-                  }
-                }
-
-                if (state.pageIndex != index && !_sound.recorder.isRecording) {
-                  _sound.url = null;
-                  _sound.soundIndex = 0;
-                  context
-                      .read<NavigationBloc>()
-                      .add(ChangeCurrentIndexEvent(currentIndex: index));
-                }
-              },
+              onTap: widget.onTap,
               selectedLabelStyle: const TextStyle(fontSize: 10),
               unselectedLabelStyle: const TextStyle(fontSize: 10),
             ),

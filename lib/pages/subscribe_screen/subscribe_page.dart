@@ -11,31 +11,84 @@ import 'bloc/subscribe_bloc.dart';
 
 class SubscribeScreen extends StatelessWidget {
   const SubscribeScreen({Key? key}) : super(key: key);
-  static const routeName = '/record_screen.dart';
+  static const routeName = '/subscribe_screen.dart';
   static const SubscribeScreenTitleText title = SubscribeScreenTitleText();
 
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
 
-    return Stack(
-      children: [
-        Column(
-          children: [
-            ClipPath(
-              clipper: OvalBC(),
-              child: Container(
-                height: screen.height / 4.5,
-                color: CustomColors.blueSoso,
+    return Scaffold(
+      appBar: _SubscribeScreenAppBar(
+        onAction: () {
+          Scaffold.of(context).openDrawer();
+        },
+      ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              ClipPath(
+                clipper: OvalBC(),
+                child: Container(
+                  height: screen.height / 4.5,
+                  color: CustomColors.blueSoso,
+                ),
               ),
+            ],
+          ),
+          const Align(
+            alignment: Alignment(0, -0.45),
+            child: CardWidget(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SubscribeScreenAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _SubscribeScreenAppBar({
+    Key? key,
+    this.onAction,
+  }) : super(key: key);
+  final void Function()? onAction;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return AppBar(
+      backgroundColor: CustomColors.blueSoso,
+      elevation: 0,
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          SizedBox(),
+          SubscribeScreenTitleText(),
+        ],
+      ),
+      leading: Padding(
+        padding: EdgeInsets.only(
+          left: screen.width * 0.04,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                CustomIconsImg.drawer,
+                height: 25,
+                color: CustomColors.white,
+              ),
+              onPressed: onAction,
             ),
+            const SizedBox(),
           ],
         ),
-        const Align(
-          alignment: Alignment(0, -0.45),
-          child: CardWidget(),
-        ),
-      ],
+      ),
     );
   }
 }

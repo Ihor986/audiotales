@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/audio.dart';
 import '../../../models/selections.dart';
@@ -19,39 +20,85 @@ import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 
 class HeadScreen extends StatelessWidget {
   const HeadScreen({Key? key}) : super(key: key);
-  static const routeName = '/head_screen.dart';
+  static const routeName = '/';
   static const HeadText title = HeadText();
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     // Scaffold.of(context).
-    return
-        // Scaffold(
-        //   extendBody: true,
-        //   appBar: AppBar(
-        //     backgroundColor: CustomColors.blueSoso,
-        //     elevation: 0,
-        //   ),
-        //   body:
-        Stack(
-      children: [
-        Column(
-          children: [
-            ClipPath(
-              clipper: OvalBC(),
-              child: Container(
-                height: screen.height / 4.5,
-                color: CustomColors.blueSoso,
+    return Scaffold(
+      extendBody: true,
+      appBar: _HaedScreenAppBar(
+        onAction: () {
+          Scaffold.of(context).openDrawer();
+        },
+      ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              ClipPath(
+                clipper: OvalBC(),
+                child: Container(
+                  height: screen.height / 4.5,
+                  color: CustomColors.blueSoso,
+                ),
               ),
+            ],
+          ),
+          const _SelectionButtons(),
+          const _TalesSelectionWidget(),
+          const _AudioDraggableWidget(),
+        ],
+      ),
+      // drawer: const CustomDrawer(),
+    );
+  }
+}
+
+class _HaedScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _HaedScreenAppBar({
+    Key? key,
+    this.onAction,
+  }) : super(key: key);
+  final void Function()? onAction;
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return AppBar(
+      backgroundColor: CustomColors.blueSoso,
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          SizedBox(),
+          HeadScreen.title,
+        ],
+      ),
+      leading: Padding(
+        padding: EdgeInsets.only(
+          left: screen.width * 0.04,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                CustomIconsImg.drawer,
+                height: 25,
+                color: CustomColors.white,
+              ),
+              onPressed: onAction,
             ),
+            const SizedBox(),
           ],
         ),
-        const _SelectionButtons(),
-        const _TalesSelectionWidget(),
-        const _AudioDraggableWidget(),
-      ],
-      // ),
-      // drawer: const CustomDrawer(),
+      ),
+
+      elevation: 0,
+      // title: HeadScreen.title,
+      // centerTitle: true,
     );
   }
 }

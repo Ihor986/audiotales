@@ -90,8 +90,9 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         selectSelectionsService.audio = event.audio;
         selectSelectionsService.selectionsIdList
             .addAll(event.audio.compilationsId);
+        selectSelectionsService.readOnly = false;
         emit(SelectionsState(
-          readOnly: false,
+          readOnly: selectSelectionsService.readOnly,
         ));
       },
     );
@@ -99,8 +100,9 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     on<CheckSelectionEvent>(
       (event, emit) {
         selectSelectionsService.changeIDList(event.id);
+        selectSelectionsService.readOnly = false;
         emit(SelectionsState(
-          readOnly: false,
+          readOnly: selectSelectionsService.readOnly,
         ));
       },
     );

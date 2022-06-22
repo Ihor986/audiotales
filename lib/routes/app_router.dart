@@ -7,12 +7,15 @@ import '../pages/income_screen/new_user/you_super_page.dart';
 import '../pages/income_screen/regular_user.dart';
 import '../pages/main_screen/head_screen/head_screen_page.dart';
 import '../pages/main_screen/main_screen.dart';
+import '../pages/main_screen/profile/profile.dart';
 import '../pages/main_screen/record_screen/record_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../pages/main_screen/selections_screen/add_new_selection/select_audio/select_audio_screen.dart';
 import '../pages/main_screen/selections_screen/selection_screen.dart/selection_screen.dart';
 import '../pages/main_screen/selections_screen/selections_screen.dart';
-import '../pages/main_screen/audios_screen/audios_screen.dart.dart';
+import '../pages/main_screen/audios_screen/audios_screen.dart';
+import '../pages/search_screen/search_page.dart';
+import '../pages/subscribe_screen/subscribe_page.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -72,6 +75,10 @@ class AppRouter {
         builder = (_) => const RecordScreen();
         break;
 
+      case Profile.routeName:
+        builder = (_) => const Profile();
+        break;
+
       case SelectionsScreen.routeName:
         builder = (_) => const SelectionsScreen();
         break;
@@ -93,6 +100,12 @@ class AppRouter {
         break;
       case DeletedScreen.routeName:
         builder = (_) => const DeletedScreen();
+        break;
+      case SubscribeScreen.routeName:
+        builder = (_) => const SubscribeScreen();
+        break;
+      case SearchScreen.routeName:
+        builder = (_) => const SearchScreen();
         break;
 
       default:

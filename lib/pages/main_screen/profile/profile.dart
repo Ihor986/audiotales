@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/user.dart';
@@ -10,6 +11,7 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../repositorys/user_reposytory.dart';
 import '../../../services/change_profile_servise.dart';
 import '../../../services/image_service.dart';
+import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../utils/consts/texts_consts.dart';
@@ -20,10 +22,21 @@ import '../../income_screen/new_user/registration_page.dart';
 import 'bloc/profile_bloc.dart';
 import 'profile_widgets/profile_text.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
-  static const routeName = '/test.dart';
+  static const routeName = '/profile.dart';
   static const ProfileText title = ProfileText();
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  @override
+  void initState() {
+    context.read<ProfileBloc>().cangeProfileService.dispouse();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,194 +51,184 @@ class Profile extends StatelessWidget {
         FirebaseAuth auth = FirebaseAuth.instance;
         String _name = _user.name ?? TextsConst.profileTextName;
 
-        return state.isProgress
-            ? const ProgresWidget()
-            : Stack(
-                children: [
-                  ClipPath(
-                    clipper: OvalBC(),
-                    child: Container(
-                      height: screen.height * 0.22,
-                      color: CustomColors.blueSoso,
+        return Scaffold(
+          extendBody: true,
+          appBar: _ProfileScreenAppBar(
+            onAction: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+          body: state.isProgress
+              ? const ProgresWidget()
+              : Stack(
+                  children: [
+                    ClipPath(
+                      clipper: OvalBC(),
+                      child: Container(
+                        height: screen.height * 0.22,
+                        color: CustomColors.blueSoso,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: screen.height * 0.8,
-                    child: Stack(
-                      children: [
-                        Container(
-                          alignment: const Alignment(0, 0),
-                          height: screen.height * 0.35,
-                          child: Column(
-                            children: [
-                              _ProfilePhotoWidget(
-                                readOnly: _cangeProfileService.readOnly,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(screen.width * 0.03),
-                                child: _NameTextField(
-                                  name: _name,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        _cangeProfileService.isChangeNumber
-                            ? const Align(
-                                alignment: Alignment(0, -0.1),
-                                child: Text('Введи код из смс'),
-                              )
-                            : const SizedBox(),
-                        Align(
-                          alignment: _cangeProfileService.readOnly
-                              ? const Alignment(0, -0.1)
-                              : const Alignment(0, 0.1),
-                          child: _cangeProfileService.isChangeNumber
-                              ? const _CodeInput()
-                              : _ProfilePhoneInput(
+                    SizedBox(
+                      height: screen.height * 0.8,
+                      child: Stack(
+                        children: [
+                          Container(
+                            alignment: const Alignment(0, 0),
+                            height: screen.height * 0.35,
+                            child: Column(
+                              children: [
+                                _ProfilePhotoWidget(
                                   readOnly: _cangeProfileService.readOnly,
                                 ),
-                        ),
-                        Align(
-                          alignment: _cangeProfileService.readOnly
-                              ? const Alignment(0, 0.1)
-                              : const Alignment(0, 0.3),
-                          child: TextButton(
-                            child: _cangeProfileService.readOnly
-                                ? const EditeText()
-                                : const SaveText(),
-                            onPressed: () {
-                              _pressEditing(
-                                cangeProfileService: _cangeProfileService,
-                                name: _name,
-                                user: _user,
-                                context: context,
-                              );
-                            },
+                                Padding(
+                                  padding: EdgeInsets.all(screen.width * 0.03),
+                                  child: _NameTextField(
+                                    name: _name,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        _cangeProfileService.readOnly
-                            ? Align(
-                                alignment: const Alignment(0, 0.3),
-                                child: TextButton(
-                                  child: const SubscribeText(),
-                                  onPressed: () {
-                                    context.read<NavigationBloc>().add(
-                                        ChangeCurrentIndexEvent(
-                                            currentIndex: 7));
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                        _cangeProfileService.readOnly
-                            ? Align(
-                                alignment: const Alignment(0, 0.45),
-                                child: _CustomProgressIndicator(
-                                    taleList: _taleList),
-                              )
-                            : const SizedBox(),
-                        _cangeProfileService.readOnly
-                            ? Align(
-                                alignment: const Alignment(0, 0.7),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    TextButton(
-                                        onPressed: () {
-                                          auth.signOut();
-                                          context.read<NavigationBloc>().add(
-                                                ChangeCurrentIndexEvent(
-                                                    currentIndex: 0),
-                                              );
-                                        },
-                                        child: const LogoutText()),
-                                    TextButton(
-                                        onPressed: () async {
-                                          _pressDelete(
-                                            context: context,
-                                            user: _user,
-                                          );
-                                        },
-                                        child: const DeleteAccountText()),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
-                      ],
+                          _cangeProfileService.isChangeNumber
+                              ? const Align(
+                                  alignment: Alignment(0, -0.1),
+                                  child: Text('Введи код из смс'),
+                                )
+                              : const SizedBox(),
+                          Align(
+                            alignment: _cangeProfileService.readOnly
+                                ? const Alignment(0, -0.1)
+                                : const Alignment(0, 0.1),
+                            child: _cangeProfileService.isChangeNumber
+                                ? const _CodeInput()
+                                : _ProfilePhoneInput(
+                                    readOnly: _cangeProfileService.readOnly,
+                                  ),
+                          ),
+                          Align(
+                            alignment: _cangeProfileService.readOnly
+                                ? const Alignment(0, 0.1)
+                                : const Alignment(0, 0.3),
+                            child: TextButton(
+                              child: _cangeProfileService.readOnly
+                                  ? const EditeText()
+                                  : const SaveText(),
+                              onPressed: () {
+                                _pressEditing(
+                                  cangeProfileService: _cangeProfileService,
+                                  name: _name,
+                                  user: _user,
+                                  context: context,
+                                );
+                              },
+                            ),
+                          ),
+                          _cangeProfileService.readOnly
+                              ? Align(
+                                  alignment: const Alignment(0, 0.3),
+                                  child: TextButton(
+                                    child: const SubscribeText(),
+                                    onPressed: () {
+                                      context.read<NavigationBloc>().add(
+                                          ChangeCurrentIndexEvent(
+                                              currentIndex: 7));
+                                    },
+                                  ),
+                                )
+                              : const SizedBox(),
+                          _cangeProfileService.readOnly
+                              ? Align(
+                                  alignment: const Alignment(0, 0.45),
+                                  child: _CustomProgressIndicator(
+                                      taleList: _taleList),
+                                )
+                              : const SizedBox(),
+                          _cangeProfileService.readOnly
+                              ? Align(
+                                  alignment: const Alignment(0, 0.7),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      TextButton(
+                                          onPressed: () {
+                                            auth.signOut();
+                                            context.read<NavigationBloc>().add(
+                                                  ChangeCurrentIndexEvent(
+                                                      currentIndex: 0),
+                                                );
+                                          },
+                                          child: const LogoutText()),
+                                      TextButton(
+                                          onPressed: () async {
+                                            _pressDelete(
+                                              context: context,
+                                              user: _user,
+                                            );
+                                          },
+                                          child: const DeleteAccountText()),
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                ),
+        );
       },
     );
   }
 }
 
-void _pressDelete({
-  required BuildContext context,
-  required LocalUser user,
-}) {
-  Size screen = MediaQuery.of(context).size;
-  int now = DateTime.now().millisecondsSinceEpoch.toInt();
-  int loginTime = user
-          .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
-          .toInt() ??
-      0;
-  bool isNeedSignIn = now - 300000 > loginTime;
-  if (isNeedSignIn) {
-    Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-      RegistrationPage.routeName,
-      (_) => false,
+class _ProfileScreenAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _ProfileScreenAppBar({
+    Key? key,
+    this.onAction,
+  }) : super(key: key);
+  final void Function()? onAction;
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return AppBar(
+      backgroundColor: CustomColors.blueSoso,
+      elevation: 0,
+      // title: Profile.title,
+      // centerTitle: true,
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          SizedBox(),
+          Profile.title,
+        ],
+      ),
+      // titleSpacing: 0.00,
+      // bottom: _ProfileScreenAppBar(),
+      leading: Padding(
+        padding: EdgeInsets.only(
+          left: screen.width * 0.04,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                CustomIconsImg.drawer,
+                height: 25,
+                color: CustomColors.white,
+              ),
+              onPressed: onAction,
+            ),
+            const SizedBox(),
+          ],
+        ),
+      ),
     );
-  } else {
-    DeleteUserConfirm.instance.deletedConfirm(
-      screen: screen,
-      context: context,
-    );
-  }
-}
-
-void _pressEditing({
-  required CangeProfileService cangeProfileService,
-  required BuildContext context,
-  required LocalUser user,
-  required String name,
-}) {
-  bool _isProfileEditingEvent = cangeProfileService.readOnly;
-  bool _isSaveEditingEvent =
-      !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
-  bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
-      cangeProfileService.isChangeNumber &&
-      cangeProfileService.smsCode.length < 6;
-  bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
-      cangeProfileService.isChangeNumber &&
-      cangeProfileService.smsCode.length == 6;
-  if (_isProfileEditingEvent) {
-    context.read<ProfileBloc>().add(
-          ProfileEditingEvent(newName: name, user: user),
-        );
-  }
-  if (cangeProfileService.phone == null) {
-    return;
-  }
-  if (cangeProfileService.phone!.length < 13) {
-    return;
-  }
-  if (_isSaveEditingEvent) {
-    context.read<ProfileBloc>().add(
-          SaveEditingEvent(user: user),
-        );
-  }
-  if (_isSaveChangedPhoneEvent) {
-    context.read<ProfileBloc>().add(
-          SaveChangedPhoneEvent(),
-        );
-  }
-  if (_isSaveEditingWithPhoneEvent) {
-    context.read<ProfileBloc>().add(
-          SaveEditingWithPhoneEvent(user: user),
-        );
   }
 }
 
@@ -555,5 +558,72 @@ class _CodeInputState extends State<_CodeInput> {
                     color: Color.fromRGBO(246, 246, 246, 1), width: 2.0)),
           ),
         ));
+  }
+}
+
+void _pressDelete({
+  required BuildContext context,
+  required LocalUser user,
+}) {
+  Size screen = MediaQuery.of(context).size;
+  int now = DateTime.now().millisecondsSinceEpoch.toInt();
+  int loginTime = user
+          .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
+          .toInt() ??
+      0;
+  bool isNeedSignIn = now - 300000 > loginTime;
+  if (isNeedSignIn) {
+    Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+      RegistrationPage.routeName,
+      (_) => false,
+    );
+  } else {
+    DeleteUserConfirm.instance.deletedConfirm(
+      screen: screen,
+      context: context,
+    );
+  }
+}
+
+void _pressEditing({
+  required CangeProfileService cangeProfileService,
+  required BuildContext context,
+  required LocalUser user,
+  required String name,
+}) {
+  bool _isProfileEditingEvent = cangeProfileService.readOnly;
+  bool _isSaveEditingEvent =
+      !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
+  bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
+      cangeProfileService.isChangeNumber &&
+      cangeProfileService.smsCode.length < 6;
+  bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
+      cangeProfileService.isChangeNumber &&
+      cangeProfileService.smsCode.length == 6;
+  if (_isProfileEditingEvent) {
+    context.read<ProfileBloc>().add(
+          ProfileEditingEvent(newName: name, user: user),
+        );
+  }
+  if (cangeProfileService.phone == null) {
+    return;
+  }
+  if (cangeProfileService.phone!.length < 13) {
+    return;
+  }
+  if (_isSaveEditingEvent) {
+    context.read<ProfileBloc>().add(
+          SaveEditingEvent(user: user),
+        );
+  }
+  if (_isSaveChangedPhoneEvent) {
+    context.read<ProfileBloc>().add(
+          SaveChangedPhoneEvent(),
+        );
+  }
+  if (_isSaveEditingWithPhoneEvent) {
+    context.read<ProfileBloc>().add(
+          SaveEditingWithPhoneEvent(user: user),
+        );
   }
 }

@@ -14,15 +14,28 @@ import 'bloc/selections_bloc.dart';
 import 'selection_screen.dart/selection_screen.dart';
 import 'selections_text.dart';
 
-class SelectionsScreen extends StatelessWidget {
+class SelectionsScreen extends StatefulWidget {
   const SelectionsScreen({Key? key}) : super(key: key);
   static const routeName = '/selections_screen.dart';
   static const SelectionsText title = SelectionsText();
+
+  @override
+  State<SelectionsScreen> createState() => _SelectionsScreenState();
+}
+
+class _SelectionsScreenState extends State<SelectionsScreen> {
+  @override
+  void initState() {
+    // context.read<SelectionsBloc>().add(InitEvent);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
         Size screen = MediaQuery.of(context).size;
+        print(state.readOnly);
         // print('${RepositoryProvider.of<UserRepository>(context).localUser.id}');
 
         return Scaffold(

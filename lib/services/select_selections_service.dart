@@ -5,6 +5,7 @@ import '../models/tales_list.dart';
 
 class SelectSelectionsService {
   AudioTale? audio;
+  bool readOnly = true;
   final List selectionsIdList = [];
 
   void changeIDList(String id) {
@@ -38,6 +39,7 @@ class SelectSelectionsService {
 
   dispose() {
     audio = null;
+    readOnly = true;
     selectionsIdList.clear();
   }
 }

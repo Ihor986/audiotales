@@ -31,42 +31,49 @@ class _AudiosScreen extends State<AudiosScreen> {
             .getActiveTalesList();
     Size screen = MediaQuery.of(context).size;
 
-    return Stack(
-      children: [
-        ClipPath(
-          clipper: OvalBC(),
-          child: Container(
-            height: screen.height / 5,
-            color: CustomColors.audiotalesHeadColorBlue,
-          ),
-        ),
-        Align(
-          alignment: const Alignment(1, -0.8),
-          child: SizedBox(
-            height: screen.height * 0.05,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const AudiosScreenListTextData(),
-                talesList.isNotEmpty
-                    ? _PlayAllTalesButtonWidget(
-                        talesList: talesList,
-                      )
-                    : const SizedBox(),
-              ],
-            ),
-          ),
-        ),
-        Align(
-          alignment: const Alignment(0, 1),
-          child: SizedBox(
-            height: screen.height * 0.65,
-            child: const ActiveTalesListWidget(
+    return Scaffold(
+      appBar: _AudioScreenAppBar(
+        onAction: () {
+          Scaffold.of(context).openDrawer();
+        },
+      ),
+      body: Stack(
+        children: [
+          ClipPath(
+            clipper: OvalBC(),
+            child: Container(
+              height: screen.height / 5,
               color: CustomColors.audiotalesHeadColorBlue,
             ),
           ),
-        ),
-      ],
+          Align(
+            alignment: const Alignment(1, -0.8),
+            child: SizedBox(
+              height: screen.height * 0.05,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const AudiosScreenListTextData(),
+                  talesList.isNotEmpty
+                      ? _PlayAllTalesButtonWidget(
+                          talesList: talesList,
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: const Alignment(0, 1),
+            child: SizedBox(
+              height: screen.height * 0.65,
+              child: const ActiveTalesListWidget(
+                color: CustomColors.audiotalesHeadColorBlue,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -125,6 +132,67 @@ class _PlayAllTalesButtonWidget extends StatelessWidget {
         );
       },
       // ),
+    );
+  }
+}
+
+class _AudioScreenAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _AudioScreenAppBar({
+    Key? key,
+    this.onAction,
+  }) : super(key: key);
+  final void Function()? onAction;
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return AppBar(
+      actions: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(right: screen.width * 0.04),
+          child: Column(
+            children: [
+              IconButton(
+                icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
+                onPressed: () {},
+              ),
+              const SizedBox(),
+            ],
+          ),
+        ),
+      ],
+      backgroundColor: CustomColors.audiotalesHeadColorBlue,
+      elevation: 0,
+      // title: AudiosScreen.title,
+      // centerTitle: true,
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          SizedBox(),
+          AudiosScreen.title,
+        ],
+      ),
+      leading: Padding(
+        padding: EdgeInsets.only(
+          left: screen.width * 0.04,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                CustomIconsImg.drawer,
+                height: 25,
+                color: CustomColors.white,
+              ),
+              onPressed: onAction,
+            ),
+            const SizedBox(),
+          ],
+        ),
+      ),
     );
   }
 }
