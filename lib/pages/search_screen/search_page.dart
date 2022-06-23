@@ -157,8 +157,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                 .getTalesListRepository()
                 .getActiveTalesList();
         final Size screen = MediaQuery.of(context).size;
-        final MainScreenBloc _mainScreenBloc =
-            BlocProvider.of<MainScreenBloc>(context);
+        final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
         List<AudioTale> _talesList = talesList;
         if (state.searchValue != null) {
           _talesList = talesList

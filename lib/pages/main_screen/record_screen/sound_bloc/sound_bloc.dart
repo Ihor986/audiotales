@@ -31,7 +31,8 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     );
     on<StopRecordEvent>(
       (event, emit) async {
-        await sound.stopRecorder();
+        // sound.dispouse();
+        // await sound.stopRecorder();
         emit(SoundInitial());
       },
     );

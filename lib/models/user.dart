@@ -6,7 +6,7 @@ class LocalUser {
     // this.photo,
     this.photoUrl,
     this.name,
-    // this.phone,
+    this.subscribe,
     this.id,
     this.updateDate,
     this.isNewUser,
@@ -17,7 +17,7 @@ class LocalUser {
   // String? photo;
   String? photoUrl;
   String? name;
-  // String? phone;
+  String? subscribe;
   String? id;
   int? updateDate;
   bool? isNewUser;
@@ -28,7 +28,7 @@ class LocalUser {
       // photo: json['photo'],
       photoUrl: json['photoUrl'],
       name: json['name'],
-      // phone: json['phone'],
+      subscribe: json['subscribe'],
       id: json['id'],
       updateDate: json['updateDate'],
       isNewUser: json['isNewUser'],
@@ -43,7 +43,7 @@ class LocalUser {
         // photo = snapshot.data()?['photo'],
         photoUrl = snapshot.data()?['photoUrl'],
         name = snapshot.data()?['name'],
-        // phone = snapshot.data()?['phone'],
+        subscribe = snapshot.data()?['subscribe'],
         id = snapshot.data()?['id'],
         updateDate = snapshot.data()?['updateDate'],
         isNewUser = snapshot.data()?['isNewUser'],
@@ -53,7 +53,7 @@ class LocalUser {
         // 'photo': photo,
         'photoUrl': photoUrl,
         'name': name,
-        // 'phone': phone,
+        'subscribe': subscribe,
         'id': id,
         'updateDate': updateDate,
         'isNewUser': isNewUser,
@@ -65,7 +65,7 @@ class LocalUser {
       // 'photo': photo,
       'photoUrl': photoUrl,
       'name': name,
-      // 'phone': phone,
+      'subscribe': subscribe,
       'id': id,
       'updateDate': updateDate,
       'isNewUser': isNewUser,
@@ -89,7 +89,7 @@ class LocalUser {
     // }
     photoUrl = newUser.photoUrl;
     name = newUser.name;
-    // phone = newUser.phone;
+    subscribe = newUser.subscribe;
     id = newUser.id;
     updateDate = newUser.updateDate;
     isNewUser = newUser.isNewUser;
@@ -98,9 +98,9 @@ class LocalUser {
 
   changeUserFields({
     String? nName,
-    String? nPhone,
+    String? nSubscribe,
   }) {
     name = nName ?? name;
-    // phone = nPhone ?? phone;
+    subscribe = nSubscribe ?? subscribe;
   }
 }

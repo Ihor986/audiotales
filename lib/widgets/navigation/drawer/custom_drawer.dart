@@ -6,9 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../pages/income_screen/new_user/registration_page.dart';
-import '../../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../../services/mailto_service.dart';
-import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../utils/consts/texts_consts.dart';
 import 'drawer_text.dart';
@@ -57,7 +55,6 @@ class _BodyMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SoundService _sound = BlocProvider.of<MainScreenBloc>(context).sound;
     Size screen = MediaQuery.of(context).size;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {

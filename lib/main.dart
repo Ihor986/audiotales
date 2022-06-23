@@ -20,8 +20,6 @@ import 'repositorys/user_reposytory.dart';
 import 'routes/app_router.dart';
 import 'package:bot_toast/bot_toast.dart';
 
-import 'services/sound_service.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

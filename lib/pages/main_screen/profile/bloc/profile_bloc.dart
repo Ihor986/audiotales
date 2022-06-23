@@ -37,7 +37,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
         LocalUser _user = event.user;
         _user.changeUserFields(
           nName: cangeProfileService.nameController,
-          nPhone: cangeProfileService.phone,
+          // nPhone: cangeProfileService.phone,
         );
         await cangeProfileService.saveImage(_user);
         cangeProfileService.dispouse();
