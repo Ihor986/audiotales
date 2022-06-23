@@ -9,7 +9,11 @@ import '../../../services/minuts_text_convert_service.dart';
 import '../../../utils/consts/texts_consts.dart';
 
 class SelectionsText extends StatelessWidget {
-  const SelectionsText({Key? key}) : super(key: key);
+  const SelectionsText({
+    Key? key,
+    required this.readOnly,
+  }) : super(key: key);
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +23,15 @@ class SelectionsText extends StatelessWidget {
         Text(
           TextsConst.collections,
           style: TextStyle(
-              color: CustomColors.white,
+              color: readOnly ? CustomColors.white : CustomColors.whiteOp05,
               fontWeight: FontWeight.bold,
               fontSize: screen.width * 0.07),
         ),
         Text(
           TextsConst.selectionsTextAllInOnePlace,
           style: TextStyle(
-              color: CustomColors.white, fontSize: screen.width * 0.03),
+              color: readOnly ? CustomColors.white : CustomColors.whiteOp05,
+              fontSize: screen.width * 0.03),
         )
       ],
     );
@@ -48,6 +53,23 @@ class WrapSelectionsListTextName extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: screen.width * 0.03,
         ),
+      ),
+    );
+  }
+}
+
+class SelectSelectionTextAdd extends StatelessWidget {
+  const SelectSelectionTextAdd({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Align(
+      alignment: const Alignment(0, 0.7),
+      child: Text(
+        TextsConst.selectAudioTextAdd,
+        style:
+            TextStyle(color: CustomColors.white, fontSize: screen.width * 0.03),
       ),
     );
   }

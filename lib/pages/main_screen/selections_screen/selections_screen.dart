@@ -17,7 +17,6 @@ import 'selections_text.dart';
 class SelectionsScreen extends StatefulWidget {
   const SelectionsScreen({Key? key}) : super(key: key);
   static const routeName = '/selections_screen.dart';
-  static const SelectionsText title = SelectionsText();
 
   @override
   State<SelectionsScreen> createState() => _SelectionsScreenState();
@@ -54,11 +53,10 @@ class _SelectionsScreenState extends State<SelectionsScreen> {
                   ),
                 ],
               ),
-              Align(
-                  alignment: const Alignment(0, -0.6),
-                  child: _WrapSelectionsList(
-                    readOnly: state.readOnly,
-                  )),
+              const Align(
+                alignment: Alignment(0, -0.6),
+                child: _WrapSelectionsList(),
+              ),
             ],
           ),
         );
@@ -98,10 +96,6 @@ class _SelectionsScreenAppBar extends StatelessWidget
             children: [
               readOnly
                   ? const SizedBox()
-                  // IconButton(
-                  //     icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
-                  //     onPressed: () {},
-                  //   )
                   : TextButton(
                       onPressed: () {
                         _selectionsBloc.add(
@@ -109,24 +103,22 @@ class _SelectionsScreenAppBar extends StatelessWidget
                               talesList: _talesListRep),
                         );
                       },
-                      child: const Text('Add')),
+                      child: const SelectSelectionTextAdd()),
             ],
           ),
         ),
       ],
       backgroundColor: CustomColors.oliveSoso,
-
       elevation: 0,
       flexibleSpace: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
-          SizedBox(),
-          SelectionsScreen.title,
-          // SizedBox(),
+        children: [
+          const SizedBox(),
+          SelectionsText(
+            readOnly: readOnly,
+          ),
         ],
       ),
-
-      // title: SelectionsScreen.title,
       leading: Padding(
         padding: EdgeInsets.only(
           left: screen.width * 0.04,
@@ -153,11 +145,7 @@ class _SelectionsScreenAppBar extends StatelessWidget
 }
 
 class _WrapSelectionsList extends StatelessWidget {
-  const _WrapSelectionsList({
-    Key? key,
-    required this.readOnly,
-  }) : super(key: key);
-  final bool readOnly;
+  const _WrapSelectionsList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -169,29 +157,22 @@ class _WrapSelectionsList extends StatelessWidget {
                 .getSelectionsListRepository()
                 .selectionsList;
 
-        List<Widget> selections = [];
-
-        for (var selection in _selectionsList) {
-          selections.add(
-            _Selection(
-              selection: selection,
-              readOnly: readOnly,
+        List<Widget> selections = [
+          ...List.generate(
+            _selectionsList.length,
+            (index) => _Selection(
+              selection: _selectionsList.elementAt(index),
+              readOnly: state.readOnly,
             ),
-          );
-        }
+          )
+        ];
 
         return SizedBox(
           height: screen.height * 0.75,
           child: SingleChildScrollView(
             child: Wrap(
               direction: Axis.horizontal,
-              children: [
-                for (var selection in selections)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: selection,
-                  )
-              ],
+              children: selections,
             ),
           ),
         );
@@ -210,8 +191,6 @@ class _Selection extends StatelessWidget {
   final Selection selection;
   @override
   Widget build(BuildContext context) {
-    // SelectionsBloc
-    // final SoundService _sound = context.read<MainScreenBloc>().sound;
     final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
     bool _isCheked = _selectionsBloc.selectSelectionsService.selectionsIdList
         .contains(selection.id);
@@ -219,22 +198,20 @@ class _Selection extends StatelessWidget {
     DecorationImage? decorationImage() {
       if (selection.photo != null) {
         try {
-          // print(selection.photo);
           return DecorationImage(
               image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
               fit: BoxFit.cover);
-        } catch (e) {
-          // print(e);
-        }
+        } catch (_) {}
       }
 
       if (selection.photoUrl != null) {
         try {
           return DecorationImage(
+            // image: CachedNetworkImageProvider(selection.photoUrl ?? ''),
             image: NetworkImage(selection.photoUrl ?? ''), // cash network image
             fit: BoxFit.cover,
           );
-        } catch (e) {
+        } catch (_) {
           return null;
         }
       }
@@ -258,54 +235,57 @@ class _Selection extends StatelessWidget {
           _selectionsBloc.add(CheckSelectionEvent(id: selection.id));
         }
       },
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: decorationImage(),
-              borderRadius: BorderRadius.circular(15),
-              color: CustomColors.iconsColorBNB,
-            ),
-            width: screen.width * 0.45,
-            height: screen.height * 0.27,
-            child: Padding(
-              padding: EdgeInsets.all(screen.width * 0.04),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  WrapSelectionsListTextName(selection: selection),
-                  WrapSelectionsListTextData(selection: selection),
-                ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: decorationImage(),
+                borderRadius: BorderRadius.circular(15),
+                color: CustomColors.iconsColorBNB,
+              ),
+              width: screen.width * 0.45,
+              height: screen.height * 0.27,
+              child: Padding(
+                padding: EdgeInsets.all(screen.width * 0.04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    WrapSelectionsListTextName(selection: selection),
+                    WrapSelectionsListTextData(selection: selection),
+                  ],
+                ),
               ),
             ),
-          ),
-          readOnly
-              ? const SizedBox()
-              : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: CustomColors.disactive,
-                  ),
-                  width: screen.width * 0.45,
-                  height: screen.height * 0.27,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: screen.width * 0.15,
-                      right: screen.width * 0.15,
+            readOnly
+                ? const SizedBox()
+                : Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: CustomColors.disactive,
                     ),
-                    child: _isCheked
-                        ? SvgPicture.asset(
-                            CustomIconsImg.check,
-                            color: CustomColors.white,
-                          )
-                        : SvgPicture.asset(
-                            CustomIconsImg.uncheck,
-                            color: CustomColors.white,
-                          ),
+                    width: screen.width * 0.45,
+                    height: screen.height * 0.27,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screen.width * 0.15,
+                        right: screen.width * 0.15,
+                      ),
+                      child: _isCheked
+                          ? SvgPicture.asset(
+                              CustomIconsImg.check,
+                              color: CustomColors.white,
+                            )
+                          : SvgPicture.asset(
+                              CustomIconsImg.uncheck,
+                              color: CustomColors.white,
+                            ),
+                    ),
                   ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }
