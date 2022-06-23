@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../models/tales_list.dart';
 import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
+import '../../pages/main_screen/selections_screen/selections_screen.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
@@ -40,14 +41,13 @@ class CustomPopUpMenu extends StatelessWidget {
         PopupMenuItem(
           child: const Text('Добавить в подборку'),
           value: () {
-            //  _sound.url = null;
-            //         _sound.soundIndex = 0;
             context
                 .read<SelectionsBloc>()
                 .add(SelectSelectionsEvent(audio: audio));
-            context
-                .read<NavigationBloc>()
-                .add(ChangeCurrentIndexEvent(currentIndex: 1));
+            Navigator.pushNamed(
+              context,
+              SelectionsScreen.routeName,
+            );
           },
         ),
         PopupMenuItem(

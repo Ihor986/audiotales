@@ -20,6 +20,8 @@ class StopRecordEvent extends SoundEvent {}
 
 class StartPlaydEvent extends SoundEvent {}
 
+class SetStateEvent extends SoundEvent {}
+
 class ChangeAudioNameEvent extends SoundEvent {
   ChangeAudioNameEvent({required this.name});
   final String name;

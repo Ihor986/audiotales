@@ -27,8 +27,6 @@ class MainScreen extends StatelessWidget {
       GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
-    final SoundService _soundService =
-        BlocProvider.of<MainScreenBloc>(context).sound;
     final FirebaseAuth auth = FirebaseAuth.instance;
     const List<String> _pages = [
       HeadScreen.routeName,
@@ -41,46 +39,39 @@ class MainScreen extends StatelessWidget {
       SubscribeScreen.routeName,
     ];
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AudioScreenBloc>(
-          create: (_) => AudioScreenBloc(_soundService),
-        ),
-      ],
-      child: BlocConsumer<NavigationBloc, NavigationState>(
-        listener: (_, state) {
-          if (_navigatorKey.currentState != null) {
-            _navigatorKey.currentState!.pushNamedAndRemoveUntil(
-              _pages.elementAt(state.pageIndex),
-              (route) => false,
-            );
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            body: Navigator(
-              key: _navigatorKey,
-              initialRoute: HeadScreen.routeName,
-              onGenerateRoute: AppRouter.generateRoute,
-            ),
-            bottomNavigationBar: CustomBottomNavigationBar(
-              onTap: (index) {
-                _onTap(
-                  index: index,
-                  auth: auth,
-                  context: context,
-                );
-              },
-            ),
-            drawerEnableOpenDragGesture: false,
-            drawer: const CustomDrawer(),
-            extendBody: true,
-            resizeToAvoidBottomInset: false,
+    return BlocConsumer<NavigationBloc, NavigationState>(
+      listener: (_, state) {
+        if (_navigatorKey.currentState != null) {
+          _navigatorKey.currentState!.pushNamedAndRemoveUntil(
+            _pages.elementAt(state.pageIndex),
+            (route) => false,
           );
-        },
-      ),
-      // ),
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: Navigator(
+            key: _navigatorKey,
+            initialRoute: HeadScreen.routeName,
+            onGenerateRoute: AppRouter.generateRoute,
+          ),
+          bottomNavigationBar: CustomBottomNavigationBar(
+            onTap: (index) {
+              _onTap(
+                index: index,
+                auth: auth,
+                context: context,
+              );
+            },
+          ),
+          drawerEnableOpenDragGesture: false,
+          drawer: const CustomDrawer(),
+          extendBody: true,
+          resizeToAvoidBottomInset: false,
+        );
+      },
     );
+    // ),
   }
 }
 

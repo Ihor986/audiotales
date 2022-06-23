@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audiotales/pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -83,6 +84,7 @@ class _SelectionsScreenAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
+    final SoundBloc _soundbloc = context.read<SoundBloc>();
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
@@ -102,6 +104,8 @@ class _SelectionsScreenAppBar extends StatelessWidget
                           SaveAudioWithSelectionsListEvent(
                               talesList: _talesListRep),
                         );
+                        _soundbloc.add(SetStateEvent());
+                        Navigator.pop(context);
                       },
                       child: const SelectSelectionTextAdd()),
             ],

@@ -37,6 +37,12 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
       },
     );
 
+    on<SetStateEvent>(
+      (event, emit) async {
+        emit(SoundInitial());
+      },
+    );
+
     on<ChangeAudioNameEvent>(
       (event, emit) {
         changeAudioServise.dispose();

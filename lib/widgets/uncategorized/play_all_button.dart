@@ -25,57 +25,50 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
 
     Size screen = MediaQuery.of(context).size;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AudioScreenBloc>(
-          create: (_) => AudioScreenBloc(_soundService),
-        ),
-      ],
-      child: BlocBuilder<AudioScreenBloc, AudioScreenState>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  context
-                      .read<AudioScreenBloc>()
-                      .add(AudioScreenPlayAllEvent(talesList: talesList));
-                },
-                child: Container(
-                  height: screen.height * 0.05,
-                  width: screen.width * 0.41,
-                  decoration: BoxDecoration(
-                    color: backgroundColor,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(screen.height * 0.005),
-                        child: _soundService.audioPlayer.isPlaying
-                            ? SvgPicture.asset(
-                                CustomIconsImg.pauseAll,
-                                color: textColor,
-                                height: screen.height * 0.04,
-                              )
-                            : ImageIcon(
-                                CustomIconsImg.playBlueSolo,
-                                color: textColor,
-                                size: screen.height * 0.04,
-                              ),
-                      ),
-                      _soundService.audioPlayer.isPlaying
-                          ? _AudioScreenPlayAllTextF(color: textColor)
-                          : _AudioScreenPlayAllTextT(color: textColor),
-                    ],
-                  ),
+    return BlocBuilder<AudioScreenBloc, AudioScreenState>(
+      builder: (context, state) {
+        return Stack(
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                context
+                    .read<AudioScreenBloc>()
+                    .add(AudioScreenPlayAllEvent(talesList: talesList));
+              },
+              child: Container(
+                height: screen.height * 0.05,
+                width: screen.width * 0.41,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(screen.height * 0.005),
+                      child: _soundService.audioPlayer.isPlaying
+                          ? SvgPicture.asset(
+                              CustomIconsImg.pauseAll,
+                              color: textColor,
+                              height: screen.height * 0.04,
+                            )
+                          : ImageIcon(
+                              CustomIconsImg.playBlueSolo,
+                              color: textColor,
+                              size: screen.height * 0.04,
+                            ),
+                    ),
+                    _soundService.audioPlayer.isPlaying
+                        ? _AudioScreenPlayAllTextF(color: textColor)
+                        : _AudioScreenPlayAllTextT(color: textColor),
+                  ],
                 ),
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

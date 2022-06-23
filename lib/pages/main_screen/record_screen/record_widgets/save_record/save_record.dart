@@ -12,6 +12,8 @@ import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
+import '../../../selections_screen/bloc/selections_bloc.dart';
+import '../../../selections_screen/selections_screen.dart';
 import '../../sound_bloc/sound_bloc.dart';
 import '../play_record/play_record_progress.dart';
 
@@ -30,7 +32,6 @@ class SaveRecord extends StatelessWidget {
         final SelectionsList _selectionsRep =
             RepositoryProvider.of<SelectionsListRepository>(context)
                 .getSelectionsListRepository();
-
         return Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
@@ -62,17 +63,16 @@ class SaveRecord extends StatelessWidget {
                           Align(
                             alignment: const Alignment(0, -0.7),
                             child: _SaveRecordPhotoWidget(
-                              readOnly: state.readOnly,
-                              selection:
-                                  _selectionsRep.getSelectionById(_audio.id),
-                            ),
+                                readOnly: state.readOnly,
+                                selection: _selectionsRep
+                                    .getSelectionByAudioId(_audio)),
                           ),
                           Align(
                             alignment: const Alignment(0, 0.05),
                             child: _SelectionName(
                                 readOnly: state.readOnly,
-                                selection:
-                                    _selectionsRep.getSelectionById(_audio.id)),
+                                selection: _selectionsRep
+                                    .getSelectionByAudioId(_audio)),
                           ),
                           Align(
                             alignment: const Alignment(0, 0.15),
@@ -141,7 +141,15 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                   itemBuilder: (context) => [
                     PopupMenuItem(
                       child: const Text('Добавить в подборку'),
-                      value: () {},
+                      value: () {
+                        context
+                            .read<SelectionsBloc>()
+                            .add(SelectSelectionsEvent(audio: audio));
+                        Navigator.pushNamed(
+                          context,
+                          SelectionsScreen.routeName,
+                        );
+                      },
                     ),
                     PopupMenuItem(
                       child: const Text('Редактировать название'),
@@ -196,8 +204,9 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
 class _SaveRecordPhotoWidget extends StatelessWidget {
   const _SaveRecordPhotoWidget({
     Key? key,
-    required this.selection,
+    // required this.audio,
     required this.readOnly,
+    required this.selection,
   }) : super(key: key);
 
   final bool readOnly;
@@ -205,19 +214,19 @@ class _SaveRecordPhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    DecorationImage? _image =
+    var _image =
         selection == null ? null : _decorationImageReadOnly(selection!);
+    Size screen = MediaQuery.of(context).size;
     return Container(
       width: screen.height * 0.34,
       height: screen.height * 0.34,
       decoration: BoxDecoration(
         image: _image,
+        // image: _decorationImageReadOnly(selection!),
         boxShadow: const [
           BoxShadow(
               color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
         ],
-        // color: CustomColors.iconsColorBNB,
         borderRadius: const BorderRadius.all(
           Radius.circular(25),
         ),
@@ -227,39 +236,30 @@ class _SaveRecordPhotoWidget extends StatelessWidget {
           : const BoxDecoration(
               color: CustomColors.disactive,
             ),
-      // child:
-      //  IconButton(
-      //   onPressed: () {},
-      //   icon: const ImageIcon(
-      //     CustomIconsImg.emptyfoto,
-      //     color: CustomColors.iconsColorPlayRecUpbar,
-      //     size: 50,
-      //   ),
-      // ),
     );
   }
-}
 
-DecorationImage? _decorationImageReadOnly(Selection selection) {
-  if (selection.photo != null) {
-    try {
-      return DecorationImage(
-          image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
-          fit: BoxFit.cover);
-    } catch (_) {}
-  }
-
-  if (selection.photoUrl != null) {
-    try {
-      return DecorationImage(
-        image: NetworkImage(selection.photoUrl ?? ''),
-        fit: BoxFit.cover,
-      );
-    } catch (_) {
-      return null;
+  DecorationImage? _decorationImageReadOnly(Selection selection) {
+    if (selection.photo != null) {
+      try {
+        return DecorationImage(
+            image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
+            fit: BoxFit.cover);
+      } catch (_) {}
     }
+
+    if (selection.photoUrl != null) {
+      try {
+        return DecorationImage(
+          image: NetworkImage(selection.photoUrl ?? ''),
+          fit: BoxFit.cover,
+        );
+      } catch (_) {
+        return null;
+      }
+    }
+    return null;
   }
-  return null;
 }
 
 class _SavePagePlayRecordButtons extends StatelessWidget {

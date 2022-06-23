@@ -16,33 +16,28 @@ class RecordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screen = MediaQuery.of(context).size;
-    // final SoundService _sound = context.read<MainScreenBloc>().sound;
+
     return Scaffold(
       appBar: _RecordScreenAppBar(
         onAction: () {
           Scaffold.of(context).openDrawer();
         },
       ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider<SoundBloc>(create: (context) => SoundBloc()),
-        ],
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                ClipPath(
-                  clipper: OvalBC(),
-                  child: Container(
-                    height: screen.height / 4.5,
-                    color: CustomColors.blueSoso,
-                  ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              ClipPath(
+                clipper: OvalBC(),
+                child: Container(
+                  height: screen.height / 4.5,
+                  color: CustomColors.blueSoso,
                 ),
-              ],
-            ),
-            const RecordDraggableWidget(),
-          ],
-        ),
+              ),
+            ],
+          ),
+          const RecordDraggableWidget(),
+        ],
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:audiotales/models/audio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SelectionsList {
@@ -18,9 +19,12 @@ class SelectionsList {
     }
   }
 
-  Selection? getSelectionById(String id) {
+  Selection? getSelectionByAudioId(AudioTale audio) {
+    var isAudioHaveCompilations = audio.compilationsId.isNotEmpty;
+    final String id = isAudioHaveCompilations ? audio.compilationsId.last : '';
     List<Selection> _selectionsList =
         selectionsList.where((element) => element.id == id).toList();
+    print(id);
 
     return _selectionsList.isNotEmpty ? _selectionsList.first : null;
   }

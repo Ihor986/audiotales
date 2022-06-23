@@ -7,8 +7,8 @@ part 'audio_screen_event.dart';
 part 'audio_screen_state.dart';
 
 class AudioScreenBloc extends Bloc<AudioScreenEvent, AudioScreenState> {
-  final SoundService sound;
-  AudioScreenBloc(this.sound)
+  final SoundService sound = SoundService.instance;
+  AudioScreenBloc()
       : super(
           AudioScreenState(),
         ) {
