@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:audiotales/pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -211,8 +212,7 @@ class _Selection extends StatelessWidget {
       if (selection.photoUrl != null) {
         try {
           return DecorationImage(
-            // image: CachedNetworkImageProvider(selection.photoUrl ?? ''),
-            image: NetworkImage(selection.photoUrl ?? ''), // cash network image
+            image: CachedNetworkImageProvider(selection.photoUrl!),
             fit: BoxFit.cover,
           );
         } catch (_) {

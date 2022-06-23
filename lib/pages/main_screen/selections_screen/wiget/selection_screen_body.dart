@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:audiotales/pages/main_screen/selections_screen/selection_screen.dart/selection_screen_widgets/text_selection_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -178,7 +179,7 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
       if (widget.selection?.photoUrl != null) {
         try {
           return DecorationImage(
-            image: NetworkImage(widget.selection?.photoUrl ?? ''),
+            image: CachedNetworkImageProvider(widget.selection?.photoUrl ?? ''),
             fit: BoxFit.cover,
           );
         } catch (_) {
@@ -201,7 +202,7 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
       if (widget.selection?.photoUrl != null) {
         try {
           return DecorationImage(
-            image: NetworkImage(widget.selection?.photoUrl ?? ''),
+            image: CachedNetworkImageProvider(widget.selection?.photoUrl ?? ''),
             fit: BoxFit.cover,
           );
         } catch (_) {

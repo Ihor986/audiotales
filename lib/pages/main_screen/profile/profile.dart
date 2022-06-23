@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -394,7 +395,7 @@ DecorationImage? _decorationImageReadOnly({
   if (user.photoUrl != null) {
     try {
       return DecorationImage(
-        image: NetworkImage(user.photoUrl ?? ''),
+        image: CachedNetworkImageProvider(user.photoUrl ?? ''),
         fit: BoxFit.cover,
       );
     } catch (_) {
@@ -419,7 +420,7 @@ DecorationImage? _decorationImage({
   if (cangeProfileService.photoUrl != null) {
     try {
       return DecorationImage(
-        image: NetworkImage(cangeProfileService.photoUrl ?? ''),
+        image: CachedNetworkImageProvider(cangeProfileService.photoUrl ?? ''),
         fit: BoxFit.cover,
       );
     } catch (_) {

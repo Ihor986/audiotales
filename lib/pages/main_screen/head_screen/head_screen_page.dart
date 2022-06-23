@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,6 @@ class HeadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    // Scaffold.of(context).
     return Scaffold(
       extendBody: true,
       appBar: _HaedScreenAppBar(
@@ -51,7 +51,6 @@ class HeadScreen extends StatelessWidget {
           const _AudioDraggableWidget(),
         ],
       ),
-      // drawer: const CustomDrawer(),
     );
   }
 }
@@ -95,10 +94,7 @@ class _HaedScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-
       elevation: 0,
-      // title: HeadScreen.title,
-      // centerTitle: true,
     );
   }
 }
@@ -108,7 +104,6 @@ class _SelectionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Container(
@@ -117,15 +112,7 @@ class _SelectionButtons extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // TextButton(
-            //     onPressed: () {
-            //       context
-            //           .read<NavigationBloc>()
-            //           .add(ChangeCurrentIndexEvent(currentIndex: 1));
-            //     },
-            //     child:
             const SelectionText1(),
-            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -284,7 +271,7 @@ class _Selection extends StatelessWidget {
       if (selection.photoUrl != null) {
         try {
           return DecorationImage(
-            image: NetworkImage(selection.photoUrl ?? ''),
+            image: CachedNetworkImageProvider(selection.photoUrl ?? ''),
             fit: BoxFit.cover,
           );
         } catch (e) {
@@ -306,12 +293,6 @@ class _Selection extends StatelessWidget {
           ),
           (_) => true,
         );
-
-        // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-        //   SelectionScreen.routeName,
-        //   (_) => true,
-        // );
-        // print('tap');
       },
       child: Container(
         decoration: BoxDecoration(
