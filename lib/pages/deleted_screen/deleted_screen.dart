@@ -239,11 +239,12 @@ class _DeletedTalesListWidget extends StatelessWidget {
                               onPressed: () {
                                 // _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                               },
-                              icon: ImageIcon(
-                                CustomIconsImg.playBlueSolo,
+                              icon: SvgPicture.asset(
+                                CustomIconsImg.playSVG,
+                                height: screen.height * 0.04,
                                 color: CustomColors.audiotalesHeadColorBlue,
-                                size: screen.height,
                               ),
+                              iconSize: screen.height * 0.05,
                             ),
                             SizedBox(
                               width: screen.width * 0.05,

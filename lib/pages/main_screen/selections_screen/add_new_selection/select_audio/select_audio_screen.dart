@@ -137,11 +137,11 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                               // print('11111111111111');
                               // _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                             },
-                            icon: ImageIcon(
-                              CustomIconsImg.playBlueSolo,
+                            icon: SvgPicture.asset(
+                              CustomIconsImg.playSVG,
                               color: CustomColors.oliveSoso,
-                              size: screen.height,
                             ),
+                            iconSize: screen.height * 0.05,
                           ),
                           SizedBox(
                             width: screen.width * 0.05,

@@ -53,11 +53,17 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
                               color: textColor,
                               height: screen.height * 0.04,
                             )
-                          : ImageIcon(
-                              CustomIconsImg.playBlueSolo,
+                          : SvgPicture.asset(
+                              CustomIconsImg.playSVG,
+                              height: screen.height * 0.04,
                               color: textColor,
-                              size: screen.height * 0.04,
                             ),
+
+                      //  ImageIcon(
+                      //     CustomIconsImg.playBlueSolo,
+                      //     color: textColor,
+                      //     size: screen.height * 0.04,
+                      //   ),
                     ),
                     _soundService.audioPlayer.isPlaying
                         ? _AudioScreenPlayAllTextF(color: textColor)

@@ -46,8 +46,11 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
     on<ChangeAudioNameEvent>(
       (event, emit) {
         changeAudioServise.dispose();
-        changeAudioServise.name = event.name;
-        emit(SoundInitial(readOnly: false));
+        changeAudioServise.name = event.audio.name;
+        emit(SoundInitial(
+          readOnly: false,
+          chahgedAudioId: event.audio.id,
+        ));
       },
     );
 

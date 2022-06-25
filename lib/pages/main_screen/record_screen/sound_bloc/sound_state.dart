@@ -4,7 +4,12 @@ part of 'sound_bloc.dart';
 // abstract class SoundState {}
 
 class SoundInitial {
-  SoundInitial({this.isProgress = false, this.readOnly = true});
+  SoundInitial({
+    this.isProgress = false,
+    this.readOnly = true,
+    this.chahgedAudioId,
+  });
   final bool isProgress;
   final bool readOnly;
+  final String? chahgedAudioId;
 }

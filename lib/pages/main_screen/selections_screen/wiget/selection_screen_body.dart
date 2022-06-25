@@ -577,14 +577,13 @@ class _TalesListWidget extends StatelessWidget {
                             if (isDisactive == true) {
                               return;
                             }
-                            // print('11111111111111');
                             _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                           },
-                          icon: ImageIcon(
-                            CustomIconsImg.playBlueSolo,
+                          icon: SvgPicture.asset(
+                            CustomIconsImg.playSVG,
                             color: color,
-                            size: screen.height,
                           ),
+                          iconSize: screen.height * 0.05,
                         ),
                         SizedBox(
                           width: screen.width * 0.05,

@@ -182,11 +182,11 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                             onPressed: () {
                               _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
                             },
-                            icon: ImageIcon(
-                              CustomIconsImg.playBlueSolo,
+                            icon: SvgPicture.asset(
+                              CustomIconsImg.playSVG,
                               color: CustomColors.audiotalesHeadColorBlue,
-                              size: screen.height,
                             ),
+                            iconSize: 0.05 * screen.height,
                           ),
                           SizedBox(
                             width: screen.width * 0.05,

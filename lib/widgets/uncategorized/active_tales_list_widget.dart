@@ -1,6 +1,7 @@
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../models/audio.dart';
 import '../../models/tales_list.dart';
 import '../../repositorys/tales_list_repository.dart';
@@ -22,11 +23,10 @@ class ActiveTalesListWidget extends StatelessWidget {
       builder: (context, state) {
         Size screen = MediaQuery.of(context).size;
         final TalesList _talesListRep =
-            RepositoryProvider.of<TalesListRepository>(context)
-                .getTalesListRepository();
+            context.read<TalesListRepository>().getTalesListRepository();
         final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
-        final MainScreenBloc _mainScreenBloc =
-            BlocProvider.of<MainScreenBloc>(context);
+        final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
+
         return ListView.builder(
           itemCount: _talesList.length,
           // itemCount: 10,
@@ -41,28 +41,41 @@ class ActiveTalesListWidget extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            _mainScreenBloc.add(ClickPlayEvent(_talesList[i]));
+                            _mainScreenBloc.add(
+                              ClickPlayEvent(
+                                _talesList.elementAt(i),
+                              ),
+                            );
                           },
-                          icon: ImageIcon(
-                            CustomIconsImg.playBlueSolo,
+                          icon: SvgPicture.asset(
+                            CustomIconsImg.playSVG,
                             color: color,
-                            size: screen.height,
                           ),
+                          iconSize: screen.height * 0.05,
                         ),
                         SizedBox(
                           width: screen.width * 0.05,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(_talesList[i].name),
-                            AudioListText(time: _talesList[i].time),
-                          ],
+                        SizedBox(
+                          height: screen.height * 0.07,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AudioListNameText(
+                                audio: _talesList.elementAt(i),
+                                fullTalesList: _talesListRep,
+                              ),
+                              AudioListText(
+                                time: _talesList.elementAt(i).time,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                     CustomPopUpMenu(
-                      audio: _talesList[i],
+                      audio: _talesList.elementAt(i),
                     ),
                   ],
                 ),

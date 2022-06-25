@@ -111,7 +111,7 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NavigationBloc _navdBloc = context.read<NavigationBloc>();
-    final _soundBloc = context.read<SoundBloc>();
+    final SoundBloc _soundBloc = context.read<SoundBloc>();
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
@@ -156,7 +156,7 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                       child: const Text('Редактировать название'),
                       value: () {
                         _soundBloc.add(ChangeAudioNameEvent(
-                          name: audio.name,
+                          audio: audio,
                         ));
                       },
                     ),

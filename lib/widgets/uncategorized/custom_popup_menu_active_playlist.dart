@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../models/tales_list.dart';
+import '../../pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
 import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import '../../pages/main_screen/selections_screen/selections_screen.dart';
 import '../../repositorys/tales_list_repository.dart';
@@ -16,8 +17,10 @@ class CustomPopUpMenu extends StatelessWidget {
   const CustomPopUpMenu({
     Key? key,
     required this.audio,
+    // required this.fullTalesList,
   }) : super(key: key);
   final AudioTale audio;
+  // final TalesList fullTalesList;
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -36,7 +39,11 @@ class CustomPopUpMenu extends StatelessWidget {
       itemBuilder: (context) => [
         PopupMenuItem(
           child: const Text('Переименовать'),
-          value: () {},
+          value: () {
+            context.read<SoundBloc>().add(ChangeAudioNameEvent(
+                  audio: audio,
+                ));
+          },
         ),
         PopupMenuItem(
           child: const Text('Добавить в подборку'),
