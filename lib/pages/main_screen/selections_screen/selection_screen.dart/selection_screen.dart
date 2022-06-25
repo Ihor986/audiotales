@@ -1,9 +1,11 @@
+import 'package:audiotales/models/tales_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../models/selections.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../repositorys/tales_list_repository.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../wiget/selection_screen_body.dart';
@@ -95,11 +97,11 @@ class _Action extends StatelessWidget {
     // return BlocBuilder<SelectionsBloc, SelectionsState>(
     //   builder: (context, state) {
     Size screen = MediaQuery.of(context).size;
-    final SelectionsBloc _selectionsBloc =
-        BlocProvider.of<SelectionsBloc>(context);
+    final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
     final SelectionsList _selectionsList =
-        RepositoryProvider.of<SelectionsListRepository>(context)
-            .getSelectionsListRepository();
+        context.read<SelectionsListRepository>().getSelectionsListRepository();
+    final TalesList talesList =
+        context.read<TalesListRepository>().getTalesListRepository();
     if (_selectionsBloc.changeSelectionService.readOnly) {
       return Padding(
         padding: EdgeInsets.only(right: screen.width * 0.04),
@@ -114,7 +116,9 @@ class _Action extends StatelessWidget {
                 PopupMenuItem(
                   child: const Text('Редактировать'),
                   value: () {
-                    _selectionsBloc.add(EditAllSelection(selection: selection));
+                    _selectionsBloc.add(EditAllSelection(
+                      selection: selection,
+                    ));
                   },
                 ),
                 PopupMenuItem(
@@ -123,7 +127,14 @@ class _Action extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   child: const Text('Удалить подборку'),
-                  value: () {},
+                  value: () {
+                    _selectionsBloc.add(DeleteSelectionEvent(
+                      selection: selection,
+                      selectionsList: _selectionsList,
+                      talesList: talesList,
+                    ));
+                    Navigator.pop(context);
+                  },
                 ),
                 PopupMenuItem(
                   child: const Text('Поделиться'),

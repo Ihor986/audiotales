@@ -1,3 +1,4 @@
+import 'package:audiotales/data_base/data_base.dart';
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
 import '../../../../models/audio.dart';
@@ -115,6 +116,18 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         await selectSelectionsService.addSelectionsToAudio(
           fullTalesList: event.talesList,
         );
+        emit(SelectionsState());
+      },
+    );
+
+    on<DeleteSelectionEvent>(
+      (event, emit) async {
+        final SelectionsList selectionsList = event.selectionsList;
+        final TalesList talesList = event.talesList;
+        talesList.deleteSelectionFromAudio(event.selection);
+        selectionsList.deleteSelection(selection: event.selection);
+        await DataBase.instance.saveSelectionsList(selectionsList);
+        await DataBase.instance.saveAudioTales(talesList);
         emit(SelectionsState());
       },
     );

@@ -1,3 +1,4 @@
+import 'package:audiotales/models/selections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -78,6 +79,15 @@ class TalesList {
 
   void addNewAudio(AudioTale audioTale) {
     fullTalesList.insert(0, audioTale);
+  }
+
+  void deleteSelectionFromAudio(Selection selection) {
+    var l = fullTalesList
+        .where((element) => element.compilationsId.contains(selection.id))
+        .toList();
+    for (var item in l) {
+      item.compilationsId.remove(selection.id);
+    }
   }
 
   Map<String, dynamic> toJson() => {

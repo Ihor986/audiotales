@@ -79,3 +79,14 @@ class SaveAudioWithSelectionsListEvent extends SelectionsEvent {
 }
 
 class DisposeEvent extends SelectionsEvent {}
+
+class DeleteSelectionEvent extends SelectionsEvent {
+  DeleteSelectionEvent({
+    required this.selection,
+    required this.selectionsList,
+    required this.talesList,
+  });
+  final TalesList talesList;
+  final Selection selection;
+  final SelectionsList selectionsList;
+}

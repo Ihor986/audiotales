@@ -1,4 +1,5 @@
 import 'package:audiotales/models/audio.dart';
+import 'package:audiotales/models/tales_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SelectionsList {
@@ -17,6 +18,15 @@ class SelectionsList {
         sel.replace(selection);
       }
     }
+  }
+
+  deleteSelection({
+    required Selection selection,
+    //  required TalesList talesList,
+  }) {
+    int index =
+        selectionsList.indexWhere((element) => element.id == selection.id);
+    selectionsList.removeAt(index);
   }
 
   Selection? getSelectionByAudioId(AudioTale audio) {
