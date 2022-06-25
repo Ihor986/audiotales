@@ -85,6 +85,47 @@ class SoundService {
     // dispouse();
   }
 
+  // saveAudioTaleToLS({
+  //   required TalesList fullTalesList,
+  //   required LocalUser localUser,
+  //   required bool? isAutosaveLocal,
+  // }) async {
+  //   if (url == null) {
+  //     return;
+  //   }
+  //   if (localUser.isUserRegistered == true) {
+  //     try {
+  //       final storageRef = FirebaseStorage.instance
+  //           .ref()
+  //           .child('${LocalDB.instance.getUser().id}/audio/')
+  //           .child(id!);
+  //       final audiofile = File(path!);
+  //       await storageRef.putFile(audiofile);
+  //       pathUrl = await storageRef.getDownloadURL();
+  //       FullMetadata sizeFromMD = await storageRef.getMetadata();
+  //       size = sizeFromMD.size;
+  //       if (isAutosaveLocal != true) {
+  //         File(path!).delete();
+  //         path = null;
+  //       }
+  //     } on FirebaseException catch (e) {
+  //       print(e);
+  //     }
+  //   }
+
+  //   audioTale = AudioTale(
+  //       id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
+  //       path: path,
+  //       pathUrl: pathUrl,
+  //       time: endOfSliderPosition / 60000,
+  //       size: size ?? 0,
+  //       name: '$audioname ${fullTalesList.fullTalesList.length + 1}',
+  //       compilationsId: []);
+  //   fullTalesList.addNewAudio(audioTale!);
+  //   DataBase.instance.saveAudioTales(fullTalesList);
+  //   // dispouse();
+  // }
+
   clickRecorder() async {
     bool isRedyStartRecord = !recorder.isRecording &&
         url == null &&

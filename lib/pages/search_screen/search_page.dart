@@ -73,46 +73,46 @@ class _SearchScreenAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return AppBar(
-      actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: screen.width * 0.04),
-          child: Column(
-            children: [
-              PopupMenuButton(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                icon: SvgPicture.asset(
-                  CustomIconsImg.moreHorizontRounded,
-                ),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: const Text(
-                      '',
-                      style: TextStyle(
-                        color: CustomColors.black,
-                      ),
-                    ),
-                    value: () {},
-                  ),
-                  PopupMenuItem(
-                    child: const Text(
-                      '',
-                      style: TextStyle(
-                        color: CustomColors.black,
-                      ),
-                    ),
-                    value: () {},
-                  ),
-                ],
-                onSelected: (Function value) {
-                  value();
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
+      // actions: <Widget>[
+      //   Padding(
+      //     padding: EdgeInsets.only(right: screen.width * 0.04),
+      //     child: Column(
+      //       children: [
+      //         PopupMenuButton(
+      //           shape: const RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.all(Radius.circular(15)),
+      //           ),
+      //           icon: SvgPicture.asset(
+      //             CustomIconsImg.moreHorizontRounded,
+      //           ),
+      //           itemBuilder: (context) => [
+      //             PopupMenuItem(
+      //               child: const Text(
+      //                 '',
+      //                 style: TextStyle(
+      //                   color: CustomColors.black,
+      //                 ),
+      //               ),
+      //               value: () {},
+      //             ),
+      //             PopupMenuItem(
+      //               child: const Text(
+      //                 '',
+      //                 style: TextStyle(
+      //                   color: CustomColors.black,
+      //                 ),
+      //               ),
+      //               value: () {},
+      //             ),
+      //           ],
+      //           onSelected: (Function value) {
+      //             value();
+      //           },
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ],
       backgroundColor: CustomColors.audiotalesHeadColorBlue,
       elevation: 0,
       flexibleSpace: Column(
