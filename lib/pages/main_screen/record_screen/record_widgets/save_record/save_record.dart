@@ -23,7 +23,7 @@ class SaveRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SoundBloc, SoundInitial>(
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
         final AudioTale _audio =
             RepositoryProvider.of<TalesListRepository>(context)
@@ -111,7 +111,8 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NavigationBloc _navdBloc = context.read<NavigationBloc>();
-    final SoundBloc _soundBloc = context.read<SoundBloc>();
+    // final SoundBloc _soundBloc = context.read<SoundBloc>();
+    final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
@@ -155,7 +156,7 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                     PopupMenuItem(
                       child: const Text('Редактировать название'),
                       value: () {
-                        _soundBloc.add(ChangeAudioNameEvent(
+                        _mainScreenBloc.add(ChangeAudioNameEvent(
                           audio: audio,
                         ));
                       },
@@ -189,7 +190,7 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                 )
               : TextButton(
                   onPressed: () {
-                    _soundBloc.add(SaveChangedAudioNameEvent(
+                    _mainScreenBloc.add(SaveChangedAudioNameEvent(
                       audio: audio,
                       fullTalesList: _talesListRep,
                     ));
@@ -340,7 +341,7 @@ class _AudioName extends StatelessWidget {
       ),
       initialValue: audio.name,
       onChanged: (value) {
-        context.read<SoundBloc>().add(
+        context.read<MainScreenBloc>().add(
               EditingAudioNameEvent(value: value),
             );
       },

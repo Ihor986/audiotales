@@ -64,10 +64,9 @@ class ActiveTalesListWidget extends StatelessWidget {
                             children: [
                               AudioListNameText(
                                 audio: _talesList.elementAt(i),
-                                fullTalesList: _talesListRep,
                               ),
                               AudioListText(
-                                time: _talesList.elementAt(i).time,
+                                audio: _talesList.elementAt(i),
                               ),
                             ],
                           ),

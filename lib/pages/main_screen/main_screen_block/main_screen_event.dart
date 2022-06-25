@@ -25,6 +25,25 @@ class SearchAudioEvent extends MainScreenEvent {
 
 class DeleteUnsavedAudioEvent extends MainScreenEvent {}
 
+class ChangeAudioNameEvent extends MainScreenEvent {
+  ChangeAudioNameEvent({required this.audio});
+  final AudioTale audio;
+}
+
+class SaveChangedAudioNameEvent extends MainScreenEvent {
+  SaveChangedAudioNameEvent({
+    required this.audio,
+    required this.fullTalesList,
+  });
+  final AudioTale audio;
+  final TalesList fullTalesList;
+}
+
+class EditingAudioNameEvent extends MainScreenEvent {
+  EditingAudioNameEvent({required this.value});
+  final String value;
+}
+
 // class DeleteAudioEvent extends MainScreenEvent {
 //   DeleteAudioEvent({required this.id, required this.talesList});
 //   final String id;

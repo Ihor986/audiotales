@@ -9,7 +9,7 @@ part 'sound_state.dart';
 
 class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
   final SoundService sound = SoundService.instance;
-  final ChangeAudioServise changeAudioServise = ChangeAudioServise();
+  // final ChangeAudioServise changeAudioServise = ChangeAudioServise();
   SoundBloc() : super(SoundInitial()) {
     on<StartRecordEvent>(
       (event, emit) async {
@@ -43,31 +43,31 @@ class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
       },
     );
 
-    on<ChangeAudioNameEvent>(
-      (event, emit) {
-        changeAudioServise.dispose();
-        changeAudioServise.name = event.audio.name;
-        emit(SoundInitial(
-          readOnly: false,
-          chahgedAudioId: event.audio.id,
-        ));
-      },
-    );
+    // on<ChangeAudioNameEvent>(
+    //   (event, emit) {
+    //     changeAudioServise.dispose();
+    //     changeAudioServise.name = event.audio.name;
+    //     emit(SoundInitial(
+    //       readOnly: false,
+    //       chahgedAudioId: event.audio.id,
+    //     ));
+    //   },
+    // );
 
-    on<SaveChangedAudioNameEvent>(
-      (event, emit) async {
-        await changeAudioServise.saveChangedAudioName(
-          audio: event.audio,
-          fullTalesList: event.fullTalesList,
-        );
-        emit(SoundInitial());
-      },
-    );
+    // on<SaveChangedAudioNameEvent>(
+    //   (event, emit) async {
+    //     await changeAudioServise.saveChangedAudioName(
+    //       audio: event.audio,
+    //       fullTalesList: event.fullTalesList,
+    //     );
+    //     emit(SoundInitial());
+    //   },
+    // );
 
-    on<EditingAudioNameEvent>(
-      (event, emit) {
-        changeAudioServise.name = event.value;
-      },
-    );
+    // on<EditingAudioNameEvent>(
+    //   (event, emit) {
+    //     changeAudioServise.name = event.value;
+    //   },
+    // );
   }
 }

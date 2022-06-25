@@ -253,7 +253,7 @@ class _DeletedTalesListWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(talesList[i].name),
-                                AudioListText(time: talesList[i].time),
+                                AudioListText(audio: talesList.elementAt(i)),
                               ],
                             ),
                           ],

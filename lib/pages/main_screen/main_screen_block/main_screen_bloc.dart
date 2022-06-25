@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import '../../../data_base/data_base.dart';
 import '../../../models/audio.dart';
 import '../../../models/tales_list.dart';
+import '../../../services/change_audio_servise.dart';
 import '../../../services/sound_service.dart';
 
 part 'main_screen_event.dart';
@@ -9,6 +10,7 @@ part 'main_screen_state.dart';
 
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   final SoundService sound = SoundService.instance;
+  final ChangeAudioServise changeAudioServise = ChangeAudioServise();
   MainScreenBloc() : super(MainScreenState()) {
     on<ClickPlayEvent>(
       (event, emit) {
@@ -42,6 +44,33 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       (event, emit) async {
         await sound.deleteUnsavedAudio();
         // emit(SoundInitial(indexPage: 0));
+      },
+    );
+
+    on<ChangeAudioNameEvent>(
+      (event, emit) {
+        changeAudioServise.dispose();
+        changeAudioServise.name = event.audio.name;
+        emit(MainScreenState(
+          readOnly: false,
+          chahgedAudioId: event.audio.id,
+        ));
+      },
+    );
+
+    on<SaveChangedAudioNameEvent>(
+      (event, emit) async {
+        await changeAudioServise.saveChangedAudioName(
+          audio: event.audio,
+          fullTalesList: event.fullTalesList,
+        );
+        emit(MainScreenState());
+      },
+    );
+
+    on<EditingAudioNameEvent>(
+      (event, emit) {
+        changeAudioServise.name = event.value;
       },
     );
   }

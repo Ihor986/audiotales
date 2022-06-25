@@ -22,21 +22,21 @@ class StartPlaydEvent extends SoundEvent {}
 
 class SetStateEvent extends SoundEvent {}
 
-class ChangeAudioNameEvent extends SoundEvent {
-  ChangeAudioNameEvent({required this.audio});
-  final AudioTale audio;
-}
+// class ChangeAudioNameEvent extends SoundEvent {
+//   ChangeAudioNameEvent({required this.audio});
+//   final AudioTale audio;
+// }
 
-class SaveChangedAudioNameEvent extends SoundEvent {
-  SaveChangedAudioNameEvent({
-    required this.audio,
-    required this.fullTalesList,
-  });
-  final AudioTale audio;
-  final TalesList fullTalesList;
-}
+// class SaveChangedAudioNameEvent extends SoundEvent {
+//   SaveChangedAudioNameEvent({
+//     required this.audio,
+//     required this.fullTalesList,
+//   });
+//   final AudioTale audio;
+//   final TalesList fullTalesList;
+// }
 
-class EditingAudioNameEvent extends SoundEvent {
-  EditingAudioNameEvent({required this.value});
-  final String value;
-}
+// class EditingAudioNameEvent extends SoundEvent {
+//   EditingAudioNameEvent({required this.value});
+//   final String value;
+// }

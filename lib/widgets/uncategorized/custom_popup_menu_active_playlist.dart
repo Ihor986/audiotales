@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../models/tales_list.dart';
+import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
 import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import '../../pages/main_screen/selections_screen/selections_screen.dart';
@@ -40,7 +41,7 @@ class CustomPopUpMenu extends StatelessWidget {
         PopupMenuItem(
           child: const Text('Переименовать'),
           value: () {
-            context.read<SoundBloc>().add(ChangeAudioNameEvent(
+            context.read<MainScreenBloc>().add(ChangeAudioNameEvent(
                   audio: audio,
                 ));
           },

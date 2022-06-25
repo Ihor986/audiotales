@@ -150,7 +150,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(_talesList[i].name),
-                              AudioListText(time: _talesList[i].time),
+                              AudioListText(audio: _talesList.elementAt(i)),
                             ],
                           ),
                         ],
