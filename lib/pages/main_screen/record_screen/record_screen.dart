@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'record_widgets/record_draggable_widget.dart';
 import 'record_widgets/record_screen_text.dart';
-import 'sound_bloc/sound_bloc.dart';
 
 class RecordScreen extends StatelessWidget {
   const RecordScreen({Key? key}) : super(key: key);
@@ -18,6 +16,7 @@ class RecordScreen extends StatelessWidget {
     final Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: _RecordScreenAppBar(
         onAction: () {
           Scaffold.of(context).openDrawer();

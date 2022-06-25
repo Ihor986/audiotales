@@ -1,5 +1,10 @@
 import '../utils/consts/texts_consts.dart';
 
+enum Period {
+  Year,
+  Month,
+}
+
 class TimeTextConvertService {
   const TimeTextConvertService._();
 
@@ -49,5 +54,33 @@ class TimeTextConvertService {
     String y = '0${fullDate.year}'.substring('0${fullDate.year}'.length - 2);
     String result = '$d.$m.$y';
     return result;
+  }
+
+  String dayMonthYearSubscribe({
+    required Period period,
+  }) {
+    int m = DateTime.now().month;
+    int y = DateTime.now().year;
+    int dm;
+    int dy;
+    List m30 = [4, 6, 9, 11];
+    if (y % 4 == 0 && y % 100 == 0 && y % 4 == 0) {
+      dy = 366;
+    } else {
+      dy = 365;
+    }
+    if (m == 2) {
+      dy == 365 ? dm = 28 : dm = 29;
+    } else if (m30.contains(m)) {
+      dm = 30;
+    } else {
+      dm = 31;
+    }
+
+    if (period == Period.Year) {
+      return DateTime.now().add(Duration(days: dy)).toString();
+    } else {
+      return DateTime.now().add(Duration(days: dm)).toString();
+    }
   }
 }

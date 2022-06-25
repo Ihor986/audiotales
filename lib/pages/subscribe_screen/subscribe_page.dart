@@ -19,7 +19,7 @@ class SubscribeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-
+    // print(DateTime.now().add(const Duration(days: 30)));
     return Scaffold(
       appBar: _SubscribeScreenAppBar(
         onAction: () {
@@ -99,6 +99,8 @@ class CardWidget extends StatelessWidget {
   const CardWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final LocalUser _user =
+        RepositoryProvider.of<UserRepository>(context).getLocalUser();
     final Size screen = MediaQuery.of(context).size;
     return Container(
       height: screen.height * 0.7,
@@ -115,31 +117,52 @@ class CardWidget extends StatelessWidget {
         border: Border.all(color: CustomColors.audioBorder),
         borderRadius: const BorderRadius.all(Radius.circular(41)),
       ),
-      child: Stack(children: [
-        Column(
-          children: [
-            const _SubscribeTextHeadre(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                _SelectSubscribe(
-                  index: 0,
-                ),
-                _SelectSubscribe(
-                  index: 1,
-                ),
-              ],
-            ),
-            const Spacer(flex: 1),
-            const _SubscribeText(),
-            const _SubscribeButton(),
-            const Spacer(flex: 1),
-          ],
-        ),
-      ]),
+      child: _user.subscribe == null
+          ? Stack(children: [
+              Column(
+                children: [
+                  const _SubscribeTextHeadre(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      _SelectSubscribe(
+                        index: 0,
+                      ),
+                      _SelectSubscribe(
+                        index: 1,
+                      ),
+                    ],
+                  ),
+                  const Spacer(flex: 1),
+                  const _SubscribeText(),
+                  const _SubscribeButton(),
+                  const Spacer(flex: 1),
+                ],
+              ),
+            ])
+          : Stack(children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const Text('Подписка действует до '),
+                        Text('${_user.subscribe?.substring(0, 10)}'),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [],
+                  ),
+                  const Spacer(flex: 1),
+                  const _SubscribeText(),
+                  const Spacer(flex: 1),
+                ],
+              ),
+            ]),
     );
-    //   },
-    // );
   }
 }
 
@@ -399,6 +422,7 @@ class _SubscribeButton extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
     final LocalUser _user =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
+
     return Center(
       child: Column(
         children: [

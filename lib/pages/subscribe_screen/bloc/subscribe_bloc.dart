@@ -3,10 +3,14 @@ import 'package:audiotales/models/user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../../services/minuts_text_convert_service.dart';
+
 part 'subscribe_event.dart';
 part 'subscribe_state.dart';
 
 class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
+  final TimeTextConvertService timeTextConvertService =
+      TimeTextConvertService.instance;
   SubscribeBloc() : super(SubscribeState()) {
     on<ChangeCheckEvent>(
       (event, emit) {
@@ -20,19 +24,9 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       (event, emit) {
         final int index = state.checkIndex;
         final LocalUser _user = event.user;
-        int month = DateTime.now().month;
-        int year = DateTime.now().year;
-
-        if (index == 0) {
-          month++;
-          _user.changeUserFields(
-              nSubscribe: "${month.toString()}.${year.toString()}");
-        }
-        if (index == 1) {
-          year++;
-          _user.changeUserFields(
-              nSubscribe: "${month.toString()}.${year.toString()}");
-        }
+        final List<Period> _periodList = [Period.Month, Period.Year];
+        _user.subscribe = timeTextConvertService.dayMonthYearSubscribe(
+            period: _periodList.elementAt(index));
         DataBase.instance.saveUser(_user);
         emit(
           SubscribeState(checkIndex: index),

@@ -124,7 +124,8 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                           ),
-                          _cangeProfileService.readOnly
+                          _cangeProfileService.readOnly &&
+                                  _user.subscribe == null
                               ? Align(
                                   alignment: const Alignment(0, 0.3),
                                   child: TextButton(
@@ -137,7 +138,8 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 )
                               : const SizedBox(),
-                          _cangeProfileService.readOnly
+                          _cangeProfileService.readOnly &&
+                                  _user.subscribe == null
                               ? Align(
                                   alignment: const Alignment(0, 0.45),
                                   child: _CustomProgressIndicator(
@@ -152,8 +154,8 @@ class _ProfileState extends State<Profile> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       TextButton(
-                                          onPressed: () {
-                                            auth.signOut();
+                                          onPressed: () async {
+                                            await auth.signOut();
                                             context.read<NavigationBloc>().add(
                                                   ChangeCurrentIndexEvent(
                                                       currentIndex: 0),
@@ -180,6 +182,76 @@ class _ProfileState extends State<Profile> {
         );
       },
     );
+  }
+
+  void _pressDelete({
+    required BuildContext context,
+    required LocalUser user,
+  }) {
+    Size screen = MediaQuery.of(context).size;
+    int now = DateTime.now().millisecondsSinceEpoch.toInt();
+    int loginTime = user
+            .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
+            .toInt() ??
+        0;
+    bool isNeedSignIn = now - 300000 > loginTime;
+    if (isNeedSignIn) {
+      Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+        RegistrationPage.routeName,
+        (_) => false,
+      );
+      context
+          .read<NavigationBloc>()
+          .add(ChangeCurrentIndexEvent(currentIndex: 0));
+    } else {
+      DeleteUserConfirm.instance.deletedConfirm(
+        screen: screen,
+        context: context,
+      );
+    }
+  }
+
+  void _pressEditing({
+    required CangeProfileService cangeProfileService,
+    required BuildContext context,
+    required LocalUser user,
+    required String name,
+  }) {
+    bool _isProfileEditingEvent = cangeProfileService.readOnly;
+    bool _isSaveEditingEvent =
+        !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
+    bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
+        cangeProfileService.isChangeNumber &&
+        cangeProfileService.smsCode.length < 6;
+    bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
+        cangeProfileService.isChangeNumber &&
+        cangeProfileService.smsCode.length == 6;
+    if (_isProfileEditingEvent) {
+      context.read<ProfileBloc>().add(
+            ProfileEditingEvent(newName: name, user: user),
+          );
+    }
+    if (cangeProfileService.phone == null) {
+      return;
+    }
+    if (cangeProfileService.phone!.length < 13) {
+      return;
+    }
+    if (_isSaveEditingEvent) {
+      context.read<ProfileBloc>().add(
+            SaveEditingEvent(user: user),
+          );
+    }
+    if (_isSaveChangedPhoneEvent) {
+      context.read<ProfileBloc>().add(
+            SaveChangedPhoneEvent(),
+          );
+    }
+    if (_isSaveEditingWithPhoneEvent) {
+      context.read<ProfileBloc>().add(
+            SaveEditingWithPhoneEvent(user: user),
+          );
+    }
   }
 }
 
@@ -561,69 +633,69 @@ class _CodeInputState extends State<_CodeInput> {
   }
 }
 
-void _pressDelete({
-  required BuildContext context,
-  required LocalUser user,
-}) {
-  Size screen = MediaQuery.of(context).size;
-  int now = DateTime.now().millisecondsSinceEpoch.toInt();
-  int loginTime = user
-          .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
-          .toInt() ??
-      0;
-  bool isNeedSignIn = now - 300000 > loginTime;
-  if (isNeedSignIn) {
-    Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-      RegistrationPage.routeName,
-      (_) => false,
-    );
-  } else {
-    DeleteUserConfirm.instance.deletedConfirm(
-      screen: screen,
-      context: context,
-    );
-  }
-}
+// // void _pressDelete({
+//   required BuildContext context,
+//   required LocalUser user,
+// }) {
+//   Size screen = MediaQuery.of(context).size;
+//   int now = DateTime.now().millisecondsSinceEpoch.toInt();
+//   int loginTime = user
+//           .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
+//           .toInt() ??
+//       0;
+//   bool isNeedSignIn = now - 300000 > loginTime;
+//   if (isNeedSignIn) {
+//     Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+//       RegistrationPage.routeName,
+//       (_) => false,
+//     );
+//   } else {
+//     DeleteUserConfirm.instance.deletedConfirm(
+//       screen: screen,
+//       context: context,
+//     );
+//   }
+// }
 
-void _pressEditing({
-  required CangeProfileService cangeProfileService,
-  required BuildContext context,
-  required LocalUser user,
-  required String name,
-}) {
-  bool _isProfileEditingEvent = cangeProfileService.readOnly;
-  bool _isSaveEditingEvent =
-      !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
-  bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
-      cangeProfileService.isChangeNumber &&
-      cangeProfileService.smsCode.length < 6;
-  bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
-      cangeProfileService.isChangeNumber &&
-      cangeProfileService.smsCode.length == 6;
-  if (_isProfileEditingEvent) {
-    context.read<ProfileBloc>().add(
-          ProfileEditingEvent(newName: name, user: user),
-        );
-  }
-  if (cangeProfileService.phone == null) {
-    return;
-  }
-  if (cangeProfileService.phone!.length < 13) {
-    return;
-  }
-  if (_isSaveEditingEvent) {
-    context.read<ProfileBloc>().add(
-          SaveEditingEvent(user: user),
-        );
-  }
-  if (_isSaveChangedPhoneEvent) {
-    context.read<ProfileBloc>().add(
-          SaveChangedPhoneEvent(),
-        );
-  }
-  if (_isSaveEditingWithPhoneEvent) {
-    context.read<ProfileBloc>().add(
-          SaveEditingWithPhoneEvent(user: user),
-        );
-  }
-}
+// void _pressEditing({
+//   required CangeProfileService cangeProfileService,
+//   required BuildContext context,
+//   required LocalUser user,
+//   required String name,
+// }) {
+//   bool _isProfileEditingEvent = cangeProfileService.readOnly;
+//   bool _isSaveEditingEvent =
+//       !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
+//   bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
+//       cangeProfileService.isChangeNumber &&
+//       cangeProfileService.smsCode.length < 6;
+//   bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
+//       cangeProfileService.isChangeNumber &&
+//       cangeProfileService.smsCode.length == 6;
+//   if (_isProfileEditingEvent) {
+//     context.read<ProfileBloc>().add(
+//           ProfileEditingEvent(newName: name, user: user),
+//         );
+//   }
+//   if (cangeProfileService.phone == null) {
+//     return;
+//   }
+//   if (cangeProfileService.phone!.length < 13) {
+//     return;
+//   }
+//   if (_isSaveEditingEvent) {
+//     context.read<ProfileBloc>().add(
+//           SaveEditingEvent(user: user),
+//         );
+//   }
+//   if (_isSaveChangedPhoneEvent) {
+//     context.read<ProfileBloc>().add(
+//           SaveChangedPhoneEvent(),
+//         );
+//   }
+//   if (_isSaveEditingWithPhoneEvent) {
+//     context.read<ProfileBloc>().add(
+//           SaveEditingWithPhoneEvent(user: user),
+//         );
+//   }
+// }
