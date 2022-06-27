@@ -14,7 +14,8 @@ import '../../../widgets/texts/main_screen_text.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../selections_screen/bloc/selections_bloc.dart';
-import '../selections_screen/selection_screen.dart/selection_screen.dart';
+// import '../selections_screen/selection_screen.dart/selection_screen.dart';
+import '../selections_screen/selection_screen/selection_screen.dart';
 import '../selections_screen/selections_text.dart';
 import 'head_screen_widgets/head_screen_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
@@ -254,38 +255,40 @@ class _Selection extends StatelessWidget {
   final double width;
   final double height;
 
+  DecorationImage? decorationImage() {
+    if (selection.photo != null) {
+      try {
+        return DecorationImage(
+            image: MemoryImage(
+              File(selection.photo ?? '').readAsBytesSync(),
+            ),
+            fit: BoxFit.cover);
+      } catch (_) {}
+    }
+
+    if (selection.photoUrl != null) {
+      try {
+        return DecorationImage(
+          image: CachedNetworkImageProvider(selection.photoUrl ?? ''),
+          fit: BoxFit.cover,
+        );
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    DecorationImage? decorationImage() {
-      if (selection.photo != null) {
-        try {
-          return DecorationImage(
-              image: MemoryImage(
-                File(selection.photo ?? '').readAsBytesSync(),
-              ),
-              fit: BoxFit.cover);
-        } catch (_) {}
-      }
-
-      if (selection.photoUrl != null) {
-        try {
-          return DecorationImage(
-            image: CachedNetworkImageProvider(selection.photoUrl ?? ''),
-            fit: BoxFit.cover,
-          );
-        } catch (e) {
-          return null;
-        }
-      }
-      return null;
-    }
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
         context.read<SelectionsBloc>().changeSelectionService.readOnly = true;
-        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+        Navigator.pushAndRemoveUntil(
+          context,
           MaterialPageRoute(
             builder: (context) => SelectionScreen(
               selection: selection,
@@ -331,11 +334,7 @@ class _AddSelectionButton extends StatelessWidget {
     return TextButton(
         onPressed: () {
           _selectionsBloc.add(CreateNewSelectonEvent());
-          // Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
-          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-            AddNewSelectionScreen.routeName,
-            (_) => true,
-          );
+          Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
         },
         child: const SelectionText6());
   }

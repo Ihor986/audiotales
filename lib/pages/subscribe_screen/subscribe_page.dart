@@ -58,7 +58,7 @@ class _SubscribeScreenAppBar extends StatelessWidget
   final void Function()? onAction;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -66,7 +66,7 @@ class _SubscribeScreenAppBar extends StatelessWidget
       backgroundColor: CustomColors.blueSoso,
       elevation: 0,
       flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           SizedBox(),
           SubscribeScreenTitleText(),

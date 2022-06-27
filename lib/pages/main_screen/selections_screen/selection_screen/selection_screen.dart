@@ -8,6 +8,7 @@ import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
+import '../selection_select_few_screen/selection_select_few_screen.dart';
 import '../wiget/selection_screen_body.dart';
 import 'selection_screen_widgets/text_selection_screen.dart';
 
@@ -123,7 +124,18 @@ class _Action extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   child: const Text('Выбрать несколько'),
-                  value: () {},
+                  value: () {
+                    _selectionsBloc.changeSelectionService.dispouse();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectionSelectFewScreen(
+                          selection: selection,
+                        ),
+                      ),
+                      (_) => true,
+                    );
+                  },
                 ),
                 PopupMenuItem(
                   child: const Text('Удалить подборку'),

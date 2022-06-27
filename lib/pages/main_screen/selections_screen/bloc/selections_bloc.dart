@@ -44,6 +44,11 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       emit(SelectionsState(searchValue: searchValue));
     });
 
+    on<UncheckAll>((event, emit) {
+      changeSelectionService.dispouse();
+      emit(SelectionsState());
+    });
+
     on<ChangeSelectionNameEvent>(
       (event, emit) {
         changeSelectionService.name = event.value;
@@ -101,6 +106,17 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       },
     );
 
+    on<SelectSelectionsForListAudiosEvent>(
+      (event, emit) {
+        selectSelectionsService.dispose();
+        selectSelectionsService.audioList = changeSelectionService.checkedList;
+        selectSelectionsService.readOnly = false;
+        emit(SelectionsState(
+          readOnly: selectSelectionsService.readOnly,
+        ));
+      },
+    );
+
     on<CheckSelectionEvent>(
       (event, emit) {
         selectSelectionsService.changeIDList(event.id);
@@ -113,7 +129,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<SaveAudioWithSelectionsListEvent>(
       (event, emit) async {
-        await selectSelectionsService.addSelectionsToAudio(
+        await selectSelectionsService.addSelections(
           fullTalesList: event.talesList,
         );
         emit(SelectionsState());

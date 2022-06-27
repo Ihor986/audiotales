@@ -54,6 +54,13 @@ class TalesList {
         .toList();
   }
 
+  AudioTale? getAudio(String id) {
+    List<AudioTale> list =
+        fullTalesList.where((element) => element.id == id).toList();
+
+    return list.isNotEmpty ? list.first : null;
+  }
+
   num getCompilationTime(String value) {
     return fullTalesList
         .where((element) =>
@@ -166,13 +173,24 @@ class TalesList {
     }
   }
 
-  updateAudioSelectionsId({
+  changeAudioSelectionsId({
     required String id,
     required List selectionsId,
   }) {
     for (var audio in fullTalesList) {
       if (audio.id == id) {
         audio.updateAudio(nCompilationsId: selectionsId);
+      }
+    }
+  }
+
+  addNewAudioSelectionsId({
+    required String id,
+    required List selectionsId,
+  }) {
+    for (var audio in fullTalesList) {
+      if (audio.id == id) {
+        audio.updateAudio(addCompilationsId: selectionsId);
       }
     }
   }

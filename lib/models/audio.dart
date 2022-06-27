@@ -100,6 +100,7 @@ class AudioTale {
     bool? nIsDeleted,
     String? nDeletedDate,
     String? nUpdateDate,
+    List? addCompilationsId,
     // String? nPath,
     // String? nPathUrl,
     // num? nTime,
@@ -112,6 +113,13 @@ class AudioTale {
         ? DateTime.now().millisecondsSinceEpoch.toString()
         : deletedDate;
     updateDate = DateTime.now().millisecondsSinceEpoch.toString();
+    if (addCompilationsId == null) return;
+    for (var item in addCompilationsId) {
+      final bool isNoContain = !compilationsId.contains(item);
+      if (isNoContain) {
+        compilationsId.add(item);
+      }
+    }
     // final String? path;
     // pathUrl = nPathUrl ?? pathUrl;
     // final num time;

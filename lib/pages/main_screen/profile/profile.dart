@@ -73,21 +73,25 @@ class _ProfileState extends State<Profile> {
                       height: screen.height * 0.8,
                       child: Stack(
                         children: [
-                          Container(
-                            alignment: const Alignment(0, 0),
-                            height: screen.height * 0.35,
-                            child: Column(
-                              children: [
-                                _ProfilePhotoWidget(
-                                  readOnly: _cangeProfileService.readOnly,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(screen.width * 0.03),
-                                  child: _NameTextField(
-                                    name: _name,
+                          Align(
+                            alignment: const Alignment(0, -0.95),
+                            child: Container(
+                              alignment: const Alignment(0, 0),
+                              height: screen.height * 0.35,
+                              child: Column(
+                                children: [
+                                  _ProfilePhotoWidget(
+                                    readOnly: _cangeProfileService.readOnly,
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.all(screen.width * 0.02),
+                                    child: _NameTextField(
+                                      name: _name,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           _cangeProfileService.isChangeNumber
@@ -148,7 +152,7 @@ class _ProfileState extends State<Profile> {
                               : const SizedBox(),
                           _cangeProfileService.readOnly
                               ? Align(
-                                  alignment: const Alignment(0, 0.7),
+                                  alignment: const Alignment(0, 0.8),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -263,24 +267,20 @@ class _ProfileScreenAppBar extends StatelessWidget
   }) : super(key: key);
   final void Function()? onAction;
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return AppBar(
       backgroundColor: CustomColors.blueSoso,
       elevation: 0,
-      // title: Profile.title,
-      // centerTitle: true,
       flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           SizedBox(),
           Profile.title,
         ],
       ),
-      // titleSpacing: 0.00,
-      // bottom: _ProfileScreenAppBar(),
       leading: Padding(
         padding: EdgeInsets.only(
           left: screen.width * 0.04,

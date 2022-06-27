@@ -21,6 +21,8 @@ class CheckEvent extends SelectionsEvent {
 
 class ClearChekedEvent extends SelectionsEvent {}
 
+class UncheckAll extends SelectionsEvent {}
+
 class ChangeSelectionNameEvent extends SelectionsEvent {
   ChangeSelectionNameEvent({required this.value});
   String value;
@@ -63,6 +65,8 @@ class SelectSelectionsEvent extends SelectionsEvent {
   });
   final AudioTale audio;
 }
+
+class SelectSelectionsForListAudiosEvent extends SelectionsEvent {}
 
 class CheckSelectionEvent extends SelectionsEvent {
   CheckSelectionEvent({

@@ -23,6 +23,8 @@ class SearchAudioEvent extends MainScreenEvent {
   String value;
 }
 
+class SetState extends MainScreenEvent {}
+
 class DeleteUnsavedAudioEvent extends MainScreenEvent {}
 
 class ChangeAudioNameEvent extends MainScreenEvent {

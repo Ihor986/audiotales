@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:audiotales/pages/main_screen/selections_screen/selection_screen.dart/selection_screen_widgets/text_selection_screen.dart';
+// import 'package:audiotales/pages/main_screen/selections_screen/selection_screen.dart/selection_screen_widgets/text_selection_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +17,7 @@ import '../../../../widgets/uncategorized/play_all_button.dart';
 import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
+import '../selection_screen/selection_screen_widgets/text_selection_screen.dart';
 import '../selections_text.dart';
 
 class BodySelectionScreen extends StatelessWidget {
@@ -504,37 +505,6 @@ class _FullTextInput extends StatelessWidget {
     );
   }
 }
-
-// class _TalesListWidget extends StatelessWidget {
-//   const _TalesListWidget({
-//     Key? key,
-//     required this.talesList,
-//     required this.readOnly,
-//   }) : super(key: key);
-
-//   final bool readOnly;
-//   final List<AudioTale> talesList;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (readOnly) {
-//       return _TalesListWidget(
-//         talesList: talesList,
-//         color: CustomColors.blueSoso,
-//         icon: CustomIconsImg.moreHorizontRounded,
-//         onTap: () {},
-//       );
-//     } else {
-//       return _TalesListWidget(
-//         talesList: talesList,
-//         isDisactive: true,
-//         color: CustomColors.blueSoso,
-//         icon: CustomIconsImg.moreHorizontRounded,
-//         onTap: () {},
-//       );
-//     }
-//   }
-// }
 
 class _TalesListWidget extends StatelessWidget {
   const _TalesListWidget({

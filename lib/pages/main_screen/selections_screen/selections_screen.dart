@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:audiotales/pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'package:audiotales/pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
+import 'package:audiotales/pages/main_screen/selections_screen/selection_screen/selection_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,7 @@ import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
-import 'selection_screen.dart/selection_screen.dart';
+// import 'selection_screen.dart/selection_screen.dart';
 import 'selections_text.dart';
 
 class SelectionsScreen extends StatefulWidget {
@@ -106,6 +108,7 @@ class _SelectionsScreenAppBar extends StatelessWidget
                               talesList: _talesListRep),
                         );
                         _soundbloc.add(SetStateEvent());
+                        context.read<MainScreenBloc>().add(SetState());
                         Navigator.pop(context);
                       },
                       child: const SelectSelectionTextAdd()),

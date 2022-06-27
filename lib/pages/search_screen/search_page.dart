@@ -68,7 +68,7 @@ class _SearchScreenAppBar extends StatelessWidget
   final void Function()? onAction;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -116,7 +116,7 @@ class _SearchScreenAppBar extends StatelessWidget
       backgroundColor: CustomColors.audiotalesHeadColorBlue,
       elevation: 0,
       flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           SizedBox(),
           SearchAppBarText(),

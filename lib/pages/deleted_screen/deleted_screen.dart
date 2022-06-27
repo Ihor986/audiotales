@@ -161,9 +161,11 @@ class _DeletedScreenAppBar extends StatelessWidget
       backgroundColor: CustomColors.audiotalesHeadColorBlue,
       elevation: 0,
       flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: const [
-          SizedBox(),
+          SizedBox(
+            height: 30,
+          ),
           DeletedScreenTitleText(),
         ],
       ),
