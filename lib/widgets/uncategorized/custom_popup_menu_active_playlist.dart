@@ -10,6 +10,7 @@ import '../../pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
 import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import '../../pages/main_screen/selections_screen/selections_screen.dart';
 import '../../repositorys/tales_list_repository.dart';
+import '../../services/share_service.dart';
 import '../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons_img.dart';
 import '../alerts/deleted/remove_to_deleted_confirm.dart';
@@ -72,7 +73,9 @@ class CustomPopUpMenu extends StatelessWidget {
         ),
         PopupMenuItem(
           child: const Text('Поделиться'),
-          value: () {},
+          value: () async {
+            await ShareAppService.instance.shareFiles(context, [audio.path!]);
+          },
         ),
       ],
       onSelected: (Function value) {
