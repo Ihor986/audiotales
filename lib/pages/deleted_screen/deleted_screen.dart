@@ -164,9 +164,12 @@ class _DeletedScreenAppBar extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
           SizedBox(
-            height: 30,
+              // height: 30,
+              ),
+          SizedBox(
+            height: kToolbarHeight * 1.3,
+            child: DeletedScreenTitleText(),
           ),
-          DeletedScreenTitleText(),
         ],
       ),
       leading: Padding(
@@ -191,6 +194,38 @@ class _DeletedScreenAppBar extends StatelessWidget
     );
   }
 }
+
+// class _Appbar extends StatelessWidget {
+//   const _Appbar({
+//     Key? key,
+//     this.onAction,
+//   }) : super(key: key);
+//   final void Function()? onAction;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Row(
+//         children: [
+//           Column(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               IconButton(
+//                 icon: SvgPicture.asset(
+//                   CustomIconsImg.drawer,
+//                   height: 25,
+//                   color: CustomColors.white,
+//                 ),
+//                 onPressed: onAction,
+//               ),
+//               const SizedBox(),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _DeletedTalesListWidget extends StatelessWidget {
   const _DeletedTalesListWidget({
