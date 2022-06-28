@@ -15,6 +15,11 @@ class ShareAudioService {
   final List<String> downloadsPaths = [];
   String? text;
 
+  Future<void> shareUnsavedAudio({required String path}) async {
+    paths.add(path);
+    await _onShareWithResult();
+  }
+
   Future<void> shareFiles({
     required List<AudioTale> talesList,
     List<String>? idList,
@@ -70,14 +75,11 @@ class ShareAudioService {
   }
 
   Future<void> _onShareWithResult() async {
-    // ShareResult result;
     if (paths.isEmpty) return;
-    // result =
     await Share.shareFilesWithResult(
       paths,
       text: text,
     );
-    // print(result.status.toString());
     _deleteDownloadFiles();
   }
 
@@ -85,7 +87,6 @@ class ShareAudioService {
     if (downloadsPaths.isEmpty) return;
     for (var item in downloadsPaths) {
       File(item).delete();
-      print('deleted');
     }
   }
 

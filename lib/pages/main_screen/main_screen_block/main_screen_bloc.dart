@@ -103,5 +103,13 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
         emit(MainScreenState());
       },
     );
+
+    on<ShareUnsavedAudioEvent>(
+      (event, emit) async {
+        shareAudioService.dispouse();
+        await shareAudioService.shareUnsavedAudio(path: event.path);
+        emit(MainScreenState());
+      },
+    );
   }
 }

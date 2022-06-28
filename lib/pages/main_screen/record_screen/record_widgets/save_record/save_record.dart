@@ -163,7 +163,13 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       child: const Text('Поделиться'),
-                      value: () {},
+                      value: () {
+                        context.read<MainScreenBloc>().add(
+                              ShareAudioEvent(
+                                audio: audio,
+                              ),
+                            );
+                      },
                     ),
                     PopupMenuItem(
                       child: const Text('Скачать'),

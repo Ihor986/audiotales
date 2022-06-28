@@ -8,6 +8,7 @@ import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../repositorys/user_reposytory.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../../widgets/alerts/deleted/delete_unsaved_audio.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../sound_bloc/sound_bloc.dart';
 import '../recordering/record_screen_text.dart';
 
@@ -33,7 +34,15 @@ class PlayRecordUpbarButtons extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final String? _path = context.read<SoundBloc>().sound.path;
+                    if (_path == null) return;
+                    context.read<MainScreenBloc>().add(
+                          ShareUnsavedAudioEvent(
+                            path: _path,
+                          ),
+                        );
+                  },
                   icon: const ImageIcon(
                     CustomIconsImg.share,
                     size: 25,

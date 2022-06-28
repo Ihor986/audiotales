@@ -48,6 +48,14 @@ class ShareAudiosEvent extends MainScreenEvent {
   final List<String>? idList;
 }
 
+class ShareUnsavedAudioEvent extends MainScreenEvent {
+  ShareUnsavedAudioEvent({
+    required this.path,
+  });
+
+  final String path;
+}
+
 class SaveChangedAudioNameEvent extends MainScreenEvent {
   SaveChangedAudioNameEvent({
     required this.audio,
