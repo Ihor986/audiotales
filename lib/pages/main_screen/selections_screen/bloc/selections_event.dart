@@ -21,6 +21,8 @@ class CheckEvent extends SelectionsEvent {
 
 class ClearChekedEvent extends SelectionsEvent {}
 
+// class RemoveFromSelectionChekedEvent extends SelectionsEvent {}
+
 class UncheckAll extends SelectionsEvent {}
 
 class ChangeSelectionNameEvent extends SelectionsEvent {

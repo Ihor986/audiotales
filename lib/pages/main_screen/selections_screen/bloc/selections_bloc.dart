@@ -49,6 +49,10 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       emit(SelectionsState());
     });
 
+    // on<RemoveFromSelectionChekedEvent>((event, emit) {
+    //   emit(SelectionsState());
+    // });
+
     on<ChangeSelectionNameEvent>(
       (event, emit) {
         changeSelectionService.name = event.value;
