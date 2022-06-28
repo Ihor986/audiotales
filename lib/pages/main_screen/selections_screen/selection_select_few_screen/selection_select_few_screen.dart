@@ -145,7 +145,16 @@ class _Action extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   child: const Text('Поделиться'),
-                  value: () {},
+                  value: () {
+                    context.read<MainScreenBloc>().add(
+                          ShareAudiosEvent(
+                            audioList: talesList.getCompilation(selection.id),
+                            idList: _selectionsBloc
+                                .changeSelectionService.checkedList,
+                            name: selection.name,
+                          ),
+                        );
+                  },
                 ),
                 PopupMenuItem(
                   child: const Text('Скачать все'),

@@ -32,6 +32,22 @@ class ChangeAudioNameEvent extends MainScreenEvent {
   final AudioTale audio;
 }
 
+class ShareAudioEvent extends MainScreenEvent {
+  ShareAudioEvent({required this.audio});
+  final AudioTale audio;
+}
+
+class ShareAudiosEvent extends MainScreenEvent {
+  ShareAudiosEvent({
+    required this.audioList,
+    this.name,
+    this.idList,
+  });
+  final List<AudioTale> audioList;
+  final String? name;
+  final List<String>? idList;
+}
+
 class SaveChangedAudioNameEvent extends MainScreenEvent {
   SaveChangedAudioNameEvent({
     required this.audio,

@@ -6,6 +6,7 @@ import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../repositorys/tales_list_repository.dart';
+import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selection_select_few_screen/selection_select_few_screen.dart';
@@ -150,7 +151,14 @@ class _Action extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   child: const Text('Поделиться'),
-                  value: () {},
+                  value: () {
+                    context.read<MainScreenBloc>().add(
+                          ShareAudiosEvent(
+                            audioList: talesList.getCompilation(selection.id),
+                            name: selection.name,
+                          ),
+                        );
+                  },
                 ),
               ],
               onSelected: (Function value) {

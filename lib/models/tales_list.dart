@@ -162,6 +162,17 @@ class TalesList {
     }
   }
 
+  changeAudioPath({
+    required String id,
+    required String path,
+  }) {
+    for (var audio in fullTalesList) {
+      if (audio.id == id) {
+        audio.updateAudio(nPath: path);
+      }
+    }
+  }
+
   changeAudioName({
     required String id,
     required String name,

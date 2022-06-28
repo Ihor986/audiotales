@@ -14,7 +14,8 @@ class AudioTale {
 
   final String id;
   String name;
-  final String? path;
+
+  String? path;
   String? pathUrl;
   final num time;
   final num size;
@@ -101,12 +102,13 @@ class AudioTale {
     String? nDeletedDate,
     String? nUpdateDate,
     List? addCompilationsId,
-    // String? nPath,
+    String? nPath,
     // String? nPathUrl,
     // num? nTime,
     // num? nSize,
   }) {
     name = nName ?? name;
+    path = nPath ?? path;
     compilationsId = nCompilationsId ?? compilationsId;
     isDeleted = nIsDeleted ?? isDeleted;
     deletedDate = nIsDeleted == true

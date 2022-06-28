@@ -74,7 +74,14 @@ class CustomPopUpMenu extends StatelessWidget {
         PopupMenuItem(
           child: const Text('Поделиться'),
           value: () async {
-            await ShareAppService.instance.shareFiles(context, [audio.path!]);
+            context.read<MainScreenBloc>().add(
+                  ShareAudioEvent(
+                    audio: audio,
+                  ),
+                );
+            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            //   content: Text("Share result: "),
+            // ));
           },
         ),
       ],
