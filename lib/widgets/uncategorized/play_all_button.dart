@@ -1,3 +1,4 @@
+import 'package:audiotales/models/selections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,12 +10,14 @@ import '../../utils/consts/custom_icons_img.dart';
 import '../../utils/consts/texts_consts.dart';
 
 class PlayAllTalesButtonWidget extends StatelessWidget {
-  const PlayAllTalesButtonWidget(
-      {Key? key,
-      required this.talesList,
-      required this.textColor,
-      required this.backgroundColor})
-      : super(key: key);
+  const PlayAllTalesButtonWidget({
+    Key? key,
+    required this.talesList,
+    required this.textColor,
+    required this.backgroundColor,
+    this.selection,
+  }) : super(key: key);
+  final Selection? selection;
   final List<AudioTale> talesList;
   final Color textColor;
   final Color backgroundColor;
@@ -25,16 +28,18 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
 
     Size screen = MediaQuery.of(context).size;
 
-    return BlocBuilder<AudioScreenBloc, AudioScreenState>(
-      builder: (context, state) {
+    return AnimatedBuilder(
+      animation: _soundService,
+      builder: (context, child) {
         return Stack(
           children: [
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                context
-                    .read<AudioScreenBloc>()
-                    .add(AudioScreenPlayAllEvent(talesList: talesList));
+                context.read<AudioScreenBloc>().add(AudioScreenPlayAllEvent(
+                      talesList: talesList,
+                      selection: selection?.id,
+                    ));
               },
               child: Container(
                 height: screen.height * 0.05,
@@ -47,7 +52,9 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.all(screen.height * 0.005),
-                      child: _soundService.audioPlayer.isPlaying
+                      child: _soundService.audioPlayer.isPlaying &&
+                              _soundService.isPlayingList == true &&
+                              _soundService.idPlayingList == null
                           ? SvgPicture.asset(
                               CustomIconsImg.pauseAll,
                               color: textColor,
@@ -58,14 +65,10 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
                               height: screen.height * 0.04,
                               color: textColor,
                             ),
-
-                      //  ImageIcon(
-                      //     CustomIconsImg.playBlueSolo,
-                      //     color: textColor,
-                      //     size: screen.height * 0.04,
-                      //   ),
                     ),
-                    _soundService.audioPlayer.isPlaying
+                    _soundService.audioPlayer.isPlaying &&
+                            _soundService.isPlayingList == true &&
+                            _soundService.idPlayingList == null
                         ? _AudioScreenPlayAllTextF(color: textColor)
                         : _AudioScreenPlayAllTextT(color: textColor),
                   ],
@@ -98,7 +101,6 @@ class _AudioScreenPlayAllTextF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Size screen = MediaQuery.of(context).size;
     return Text(TextsConst.audioScreenPlayAllF, style: TextStyle(color: color));
   }
 }

@@ -3,17 +3,20 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../models/audio.dart';
 import '../../../../models/selections.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
+import '../../../../services/sound_service.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons_img.dart';
 import '../../../../utils/consts/texts_consts.dart';
 import '../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/play_all_button.dart';
+import '../../audios_screen/bloc/audio_screen_bloc.dart';
 import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
@@ -254,11 +257,12 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
                         WrapSelectionsListTextData(
                             selection: widget.selection!),
                         widget.talesList.isNotEmpty
-                            ? PlayAllTalesButtonWidget(
+                            ? _PlayAllTalesButtonWidget(
                                 talesList: widget.talesList,
                                 textColor: CustomColors.white,
                                 backgroundColor:
                                     CustomColors.playAllButtonDisactive,
+                                selection: widget.selection,
                               )
                             : const SizedBox(),
                       ],
@@ -528,8 +532,8 @@ class _TalesListWidget extends StatelessWidget {
         // final TalesList _talesListRep =
         //     RepositoryProvider.of<TalesListRepository>(context)
         //         .getTalesListRepository();
-        final MainScreenBloc _mainScreenBloc =
-            BlocProvider.of<MainScreenBloc>(context);
+        // final MainScreenBloc _mainScreenBloc =
+        //     BlocProvider.of<MainScreenBloc>(context);
         return ListView.builder(
           itemCount: talesList.length,
           // itemCount: 10,
@@ -542,19 +546,24 @@ class _TalesListWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            if (isDisactive == true) {
-                              return;
-                            }
-                            _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
-                          },
-                          icon: SvgPicture.asset(
-                            CustomIconsImg.playSVG,
-                            color: color,
-                          ),
-                          iconSize: screen.height * 0.05,
+                        _PlayButton(
+                          color: color,
+                          i: i,
+                          talesList: talesList,
                         ),
+                        // IconButton(
+                        //   onPressed: () {
+                        //     if (isDisactive == true) {
+                        //       return;
+                        //     }
+                        //     _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
+                        //   },
+                        //   icon: SvgPicture.asset(
+                        //     CustomIconsImg.playSVG,
+                        //     color: color,
+                        //   ),
+                        //   iconSize: screen.height * 0.05,
+                        // ),
                         SizedBox(
                           width: screen.width * 0.05,
                         ),
@@ -629,5 +638,149 @@ class _TalesListWidget extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class _PlayButton extends StatelessWidget {
+  const _PlayButton({
+    Key? key,
+    required this.i,
+    required this.color,
+    required this.talesList,
+  }) : super(key: key);
+  final List<AudioTale> talesList;
+  final Color color;
+  final int i;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screen = MediaQuery.of(context).size;
+    final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
+    final String _id = talesList.elementAt(i).id;
+    final FlutterSoundPlayer _player = _mainScreenBloc.sound.audioPlayer;
+    return AnimatedBuilder(
+      animation: _mainScreenBloc.sound,
+      builder: (context, child) {
+        return Column(
+          children: [
+            IconButton(
+              onPressed: () {
+                _mainScreenBloc.add(
+                  ClickPlayEvent(
+                    talesList.elementAt(i),
+                  ),
+                );
+              },
+              icon: _player.isPlaying && _id == _mainScreenBloc.sound.idPlaying
+                  ? SvgPicture.asset(
+                      CustomIconsImg.pauseAll,
+                      color: color,
+                    )
+                  : SvgPicture.asset(
+                      CustomIconsImg.playSVG,
+                      color: color,
+                    ),
+              iconSize: screen.height * 0.05,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _PlayAllTalesButtonWidget extends StatelessWidget {
+  const _PlayAllTalesButtonWidget({
+    Key? key,
+    required this.talesList,
+    required this.textColor,
+    required this.backgroundColor,
+    this.selection,
+  }) : super(key: key);
+  final Selection? selection;
+  final List<AudioTale> talesList;
+  final Color textColor;
+  final Color backgroundColor;
+  @override
+  Widget build(BuildContext context) {
+    final SoundService _soundService =
+        BlocProvider.of<MainScreenBloc>(context).sound;
+
+    Size screen = MediaQuery.of(context).size;
+
+    return AnimatedBuilder(
+      animation: _soundService,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                context.read<AudioScreenBloc>().add(AudioScreenPlayAllEvent(
+                      talesList: talesList,
+                      selection: selection?.id,
+                    ));
+              },
+              child: Container(
+                height: screen.height * 0.05,
+                width: screen.width * 0.41,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(screen.height * 0.005),
+                      child: _soundService.audioPlayer.isPlaying &&
+                              _soundService.isPlayingList == true &&
+                              _soundService.idPlayingList == selection?.id
+                          ? SvgPicture.asset(
+                              CustomIconsImg.pauseAll,
+                              color: textColor,
+                              height: screen.height * 0.04,
+                            )
+                          : SvgPicture.asset(
+                              CustomIconsImg.playSVG,
+                              height: screen.height * 0.04,
+                              color: textColor,
+                            ),
+                    ),
+                    _soundService.audioPlayer.isPlaying &&
+                            _soundService.isPlayingList == true &&
+                            _soundService.idPlayingList == selection?.id
+                        ? _AudioScreenPlayAllTextF(color: textColor)
+                        : _AudioScreenPlayAllTextT(color: textColor),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _AudioScreenPlayAllTextT extends StatelessWidget {
+  const _AudioScreenPlayAllTextT({Key? key, required this.color})
+      : super(key: key);
+
+  final Color color;
+  @override
+  Widget build(BuildContext context) {
+    return Text(TextsConst.audioScreenPlayAllT, style: TextStyle(color: color));
+  }
+}
+
+class _AudioScreenPlayAllTextF extends StatelessWidget {
+  const _AudioScreenPlayAllTextF({Key? key, required this.color})
+      : super(key: key);
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(TextsConst.audioScreenPlayAllF, style: TextStyle(color: color));
   }
 }

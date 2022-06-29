@@ -1,5 +1,3 @@
-// import 'dart:async';
-// import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:audiotales/models/user.dart';
@@ -8,24 +6,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
 
-// enum SaveMetod {
-//   firestore,
-//   localDB
-// }
-
-class SoundService {
+class SoundService extends ChangeNotifier {
   SoundService._();
   static final SoundService instance = SoundService._();
 
   final FlutterSoundRecorder recorder = FlutterSoundRecorder();
   final FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
+  String? idPlayingList;
+  bool? isPlayingList;
+  String? idPlaying;
   String? id;
   bool isRecoderReady = false;
   int limit = 0;
@@ -44,7 +39,7 @@ class SoundService {
   AudioTale? audioTale;
   bool isRepeatAllList = false;
 
-  saveAudioTale({
+  Future<void> saveAudioTale({
     required TalesList fullTalesList,
     required LocalUser localUser,
     required bool? isAutosaveLocal,
@@ -81,52 +76,10 @@ class SoundService {
         name: '$audioname ${fullTalesList.fullTalesList.length + 1}',
         compilationsId: []);
     fullTalesList.addNewAudio(audioTale!);
-    DataBase.instance.saveAudioTales(fullTalesList);
-    // dispouse();
+    await DataBase.instance.saveAudioTales(fullTalesList);
   }
 
-  // saveAudioTaleToLS({
-  //   required TalesList fullTalesList,
-  //   required LocalUser localUser,
-  //   required bool? isAutosaveLocal,
-  // }) async {
-  //   if (url == null) {
-  //     return;
-  //   }
-  //   if (localUser.isUserRegistered == true) {
-  //     try {
-  //       final storageRef = FirebaseStorage.instance
-  //           .ref()
-  //           .child('${LocalDB.instance.getUser().id}/audio/')
-  //           .child(id!);
-  //       final audiofile = File(path!);
-  //       await storageRef.putFile(audiofile);
-  //       pathUrl = await storageRef.getDownloadURL();
-  //       FullMetadata sizeFromMD = await storageRef.getMetadata();
-  //       size = sizeFromMD.size;
-  //       if (isAutosaveLocal != true) {
-  //         File(path!).delete();
-  //         path = null;
-  //       }
-  //     } on FirebaseException catch (e) {
-  //       print(e);
-  //     }
-  //   }
-
-  //   audioTale = AudioTale(
-  //       id: id ?? '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4',
-  //       path: path,
-  //       pathUrl: pathUrl,
-  //       time: endOfSliderPosition / 60000,
-  //       size: size ?? 0,
-  //       name: '$audioname ${fullTalesList.fullTalesList.length + 1}',
-  //       compilationsId: []);
-  //   fullTalesList.addNewAudio(audioTale!);
-  //   DataBase.instance.saveAudioTales(fullTalesList);
-  //   // dispouse();
-  // }
-
-  clickRecorder() async {
+  Future<void> clickRecorder() async {
     bool isRedyStartRecord = !recorder.isRecording &&
         url == null &&
         !audioPlayer.isPlaying &&
@@ -160,38 +113,46 @@ class SoundService {
     }
   }
 
-  clickPlayer(audio) async {
+  Future<void> clickPlayer(audio) async {
     if (!audioPlayer.isPlaying) {
       await _initPlayer();
       _startPlayer(audio);
       _showPlayerProgres();
     } else if (audioPlayer.isPlaying) {
       await audioPlayer.stopPlayer();
+      idPlaying = null;
+      idPlayingList = null;
+      isPlayingList = null;
+      notifyListeners();
       isRepeatAllList = false;
     }
   }
 
-  playAllPlayer(List<AudioTale> audioList) async {
+  Future<void> playAllPlayer(List<AudioTale> audioList) async {
     if (audioList.isEmpty) {
       return;
     }
     if (!audioPlayer.isPlaying) {
       await _initPlayer();
       await _startAllAudioPlayer(audioList, 0);
-      // await _showPlayerProgres();
+      isPlayingList = true;
     } else if (audioPlayer.isPlaying) {
       await audioPlayer.stopPlayer();
+      idPlaying = null;
+      idPlayingList = null;
+      isPlayingList = null;
       isRepeatAllList = false;
+      notifyListeners();
     }
   }
 
-  _startRecord() async {
+  Future<void> _startRecord() async {
     await _record();
     _startTimer();
     soundIndex = 1;
   }
 
-  _initPlayer() async {
+  Future<void> _initPlayer() async {
     if (!isRecoderReady) {
       await audioPlayer.openPlayer().then((value) {
         isRecoderReady = true;
@@ -201,7 +162,7 @@ class SoundService {
     }
   }
 
-  initRecorder() async {
+  Future<void> initRecorder() async {
     if (!isRecoderReady) {
       await audioPlayer.openPlayer().then((value) {
         isRecoderReady = true;
@@ -228,13 +189,13 @@ class SoundService {
     }
   }
 
-  _record() async {
+  Future<void> _record() async {
     if (!isRecoderReady) return;
     id = '${DateTime.now().millisecondsSinceEpoch.toString()}.mp4';
     await recorder.startRecorder(toFile: id, codec: Codec.defaultCodec);
   }
 
-  _startTimer() {
+  void _startTimer() {
     recorder.onProgress!.listen(
       (e) {
         int vol = e.decibels!.toInt();
@@ -251,7 +212,7 @@ class SoundService {
     );
   }
 
-  stopRecorder() async {
+  Future<void> stopRecorder() async {
     if (!isRecoderReady) return;
     path = await recorder.stopRecorder();
     // final audiofile = File(
@@ -277,7 +238,7 @@ class SoundService {
     path = null;
   }
 
-  _startPlayer(AudioTale audio) async {
+  Future<void> _startPlayer(AudioTale audio) async {
     final bool auth = FirebaseAuth.instance.currentUser == null;
     // print('${path.path} && ${path.pathUrl}');
     try {
@@ -287,6 +248,12 @@ class SoundService {
         await audioPlayer.startPlayer(
           fromDataBuffer: url,
           codec: Codec.defaultCodec,
+          whenFinished: () {
+            idPlaying = null;
+            idPlayingList = null;
+            isPlayingList = null;
+            notifyListeners();
+          },
         );
       }
 
@@ -294,14 +261,23 @@ class SoundService {
         await audioPlayer.startPlayer(
           fromURI: audio.pathUrl,
           codec: Codec.defaultCodec,
+          whenFinished: () {
+            idPlaying = null;
+            idPlayingList = null;
+            isPlayingList = null;
+            notifyListeners();
+          },
         );
       }
     } catch (e) {
       print(e);
     }
+    idPlaying = audio.id;
+    print(idPlaying);
+    notifyListeners();
   }
 
-  _startLocalPlayer(String path) async {
+  Future<void> _startLocalPlayer(String path) async {
     try {
       final audiofile = File(path);
       url = audiofile.readAsBytesSync();
@@ -314,7 +290,8 @@ class SoundService {
     }
   }
 
-  _startAllAudioPlayer(List<AudioTale> audioList, int index) async {
+  Future<void> _startAllAudioPlayer(
+      List<AudioTale> audioList, int index) async {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     final int length = audioList.length;
     int listIndex = index;
@@ -328,13 +305,18 @@ class SoundService {
             fromDataBuffer: url,
             codec: Codec.defaultCodec,
             whenFinished: () {
+              idPlaying = null;
+              notifyListeners();
               listIndex++;
               if (listIndex < length) {
                 _startAllAudioPlayer(audioList, listIndex);
-              }
-              if (listIndex == length && isRepeatAllList) {
+              } else if (listIndex == length && isRepeatAllList) {
                 listIndex = 0;
                 _startAllAudioPlayer(audioList, listIndex);
+              } else {
+                idPlayingList = null;
+                isPlayingList = null;
+                notifyListeners();
               }
             });
       }
@@ -344,13 +326,18 @@ class SoundService {
             fromURI: audio.pathUrl,
             codec: Codec.defaultCodec,
             whenFinished: () {
+              idPlaying = null;
+              notifyListeners();
               listIndex++;
               if (listIndex < length) {
                 _startAllAudioPlayer(audioList, listIndex);
-              }
-              if (listIndex == length && isRepeatAllList) {
+              } else if (listIndex == length && isRepeatAllList) {
                 listIndex = 0;
                 _startAllAudioPlayer(audioList, listIndex);
+              } else {
+                idPlayingList = null;
+                isPlayingList = null;
+                notifyListeners();
               }
             });
       }
@@ -359,11 +346,11 @@ class SoundService {
       _startAllAudioPlayer(audioList, listIndex);
       print(audio.name); // alert
     }
-    print(audio.name);
-    print(length);
+    idPlaying = audio.id;
+    notifyListeners();
   }
 
-  _showPlayerProgres() {
+  void _showPlayerProgres() {
     audioPlayer.onProgress!.listen(
       (event) {
         endOfSliderPosition = event.duration.inMilliseconds;
@@ -392,14 +379,7 @@ class SoundService {
     return mic;
   }
 
-  // int getSoundIndex() {
-  //   if (recorder.isRecording) {
-  //     return 0;
-  //   }
-  //   return 0;
-  // }
-
-  forwardPlayer(int i) {
+  void forwardPlayer(int i) {
     if (i > 0) {
       if (audioPlayer.isPlaying || audioPlayer.isPaused) {
         audioPlayer.seekToPlayer(Duration(
@@ -415,7 +395,7 @@ class SoundService {
     }
   }
 
-  forwardPlayerWithSlider(num d) async {
+  Future<void> forwardPlayerWithSlider(num d) async {
     sliderPosition = d.floor();
     if (audioPlayer.isPlaying || audioPlayer.isPaused) {
       await audioPlayer.seekToPlayer(Duration(milliseconds: d.floor()));
@@ -426,6 +406,9 @@ class SoundService {
   }
 
   void dispouse() {
+    // idPlayingList = null;
+    // isPlayingList = null;
+    // idPlaying = null;
     id = null;
     isRecoderReady = false;
     limit = 0;

@@ -89,15 +89,7 @@ class _PlayAllTalesButtonWidget extends StatelessWidget {
 
     Size screen = MediaQuery.of(context).size;
 
-    return
-        //  MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider<AudioScreenBloc>(
-        //       create: (_) => AudioScreenBloc(_soundService),
-        //     ),
-        //   ],
-        //   child:
-        BlocBuilder<AudioScreenBloc, AudioScreenState>(
+    return BlocBuilder<AudioScreenBloc, AudioScreenState>(
       builder: (context, state) {
         return Stack(
           children: [
@@ -149,24 +141,8 @@ class _AudioScreenAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return AppBar(
-      // actions: <Widget>[
-      //   Padding(
-      //     padding: EdgeInsets.only(right: screen.width * 0.04),
-      //     child: Column(
-      //       children: [
-      //         IconButton(
-      //           icon: const ImageIcon(CustomIconsImg.moreHorizRounded),
-      //           onPressed: () {},
-      //         ),
-      //         const SizedBox(),
-      //       ],
-      //     ),
-      //   ),
-      // ],
       backgroundColor: CustomColors.audiotalesHeadColorBlue,
       elevation: 0,
-      // title: AudiosScreen.title,
-      // centerTitle: true,
       flexibleSpace: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [

@@ -1,6 +1,7 @@
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../models/audio.dart';
 import '../../models/tales_list.dart';
@@ -21,11 +22,11 @@ class ActiveTalesListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
-        Size screen = MediaQuery.of(context).size;
+        final Size screen = MediaQuery.of(context).size;
         final TalesList _talesListRep =
             context.read<TalesListRepository>().getTalesListRepository();
         final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
-        final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
+        // final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
 
         return ListView.builder(
           itemCount: _talesList.length,
@@ -39,20 +40,27 @@ class ActiveTalesListWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            _mainScreenBloc.add(
-                              ClickPlayEvent(
-                                _talesList.elementAt(i),
-                              ),
-                            );
-                          },
-                          icon: SvgPicture.asset(
-                            CustomIconsImg.playSVG,
-                            color: color,
-                          ),
-                          iconSize: screen.height * 0.05,
+                        _PlayButton(
+                          color: color,
+                          i: i,
                         ),
+                        // IconButton(
+                        //   onPressed: () {
+                        //     _mainScreenBloc.add(
+                        //       ClickPlayEvent(
+                        //         _talesList.elementAt(i),
+                        //       ),
+                        //     );
+                        //     //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //     //     content: Text("Share result: "),
+                        //     //   ));
+                        //   },
+                        //   icon: SvgPicture.asset(
+                        //     CustomIconsImg.playSVG,
+                        //     color: color,
+                        //   ),
+                        //   iconSize: screen.height * 0.05,
+                        // ),
                         SizedBox(
                           width: screen.width * 0.05,
                         ),
@@ -86,6 +94,56 @@ class ActiveTalesListWidget extends StatelessWidget {
               ),
             );
           },
+        );
+      },
+    );
+  }
+}
+
+class _PlayButton extends StatelessWidget {
+  const _PlayButton({
+    Key? key,
+    required this.i,
+    required this.color,
+  }) : super(key: key);
+
+  final Color color;
+  final int i;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screen = MediaQuery.of(context).size;
+    final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
+    final TalesList _talesListRep =
+        context.read<TalesListRepository>().getTalesListRepository();
+    final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
+    final String _id = _talesList.elementAt(i).id;
+    final FlutterSoundPlayer _player = _mainScreenBloc.sound.audioPlayer;
+    return AnimatedBuilder(
+      animation: _mainScreenBloc.sound,
+      builder: (context, child) {
+        return Column(
+          children: [
+            IconButton(
+              onPressed: () {
+                _mainScreenBloc.add(
+                  ClickPlayEvent(
+                    _talesList.elementAt(i),
+                  ),
+                );
+              },
+              icon: _player.isPlaying && _id == _mainScreenBloc.sound.idPlaying
+                  ? SvgPicture.asset(
+                      CustomIconsImg.pauseAll,
+                      color: color,
+                    )
+                  : SvgPicture.asset(
+                      CustomIconsImg.playSVG,
+                      color: color,
+                    ),
+              iconSize: screen.height * 0.05,
+            ),
+          ],
         );
       },
     );

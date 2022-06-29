@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../../models/audio.dart';
+import '../../../../models/selections.dart';
 import '../../../../services/sound_service.dart';
 
 part 'audio_screen_event.dart';
@@ -14,7 +15,9 @@ class AudioScreenBloc extends Bloc<AudioScreenEvent, AudioScreenState> {
         ) {
     on<AudioScreenPlayAllEvent>(
       (event, emit) async {
+        sound.idPlayingList = event.selection;
         await sound.playAllPlayer(event.talesList);
+        print('play');
 
         emit(AudioScreenState());
       },
