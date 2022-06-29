@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../widgets/alerts/alert_microphone_permision.dart';
 import '../../sound_bloc/sound_bloc.dart';
 import 'cancel_button.dart';
 import 'record_screen_text.dart';

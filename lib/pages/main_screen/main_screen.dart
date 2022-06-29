@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../routes/app_router.dart';
 import '../../services/sound_service.dart';
+import '../../widgets/alerts/alert_microphone_permision.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/drawer/custom_drawer.dart';
 import '../deleted_screen/deleted_screen.dart';
@@ -79,7 +81,17 @@ void _onTap({
   required int index,
   required FirebaseAuth auth,
   required BuildContext context,
-}) {
+}) async {
+  if (index == 2) {
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted) {
+      context
+          .read<NavigationBloc>()
+          .add(ChangeCurrentIndexEvent(currentIndex: 0));
+      MicrophonePermissionConfirmAlert.instance.confirm(context: context);
+      return;
+    }
+  }
   if (auth.currentUser == null && index == 4) {
     index = 0;
     Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(

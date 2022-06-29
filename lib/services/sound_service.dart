@@ -11,6 +11,7 @@ import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
+import '../widgets/alerts/alert_microphone_permision.dart';
 
 class SoundService extends ChangeNotifier {
   SoundService._();
@@ -172,11 +173,8 @@ class SoundService extends ChangeNotifier {
     }
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
-      // isMicrophonePermissionGranted = false;
-      openAppSettings();
+      // openAppSettings();
       throw 'Microphone permission not granted';
-      // return const AlertMicrophonePermision();
-
     }
 
     await recorder.openRecorder();
