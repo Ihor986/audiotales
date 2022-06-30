@@ -26,11 +26,9 @@ class ActiveTalesListWidget extends StatelessWidget {
         final TalesList _talesListRep =
             context.read<TalesListRepository>().getTalesListRepository();
         final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
-        // final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
 
         return ListView.builder(
           itemCount: _talesList.length,
-          // itemCount: 10,
           itemBuilder: (_, i) {
             return Padding(
               padding: EdgeInsets.all(screen.height * 0.005),
@@ -44,23 +42,6 @@ class ActiveTalesListWidget extends StatelessWidget {
                           color: color,
                           i: i,
                         ),
-                        // IconButton(
-                        //   onPressed: () {
-                        //     _mainScreenBloc.add(
-                        //       ClickPlayEvent(
-                        //         _talesList.elementAt(i),
-                        //       ),
-                        //     );
-                        //     //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //     //     content: Text("Share result: "),
-                        //     //   ));
-                        //   },
-                        //   icon: SvgPicture.asset(
-                        //     CustomIconsImg.playSVG,
-                        //     color: color,
-                        //   ),
-                        //   iconSize: screen.height * 0.05,
-                        // ),
                         SizedBox(
                           width: screen.width * 0.05,
                         ),
@@ -122,28 +103,24 @@ class _PlayButton extends StatelessWidget {
     return AnimatedBuilder(
       animation: _mainScreenBloc.sound,
       builder: (context, child) {
-        return Column(
-          children: [
-            IconButton(
-              onPressed: () {
-                _mainScreenBloc.add(
-                  ClickPlayEvent(
-                    _talesList.elementAt(i),
-                  ),
-                );
-              },
-              icon: _player.isPlaying && _id == _mainScreenBloc.sound.idPlaying
-                  ? SvgPicture.asset(
-                      CustomIconsImg.pauseAll,
-                      color: color,
-                    )
-                  : SvgPicture.asset(
-                      CustomIconsImg.playSVG,
-                      color: color,
-                    ),
-              iconSize: screen.height * 0.05,
-            ),
-          ],
+        return IconButton(
+          onPressed: () {
+            _mainScreenBloc.add(
+              ClickPlayEvent(
+                _talesList.elementAt(i),
+              ),
+            );
+          },
+          icon: _player.isPlaying && _id == _mainScreenBloc.sound.idPlaying
+              ? SvgPicture.asset(
+                  CustomIconsImg.pauseAll,
+                  color: color,
+                )
+              : SvgPicture.asset(
+                  CustomIconsImg.playSVG,
+                  color: color,
+                ),
+          iconSize: screen.height * 0.05,
         );
       },
     );
