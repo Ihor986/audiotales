@@ -24,11 +24,11 @@ class SearchScreen extends StatelessWidget {
 
     return Scaffold(
       extendBody: true,
-      appBar: _SearchScreenAppBar(
-        onAction: () {
-          Scaffold.of(context).openDrawer();
-        },
-      ),
+      // appBar: _SearchScreenAppBar(
+      //   onAction: () {
+      //     Scaffold.of(context).openDrawer();
+      //   },
+      // ),
       body: Stack(
         children: [
           Column(
@@ -36,14 +36,20 @@ class SearchScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screen.height * 0.15,
+                  alignment: const Alignment(0, -0.8),
+                  height: screen.height * 0.3,
                   color: CustomColors.audiotalesHeadColorBlue,
+                  child: _SearchScreenAppBar(
+                    onAction: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
                 ),
               ),
             ],
           ),
           const Align(
-            alignment: Alignment(0, -0.9),
+            alignment: Alignment(0, -0.7),
             child: _SelectAudioSearchWidget(),
           ),
           const Align(
@@ -59,91 +65,150 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class _SearchScreenAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class _SearchScreenAppBar extends StatelessWidget {
   const _SearchScreenAppBar({
     Key? key,
-    this.onAction,
+    required this.onAction,
+    // required this.isChosen,
   }) : super(key: key);
-  final void Function()? onAction;
+  final void Function() onAction;
+  // final bool isChosen;
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  // @override
+  // Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    return AppBar(
-      // actions: <Widget>[
-      //   Padding(
-      //     padding: EdgeInsets.only(right: screen.width * 0.04),
-      //     child: Column(
-      //       children: [
-      //         PopupMenuButton(
-      //           shape: const RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.all(Radius.circular(15)),
-      //           ),
-      //           icon: SvgPicture.asset(
-      //             CustomIconsImg.moreHorizontRounded,
-      //           ),
-      //           itemBuilder: (context) => [
-      //             PopupMenuItem(
-      //               child: const Text(
-      //                 '',
-      //                 style: TextStyle(
-      //                   color: CustomColors.black,
-      //                 ),
-      //               ),
-      //               value: () {},
-      //             ),
-      //             PopupMenuItem(
-      //               child: const Text(
-      //                 '',
-      //                 style: TextStyle(
-      //                   color: CustomColors.black,
-      //                 ),
-      //               ),
-      //               value: () {},
-      //             ),
-      //           ],
-      //           onSelected: (Function value) {
-      //             value();
-      //           },
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ],
-      backgroundColor: CustomColors.audiotalesHeadColorBlue,
-      elevation: 0,
-      flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          SizedBox(),
-          SearchAppBarText(),
-        ],
-      ),
-      leading: Padding(
-        padding: EdgeInsets.only(
-          left: screen.width * 0.04,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: SvgPicture.asset(
-                CustomIconsImg.drawer,
-                height: 25,
-                color: CustomColors.white,
-              ),
-              onPressed: onAction,
+    return Container(
+      height: 0.16 * screen.height,
+      color: CustomColors.audiotalesHeadColorBlue,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 0.04 * screen.height,
             ),
-            const SizedBox(),
-          ],
-        ),
+            child: Stack(
+              children: [
+                const Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: SearchAppBarText(),
+                )),
+                // const Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: DeletedScreenTitleText(),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        CustomIconsImg.drawer,
+                        height: 0.02 * screen.height,
+                        color: CustomColors.white,
+                      ),
+                      padding: const EdgeInsets.all(0),
+                      onPressed: onAction,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+// class _SearchScreenAppBar extends StatelessWidget
+//     implements PreferredSizeWidget {
+//   const _SearchScreenAppBar({
+//     Key? key,
+//     this.onAction,
+//   }) : super(key: key);
+//   final void Function()? onAction;
+
+//   @override
+//   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+//   @override
+//   Widget build(BuildContext context) {
+//     Size screen = MediaQuery.of(context).size;
+//     return AppBar(
+//       // actions: <Widget>[
+//       //   Padding(
+//       //     padding: EdgeInsets.only(right: screen.width * 0.04),
+//       //     child: Column(
+//       //       children: [
+//       //         PopupMenuButton(
+//       //           shape: const RoundedRectangleBorder(
+//       //             borderRadius: BorderRadius.all(Radius.circular(15)),
+//       //           ),
+//       //           icon: SvgPicture.asset(
+//       //             CustomIconsImg.moreHorizontRounded,
+//       //           ),
+//       //           itemBuilder: (context) => [
+//       //             PopupMenuItem(
+//       //               child: const Text(
+//       //                 '',
+//       //                 style: TextStyle(
+//       //                   color: CustomColors.black,
+//       //                 ),
+//       //               ),
+//       //               value: () {},
+//       //             ),
+//       //             PopupMenuItem(
+//       //               child: const Text(
+//       //                 '',
+//       //                 style: TextStyle(
+//       //                   color: CustomColors.black,
+//       //                 ),
+//       //               ),
+//       //               value: () {},
+//       //             ),
+//       //           ],
+//       //           onSelected: (Function value) {
+//       //             value();
+//       //           },
+//       //         ),
+//       //       ],
+//       //     ),
+//       //   ),
+//       // ],
+//       backgroundColor: CustomColors.audiotalesHeadColorBlue,
+//       elevation: 0,
+//       flexibleSpace: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: const [
+//           SizedBox(),
+//           SearchAppBarText(),
+//         ],
+//       ),
+//       leading: Padding(
+//         padding: EdgeInsets.only(
+//           left: screen.width * 0.04,
+//         ),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             IconButton(
+//               icon: SvgPicture.asset(
+//                 CustomIconsImg.drawer,
+//                 height: 25,
+//                 color: CustomColors.white,
+//               ),
+//               onPressed: onAction,
+//             ),
+//             const SizedBox(),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class _AudiolistSelectAudioWidget extends StatelessWidget {
   const _AudiolistSelectAudioWidget({Key? key}) : super(key: key);

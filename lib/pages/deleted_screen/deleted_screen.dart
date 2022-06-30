@@ -26,11 +26,11 @@ class DeletedScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           extendBody: true,
-          appBar: _DeletedScreenAppBar(
-            onAction: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
+          // appBar: _DeletedScreenAppBar(
+          // onAction: () {
+          //   Scaffold.of(context).openDrawer();
+          // },
+          // ),
           body: Stack(
             children: [
               Column(
@@ -38,15 +38,23 @@ class DeletedScreen extends StatelessWidget {
                   ClipPath(
                     clipper: OvalBC(),
                     child: Container(
-                      height: screen.height / 7,
+                      alignment: const Alignment(0, -0.8),
+                      height: screen.height * 0.3,
                       color: CustomColors.audiotalesHeadColorBlue,
+                      child: _DeletedScreenAppBar(
+                        isChosen:
+                            _deleteBloc.selectAudioToDeleteService.isChosen,
+                        onAction: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
                     ),
                   ),
                 ],
               ),
               _deleteBloc.selectAudioToDeleteService.isChosen
                   ? Align(
-                      alignment: const Alignment(0.95, -0.9),
+                      alignment: const Alignment(0.95, -0.6),
                       child: TextButton(
                         onPressed: () {
                           _deleteBloc.add(SelectDeletedAudioEvent());
@@ -63,7 +71,7 @@ class DeletedScreen extends StatelessWidget {
               Column(
                 children: [
                   SizedBox(
-                    height: screen.height * 0.15,
+                    height: screen.height * 0.3,
                   ),
                   const Expanded(
                     child: _DeletedTalesListWidget(),
@@ -72,22 +80,25 @@ class DeletedScreen extends StatelessWidget {
               ),
             ],
           ),
+          // backgroundColor: CustomColors.red,
         );
       },
     );
   }
 }
 
-class _DeletedScreenAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class _DeletedScreenAppBar extends StatelessWidget {
   const _DeletedScreenAppBar({
     Key? key,
-    this.onAction,
+    required this.onAction,
+    required this.isChosen,
   }) : super(key: key);
-  final void Function()? onAction;
+  final void Function() onAction;
+  final bool isChosen;
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+  // @override
+  // Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+
   @override
   Widget build(BuildContext context) {
     final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
@@ -95,133 +106,219 @@ class _DeletedScreenAppBar extends StatelessWidget
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
     Size screen = MediaQuery.of(context).size;
-    return AppBar(
-      actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: screen.width * 0.04),
-          child: Column(
-            children: [
-              PopupMenuButton(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+    return Container(
+      height: 0.18 * screen.height,
+      color: CustomColors.audiotalesHeadColorBlue,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 0.04 * screen.height,
+            ),
+            child: Stack(
+              children: [
+                const Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: DeletedScreenTitleText(),
+                )),
+                // const Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: DeletedScreenTitleText(),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    isChosen
+                        ? const SizedBox()
+                        : IconButton(
+                            icon: SvgPicture.asset(
+                              CustomIconsImg.drawer,
+                              height: 0.02 * screen.height,
+                              color: CustomColors.white,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: onAction,
+                          ),
+                    PopupMenuButton(
+                      padding: const EdgeInsets.all(0),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      icon: SvgPicture.asset(
+                        CustomIconsImg.moreHorizontRounded,
+                        // height: 0.02 * screen.height,
+                        width: 0.07 * screen.width,
+                      ),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: const Text(
+                            'Выбрать несколько',
+                            style: TextStyle(
+                              color: CustomColors.black,
+                            ),
+                          ),
+                          value: () {
+                            if (_deleteBloc
+                                .selectAudioToDeleteService.isChosen) {
+                              return;
+                            }
+                            _deleteBloc.add(SelectDeletedAudioEvent());
+                          },
+                        ),
+                        PopupMenuItem(
+                          child: const Text(
+                            'Удалить все',
+                            style: TextStyle(
+                              color: CustomColors.black,
+                            ),
+                          ),
+                          value: () {
+                            _deleteBloc.add(DeleteSelectedAudioEvent(
+                                talesList: _talesList));
+                          },
+                        ),
+                        PopupMenuItem(
+                          child: const Text(
+                            'Восстановить все',
+                            style: TextStyle(
+                              color: CustomColors.black,
+                            ),
+                          ),
+                          value: () {
+                            _deleteBloc.add(RestoreSelectedAudioEvent(
+                                talesList: _talesList));
+                          },
+                        ),
+                      ],
+                      onSelected: (Function value) {
+                        value();
+                      },
+                    ),
+                  ],
                 ),
-                icon: SvgPicture.asset(
-                  CustomIconsImg.moreHorizontRounded,
-                  // height: 3,
-                  // color: CustomColors.black,
-                ),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: const Text(
-                      'Выбрать несколько',
-                      style: TextStyle(
-                        color: CustomColors.black,
-                      ),
-                    ),
-                    value: () {
-                      if (_deleteBloc.selectAudioToDeleteService.isChosen) {
-                        return;
-                      }
-                      _deleteBloc.add(SelectDeletedAudioEvent());
-                    },
-                  ),
-                  PopupMenuItem(
-                    child: const Text(
-                      'Удалить все',
-                      style: TextStyle(
-                        color: CustomColors.black,
-                      ),
-                    ),
-                    value: () {
-                      _deleteBloc
-                          .add(DeleteSelectedAudioEvent(talesList: _talesList));
-                    },
-                  ),
-                  PopupMenuItem(
-                    child: const Text(
-                      'Восстановить все',
-                      style: TextStyle(
-                        color: CustomColors.black,
-                      ),
-                    ),
-                    value: () {
-                      _deleteBloc.add(
-                          RestoreSelectedAudioEvent(talesList: _talesList));
-                    },
-                  ),
-                ],
-                onSelected: (Function value) {
-                  value();
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-      backgroundColor: CustomColors.audiotalesHeadColorBlue,
-      elevation: 0,
-      flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
-          SizedBox(
-              // height: 30,
-              ),
-          SizedBox(
-            height: kToolbarHeight * 1.3,
-            child: DeletedScreenTitleText(),
+              ],
+            ),
           ),
         ],
-      ),
-      leading: Padding(
-        padding: EdgeInsets.only(
-          left: screen.width * 0.04,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: SvgPicture.asset(
-                CustomIconsImg.drawer,
-                height: 25,
-                color: CustomColors.white,
-              ),
-              onPressed: onAction,
-            ),
-            const SizedBox(),
-          ],
-        ),
       ),
     );
   }
 }
 
-// class _Appbar extends StatelessWidget {
-//   const _Appbar({
+// class _DeletedScreenAppBar extends StatelessWidget
+//     implements PreferredSizeWidget {
+//   const _DeletedScreenAppBar({
 //     Key? key,
 //     this.onAction,
 //   }) : super(key: key);
 //   final void Function()? onAction;
 
+// @override
+// Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
 //   @override
 //   Widget build(BuildContext context) {
-//     return Container(
-//       child: Row(
-//         children: [
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//     final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
+//     final TalesList _talesList =
+//         RepositoryProvider.of<TalesListRepository>(context)
+//             .getTalesListRepository();
+//     Size screen = MediaQuery.of(context).size;
+//     return AppBar(
+//       actions: <Widget>[
+//         Padding(
+//           padding: EdgeInsets.only(right: screen.width * 0.04),
+//           child: Column(
 //             children: [
-//               IconButton(
-//                 icon: SvgPicture.asset(
-//                   CustomIconsImg.drawer,
-//                   height: 25,
-//                   color: CustomColors.white,
+//               PopupMenuButton(
+//                 shape: const RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.all(Radius.circular(15)),
 //                 ),
-//                 onPressed: onAction,
+//                 icon: SvgPicture.asset(
+//                   CustomIconsImg.moreHorizontRounded,
+//                   // height: 3,
+//                   // color: CustomColors.black,
+//                 ),
+//                 itemBuilder: (context) => [
+//                   PopupMenuItem(
+//                     child: const Text(
+//                       'Выбрать несколько',
+//                       style: TextStyle(
+//                         color: CustomColors.black,
+//                       ),
+//                     ),
+//                     value: () {
+//                       if (_deleteBloc.selectAudioToDeleteService.isChosen) {
+//                         return;
+//                       }
+//                       _deleteBloc.add(SelectDeletedAudioEvent());
+//                     },
+//                   ),
+//                   PopupMenuItem(
+//                     child: const Text(
+//                       'Удалить все',
+//                       style: TextStyle(
+//                         color: CustomColors.black,
+//                       ),
+//                     ),
+//                     value: () {
+//                       _deleteBloc
+//                           .add(DeleteSelectedAudioEvent(talesList: _talesList));
+//                     },
+//                   ),
+//                   PopupMenuItem(
+//                     child: const Text(
+//                       'Восстановить все',
+//                       style: TextStyle(
+//                         color: CustomColors.black,
+//                       ),
+//                     ),
+//                     value: () {
+//                       _deleteBloc.add(
+//                           RestoreSelectedAudioEvent(talesList: _talesList));
+//                     },
+//                   ),
+//                 ],
+//                 onSelected: (Function value) {
+//                   value();
+//                 },
 //               ),
-//               const SizedBox(),
 //             ],
 //           ),
+//         ),
+//       ],
+//       backgroundColor: CustomColors.audiotalesHeadColorBlue,
+//       elevation: 0,
+//       flexibleSpace: Column(
+//         mainAxisAlignment: MainAxisAlignment.end,
+//         children: const [
+//           SizedBox(
+//               // height: 30,
+//               ),
+//           SizedBox(
+//             height: kToolbarHeight * 1.3,
+//             child: DeletedScreenTitleText(),
+//           ),
 //         ],
+//       ),
+//       leading: Padding(
+//         padding: EdgeInsets.only(
+//           left: screen.width * 0.04,
+//         ),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             IconButton(
+//               icon: SvgPicture.asset(
+//                 CustomIconsImg.drawer,
+//                 height: 25,
+//                 color: CustomColors.white,
+//               ),
+//               onPressed: onAction,
+//             ),
+//             const SizedBox(),
+//           ],
+//         ),
 //       ),
 //     );
 //   }

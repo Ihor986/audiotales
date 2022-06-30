@@ -21,11 +21,11 @@ class SubscribeScreen extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
     // print(DateTime.now().add(const Duration(days: 30)));
     return Scaffold(
-      appBar: _SubscribeScreenAppBar(
-        onAction: () {
-          Scaffold.of(context).openDrawer();
-        },
-      ),
+      // appBar: _SubscribeScreenAppBar(
+      //   onAction: () {
+      //     Scaffold.of(context).openDrawer();
+      //   },
+      // ),
       body: Stack(
         children: [
           Column(
@@ -33,14 +33,20 @@ class SubscribeScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screen.height / 4.5,
+                  alignment: const Alignment(0, -0.8),
+                  height: screen.height * 0.3,
                   color: CustomColors.blueSoso,
+                  child: _SubscribeScreenAppBar(
+                    onAction: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
                 ),
               ),
             ],
           ),
           const Align(
-            alignment: Alignment(0, -0.45),
+            alignment: Alignment(0, 0.2),
             child: CardWidget(),
           ),
         ],
@@ -49,51 +55,108 @@ class SubscribeScreen extends StatelessWidget {
   }
 }
 
-class _SubscribeScreenAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class _SubscribeScreenAppBar extends StatelessWidget {
   const _SubscribeScreenAppBar({
     Key? key,
-    this.onAction,
+    required this.onAction,
   }) : super(key: key);
-  final void Function()? onAction;
+  final void Function() onAction;
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  // @override
+  // Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
+
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    return AppBar(
-      backgroundColor: CustomColors.blueSoso,
-      elevation: 0,
-      flexibleSpace: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          SizedBox(),
-          SubscribeScreenTitleText(),
-        ],
-      ),
-      leading: Padding(
-        padding: EdgeInsets.only(
-          left: screen.width * 0.04,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: SvgPicture.asset(
-                CustomIconsImg.drawer,
-                height: 25,
-                color: CustomColors.white,
-              ),
-              onPressed: onAction,
+    return Container(
+      height: 0.18 * screen.height,
+      color: CustomColors.blueSoso,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 0.04 * screen.height,
             ),
-            const SizedBox(),
-          ],
-        ),
+            child: Stack(
+              children: [
+                const Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: SubscribeScreenTitleText(),
+                )),
+                // const Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: DeletedScreenTitleText(),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        CustomIconsImg.drawer,
+                        height: 0.02 * screen.height,
+                        color: CustomColors.white,
+                      ),
+                      padding: const EdgeInsets.all(0),
+                      onPressed: onAction,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+// class _SubscribeScreenAppBar extends StatelessWidget
+//     implements PreferredSizeWidget {
+//   const _SubscribeScreenAppBar({
+//     Key? key,
+//     this.onAction,
+//   }) : super(key: key);
+//   final void Function()? onAction;
+
+//   @override
+//   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+//   @override
+//   Widget build(BuildContext context) {
+//     Size screen = MediaQuery.of(context).size;
+//     return AppBar(
+//       backgroundColor: CustomColors.blueSoso,
+//       elevation: 0,
+//       flexibleSpace: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: const [
+//           SizedBox(),
+//           SubscribeScreenTitleText(),
+//         ],
+//       ),
+//       leading: Padding(
+//         padding: EdgeInsets.only(
+//           left: screen.width * 0.04,
+//         ),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             IconButton(
+//               icon: SvgPicture.asset(
+//                 CustomIconsImg.drawer,
+//                 height: 25,
+//                 color: CustomColors.white,
+//               ),
+//               onPressed: onAction,
+//             ),
+//             const SizedBox(),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class CardWidget extends StatelessWidget {
   const CardWidget({Key? key}) : super(key: key);
