@@ -8,6 +8,7 @@ import '../../services/sound_service.dart';
 import '../../widgets/alerts/alert_microphone_permision.dart';
 import '../../widgets/navigation/custom_bottom_navigation_bar.dart';
 import '../../widgets/navigation/drawer/custom_drawer.dart';
+import '../../widgets/uncategorized/player_widget.dart';
 import '../deleted_screen/deleted_screen.dart';
 import '../income_screen/new_user/registration_page.dart';
 import '../search_screen/search_page.dart';

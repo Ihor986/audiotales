@@ -10,6 +10,7 @@ import '../../utils/consts/custom_icons_img.dart';
 import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'custom_popup_menu_active_playlist.dart';
+import 'player_widget.dart';
 
 class ActiveTalesListWidget extends StatelessWidget {
   const ActiveTalesListWidget({
@@ -27,54 +28,59 @@ class ActiveTalesListWidget extends StatelessWidget {
             context.read<TalesListRepository>().getTalesListRepository();
         final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
 
-        return ListView.builder(
-          itemCount: _talesList.length,
-          itemBuilder: (_, i) {
-            return Padding(
-              padding: EdgeInsets.all(screen.height * 0.005),
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+        return Stack(
+          children: [
+            ListView.builder(
+              itemCount: _talesList.length,
+              itemBuilder: (_, i) {
+                return Padding(
+                  padding: EdgeInsets.all(screen.height * 0.005),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _PlayButton(
-                          color: color,
-                          i: i,
-                        ),
-                        SizedBox(
-                          width: screen.width * 0.05,
-                        ),
-                        SizedBox(
-                          height: screen.height * 0.07,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AudioListNameText(
-                                audio: _talesList.elementAt(i),
+                        Row(
+                          children: [
+                            _PlayButton(
+                              color: color,
+                              i: i,
+                            ),
+                            SizedBox(
+                              width: screen.width * 0.05,
+                            ),
+                            SizedBox(
+                              height: screen.height * 0.07,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AudioListNameText(
+                                    audio: _talesList.elementAt(i),
+                                  ),
+                                  AudioListText(
+                                    audio: _talesList.elementAt(i),
+                                  ),
+                                ],
                               ),
-                              AudioListText(
-                                audio: _talesList.elementAt(i),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
+                        CustomPopUpMenu(
+                          audio: _talesList.elementAt(i),
                         ),
                       ],
                     ),
-                    CustomPopUpMenu(
-                      audio: _talesList.elementAt(i),
+                    decoration: BoxDecoration(
+                      color: CustomColors.white,
+                      border: Border.all(color: CustomColors.audioBorder),
+                      borderRadius: const BorderRadius.all(Radius.circular(41)),
                     ),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: CustomColors.white,
-                  border: Border.all(color: CustomColors.audioBorder),
-                  borderRadius: const BorderRadius.all(Radius.circular(41)),
-                ),
-              ),
-            );
-          },
+                  ),
+                );
+              },
+            ),
+            // const PlayerWidget(),
+          ],
         );
       },
     );
@@ -107,7 +113,8 @@ class _PlayButton extends StatelessWidget {
           onPressed: () {
             _mainScreenBloc.add(
               ClickPlayEvent(
-                _talesList.elementAt(i),
+                audioList: _talesList,
+                indexAudio: i,
               ),
             );
           },

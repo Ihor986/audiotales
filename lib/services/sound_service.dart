@@ -11,7 +11,6 @@ import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
 import '../utils/consts/custom_icons_img.dart';
-import '../widgets/alerts/alert_microphone_permision.dart';
 
 class SoundService extends ChangeNotifier {
   SoundService._();
@@ -39,6 +38,9 @@ class SoundService extends ChangeNotifier {
   num? size;
   AudioTale? audioTale;
   bool isRepeatAllList = false;
+  List<AudioTale> audioList =
+      DataBase.instance.getAudioTales().getActiveTalesList();
+  int listIndex = 0;
 
   Future<void> saveAudioTale({
     required TalesList fullTalesList,
@@ -114,37 +116,57 @@ class SoundService extends ChangeNotifier {
     }
   }
 
-  Future<void> clickPlayer(audio) async {
-    if (!audioPlayer.isPlaying) {
-      await _initPlayer();
-      _startPlayer(audio);
-      _showPlayerProgres();
-    } else if (audioPlayer.isPlaying) {
+  Future<void> playNextTreck() async {
+    listIndex++;
+    if (isPlayingList == true) {
       await audioPlayer.stopPlayer();
-      idPlaying = null;
-      idPlayingList = null;
+      await _startAllAudioPlayer(audioList, listIndex);
+      isPlayingList = true;
+    } else {
+      await audioPlayer.stopPlayer();
+      _startPlayer(audioList.elementAt(listIndex));
       isPlayingList = null;
-      notifyListeners();
-      isRepeatAllList = false;
     }
   }
 
-  Future<void> playAllPlayer(List<AudioTale> audioList) async {
-    if (audioList.isEmpty) {
+  Future<void> play(List<AudioTale> _audioList,
+      {required int indexAudio}) async {
+    if (_audioList.isEmpty) {
       return;
     }
-    if (!audioPlayer.isPlaying) {
-      await _initPlayer();
-      await _startAllAudioPlayer(audioList, 0);
-      isPlayingList = true;
-    } else if (audioPlayer.isPlaying) {
+    if (audioPlayer.isPlaying) {
       await audioPlayer.stopPlayer();
       idPlaying = null;
       idPlayingList = null;
       isPlayingList = null;
       isRepeatAllList = false;
       notifyListeners();
+      return;
     }
+    if (isPlayingList == true) {
+      _playAllPlayer(_audioList, indexAudio: indexAudio);
+    } else {
+      _clickPlayer(_audioList, indexAudio: indexAudio);
+    }
+  }
+
+  Future<void> _clickPlayer(List<AudioTale> _audioList,
+      {required int indexAudio}) async {
+    listIndex = indexAudio;
+    audioList = _audioList;
+    await _initPlayer();
+    _startPlayer(_audioList.elementAt(indexAudio));
+    isPlayingList = null;
+    _showPlayerProgres();
+  }
+
+  Future<void> _playAllPlayer(List<AudioTale> _audioList,
+      {int? indexAudio}) async {
+    audioList = _audioList;
+    await _initPlayer();
+    await _startAllAudioPlayer(_audioList, 0);
+    _showPlayerProgres();
+    isPlayingList = true;
   }
 
   Future<void> _startRecord() async {
@@ -292,7 +314,7 @@ class SoundService extends ChangeNotifier {
       List<AudioTale> audioList, int index) async {
     final bool auth = FirebaseAuth.instance.currentUser != null;
     final int length = audioList.length;
-    int listIndex = index;
+    listIndex = index;
     final audio = audioList[listIndex];
 
     try {
@@ -349,7 +371,7 @@ class SoundService extends ChangeNotifier {
   }
 
   void _showPlayerProgres() {
-    audioPlayer.onProgress!.listen(
+    audioPlayer.onProgress?.listen(
       (event) {
         endOfSliderPosition = event.duration.inMilliseconds;
         sliderPosition = event.position.inMilliseconds;

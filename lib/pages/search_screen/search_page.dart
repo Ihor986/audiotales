@@ -180,7 +180,10 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () {
-                              _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
+                              _mainScreenBloc.add(ClickPlayEvent(
+                                audioList: talesList,
+                                indexAudio: i,
+                              ));
                             },
                             icon: SvgPicture.asset(
                               CustomIconsImg.playSVG,

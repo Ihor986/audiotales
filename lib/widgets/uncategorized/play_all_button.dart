@@ -26,7 +26,7 @@ class PlayAllTalesButtonWidget extends StatelessWidget {
     final SoundService _soundService =
         BlocProvider.of<MainScreenBloc>(context).sound;
 
-    Size screen = MediaQuery.of(context).size;
+    final Size screen = MediaQuery.of(context).size;
 
     return AnimatedBuilder(
       animation: _soundService,

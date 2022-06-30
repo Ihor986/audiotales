@@ -16,11 +16,19 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   MainScreenBloc() : super(MainScreenState()) {
     on<ClickPlayEvent>(
       (event, emit) {
-        String? searchValue = state.searchValue;
-        sound.clickPlayer(event.audio);
+        final String? searchValue = state.searchValue;
+        sound.play(event.audioList, indexAudio: event.indexAudio);
         emit(MainScreenState(searchValue: searchValue));
       },
     );
+    on<NextTreckEvent>(
+      (event, emit) {
+        final String? searchValue = state.searchValue;
+        sound.playNextTreck();
+        emit(MainScreenState(searchValue: searchValue));
+      },
+    );
+
     on<Rewind15Event>(
       (event, emit) {
         sound.forwardPlayer(event.time);
@@ -29,7 +37,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     );
     on<RemoveToDeleteAudioEvent>(
       (event, emit) async {
-        TalesList _talesList = event.talesList;
+        final TalesList _talesList = event.talesList;
         _talesList.removeAudioToDeleted(id: event.id);
         await DataBase.instance.saveAudioTales(_talesList);
         print('delete');

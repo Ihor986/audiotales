@@ -13,6 +13,7 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons_img.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../../widgets/uncategorized/player_widget.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
 // import 'selection_screen.dart/selection_screen.dart';
@@ -61,6 +62,7 @@ class _SelectionsScreenState extends State<SelectionsScreen> {
                 alignment: Alignment(0, -0.6),
                 child: _WrapSelectionsList(),
               ),
+              const PlayerWidget(),
             ],
           ),
         );

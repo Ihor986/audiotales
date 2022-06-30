@@ -62,6 +62,7 @@ class CustomIconsImg {
   static const String check = "assets/icons/check.svg";
   static const String uncheck = "assets/icons/uncheck.svg";
   static const String playSVG = "assets/icons/play.svg";
+  static const String forwardVector = "assets/icons/forwardVector.svg";
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
 }

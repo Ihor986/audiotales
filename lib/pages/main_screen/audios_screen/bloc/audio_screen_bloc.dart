@@ -16,7 +16,8 @@ class AudioScreenBloc extends Bloc<AudioScreenEvent, AudioScreenState> {
     on<AudioScreenPlayAllEvent>(
       (event, emit) async {
         sound.idPlayingList = event.selection;
-        await sound.playAllPlayer(event.talesList);
+        sound.isPlayingList = true;
+        await sound.play(event.talesList, indexAudio: 0);
         print('play');
 
         emit(AudioScreenState());

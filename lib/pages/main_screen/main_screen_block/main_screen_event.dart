@@ -3,8 +3,15 @@ part of 'main_screen_bloc.dart';
 abstract class MainScreenEvent {}
 
 class ClickPlayEvent extends MainScreenEvent {
-  ClickPlayEvent(this.audio);
-  AudioTale audio;
+  ClickPlayEvent({required this.audioList, required this.indexAudio});
+  List<AudioTale> audioList;
+  int indexAudio;
+}
+
+class NextTreckEvent extends MainScreenEvent {
+  // NextTreckEvent({required this.audioList, required this.indexAudio});
+  // List<AudioTale> audioList;
+  // int indexAudio;
 }
 
 class Rewind15Event extends MainScreenEvent {
