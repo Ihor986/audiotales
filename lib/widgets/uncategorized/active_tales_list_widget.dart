@@ -27,7 +27,7 @@ class ActiveTalesListWidget extends StatelessWidget {
         final TalesList _talesListRep =
             context.read<TalesListRepository>().getTalesListRepository();
         final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
-
+        print(_talesList.first.path);
         return Stack(
           children: [
             ListView.builder(

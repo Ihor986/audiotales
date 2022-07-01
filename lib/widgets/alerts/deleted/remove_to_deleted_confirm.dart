@@ -15,7 +15,7 @@ class RemoveToDeletedConfirm {
   deletedConfirm({
     required Size screen,
     required BuildContext context,
-    required String id,
+    required List<String> idList,
     required TalesList talesList,
     bool? isClosePage,
   }) {
@@ -29,7 +29,7 @@ class RemoveToDeletedConfirm {
             actionsAlignment: MainAxisAlignment.center,
             actions: [
               _ConfirmButtonYes(
-                id: id,
+                idList: idList,
                 talesList: talesList,
                 isClosePage: isClosePage,
               ),
@@ -127,11 +127,11 @@ class _ConfirmButtonNo extends StatelessWidget {
 class _ConfirmButtonYes extends StatelessWidget {
   const _ConfirmButtonYes({
     Key? key,
-    required this.id,
+    required this.idList,
     required this.talesList,
     this.isClosePage,
   }) : super(key: key);
-  final String id;
+  final List<String> idList;
   final TalesList talesList;
   final bool? isClosePage;
   @override
@@ -142,8 +142,8 @@ class _ConfirmButtonYes extends StatelessWidget {
     final NavigationBloc _navdBloc = BlocProvider.of<NavigationBloc>(context);
     return GestureDetector(
       onTap: () {
-        _mainScreenBloc
-            .add(RemoveToDeleteAudioEvent(id: id, talesList: talesList));
+        _mainScreenBloc.add(
+            RemoveToDeleteAudioEvent(idList: idList, talesList: talesList));
         if (isClosePage == true) {
           _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
         }

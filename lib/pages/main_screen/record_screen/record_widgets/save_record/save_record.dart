@@ -173,7 +173,12 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       child: const Text('Скачать'),
-                      value: () {},
+                      value: () {
+                        context.read<MainScreenBloc>().add(DownloadAudioEvent(
+                              audioList: [audio.id],
+                              talesList: _talesListRep,
+                            ));
+                      },
                     ),
                     PopupMenuItem(
                       child: const Text('Удалить'),
@@ -181,7 +186,7 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                         RemoveToDeletedConfirm.instance.deletedConfirm(
                           screen: screen,
                           context: context,
-                          id: _talesListRep.fullTalesList.first.id,
+                          idList: [_talesListRep.fullTalesList.first.id],
                           talesList: _talesListRep,
                           isClosePage: true,
                         );

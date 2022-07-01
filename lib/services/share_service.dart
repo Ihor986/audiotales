@@ -10,7 +10,6 @@ import '../data_base/data/local_data_base.dart';
 class ShareAudioService {
   ShareAudioService._();
   static final ShareAudioService instance = ShareAudioService._();
-  final Share shareService = Share();
   final List<String> paths = [];
   final List<String> downloadsPaths = [];
   String? text;

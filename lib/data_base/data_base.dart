@@ -36,10 +36,8 @@ class DataBase {
   }
 
   Future<void> deleteUser() async {
-    print('start');
     await FirestoreDB.instance.deleteUser(user: getUser());
     LocalDB.instance.deleteUser();
-    print('finish');
   }
 
   Future<void> saveUserWithUpDate() async {
@@ -47,12 +45,18 @@ class DataBase {
   }
 
   TalesList getAudioTales() {
-    // _saveAudioTalesForUpDate();
+    print('get');
     return LocalDB.instance.getAudioTales();
   }
 
+  Future<void> deleteAudioTaleFromDB(
+      List<String> idList, TalesList talesList) async {
+    await _deleteAudioTaleFromDB(idList, talesList);
+  }
+
   Future<void> saveAudioTales(TalesList _talesList) async {
-    _deleteOldAudio(talesList: _talesList);
+    print('save');
+    await _deleteOldAudio(talesList: _talesList);
     LocalDB.instance.saveAudioTalesToLocalDB(_talesList);
     if (getUser().isUserRegistered == true) {
       FirestoreDB.instance
@@ -60,49 +64,42 @@ class DataBase {
     }
   }
 
-  _deleteOldAudio({
+  Future<void> _deleteOldAudio({
     required TalesList talesList,
-  }) {
+  }) async {
     int today = DateTime.now().millisecondsSinceEpoch.toInt();
-    int howMenyDays = 86400000 * 2;
+    int howMenyDays = 86400000 * 15;
     TalesList _talesList = talesList;
-    _talesList.fullTalesList.map(
-      (element) {
-        bool isPath = element.path == null && element.pathUrl == null;
-        // bool isNotDeleted = !element.isDeleted;
-        if (isPath) {
-          DataBase.instance.deleteAudioTaleFromDB(element.id, _talesList);
-        }
-        if (element.deletedDate == null) {
-          return element;
-        }
-        if (int.parse(element.deletedDate ?? '0') < today - howMenyDays) {
-          DataBase.instance.deleteAudioTaleFromDB(element.id, _talesList);
-        }
-        return element;
-      },
-    ).toList();
+    List<AudioTale> _deleteOldAudioList =
+        _talesList.fullTalesList.where((element) {
+      bool isNoPath = element.path == null && element.pathUrl == null;
+      bool isToOld = int.parse(element.deletedDate ?? today.toString()) <
+          today - howMenyDays;
+      return isNoPath || isToOld ? true : false;
+    }).toList();
+    if (_deleteOldAudioList.isEmpty) return;
+    List<String> idList = _deleteOldAudioList.map((e) => e.id).toList();
+    await _deleteAudioTaleFromDB(idList, talesList);
   }
 
-  Future<void> deleteAudioTaleFromDB(String id, TalesList talesList) async {
+  Future<void> _deleteAudioTaleFromDB(
+      List<String> idList, TalesList talesList) async {
     TalesList _talesList = talesList;
-    AudioTale _audioTale = _talesList.fullTalesList.firstWhere(
-      (element) => element.id == id,
-      orElse: () {
-        return AudioTale(
-            id: id,
-            path: null,
-            pathUrl: null,
-            name: 'null',
-            time: 0,
-            size: 0,
-            compilationsId: []);
-      },
-    );
-    await FirestoreDB.instance.deleteAudioTaleFromFireBase(
-        audioTale: _audioTale, userId: LocalDB.instance.getUser().id);
-    LocalDB.instance.deleteAudioTaleFromLocalDB(_audioTale);
-    _talesList.deleteAudio(id: id);
+    for (var id in idList) {
+      List<AudioTale> aList = _talesList.fullTalesList
+          .where((element) => element.id == id)
+          .toList();
+      if (aList.isEmpty) continue;
+      AudioTale _audioTale = aList.first;
+      try {
+        await FirestoreDB.instance.deleteAudioTaleFromFireBase(
+            audioTale: _audioTale, userId: LocalDB.instance.getUser().id);
+      } catch (_) {}
+      try {
+        LocalDB.instance.deleteAudioTaleFromLocalDB(_audioTale);
+      } catch (_) {}
+      _talesList.deleteAudio(id: id);
+    }
     await saveAudioTales(_talesList);
   }
 
@@ -111,7 +108,6 @@ class DataBase {
   }
 
   SelectionsList getSelectionsList() {
-    // _saveAudioTalesForUpDate();
     return LocalDB.instance.getSelectionsList();
   }
 

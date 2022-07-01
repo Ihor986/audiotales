@@ -426,9 +426,6 @@ class SoundService extends ChangeNotifier {
   }
 
   void dispouse() {
-    // idPlayingList = null;
-    // isPlayingList = null;
-    // idPlaying = null;
     id = null;
     isRecoderReady = false;
     limit = 0;

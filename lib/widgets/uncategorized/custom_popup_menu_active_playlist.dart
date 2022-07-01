@@ -66,7 +66,7 @@ class CustomPopUpMenu extends StatelessWidget {
             RemoveToDeletedConfirm.instance.deletedConfirm(
               screen: screen,
               context: context,
-              id: audio.id,
+              idList: [audio.id],
               talesList: _talesListRep,
             );
           },

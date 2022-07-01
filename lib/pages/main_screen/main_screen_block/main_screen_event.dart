@@ -20,8 +20,8 @@ class Rewind15Event extends MainScreenEvent {
 }
 
 class RemoveToDeleteAudioEvent extends MainScreenEvent {
-  RemoveToDeleteAudioEvent({required this.id, required this.talesList});
-  final String id;
+  RemoveToDeleteAudioEvent({required this.idList, required this.talesList});
+  final List<String> idList;
   final TalesList talesList;
 }
 
@@ -31,6 +31,12 @@ class SearchAudioEvent extends MainScreenEvent {
 }
 
 class SetState extends MainScreenEvent {}
+
+class DownloadAudioEvent extends MainScreenEvent {
+  DownloadAudioEvent({required this.audioList, required this.talesList});
+  final List<String> audioList;
+  final TalesList talesList;
+}
 
 class DeleteUnsavedAudioEvent extends MainScreenEvent {}
 

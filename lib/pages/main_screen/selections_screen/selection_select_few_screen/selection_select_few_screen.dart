@@ -13,6 +13,7 @@ import '../../../../models/audio.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
 import '../../../../utils/consts/texts_consts.dart';
+import '../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 import '../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/custom_popup_menu_active_playlist.dart';
@@ -158,11 +159,25 @@ class _Action extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   child: const Text('Скачать все'),
-                  value: () {},
+                  value: () {
+                    context.read<MainScreenBloc>().add(DownloadAudioEvent(
+                          audioList: _selectionsBloc
+                              .changeSelectionService.checkedList,
+                          talesList: talesList,
+                        ));
+                  },
                 ),
                 PopupMenuItem(
                   child: const Text('Удалить все'),
-                  value: () {},
+                  value: () {
+                    RemoveToDeletedConfirm.instance.deletedConfirm(
+                      screen: screen,
+                      context: context,
+                      idList:
+                          _selectionsBloc.changeSelectionService.checkedList,
+                      talesList: talesList,
+                    );
+                  },
                 ),
               ],
               onSelected: (Function value) {

@@ -15,7 +15,7 @@ class DeleteBloc extends Bloc<DeleteEvent, DeleteState> {
     on<DeleteAudioEvent>(
       (event, emit) async {
         await DataBase.instance
-            .deleteAudioTaleFromDB(event.id, event.talesList);
+            .deleteAudioTaleFromDB([event.id], event.talesList);
         emit(DeleteState());
       },
     );
@@ -34,8 +34,8 @@ class DeleteBloc extends Bloc<DeleteEvent, DeleteState> {
       emit(DeleteState());
     });
 
-    on<DeleteSelectedAudioEvent>((event, emit) {
-      selectAudioToDeleteService.deleteSelectedAudioEvent(
+    on<DeleteSelectedAudioEvent>((event, emit) async {
+      await selectAudioToDeleteService.deleteSelectedAudioEvent(
           talesList: event.talesList);
       emit(DeleteState());
     });

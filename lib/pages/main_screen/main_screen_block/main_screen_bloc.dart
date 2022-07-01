@@ -3,6 +3,7 @@ import '../../../data_base/data_base.dart';
 import '../../../models/audio.dart';
 import '../../../models/tales_list.dart';
 import '../../../services/change_audio_servise.dart';
+import '../../../services/download_audio_service.dart';
 import '../../../services/share_service.dart';
 import '../../../services/sound_service.dart';
 
@@ -13,6 +14,8 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   final SoundService sound = SoundService.instance;
   final ChangeAudioServise changeAudioServise = ChangeAudioServise();
   final ShareAudioService shareAudioService = ShareAudioService.instance;
+  final DownloadAudioService downloadAudioService =
+      DownloadAudioService.instance;
   MainScreenBloc() : super(MainScreenState()) {
     on<ClickPlayEvent>(
       (event, emit) {
@@ -21,6 +24,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
         emit(MainScreenState(searchValue: searchValue));
       },
     );
+
     on<NextTreckEvent>(
       (event, emit) {
         final String? searchValue = state.searchValue;
@@ -38,7 +42,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     on<RemoveToDeleteAudioEvent>(
       (event, emit) async {
         final TalesList _talesList = event.talesList;
-        _talesList.removeAudioToDeleted(id: event.id);
+        _talesList.removeAudioToDeleted(idList: event.idList);
         await DataBase.instance.saveAudioTales(_talesList);
         print('delete');
         emit(MainScreenState());
@@ -117,6 +121,15 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
         shareAudioService.dispouse();
         await shareAudioService.shareUnsavedAudio(path: event.path);
         emit(MainScreenState());
+      },
+    );
+
+    on<DownloadAudioEvent>(
+      (event, emit) {
+        final String? searchValue = state.searchValue;
+        downloadAudioService.downloadAudioToDevice(
+            audioList: event.audioList, talesList: event.talesList);
+        emit(MainScreenState(searchValue: searchValue));
       },
     );
   }

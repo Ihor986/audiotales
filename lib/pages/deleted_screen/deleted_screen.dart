@@ -1,4 +1,3 @@
-// import 'package:audiotales/pages/outher/deleted_screen/widgets/deleted_screen_text.dart';
 import 'package:audiotales/pages/deleted_screen/bloc/delete_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,23 +13,30 @@ import '../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'widgets/deleted_screen_text.dart';
 
-class DeletedScreen extends StatelessWidget {
+class DeletedScreen extends StatefulWidget {
   const DeletedScreen({Key? key}) : super(key: key);
   static const routeName = '/deleted_screen.dart';
   static const DeletedScreenTitleText title = DeletedScreenTitleText();
+
+  @override
+  State<DeletedScreen> createState() => _DeletedScreenState();
+}
+
+class _DeletedScreenState extends State<DeletedScreen> {
+  @override
+  void initState() {
+    context.read<DeleteBloc>().selectAudioToDeleteService.dispouse();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
+    final Size screen = MediaQuery.of(context).size;
+    final DeleteBloc _deleteBloc = context.read<DeleteBloc>();
     return BlocBuilder<DeleteBloc, DeleteState>(
       builder: (context, state) {
         return Scaffold(
           extendBody: true,
-          // appBar: _DeletedScreenAppBar(
-          // onAction: () {
-          //   Scaffold.of(context).openDrawer();
-          // },
-          // ),
           body: Stack(
             children: [
               Column(
@@ -80,7 +86,6 @@ class DeletedScreen extends StatelessWidget {
               ),
             ],
           ),
-          // backgroundColor: CustomColors.red,
         );
       },
     );
@@ -95,9 +100,6 @@ class _DeletedScreenAppBar extends StatelessWidget {
   }) : super(key: key);
   final void Function() onAction;
   final bool isChosen;
-
-  // @override
-  // Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
 
   @override
   Widget build(BuildContext context) {
@@ -119,14 +121,11 @@ class _DeletedScreenAppBar extends StatelessWidget {
             child: Stack(
               children: [
                 const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: DeletedScreenTitleText(),
-                )),
-                // const Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: DeletedScreenTitleText(),
-                // ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: DeletedScreenTitleText(),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -148,7 +147,6 @@ class _DeletedScreenAppBar extends StatelessWidget {
                       ),
                       icon: SvgPicture.asset(
                         CustomIconsImg.moreHorizontRounded,
-                        // height: 0.02 * screen.height,
                         width: 0.07 * screen.width,
                       ),
                       itemBuilder: (context) => [
@@ -207,123 +205,6 @@ class _DeletedScreenAppBar extends StatelessWidget {
   }
 }
 
-// class _DeletedScreenAppBar extends StatelessWidget
-//     implements PreferredSizeWidget {
-//   const _DeletedScreenAppBar({
-//     Key? key,
-//     this.onAction,
-//   }) : super(key: key);
-//   final void Function()? onAction;
-
-// @override
-// Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
-//   @override
-//   Widget build(BuildContext context) {
-//     final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
-//     final TalesList _talesList =
-//         RepositoryProvider.of<TalesListRepository>(context)
-//             .getTalesListRepository();
-//     Size screen = MediaQuery.of(context).size;
-//     return AppBar(
-//       actions: <Widget>[
-//         Padding(
-//           padding: EdgeInsets.only(right: screen.width * 0.04),
-//           child: Column(
-//             children: [
-//               PopupMenuButton(
-//                 shape: const RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.all(Radius.circular(15)),
-//                 ),
-//                 icon: SvgPicture.asset(
-//                   CustomIconsImg.moreHorizontRounded,
-//                   // height: 3,
-//                   // color: CustomColors.black,
-//                 ),
-//                 itemBuilder: (context) => [
-//                   PopupMenuItem(
-//                     child: const Text(
-//                       'Выбрать несколько',
-//                       style: TextStyle(
-//                         color: CustomColors.black,
-//                       ),
-//                     ),
-//                     value: () {
-//                       if (_deleteBloc.selectAudioToDeleteService.isChosen) {
-//                         return;
-//                       }
-//                       _deleteBloc.add(SelectDeletedAudioEvent());
-//                     },
-//                   ),
-//                   PopupMenuItem(
-//                     child: const Text(
-//                       'Удалить все',
-//                       style: TextStyle(
-//                         color: CustomColors.black,
-//                       ),
-//                     ),
-//                     value: () {
-//                       _deleteBloc
-//                           .add(DeleteSelectedAudioEvent(talesList: _talesList));
-//                     },
-//                   ),
-//                   PopupMenuItem(
-//                     child: const Text(
-//                       'Восстановить все',
-//                       style: TextStyle(
-//                         color: CustomColors.black,
-//                       ),
-//                     ),
-//                     value: () {
-//                       _deleteBloc.add(
-//                           RestoreSelectedAudioEvent(talesList: _talesList));
-//                     },
-//                   ),
-//                 ],
-//                 onSelected: (Function value) {
-//                   value();
-//                 },
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//       backgroundColor: CustomColors.audiotalesHeadColorBlue,
-//       elevation: 0,
-//       flexibleSpace: Column(
-//         mainAxisAlignment: MainAxisAlignment.end,
-//         children: const [
-//           SizedBox(
-//               // height: 30,
-//               ),
-//           SizedBox(
-//             height: kToolbarHeight * 1.3,
-//             child: DeletedScreenTitleText(),
-//           ),
-//         ],
-//       ),
-//       leading: Padding(
-//         padding: EdgeInsets.only(
-//           left: screen.width * 0.04,
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             IconButton(
-//               icon: SvgPicture.asset(
-//                 CustomIconsImg.drawer,
-//                 height: 25,
-//                 color: CustomColors.white,
-//               ),
-//               onPressed: onAction,
-//             ),
-//             const SizedBox(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class _DeletedTalesListWidget extends StatelessWidget {
   const _DeletedTalesListWidget({
     Key? key,
@@ -338,10 +219,6 @@ class _DeletedTalesListWidget extends StatelessWidget {
                 .getTalesListRepository();
         final List<AudioTale> talesList = talesListRep.getDelitedTalesList();
         Size screen = MediaQuery.of(context).size;
-
-        // context
-        //     .read<DeleteBloc>()
-        //     .add(DeleteOldAudioEvent(talesList: talesListRep));
 
         return ListView.builder(
           itemCount: talesList.length,

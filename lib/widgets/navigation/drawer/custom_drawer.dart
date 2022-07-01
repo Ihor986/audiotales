@@ -55,7 +55,8 @@ class _BodyMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size screen = MediaQuery.of(context).size;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return SizedBox(
@@ -77,7 +78,6 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.profile,
                 onClick: () {
-                  final FirebaseAuth auth = FirebaseAuth.instance;
                   if (auth.currentUser == null) {
                     Navigator.of(context, rootNavigator: true)
                         .pushNamedAndRemoveUntil(
@@ -144,9 +144,17 @@ class _BodyMenu extends StatelessWidget {
               _MenuButtonRow(
                 text: TextsConst.subscribe,
                 onClick: () {
-                  context
-                      .read<NavigationBloc>()
-                      .add(ChangeCurrentIndexEvent(currentIndex: 7));
+                  if (auth.currentUser == null) {
+                    Navigator.of(context, rootNavigator: true)
+                        .pushNamedAndRemoveUntil(
+                      RegistrationPage.routeName,
+                      (_) => false,
+                    );
+                  } else {
+                    context
+                        .read<NavigationBloc>()
+                        .add(ChangeCurrentIndexEvent(currentIndex: 7));
+                  }
 
                   Scaffold.of(context).openEndDrawer();
                 },

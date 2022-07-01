@@ -27,7 +27,8 @@ class HeadScreen extends StatelessWidget {
   static const HeadText title = HeadText();
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
+
     return Scaffold(
       extendBody: true,
       appBar: _HaedScreenAppBar(
@@ -42,7 +43,7 @@ class HeadScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screen.height / 4.5,
+                  height: _screen.height / 4.5,
                   color: CustomColors.blueSoso,
                 ),
               ),

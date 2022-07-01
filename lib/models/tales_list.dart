@@ -152,7 +152,17 @@ class TalesList {
     fullTalesList.addAll(list);
   }
 
-  removeAudioToDeleted({
+  void removeAudioToDeleted({
+    required List<String> idList,
+  }) {
+    for (var id in idList) {
+      _removeAudioToDeleted(
+        id: id,
+      );
+    }
+  }
+
+  void _removeAudioToDeleted({
     required String id,
   }) {
     for (var audio in fullTalesList) {
@@ -162,7 +172,7 @@ class TalesList {
     }
   }
 
-  changeAudioPath({
+  void changeAudioPath({
     required String id,
     required String path,
   }) {
@@ -173,7 +183,7 @@ class TalesList {
     }
   }
 
-  changeAudioName({
+  void changeAudioName({
     required String id,
     required String name,
   }) {
@@ -184,7 +194,7 @@ class TalesList {
     }
   }
 
-  changeAudioSelectionsId({
+  void changeAudioSelectionsId({
     required String id,
     required List selectionsId,
   }) {
@@ -195,7 +205,7 @@ class TalesList {
     }
   }
 
-  addNewAudioSelectionsId({
+  void addNewAudioSelectionsId({
     required String id,
     required List selectionsId,
   }) {
@@ -206,9 +216,10 @@ class TalesList {
     }
   }
 
-  deleteAudio({
+  void deleteAudio({
     required String id,
   }) {
+    if (id == '') return;
     fullTalesList.removeWhere((element) => element.id == id);
   }
 }
