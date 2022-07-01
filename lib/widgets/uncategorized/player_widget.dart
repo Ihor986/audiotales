@@ -141,7 +141,9 @@ class _PlayRecordProgresState extends State<_PlayRecordProgres> {
                 child: Slider(
                   value: _mainScreenBloc.sound.sliderPosition.toDouble(),
                   min: 0.0,
-                  max: _mainScreenBloc.sound.endOfSliderPosition.toDouble(),
+                  max: _mainScreenBloc.sound.audioPlayer.isStopped
+                      ? _mainScreenBloc.sound.sliderPosition.toDouble()
+                      : _mainScreenBloc.sound.endOfSliderPosition.toDouble(),
                   onChanged: (double d) async {
                     setState(() {
                       _mainScreenBloc.sound.forwardPlayerWithSlider(d);
@@ -156,7 +158,10 @@ class _PlayRecordProgresState extends State<_PlayRecordProgres> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _mainScreenBloc.sound.sliderPositionText.substring(3),
+                    _mainScreenBloc.sound.audioPlayer.isStopped
+                        ? _mainScreenBloc.sound.endOfSliderPositionText
+                            .substring(3)
+                        : _mainScreenBloc.sound.sliderPositionText.substring(3),
                     style: const TextStyle(
                       color: CustomColors.white,
                     ),

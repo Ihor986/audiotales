@@ -33,7 +33,7 @@ class SoundService extends ChangeNotifier {
   double recorderPower = 0;
   int sliderPosition = 0;
   int endOfSliderPosition = 1;
-  String sliderPositionText = '00:00:00';
+  String sliderPositionText = '00:00:01';
   String endOfSliderPositionText = '00:00:01';
   num? size;
   AudioTale? audioTale;
@@ -41,6 +41,7 @@ class SoundService extends ChangeNotifier {
   List<AudioTale> audioList =
       DataBase.instance.getAudioTales().getActiveTalesList();
   int listIndex = 0;
+  String lastAction = 'clickRecorder';
 
   Future<void> saveAudioTale({
     required TalesList fullTalesList,
@@ -83,6 +84,7 @@ class SoundService extends ChangeNotifier {
   }
 
   Future<void> clickRecorder() async {
+    lastAction = 'clickRecorder';
     bool isRedyStartRecord = !recorder.isRecording &&
         url == null &&
         !audioPlayer.isPlaying &&
@@ -144,9 +146,11 @@ class SoundService extends ChangeNotifier {
       return;
     }
     if (isPlayingList == true) {
-      _playAllPlayer(_audioList, indexAudio: indexAudio);
+      lastAction = 'playAllPlayer';
+      await _playAllPlayer(_audioList, indexAudio: indexAudio);
     } else {
-      _clickPlayer(_audioList, indexAudio: indexAudio);
+      lastAction = 'clickPlayer';
+      await _clickPlayer(_audioList, indexAudio: indexAudio);
     }
   }
 
@@ -170,6 +174,10 @@ class SoundService extends ChangeNotifier {
   }
 
   Future<void> _startRecord() async {
+    idPlayingList = null;
+    isPlayingList = null;
+    idPlaying = null;
+    isRepeatAllList = false;
     await _record();
     _startTimer();
     soundIndex = 1;
@@ -195,7 +203,6 @@ class SoundService extends ChangeNotifier {
     }
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
-      // openAppSettings();
       throw 'Microphone permission not granted';
     }
 
@@ -224,7 +231,6 @@ class SoundService extends ChangeNotifier {
             isUtc: true);
         limit = e.duration.inSeconds;
         endOfSliderPosition = e.duration.inMilliseconds + 1000;
-        // audioDuration = e.duration.inMinutes;
         String txt = '$date';
         recorderTime = txt.substring(11, 19);
         recorderPower = vol / 10;
@@ -235,14 +241,11 @@ class SoundService extends ChangeNotifier {
   Future<void> stopRecorder() async {
     if (!isRecoderReady) return;
     path = await recorder.stopRecorder();
-    // final audiofile = File(
-    //     '/Users/iya/Library/Developer/CoreSimulator/Devices/BDB56019-77E1-49EC-BE1C-F9FEAEEAECF9/data/Containers/Data/Application/411BFBB0-4E40-43E2-8095-2178066F26C2/tmp/1651586582427.mp4');
     final audiofile = File(path!);
     url = audiofile.readAsBytesSync();
     recorder.onProgress!.listen((event) {}).cancel();
     recorder.closeRecorder();
     limit = 0;
-    // recorder.onProgress!.listen((event) {}).cancel();
     recorderTime = '00:00:00';
   }
 
@@ -260,7 +263,8 @@ class SoundService extends ChangeNotifier {
 
   Future<void> _startPlayer(AudioTale audio) async {
     final bool auth = FirebaseAuth.instance.currentUser == null;
-    // print('${path.path} && ${path.pathUrl}');
+    path = audio.path;
+    pathUrl = audio.pathUrl;
     try {
       if (audio.path != null) {
         final audiofile = File(audio.path!);
@@ -316,12 +320,14 @@ class SoundService extends ChangeNotifier {
     final int length = audioList.length;
     listIndex = index;
     final audio = audioList[listIndex];
-
+    path = audio.path;
+    pathUrl = audio.pathUrl;
     try {
       if (audio.path != null) {
         final audiofile = File(audio.path!);
         url = audiofile.readAsBytesSync();
         await audioPlayer.startPlayer(
+            // sampleRate: 160000,
             fromDataBuffer: url,
             codec: Codec.defaultCodec,
             whenFinished: () {
@@ -343,6 +349,7 @@ class SoundService extends ChangeNotifier {
 
       if (audio.pathUrl != null && audio.path == null && auth) {
         await audioPlayer.startPlayer(
+            // sampleRate: 160000,
             fromURI: audio.pathUrl,
             codec: Codec.defaultCodec,
             whenFinished: () {
@@ -376,12 +383,12 @@ class SoundService extends ChangeNotifier {
         endOfSliderPosition = event.duration.inMilliseconds;
         sliderPosition = event.position.inMilliseconds;
         endOfSliderPositionText = DateTime.fromMillisecondsSinceEpoch(
-                event.duration.abs().inMilliseconds - 1000,
+                event.duration.abs().inMilliseconds,
                 isUtc: true)
             .toString()
             .substring(11, 19);
         sliderPositionText = DateTime.fromMillisecondsSinceEpoch(
-                event.position.inMilliseconds,
+                event.position.inMilliseconds + 1000,
                 isUtc: true)
             .toString()
             .substring(11, 19);
@@ -420,7 +427,16 @@ class SoundService extends ChangeNotifier {
     if (audioPlayer.isPlaying || audioPlayer.isPaused) {
       await audioPlayer.seekToPlayer(Duration(milliseconds: d.floor()));
       if (audioPlayer.isStopped || audioPlayer.isPaused) {
-        await clickRecorder();
+        switch (lastAction) {
+          case 'playAllPlayer':
+            await _playAllPlayer(audioList, indexAudio: listIndex);
+            break;
+          case 'clickPlayer':
+            await _clickPlayer(audioList, indexAudio: listIndex);
+            break;
+          default:
+            await clickRecorder();
+        }
       }
     }
   }
@@ -442,6 +458,5 @@ class SoundService extends ChangeNotifier {
     endOfSliderPositionText = '00:00:01';
     size = null;
     audioTale = null;
-    isRepeatAllList = false;
   }
 }

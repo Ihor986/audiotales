@@ -719,6 +719,7 @@ class _PlayAllTalesButtonWidget extends StatelessWidget {
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
+                _soundService.isRepeatAllList = false;
                 context.read<AudioScreenBloc>().add(AudioScreenPlayAllEvent(
                       talesList: talesList,
                       selection: selection?.id,
