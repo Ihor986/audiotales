@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/texts_consts.dart';
 
 class MicrophonePermissionConfirmAlert {
   const MicrophonePermissionConfirmAlert._();
@@ -142,7 +141,7 @@ class _ConfirmButtonYes extends StatelessWidget {
         ),
         child: const Center(
             child: Text(
-          'Yes',
+          'Ok',
           style: TextStyle(color: CustomColors.white),
         )),
       ),

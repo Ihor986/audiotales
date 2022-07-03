@@ -15,7 +15,6 @@ import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../../selections_screen/bloc/selections_bloc.dart';
 import '../../../selections_screen/selections_screen.dart';
-import '../../sound_bloc/sound_bloc.dart';
 import '../play_record/play_record_progress.dart';
 
 class SaveRecord extends StatelessWidget {

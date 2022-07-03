@@ -10,7 +10,6 @@ import '../../utils/consts/custom_icons_img.dart';
 import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'custom_popup_menu_active_playlist.dart';
-import 'player_widget.dart';
 
 class ActiveTalesListWidget extends StatelessWidget {
   const ActiveTalesListWidget({
@@ -27,7 +26,6 @@ class ActiveTalesListWidget extends StatelessWidget {
         final TalesList _talesListRep =
             context.read<TalesListRepository>().getTalesListRepository();
         final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
-        print(_talesList.first.path);
         return Stack(
           children: [
             ListView.builder(

@@ -15,7 +15,6 @@ import '../../../../utils/consts/custom_icons_img.dart';
 import '../../../../utils/consts/texts_consts.dart';
 import '../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
-import '../../../../widgets/uncategorized/play_all_button.dart';
 import '../../../../widgets/uncategorized/player_widget.dart';
 import '../../audios_screen/bloc/audio_screen_bloc.dart';
 import '../../main_screen_block/main_screen_bloc.dart';

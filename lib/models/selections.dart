@@ -33,7 +33,6 @@ class SelectionsList {
     final String id = isAudioHaveCompilations ? audio.compilationsId.last : '';
     List<Selection> _selectionsList =
         selectionsList.where((element) => element.id == id).toList();
-    print(id);
 
     return _selectionsList.isNotEmpty ? _selectionsList.first : null;
   }

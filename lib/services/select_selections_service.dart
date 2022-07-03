@@ -41,9 +41,7 @@ class SelectSelectionsService {
       id: _id,
       selectionsId: selectionsIdList,
     );
-    print(_talesList.fullTalesList
-        .firstWhere((element) => element.id == _id)
-        .compilationsId);
+
     await DataBase.instance.saveAudioTales(_talesList);
     dispose();
   }
@@ -58,9 +56,6 @@ class SelectSelectionsService {
         id: item,
         selectionsId: selectionsIdList,
       );
-      print(_talesList.fullTalesList
-          .firstWhere((element) => element.id == item)
-          .compilationsId);
     }
     await DataBase.instance.saveAudioTales(_talesList);
     dispose();

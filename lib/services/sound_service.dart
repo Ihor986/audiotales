@@ -317,7 +317,6 @@ class SoundService extends ChangeNotifier {
       print(e);
     }
     idPlaying = audio.id;
-    print(idPlaying);
     notifyListeners();
   }
 

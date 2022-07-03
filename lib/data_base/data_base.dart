@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/audio.dart';
@@ -46,7 +45,6 @@ class DataBase {
   }
 
   TalesList getAudioTales() {
-    print('get');
     return _locaDB.getAudioTales();
   }
 
@@ -56,7 +54,6 @@ class DataBase {
   }
 
   Future<void> saveAudioTales(TalesList _talesList) async {
-    print('save');
     await _deleteOldAudio(talesList: _talesList);
     _locaDB.saveAudioTalesToLocalDB(_talesList);
     final LocalUser _user = _locaDB.getUser();

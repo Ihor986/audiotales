@@ -49,9 +49,8 @@ class CangeProfileService {
     } catch (e) {
       print(e);
     }
-    print('to fs');
+
     DataBase.instance.saveUser(localUser);
-    print('to fs');
   }
 
 ///////////////////////////

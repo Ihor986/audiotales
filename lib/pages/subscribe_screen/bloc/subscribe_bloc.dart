@@ -24,7 +24,7 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       (event, emit) {
         final int index = state.checkIndex;
         final LocalUser _user = event.user;
-        final List<Period> _periodList = [Period.Month, Period.Year];
+        final List<Period> _periodList = [Period.month, Period.year];
         _user.subscribe = timeTextConvertService.dayMonthYearSubscribe(
             period: _periodList.elementAt(index));
         DataBase.instance.saveUser(_user);

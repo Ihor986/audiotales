@@ -1,8 +1,8 @@
 import '../utils/consts/texts_consts.dart';
 
 enum Period {
-  Year,
-  Month,
+  year,
+  month,
 }
 
 class TimeTextConvertService {
@@ -77,7 +77,7 @@ class TimeTextConvertService {
       dm = 31;
     }
 
-    if (period == Period.Year) {
+    if (period == Period.year) {
       return DateTime.now().add(Duration(days: dy)).toString();
     } else {
       return DateTime.now().add(Duration(days: dm)).toString();
