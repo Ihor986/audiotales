@@ -262,26 +262,45 @@ class SoundService extends ChangeNotifier {
   }
 
   Future<void> _startPlayer(AudioTale audio) async {
-    final bool auth = FirebaseAuth.instance.currentUser == null;
+    final bool _isAuth = FirebaseAuth.instance.currentUser != null;
     path = audio.path;
     pathUrl = audio.pathUrl;
     try {
-      if (audio.path != null) {
-        final audiofile = File(audio.path!);
-        url = audiofile.readAsBytesSync();
-        await audioPlayer.startPlayer(
-          fromDataBuffer: url,
-          codec: Codec.defaultCodec,
-          whenFinished: () {
-            idPlaying = null;
-            idPlayingList = null;
-            isPlayingList = null;
-            notifyListeners();
-          },
-        );
+      try {
+        if (audio.path != null) {
+          final audiofile = File(audio.path!);
+          url = audiofile.readAsBytesSync();
+          await audioPlayer.startPlayer(
+            fromDataBuffer: url,
+            codec: Codec.defaultCodec,
+            whenFinished: () {
+              idPlaying = null;
+              idPlayingList = null;
+              isPlayingList = null;
+              notifyListeners();
+            },
+          );
+        }
+      } catch (_) {
+        try {
+          if (audio.pathUrl != null && _isAuth) {
+            await audioPlayer.startPlayer(
+              fromURI: audio.pathUrl,
+              codec: Codec.defaultCodec,
+              whenFinished: () {
+                idPlaying = null;
+                idPlayingList = null;
+                isPlayingList = null;
+                notifyListeners();
+              },
+            );
+          }
+        } catch (_) {
+          playNextTreck();
+        }
       }
 
-      if (audio.pathUrl != null && audio.path == null && !auth) {
+      if (audio.pathUrl != null && audio.path == null && _isAuth) {
         await audioPlayer.startPlayer(
           fromURI: audio.pathUrl,
           codec: Codec.defaultCodec,
@@ -317,38 +336,67 @@ class SoundService extends ChangeNotifier {
 
   Future<void> _startAllAudioPlayer(
       List<AudioTale> audioList, int index) async {
-    final bool auth = FirebaseAuth.instance.currentUser != null;
+    final bool _isAuth = FirebaseAuth.instance.currentUser != null;
     final int length = audioList.length;
     listIndex = index;
     final audio = audioList[listIndex];
     path = audio.path;
     pathUrl = audio.pathUrl;
     try {
-      if (audio.path != null) {
-        final audiofile = File(audio.path!);
-        url = audiofile.readAsBytesSync();
-        await audioPlayer.startPlayer(
-            // sampleRate: 160000,
-            fromDataBuffer: url,
-            codec: Codec.defaultCodec,
-            whenFinished: () {
-              idPlaying = null;
-              notifyListeners();
-              listIndex++;
-              if (listIndex < length) {
-                _startAllAudioPlayer(audioList, listIndex);
-              } else if (listIndex == length && isRepeatAllList) {
-                listIndex = 0;
-                _startAllAudioPlayer(audioList, listIndex);
-              } else {
-                idPlayingList = null;
-                isPlayingList = null;
+      try {
+        if (audio.path != null) {
+          final audiofile = File(audio.path!);
+          url = audiofile.readAsBytesSync();
+          await audioPlayer.startPlayer(
+              // sampleRate: 160000,
+              fromDataBuffer: url,
+              codec: Codec.defaultCodec,
+              whenFinished: () {
+                idPlaying = null;
                 notifyListeners();
-              }
-            });
+                listIndex++;
+                if (listIndex < length) {
+                  _startAllAudioPlayer(audioList, listIndex);
+                } else if (listIndex == length && isRepeatAllList) {
+                  listIndex = 0;
+                  _startAllAudioPlayer(audioList, listIndex);
+                } else {
+                  idPlayingList = null;
+                  isPlayingList = null;
+                  notifyListeners();
+                }
+              });
+        }
+      } catch (_) {
+        try {
+          if (audio.pathUrl != null && _isAuth) {
+            await audioPlayer.startPlayer(
+                // sampleRate: 160000,
+                fromURI: audio.pathUrl,
+                codec: Codec.defaultCodec,
+                whenFinished: () {
+                  idPlaying = null;
+                  notifyListeners();
+                  listIndex++;
+                  if (listIndex < length) {
+                    _startAllAudioPlayer(audioList, listIndex);
+                  } else if (listIndex == length && isRepeatAllList) {
+                    listIndex = 0;
+                    _startAllAudioPlayer(audioList, listIndex);
+                  } else {
+                    idPlayingList = null;
+                    isPlayingList = null;
+                    notifyListeners();
+                  }
+                });
+          }
+        } catch (_) {
+          listIndex++;
+          _startAllAudioPlayer(audioList, listIndex);
+        }
       }
 
-      if (audio.pathUrl != null && audio.path == null && auth) {
+      if (audio.pathUrl != null && audio.path == null && _isAuth) {
         await audioPlayer.startPlayer(
             // sampleRate: 160000,
             fromURI: audio.pathUrl,
