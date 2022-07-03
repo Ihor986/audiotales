@@ -65,7 +65,7 @@ class AudioTale {
       'compilationsId': compilationsId.map((e) => e).toList(),
       'isDeleted': isDeleted,
       'deletedDate': deletedDate,
-      'updateDate': updateDate,
+      'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
     };
   }
 
@@ -79,7 +79,7 @@ class AudioTale {
         'compilationsId': compilationsId,
         'isDeleted': isDeleted,
         'deletedDate': deletedDate,
-        'updateDate': updateDate,
+        'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
       };
 
   String getDeleteDate() {
@@ -87,8 +87,11 @@ class AudioTale {
   }
 
   void updateFromFB(AudioTale newAudio) {
-    name = newAudio.name;
+    final int newUpdate = int.parse(newAudio.updateDate ?? '0');
+    final int oldUpdate = int.parse(updateDate ?? '0');
     pathUrl = newAudio.pathUrl;
+    if (newUpdate <= oldUpdate) return;
+    name = newAudio.name;
     compilationsId = newAudio.compilationsId;
     isDeleted = newAudio.isDeleted;
     deletedDate = newAudio.deletedDate;

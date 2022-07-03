@@ -46,12 +46,25 @@ class TalesList {
     return delitedTalesListRep.reversed.toList();
   }
 
-  List<AudioTale> getCompilation(String value) {
-    return fullTalesList
-        .where((element) =>
-            element.compilationsId.contains(value) &&
-            element.isDeleted == false)
-        .toList();
+  List<AudioTale> getCompilation({required String id}) {
+    final bool auth = FirebaseAuth.instance.currentUser != null;
+    if (auth) {
+      List<AudioTale> _compilationTalesList = fullTalesList.where((element) {
+        bool isPath = element.path != null || element.pathUrl != null;
+        bool isNotDeleted = !element.isDeleted;
+        bool isFromCompilation = element.compilationsId.contains(id);
+        return isPath && isNotDeleted && isFromCompilation;
+      }).toList();
+      return _compilationTalesList;
+    } else {
+      List<AudioTale> _compilationTalesList = fullTalesList.where((element) {
+        bool isPath = element.path != null;
+        bool isNotDeleted = !element.isDeleted;
+        bool isFromCompilation = element.compilationsId.contains(id);
+        return isPath && isNotDeleted && isFromCompilation;
+      }).toList();
+      return _compilationTalesList;
+    }
   }
 
   AudioTale? getAudio(String id) {
@@ -119,37 +132,44 @@ class TalesList {
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
-    List listJson = snapshot.data()?['talesList'];
-    List<AudioTale> tList =
-        listJson.map((e) => AudioTale.fromFirestore(e)).toList();
+    List _listJson = snapshot.data()?['talesList'];
+    List<AudioTale> _fromFirestoreList =
+        _listJson.map((e) => AudioTale.fromFirestore(e)).toList();
+
     return TalesList(
-      fullTalesList: tList,
+      fullTalesList: _fromFirestoreList,
     );
   }
 
   Map<String, dynamic> toFirestore() {
+    final List<AudioTale> _tList =
+        fullTalesList.where((e) => e.pathUrl != null).toList();
+
     return {
-      'talesList': fullTalesList.map((e) => e.toFirestore()).toList(),
+      'talesList': _tList.map((e) => e.toFirestore()).toList(),
     };
   }
 
   void updateTalesList({required TalesList newTalesList}) {
-    List<String> list1 = [];
-    for (var e in fullTalesList) {
-      final int oldUpdate = int.parse(e.updateDate ?? '0');
+    final List<AudioTale> _localList =
+        fullTalesList.where((element) => element.path != null).toList();
+    List<String> _listLocalId = [];
+    for (var e in _localList) {
+      e.pathUrl = null;
       final AudioTale newAudio = newTalesList.fullTalesList
           .firstWhere((element) => element.id == e.id, orElse: () => e);
-      final int newUpdate = int.parse(newAudio.updateDate ?? '0');
-      if (newUpdate > oldUpdate) {
-        e.updateFromFB(newAudio);
-      }
+      e.updateFromFB(newAudio);
 
-      list1.add(e.id);
+      _listLocalId.add(e.id);
     }
-    List<AudioTale> list = newTalesList.fullTalesList
-        .where((e) => list1.contains(e.id) ? false : true)
+    List<AudioTale> _fireBaselist = newTalesList.fullTalesList
+        .where((e) => _listLocalId.contains(e.id) ? false : true)
         .toList();
-    fullTalesList.addAll(list);
+    fullTalesList.clear();
+    fullTalesList.addAll(_localList);
+    fullTalesList.addAll(_fireBaselist);
+    fullTalesList.sort((b, a) => int.parse(a.id.substring(0, a.id.length - 4))
+        .compareTo(int.parse(b.id.substring(0, b.id.length - 4))));
   }
 
   void removeAudioToDeleted({

@@ -1,5 +1,4 @@
 import 'package:audiotales/models/audio.dart';
-import 'package:audiotales/models/tales_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SelectionsList {
@@ -70,19 +69,18 @@ class SelectionsList {
   void updateSelectionsList({required SelectionsList newSelectionsList}) {
     List<String> list1 = [];
     for (var e in selectionsList) {
-      final int oldUpdate = int.parse(e.updateDate ?? '0');
+      e.photoUrl = null;
       final Selection newSelection = newSelectionsList.selectionsList
           .firstWhere((element) => element.id == e.id, orElse: () => e);
-      final int newUpdate = int.parse(newSelection.updateDate ?? '0');
-      if (newUpdate >= oldUpdate) {
-        e.updateFromFB(newSelection);
-      }
+      e.updateFromFB(newSelection);
       list1.add(e.id);
     }
     List<Selection> list = newSelectionsList.selectionsList
         .where((e) => list1.contains(e.id) ? false : true)
         .toList();
     selectionsList.addAll(list);
+    selectionsList
+        .sort((b, a) => int.parse(a.date).compareTo(int.parse(b.date)));
   }
 }
 
@@ -114,6 +112,10 @@ class Selection {
   }
 
   void updateFromFB(Selection selection) {
+    final int newUpdate = int.parse(selection.updateDate ?? '0');
+    final int oldUpdate = int.parse(updateDate ?? '0');
+    photoUrl = selection.photoUrl;
+    if (newUpdate <= oldUpdate) return;
     name = selection.name;
     photoUrl = selection.photoUrl;
     description = selection.description;
@@ -139,7 +141,7 @@ class Selection {
         'photo': photo,
         'photoUrl': photoUrl,
         'description': description,
-        'updateDate': updateDate,
+        'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
       };
 
   factory Selection.fromFirestore(Map<String, dynamic> json) {
@@ -161,6 +163,6 @@ class Selection {
         // 'photo': photo,
         'photoUrl': photoUrl,
         'description': description,
-        'updateDate': updateDate,
+        'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
       };
 }

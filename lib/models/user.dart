@@ -74,19 +74,8 @@ class LocalUser {
   }
 
   updateUser({required LocalUser newUser}) {
-    if (newUser.updateDate == null) {
-      return;
-    }
-    if (updateDate != null) {
-      if (updateDate! > newUser.updateDate!) {
-        return;
-      }
-    }
-
-    // if (photo != null) {
-    //   File(photo!).delete();
-    //   photo = null;
-    // }
+    if (newUser.updateDate == null || updateDate == null) return;
+    if (updateDate! > newUser.updateDate!) return;
     photoUrl = newUser.photoUrl;
     name = newUser.name;
     subscribe = newUser.subscribe;

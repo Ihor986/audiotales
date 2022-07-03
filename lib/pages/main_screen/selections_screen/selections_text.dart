@@ -94,7 +94,7 @@ class WrapSelectionsListTextData extends StatelessWidget {
         .substring(12, 16);
 
     String textAudio =
-        _talesList.getCompilation(selection.id).length.toString() +
+        _talesList.getCompilation(id: selection.id).length.toString() +
             TextsConst.selectionAudioText;
 
     String textTime = _selectionFullTime +

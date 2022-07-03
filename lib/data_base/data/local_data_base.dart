@@ -78,9 +78,9 @@ class LocalDB {
   }
 
   void deleteAudioTaleFromLocalDB(AudioTale audioTale) {
-    if (audioTale.path == null) {
-      return;
-    }
-    File(audioTale.path!).delete();
+    if (audioTale.path == null) return;
+    try {
+      File(audioTale.path!).delete();
+    } catch (_) {}
   }
 }

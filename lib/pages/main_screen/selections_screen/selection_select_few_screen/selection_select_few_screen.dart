@@ -149,7 +149,8 @@ class _Action extends StatelessWidget {
                   value: () {
                     context.read<MainScreenBloc>().add(
                           ShareAudiosEvent(
-                            audioList: talesList.getCompilation(selection.id),
+                            audioList:
+                                talesList.getCompilation(id: selection.id),
                             idList: _selectionsBloc
                                 .changeSelectionService.checkedList,
                             name: selection.name,
@@ -227,7 +228,7 @@ class _BodySelectionScreen extends StatelessWidget {
     final List<AudioTale> talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository()
-            .getCompilation(selection.id);
+            .getCompilation(id: selection.id);
 
     Size screen = MediaQuery.of(context).size;
     return Stack(
@@ -495,7 +496,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
         final List<AudioTale> _talesList =
             RepositoryProvider.of<TalesListRepository>(context)
                 .getTalesListRepository()
-                .getCompilation(selection.id);
+                .getCompilation(id: selection.id);
         List<String> checkedList =
             _selectionsBloc.changeSelectionService.checkedList;
         return SizedBox(

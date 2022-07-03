@@ -154,7 +154,8 @@ class _Action extends StatelessWidget {
                   value: () {
                     context.read<MainScreenBloc>().add(
                           ShareAudiosEvent(
-                            audioList: talesList.getCompilation(selection.id),
+                            audioList:
+                                talesList.getCompilation(id: selection.id),
                             name: selection.name,
                           ),
                         );

@@ -39,7 +39,7 @@ class BodySelectionScreen extends StatelessWidget {
     if (selection != null) {
       talesList = RepositoryProvider.of<TalesListRepository>(context)
           .getTalesListRepository()
-          .getCompilation(selection!.id);
+          .getCompilation(id: selection!.id);
     } else {
       talesList = [];
     }

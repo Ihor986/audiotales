@@ -294,6 +294,7 @@ class SoundService extends ChangeNotifier {
         );
       }
     } catch (e) {
+      playNextTreck();
       print(e);
     }
     idPlaying = audio.id;
