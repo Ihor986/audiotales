@@ -68,6 +68,17 @@ class SelectSelectionsEvent extends SelectionsEvent {
   final AudioTale audio;
 }
 
+class RemoveFromSelectionEvent extends SelectionsEvent {
+  RemoveFromSelectionEvent({
+    required this.audio,
+    required this.talesList,
+    required this.selectionId,
+  });
+  final AudioTale? audio;
+  final TalesList talesList;
+  final String selectionId;
+}
+
 class SelectSelectionsForListAudiosEvent extends SelectionsEvent {}
 
 class CheckSelectionEvent extends SelectionsEvent {

@@ -168,13 +168,21 @@ class _Action extends StatelessWidget {
                 PopupMenuItem(
                   child: const Text('Удалить все'),
                   value: () {
-                    RemoveToDeletedConfirm.instance.deletedConfirm(
-                      screen: screen,
-                      context: context,
-                      idList:
-                          _selectionsBloc.changeSelectionService.checkedList,
-                      talesList: talesList,
-                    );
+                    print('kkkk');
+                    context.read<SelectionsBloc>().add(
+                          RemoveFromSelectionEvent(
+                            audio: null,
+                            talesList: talesList,
+                            selectionId: selection.id,
+                          ),
+                        );
+                    // RemoveToDeletedConfirm.instance.deletedConfirm(
+                    //   screen: screen,
+                    //   context: context,
+                    //   idList:
+                    //       _selectionsBloc.changeSelectionService.checkedList,
+                    //   talesList: talesList,
+                    // );
                   },
                 ),
               ],

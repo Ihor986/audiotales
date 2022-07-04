@@ -172,7 +172,7 @@ class TalesList {
         .compareTo(int.parse(b.id.substring(0, b.id.length - 4))));
   }
 
-  void removeAudioToDeleted({
+  void removeAudiosToDeleted({
     required List<String> idList,
   }) {
     for (var id in idList) {
@@ -189,6 +189,16 @@ class TalesList {
       if (audio.id == id) {
         audio.updateAudio(nIsDeleted: true);
       }
+    }
+  }
+
+  void removeAudiosFromSelections({
+    required List<String> idList,
+    required String selectionId,
+  }) {
+    for (var audio in fullTalesList) {
+      if (!idList.contains(audio.id)) continue;
+      audio.compilationsId.remove(selectionId);
     }
   }
 

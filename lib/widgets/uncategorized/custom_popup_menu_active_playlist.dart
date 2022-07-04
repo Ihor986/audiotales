@@ -47,9 +47,11 @@ class CustomPopUpMenu extends StatelessWidget {
         PopupMenuItem(
           child: const Text('Добавить в подборку'),
           value: () {
-            context.read<SelectionsBloc>().add(SelectSelectionsEvent(
-                  audio: audio,
-                ));
+            context.read<SelectionsBloc>().add(
+                  SelectSelectionsEvent(
+                    audio: audio,
+                  ),
+                );
             Navigator.pushNamed(
               context,
               SelectionsScreen.routeName,

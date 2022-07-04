@@ -42,7 +42,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     on<RemoveToDeleteAudioEvent>(
       (event, emit) async {
         final TalesList _talesList = event.talesList;
-        _talesList.removeAudioToDeleted(idList: event.idList);
+        _talesList.removeAudiosToDeleted(idList: event.idList);
         await DataBase.instance.saveAudioTales(_talesList);
         emit(MainScreenState());
       },

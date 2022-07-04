@@ -22,27 +22,26 @@ class SelectSelectionsService {
     required TalesList fullTalesList,
   }) async {
     if (audio != null) {
-      _addSelectionsToAudio(fullTalesList: fullTalesList);
+      print(audio?.name);
+      await _addSelectionsToAudio(fullTalesList: fullTalesList);
     }
     if (audioList != null) {
-      _addSelectionsToAudios(fullTalesList: fullTalesList);
+      await _addSelectionsToAudios(fullTalesList: fullTalesList);
+      print('audioList!.');
     }
   }
 
   Future<void> _addSelectionsToAudio({
     required TalesList fullTalesList,
   }) async {
-    // print(audio);
     if (audio == null) return;
-    // if (audio!.isEmpty) return;
-    final TalesList _talesList = fullTalesList;
     final String _id = audio!.id;
-    _talesList.changeAudioSelectionsId(
+    fullTalesList.changeAudioSelectionsId(
       id: _id,
       selectionsId: selectionsIdList,
     );
 
-    await DataBase.instance.saveAudioTales(_talesList);
+    await DataBase.instance.saveAudioTales(fullTalesList);
     dispose();
   }
 
@@ -50,14 +49,13 @@ class SelectSelectionsService {
     required TalesList fullTalesList,
   }) async {
     if (audioList!.isEmpty) return;
-    final TalesList _talesList = fullTalesList;
     for (var item in audioList!) {
-      _talesList.addNewAudioSelectionsId(
+      fullTalesList.addNewAudioSelectionsId(
         id: item,
         selectionsId: selectionsIdList,
       );
     }
-    await DataBase.instance.saveAudioTales(_talesList);
+    await DataBase.instance.saveAudioTales(fullTalesList);
     dispose();
   }
 

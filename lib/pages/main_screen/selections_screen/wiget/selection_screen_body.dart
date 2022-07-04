@@ -7,6 +7,7 @@ import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../models/audio.dart';
 import '../../../../models/selections.dart';
+import '../../../../models/tales_list.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
 import '../../../../services/sound_service.dart';
@@ -14,6 +15,7 @@ import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons_img.dart';
 import '../../../../utils/consts/texts_consts.dart';
 import '../../../../widgets/texts/audio_list_text/audio_list_text.dart';
+import '../../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/player_widget.dart';
 import '../../audios_screen/bloc/audio_screen_bloc.dart';
@@ -21,6 +23,7 @@ import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selection_screen/selection_screen_widgets/text_selection_screen.dart';
+import '../selections_screen.dart';
 import '../selections_text.dart';
 
 class BodySelectionScreen extends StatelessWidget {
@@ -94,8 +97,11 @@ class BodySelectionScreen extends StatelessWidget {
                 : Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
+                      // child: ActiveTalesListWidget(
+                      //   color: CustomColors.oliveSoso,
+                      // ),
                       child: _TalesListWidget(
-                        talesList: talesList,
+                        selection: selection,
                         isDisactive: !readOnly,
                         color: CustomColors.oliveSoso,
                         icon: CustomIconsImg.moreHorizontRounded,
@@ -514,13 +520,13 @@ class _FullTextInput extends StatelessWidget {
 class _TalesListWidget extends StatelessWidget {
   const _TalesListWidget({
     Key? key,
-    required this.talesList,
+    required this.selection,
     required this.color,
     required this.icon,
     // required this.onTap,
     this.isDisactive,
   }) : super(key: key);
-  final List<AudioTale> talesList;
+  final Selection? selection;
   final bool? isDisactive;
   // final void Function() onTap;
   final String icon;
@@ -530,14 +536,17 @@ class _TalesListWidget extends StatelessWidget {
     return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
         Size screen = MediaQuery.of(context).size;
-        // final TalesList _talesListRep =
-        //     RepositoryProvider.of<TalesListRepository>(context)
-        //         .getTalesListRepository();
-        // final MainScreenBloc _mainScreenBloc =
-        //     BlocProvider.of<MainScreenBloc>(context);
+        final TalesList _talesListRep =
+            RepositoryProvider.of<TalesListRepository>(context)
+                .getTalesListRepository();
+        final List<AudioTale> talesList;
+        if (selection != null) {
+          talesList = _talesListRep.getCompilation(id: selection!.id);
+        } else {
+          talesList = [];
+        }
         return ListView.builder(
           itemCount: talesList.length,
-          // itemCount: 10,
           itemBuilder: (_, i) {
             return Padding(
               padding: EdgeInsets.all(screen.height * 0.005),
@@ -552,28 +561,23 @@ class _TalesListWidget extends StatelessWidget {
                           i: i,
                           talesList: talesList,
                         ),
-                        // IconButton(
-                        //   onPressed: () {
-                        //     if (isDisactive == true) {
-                        //       return;
-                        //     }
-                        //     _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
-                        //   },
-                        //   icon: SvgPicture.asset(
-                        //     CustomIconsImg.playSVG,
-                        //     color: color,
-                        //   ),
-                        //   iconSize: screen.height * 0.05,
-                        // ),
                         SizedBox(
                           width: screen.width * 0.05,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(talesList[i].name),
-                            AudioListText(audio: talesList.elementAt(i)),
-                          ],
+                        SizedBox(
+                          height: screen.height * 0.07,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AudioListNameText(
+                                audio: talesList.elementAt(i),
+                              ),
+                              AudioListText(
+                                audio: talesList.elementAt(i),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -591,19 +595,50 @@ class _TalesListWidget extends StatelessWidget {
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                 child: const Text('Переименовать'),
-                                value: () {},
+                                value: () {
+                                  context
+                                      .read<MainScreenBloc>()
+                                      .add(ChangeAudioNameEvent(
+                                        audio: talesList.elementAt(i),
+                                      ));
+                                },
                               ),
                               PopupMenuItem(
                                 child: const Text('Добавить в подборку'),
-                                value: () {},
+                                value: () {
+                                  context
+                                      .read<SelectionsBloc>()
+                                      .add(SelectSelectionsEvent(
+                                        audio: talesList.elementAt(i),
+                                      ));
+                                  Navigator.pushNamed(
+                                    context,
+                                    SelectionsScreen.routeName,
+                                  );
+                                },
                               ),
                               PopupMenuItem(
                                 child: const Text('Удалить '),
-                                value: () {},
+                                value: () {
+                                  if (selection == null) return;
+                                  context.read<SelectionsBloc>().add(
+                                        RemoveFromSelectionEvent(
+                                          audio: talesList.elementAt(i),
+                                          talesList: _talesListRep,
+                                          selectionId: selection!.id,
+                                        ),
+                                      );
+                                },
                               ),
                               PopupMenuItem(
                                 child: const Text('Поделиться'),
-                                value: () {},
+                                value: () {
+                                  context.read<MainScreenBloc>().add(
+                                        ShareAudioEvent(
+                                          audio: talesList.elementAt(i),
+                                        ),
+                                      );
+                                },
                               ),
                             ],
                             onSelected: (Function value) {

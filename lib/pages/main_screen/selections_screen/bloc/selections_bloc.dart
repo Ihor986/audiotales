@@ -140,6 +140,20 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       },
     );
 
+    on<RemoveFromSelectionEvent>(
+      (event, emit) async {
+        final TalesList _talesList = event.talesList;
+        final List<String>? _audioList = event.audio == null
+            ? changeSelectionService.checkedList
+            : [event.audio!.id];
+        if (_audioList == null || _audioList == []) return;
+        _talesList.removeAudiosFromSelections(
+            idList: _audioList, selectionId: event.selectionId);
+        await DataBase.instance.saveAudioTales(_talesList);
+        emit(SelectionsState());
+      },
+    );
+
     on<DeleteSelectionEvent>(
       (event, emit) async {
         final SelectionsList selectionsList = event.selectionsList;
