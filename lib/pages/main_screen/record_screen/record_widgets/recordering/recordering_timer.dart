@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons.dart';
 import '../../sound_bloc/sound_bloc.dart';
@@ -35,10 +36,9 @@ class _RecorderingTimerState extends State<RecorderingTimer> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ImageIcon(
+          SvgPicture.asset(
             CustomIconsImg.ellipseRad,
             color: CustomColors.red,
-            size: screen.width * 0.02,
           ),
           SizedBox(
             width: screen.width * 0.02,

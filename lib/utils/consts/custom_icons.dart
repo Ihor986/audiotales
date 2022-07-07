@@ -29,9 +29,8 @@ class CustomIconsImg {
   static const String forwardVector = "assets/icons/forwardVector.svg";
   static const String plus15 = "assets/icons/plus_15.svg";
   static const String minus15 = "assets/icons/minus_15.svg";
+  static const String ellipseRad = "assets/icons/EllipseRed.svg";
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  static const AssetImage ellipseRad =
-      AssetImage("assets/icons/EllipseRed.png");
   static const AssetImage line = AssetImage("assets/icons/Rectangle.png");
   static const AssetImage powerLine = AssetImage("assets/icons/audioLine.png");
   static const AssetImage powerLine1 =
