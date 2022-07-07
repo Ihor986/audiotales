@@ -43,10 +43,10 @@ class PlayRecordUpbarButtons extends StatelessWidget {
                           ),
                         );
                   },
-                  icon: const ImageIcon(
+                  icon: SvgPicture.asset(
                     CustomIconsImg.share,
-                    size: 25,
                     color: CustomColors.iconsColorPlayRecUpbar,
+                    height: 25,
                   ),
                 ),
                 IconButton(
