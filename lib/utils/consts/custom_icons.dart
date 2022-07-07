@@ -30,25 +30,15 @@ class CustomIconsImg {
   static const String plus15 = "assets/icons/plus_15.svg";
   static const String minus15 = "assets/icons/minus_15.svg";
   static const String ellipseRad = "assets/icons/EllipseRed.svg";
+  static const String power0 = "assets/icons/power0svg.svg";
+  static const String power1 = "assets/icons/power1.svg";
+  static const String power2 = "assets/icons/power2.svg";
+  static const String power3 = "assets/icons/power3.svg";
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  static const AssetImage line = AssetImage("assets/icons/Rectangle.png");
-  static const AssetImage powerLine = AssetImage("assets/icons/audioLine.png");
-  static const AssetImage powerLine1 =
-      AssetImage("assets/icons/audioLine1.png");
-  static const AssetImage powerLine2 =
-      AssetImage("assets/icons/audioLine2.png");
-  static const AssetImage powerLine3 =
-      AssetImage("assets/icons/audioLine3.png");
-  static const AssetImage powerLine4 =
-      AssetImage("assets/icons/audioLine4.png");
-  static const AssetImage powerLine5 =
-      AssetImage("assets/icons/audioLine5.png");
-  static const AssetImage powerLine6 =
-      AssetImage("assets/icons/audioLine6.png");
-  static const AssetImage power0 = AssetImage("assets/icons/power0.png");
-  static const AssetImage power1 = AssetImage("assets/icons/power1.png");
-  static const AssetImage power2 = AssetImage("assets/icons/power2.png");
-  static const AssetImage power3 = AssetImage("assets/icons/power3.png");
+  // static const AssetImage power0 = AssetImage("assets/icons/power0.png");
+  // static const AssetImage power1 = AssetImage("assets/icons/power1.png");
+  // static const AssetImage power2 = AssetImage("assets/icons/power2.png");
+  // static const AssetImage power3 = AssetImage("assets/icons/power3.png");
   static const String delete = "assets/icons/delete.svg";
   static const AssetImage share = AssetImage("assets/icons/share.png");
   static const AssetImage download = AssetImage("assets/icons/download.png");

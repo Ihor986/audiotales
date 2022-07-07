@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:audiotales/utils/consts/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../utils/consts/custom_icons.dart';
 import '../../sound_bloc/sound_bloc.dart';
 
@@ -37,12 +38,15 @@ class _RecorderingAnimationState extends State<RecorderingAnimation> {
         stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
         builder: (context, snapshot) {
           if (_soundBloc.sound.recorder.isRecording) {
-            children.add(Image(
-              image: context.read<SoundBloc>().sound.recorderPower.round() > 10
-                  ? lines[10]
-                  : lines[_soundBloc.sound.recorderPower.round()],
-              height: screen.height * 0.1,
-            ));
+            children.add(
+              SvgPicture.asset(
+                context.read<SoundBloc>().sound.recorderPower.round() > 10
+                    ? lines[10]
+                    : lines[_soundBloc.sound.recorderPower.round()],
+                color: CustomColors.black,
+                height: screen.height * 0.1,
+              ),
+            );
             if (children.length > 45) {
               children.removeAt(0);
             }

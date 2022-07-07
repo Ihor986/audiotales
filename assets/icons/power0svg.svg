@@ -1,0 +1,7 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 280" width="20" height="280">
+	<title>power0</title>
+	<defs>
+		<image  width="20" height="8" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAIAQMAAADDU02uAAAAAXNSR0IB2cksfwAAAANQTFRFOjpVsC4mngAAAAtJREFUeJxjYMAPAAAgAAE0W6NhAAAAAElFTkSuQmCC"/>
+	</defs>
+	<use id="Background" href="#img1" x="0" y="136"/>
+</svg>
