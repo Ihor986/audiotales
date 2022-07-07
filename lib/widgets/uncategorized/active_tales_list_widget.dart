@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../models/audio.dart';
 import '../../models/tales_list.dart';
 import '../../repositorys/tales_list_repository.dart';
-import '../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/custom_icons.dart';
 import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'custom_popup_menu_active_playlist.dart';

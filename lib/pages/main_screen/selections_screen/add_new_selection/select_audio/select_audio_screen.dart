@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../models/audio.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../utils/consts/custom_icons.dart';
 import '../../../../../utils/consts/texts_consts.dart';
 import '../../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';

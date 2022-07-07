@@ -1,7 +1,8 @@
 // import 'package:audiotales/utils/consts/colors.dart';
-import 'package:audiotales/utils/consts/custom_icons_img.dart';
+import 'package:audiotales/utils/consts/custom_icons.dart';
 import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utils/consts/custom_colors.dart';
 
@@ -234,9 +235,9 @@ Widget noTales(screenHeight) => Center(
             SizedBox(
               height: screenHeight * 0.1,
             ),
-            const ImageIcon(
+            SvgPicture.asset(
               CustomIconsImg.arrowDown,
-              size: 37,
+              height: 37,
               color: CustomColors.noTalesText,
             ),
           ],

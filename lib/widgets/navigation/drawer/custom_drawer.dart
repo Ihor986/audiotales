@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../pages/income_screen/new_user/registration_page.dart';
 import '../../../services/mailto_service.dart';
-import '../../../utils/consts/custom_icons_img.dart';
+import '../../../utils/consts/custom_icons.dart';
 import '../../../utils/consts/texts_consts.dart';
 import 'drawer_text.dart';
 

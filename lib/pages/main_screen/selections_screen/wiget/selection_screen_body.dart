@@ -12,7 +12,7 @@ import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
 import '../../../../services/sound_service.dart';
 import '../../../../utils/consts/custom_colors.dart';
-import '../../../../utils/consts/custom_icons_img.dart';
+import '../../../../utils/consts/custom_icons.dart';
 import '../../../../utils/consts/texts_consts.dart';
 import '../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../widgets/uncategorized/active_tales_list_widget.dart';

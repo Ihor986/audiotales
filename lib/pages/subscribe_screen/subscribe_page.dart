@@ -7,7 +7,7 @@ import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../repositorys/user_reposytory.dart';
-import '../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/custom_icons.dart';
 import '../../utils/consts/texts_consts.dart';
 import 'bloc/subscribe_bloc.dart';
 

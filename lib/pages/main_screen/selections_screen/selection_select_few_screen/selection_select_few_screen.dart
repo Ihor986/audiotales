@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../models/selections.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../utils/consts/custom_icons.dart';
 import '../../../../models/audio.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';

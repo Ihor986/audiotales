@@ -4,13 +4,15 @@ import 'package:audiotales/models/selections.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../models/audio.dart';
 import '../../../../../models/tales_list.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../utils/consts/custom_icons.dart';
+import '../../../../../utils/consts/custom_img.dart';
 import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../../selections_screen/bloc/selections_bloc.dart';
@@ -300,7 +302,7 @@ class _SavePagePlayRecordButtons extends StatelessWidget {
       foregroundDecoration: const BoxDecoration(
         image: DecorationImage(
           alignment: Alignment.center,
-          image: CustomIconsImg.play,
+          image: CustomImg.play,
           fit: BoxFit.fitHeight,
         ),
       ),
@@ -313,9 +315,9 @@ class _SavePagePlayRecordButtons extends StatelessWidget {
               onPressed: () {
                 _player.add(Rewind15Event(-15));
               },
-              icon: const ImageIcon(
+              icon: SvgPicture.asset(
                 CustomIconsImg.minus15,
-                size: 25,
+                // color: CustomColors.black,
               ),
             ),
             IconButton(
@@ -331,9 +333,10 @@ class _SavePagePlayRecordButtons extends StatelessWidget {
               onPressed: () {
                 _player.add(Rewind15Event(15));
               },
-              icon: const ImageIcon(
+              icon: SvgPicture.asset(
                 CustomIconsImg.plus15,
-                size: 25,
+                // height: 250,
+                // color: CustomColors.black,
               ),
             ),
           ],

@@ -5,12 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
-import '../utils/consts/custom_icons_img.dart';
+import '../utils/consts/custom_icons.dart';
+import '../utils/consts/custom_img.dart';
 
 class SoundService extends ChangeNotifier {
   SoundService._();
@@ -447,9 +449,9 @@ class SoundService extends ChangeNotifier {
   AssetImage getNavImg() {
     AssetImage mic;
     if (soundIndex == 0) {
-      mic = CustomIconsImg.mic2;
+      mic = CustomImg.mic2;
     } else {
-      mic = CustomIconsImg.mic3;
+      mic = CustomImg.mic3;
     }
     return mic;
   }

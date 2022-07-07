@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../utils/consts/custom_icons.dart';
+import '../../../../../utils/consts/custom_img.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../sound_bloc/sound_bloc.dart';
 
@@ -18,7 +20,7 @@ class PlayRecordButtons extends StatelessWidget {
       foregroundDecoration: const BoxDecoration(
         image: DecorationImage(
           alignment: Alignment.center,
-          image: CustomIconsImg.play,
+          image: CustomImg.play,
           fit: BoxFit.fitHeight,
         ),
       ),
@@ -31,10 +33,14 @@ class PlayRecordButtons extends StatelessWidget {
               onPressed: () {
                 _player.add(Rewind15Event(-15));
               },
-              icon: const ImageIcon(
+              icon: SvgPicture.asset(
                 CustomIconsImg.minus15,
-                size: 25,
+                // color: CustomColors.black,
               ),
+              //  const ImageIcon(
+              //   CustomIconsImg.minus15,
+              //   size: 25,
+              // ),
             ),
             IconButton(
               onPressed: () async {
@@ -46,10 +52,15 @@ class PlayRecordButtons extends StatelessWidget {
               onPressed: () {
                 _player.add(Rewind15Event(15));
               },
-              icon: const ImageIcon(
+              icon: SvgPicture.asset(
                 CustomIconsImg.plus15,
-                size: 25,
+                // color: CustomColors.black,
               ),
+
+              //  const ImageIcon(
+              //   CustomIconsImg.plus15,
+              //   size: 25,
+              // ),
             ),
           ],
         ),

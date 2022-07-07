@@ -2,20 +2,34 @@ import 'package:flutter/material.dart';
 
 class CustomIconsImg {
   CustomIconsImg._();
-  static const AssetImage mic3 = AssetImage("assets/icons/mic-3.png");
-  static const AssetImage mic2 = AssetImage("assets/icons/mic-2.png");
-  static const AssetImage mic = AssetImage("assets/icons/mic.png");
+
+  // SvgPicture.asset(
+  //             CustomIconsImg.search,
+  //             color: CustomColors.black,
+  //           ),
+  static const String search = "assets/icons/search.svg";
   static const String home = "assets/icons/home.svg";
   static const String menu = "assets/icons/menu.svg";
   static const String list = "assets/icons/list.svg";
   static const String profile = "assets/icons/profile.svg";
-  static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  static const AssetImage pause2 = AssetImage("assets/icons/pause.png");
-  static const AssetImage play = AssetImage("assets/icons/Play.png");
-  // static const AssetImage playBlueSolo =
-  //     AssetImage("assets/icons/PlayBlueSolo.png");
-  static const AssetImage plus15 = AssetImage("assets/icons/plus.png");
-  static const AssetImage minus15 = AssetImage("assets/icons/minus.png");
+  static const String arrowDown = "assets/icons/arrow_down.svg";
+  static const String repeat = "assets/icons/repeat.svg";
+  static const String pauseAll = "assets/icons/pauseAll.svg";
+  static const String wallet = "assets/icons/wallet.svg";
+  static const String support = "assets/icons/support.svg";
+  static const String drawer = "assets/icons/drawer.svg";
+  static const String moreHorizontRounded =
+      "assets/icons/moreHorizontRounded.svg";
+  static const String vector = "assets/icons/vector.svg";
+  static const String downloadIcon = "assets/icons/downloadIcon.svg";
+  static const String cloud = "assets/icons/cloud.svg";
+  static const String check = "assets/icons/check.svg";
+  static const String uncheck = "assets/icons/uncheck.svg";
+  static const String playSVG = "assets/icons/play.svg";
+  static const String forwardVector = "assets/icons/forwardVector.svg";
+  static const String plus15 = "assets/icons/plus_15.svg";
+  static const String minus15 = "assets/icons/minus_15.svg";
+  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
   static const AssetImage ellipseRad =
       AssetImage("assets/icons/EllipseRed.png");
   static const AssetImage line = AssetImage("assets/icons/Rectangle.png");
@@ -47,22 +61,4 @@ class CustomIconsImg {
       AssetImage("assets/icons/more_horiz_rounded.png");
   static const AssetImage arrowLeftCircle =
       AssetImage("assets/icons/arrowLeftCircle.png");
-  static const String search = "assets/icons/search.svg";
-
-  static const String repeat = "assets/icons/repeat.svg";
-  static const String pauseAll = "assets/icons/pauseAll.svg";
-  static const String wallet = "assets/icons/wallet.svg";
-  static const String support = "assets/icons/support.svg";
-  static const String drawer = "assets/icons/drawer.svg";
-  static const String moreHorizontRounded =
-      "assets/icons/moreHorizontRounded.svg";
-  static const String vector = "assets/icons/vector.svg";
-  static const String downloadIcon = "assets/icons/downloadIcon.svg";
-  static const String cloud = "assets/icons/cloud.svg";
-  static const String check = "assets/icons/check.svg";
-  static const String uncheck = "assets/icons/uncheck.svg";
-  static const String playSVG = "assets/icons/play.svg";
-  static const String forwardVector = "assets/icons/forwardVector.svg";
-  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  // static const AssetImage pause2 = AssetImage("assets/icons/pause-2.png");
 }

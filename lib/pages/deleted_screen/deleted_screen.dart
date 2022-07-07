@@ -6,7 +6,7 @@ import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/minuts_text_convert_service.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/custom_icons.dart';
 import '../../models/tales_list.dart';
 import '../../widgets/alerts/deleted/delete_from_db_confirm.dart';
 import '../../../widgets/texts/audio_list_text/audio_list_text.dart';

@@ -9,7 +9,7 @@ import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import '../../pages/main_screen/selections_screen/selections_screen.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_colors.dart';
-import '../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/custom_icons.dart';
 import '../alerts/deleted/remove_to_deleted_confirm.dart';
 
 class CustomPopUpMenu extends StatelessWidget {

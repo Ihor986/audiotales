@@ -5,7 +5,7 @@ import '../../../../models/tales_list.dart';
 import '../../../../repositorys/selections_repositiry.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../utils/consts/custom_colors.dart';
-import '../../../../utils/consts/custom_icons_img.dart';
+import '../../../../utils/consts/custom_icons.dart';
 import '../bloc/selections_bloc.dart';
 import '../wiget/selection_screen_body.dart';
 import 'add_new_selections_text.dart';

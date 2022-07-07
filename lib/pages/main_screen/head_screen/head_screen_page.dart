@@ -9,7 +9,7 @@ import '../../../models/selections.dart';
 import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons_img.dart';
+import '../../../utils/consts/custom_icons.dart';
 import '../../../widgets/texts/main_screen_text.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';

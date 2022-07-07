@@ -6,7 +6,7 @@ import '../../models/audio.dart';
 import '../../pages/main_screen/audios_screen/bloc/audio_screen_bloc.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../services/sound_service.dart';
-import '../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/custom_icons.dart';
 import '../../utils/consts/texts_consts.dart';
 
 class PlayAllTalesButtonWidget extends StatelessWidget {

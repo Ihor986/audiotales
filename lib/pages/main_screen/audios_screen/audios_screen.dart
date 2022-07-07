@@ -5,7 +5,7 @@ import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/sound_service.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons_img.dart';
+import '../../../utils/consts/custom_icons.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/play_all_button.dart';

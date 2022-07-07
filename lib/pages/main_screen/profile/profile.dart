@@ -13,7 +13,7 @@ import '../../../repositorys/user_reposytory.dart';
 import '../../../services/change_profile_servise.dart';
 import '../../../services/image_service.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons_img.dart';
+import '../../../utils/consts/custom_icons.dart';
 import '../../../utils/consts/texts_consts.dart';
 import '../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../../widgets/alerts/user/delete_user_confirm.dart';

@@ -8,7 +8,7 @@ import '../../models/tales_list.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/consts/custom_colors.dart';
-import '../../utils/consts/custom_icons_img.dart';
+import '../../utils/consts/custom_icons.dart';
 
 class PlayerWidget extends StatelessWidget {
   const PlayerWidget({Key? key}) : super(key: key);

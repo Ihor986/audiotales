@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/custom_icons_img.dart';
+import '../../../../../utils/consts/custom_icons.dart';
 import '../../sound_bloc/sound_bloc.dart';
 
 class RecorderingTimer extends StatefulWidget {

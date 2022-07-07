@@ -39,19 +39,13 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     );
 
     on<CheckEvent>((event, emit) {
-      // String? searchValue = state.searchValue;
       changeSelectionService.checkEvent(event.isChecked, event.id);
-      // emit(SelectionsState(searchValue: searchValue));
     });
 
     on<UncheckAll>((event, emit) {
       changeSelectionService.dispouse();
       emit(SelectionsState());
     });
-
-    // on<RemoveFromSelectionChekedEvent>((event, emit) {
-    //   emit(SelectionsState());
-    // });
 
     on<ChangeSelectionNameEvent>(
       (event, emit) {
