@@ -36,8 +36,9 @@ class CustomIconsImg {
   static const String power3 = "assets/icons/power3.svg";
   static const String delete = "assets/icons/delete.svg";
   static const String share = "assets/icons/share.svg";
+  static const String emptyfoto = "assets/icons/emptyfoto.svg";
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
+  // static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
   static const AssetImage arrowDownCircle =
       AssetImage("assets/icons/arrowDownCircle.png");
   static const AssetImage plusPlus = AssetImage("assets/icons/plusPlus.png");

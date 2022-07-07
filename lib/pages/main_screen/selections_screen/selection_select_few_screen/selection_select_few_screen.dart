@@ -412,73 +412,58 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
     }
 
     return Container(
-      width: screen.width * 0.92,
-      height: screen.height * 0.25,
-      decoration: BoxDecoration(
-        image:
-            widget.readOnly ? _decorationImageReadOnly() : _decorationImage(),
-        boxShadow: const [
-          BoxShadow(
-              color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
-        ],
-        color: CustomColors.whiteOp,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
+        width: screen.width * 0.92,
+        height: screen.height * 0.25,
+        decoration: BoxDecoration(
+          image:
+              widget.readOnly ? _decorationImageReadOnly() : _decorationImage(),
+          boxShadow: const [
+            BoxShadow(
+                color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
+          ],
+          color: CustomColors.whiteOp,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      child: widget.readOnly
-          ? Padding(
-              padding: EdgeInsets.all(screen.width * 0.04),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: screen.height * 0.05,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DateSelectionScreen(selection: widget.selection!),
-                        const SizedBox(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: screen.height * 0.1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        WrapSelectionsListTextData(
-                            selection: widget.selection!),
-                        widget.talesList.isNotEmpty &&
-                                widget.route == '/selection_screen.dart'
-                            ? PlayAllTalesButtonWidget(
-                                talesList: widget.talesList,
-                                textColor: CustomColors.white,
-                                backgroundColor:
-                                    CustomColors.playAllButtonDisactive,
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
-                  ),
-                ],
+        child: Padding(
+          padding: EdgeInsets.all(screen.width * 0.04),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: screen.height * 0.05,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DateSelectionScreen(selection: widget.selection!),
+                    const SizedBox(),
+                  ],
+                ),
               ),
-            )
-          : IconButton(
-              onPressed: () async {
-                _selectionsBloc.changeSelectionService.photo =
-                    await ImageServise().pickImageToCasheMemory();
-                setState(() {});
-              },
-              icon: const ImageIcon(
-                CustomIconsImg.emptyfoto,
-                color: CustomColors.iconsColorPlayRecUpbar,
-                size: 50,
+              SizedBox(
+                height: screen.height * 0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    WrapSelectionsListTextData(selection: widget.selection!),
+                    widget.talesList.isNotEmpty &&
+                            widget.route == '/selection_screen.dart'
+                        ? PlayAllTalesButtonWidget(
+                            talesList: widget.talesList,
+                            textColor: CustomColors.white,
+                            backgroundColor:
+                                CustomColors.playAllButtonDisactive,
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
               ),
-            ),
-    );
+            ],
+          ),
+        ));
   }
 }
 

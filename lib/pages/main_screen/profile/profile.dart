@@ -443,10 +443,10 @@ class _SelectionPhotoWidgetState extends State<_ProfilePhotoWidget> {
                     await ImageServise().pickImageToCasheMemory();
                 setState(() {});
               },
-              icon: const ImageIcon(
+              icon: SvgPicture.asset(
                 CustomIconsImg.emptyfoto,
-                color: CustomColors.iconsColorPlayRecUpbar,
-                size: 50,
+                color: CustomColors.whiteOp08,
+                height: 70,
               ),
             ),
     );

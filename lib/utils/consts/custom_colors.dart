@@ -9,6 +9,7 @@ class CustomColors {
   static const Color rose = Color.fromRGBO(241, 180, 136, 1);
   static const Color white = Color.fromRGBO(246, 246, 246, 1);
   static const Color whiteOp = Color.fromRGBO(246, 246, 246, 0.9);
+  static const Color whiteOp08 = Color.fromRGBO(255, 255, 255, 0.8);
   static const Color invisible = Color.fromRGBO(246, 246, 246, 0);
   static const Color whiteOp05 = Color.fromRGBO(246, 246, 246, 0.5);
   static const Color boxShadow = Color.fromRGBO(0, 0, 0, 0.11);
