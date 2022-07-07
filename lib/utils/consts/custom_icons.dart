@@ -34,13 +34,11 @@ class CustomIconsImg {
   static const String power1 = "assets/icons/power1.svg";
   static const String power2 = "assets/icons/power2.svg";
   static const String power3 = "assets/icons/power3.svg";
-  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  // static const AssetImage power0 = AssetImage("assets/icons/power0.png");
-  // static const AssetImage power1 = AssetImage("assets/icons/power1.png");
-  // static const AssetImage power2 = AssetImage("assets/icons/power2.png");
-  // static const AssetImage power3 = AssetImage("assets/icons/power3.png");
   static const String delete = "assets/icons/delete.svg";
-  static const AssetImage share = AssetImage("assets/icons/share.png");
+  static const String share = "assets/icons/share.svg";
+  // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
+
+  // static const AssetImage share = AssetImage("assets/icons/share.png");
   static const AssetImage download = AssetImage("assets/icons/download.png");
   static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
   static const AssetImage arrowDownCircle =
