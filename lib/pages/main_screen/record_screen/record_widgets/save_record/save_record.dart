@@ -133,9 +133,10 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
             onPressed: () {
               _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
             },
-            icon: const ImageIcon(
+            icon: SvgPicture.asset(
               CustomIconsImg.arrowDownCircle,
-              size: 25,
+              color: CustomColors.black,
+              height: screen.height * 0.04,
             ),
           ),
         ),

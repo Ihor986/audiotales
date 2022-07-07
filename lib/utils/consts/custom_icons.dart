@@ -37,13 +37,10 @@ class CustomIconsImg {
   static const String delete = "assets/icons/delete.svg";
   static const String share = "assets/icons/share.svg";
   static const String emptyfoto = "assets/icons/emptyfoto.svg";
+  static const String arrowDownCircle = "assets/icons/arrowDownCircle.svg";
+  static const String arrowLeftCircle = "assets/icons/arrowLeftCircle.svg";
   // static const AssetImage arrowDown = AssetImage("assets/icons/arrow_down.png");
-  // static const AssetImage emptyfoto = AssetImage("assets/icons/emptyfoto.png");
-  static const AssetImage arrowDownCircle =
-      AssetImage("assets/icons/arrowDownCircle.png");
   static const AssetImage plusPlus = AssetImage("assets/icons/plusPlus.png");
-  static const AssetImage moreHorizRounded =
-      AssetImage("assets/icons/more_horiz_rounded.png");
-  static const AssetImage arrowLeftCircle =
-      AssetImage("assets/icons/arrowLeftCircle.png");
+  // static const AssetImage arrowLeftCircle =
+  //     AssetImage("assets/icons/arrowLeftCircle.png");
 }

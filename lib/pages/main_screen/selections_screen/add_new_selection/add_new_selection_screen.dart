@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../models/selections.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/selections_repositiry.dart';
@@ -92,27 +93,14 @@ AppBar _appBar(BuildContext context) {
     backgroundColor: CustomColors.oliveSoso,
     centerTitle: true,
     elevation: 0,
-    leading: Padding(
-      padding: EdgeInsets.only(
-        top: screen.width * 0.02,
-        left: screen.width * 0.04,
-        bottom: screen.width * 0.02,
+    leading: IconButton(
+      padding: const EdgeInsets.only(left: 16),
+      icon: SvgPicture.asset(
+        CustomIconsImg.arrowLeftCircle,
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: CustomColors.white,
-        ),
-        child: IconButton(
-          icon: const ImageIcon(
-            CustomIconsImg.arrowLeftCircle,
-            color: CustomColors.black,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     ),
     title: title,
   );

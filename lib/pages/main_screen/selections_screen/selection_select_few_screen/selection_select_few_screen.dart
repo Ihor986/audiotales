@@ -46,12 +46,33 @@ class SelectionSelectFewScreen extends StatelessWidget {
       builder: (context, state) {
         final SelectionsBloc _selectionsBloc =
             BlocProvider.of<SelectionsBloc>(context);
-        // Size screen = MediaQuery.of(context).size;
+        final Size _screen = MediaQuery.of(context).size;
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
           extendBody: true,
-          appBar: _appBar(context, _selectionsBloc, selection),
+          appBar: AppBar(
+            actions: <Widget>[
+              _Action(
+                selection: selection,
+              ),
+            ],
+            backgroundColor: CustomColors.oliveSoso,
+            centerTitle: true,
+            elevation: 0,
+            // leadingWidth: 50,
+            leading: IconButton(
+              padding: const EdgeInsets.only(left: 16),
+              icon: SvgPicture.asset(
+                CustomIconsImg.arrowLeftCircle,
+              ),
+              onPressed: () {
+                _selectionsBloc.changeSelectionService.readOnly = true;
+                Navigator.pop(context);
+              },
+            ),
+            title: const TitleSelectionScreen(),
+          ),
           body: _BodySelectionScreen(
             selection: selection,
             readOnly: _selectionsBloc.changeSelectionService.readOnly,
@@ -61,46 +82,6 @@ class SelectionSelectFewScreen extends StatelessWidget {
       },
     );
   }
-}
-
-AppBar _appBar(
-    BuildContext context, SelectionsBloc selectionsBloc, Selection selection) {
-  const TitleSelectionScreen title = TitleSelectionScreen();
-  Size screen = MediaQuery.of(context).size;
-  return AppBar(
-    actions: <Widget>[
-      _Action(
-        selection: selection,
-      ),
-    ],
-    backgroundColor: CustomColors.oliveSoso,
-    centerTitle: true,
-    elevation: 0,
-    leading: Padding(
-      padding: EdgeInsets.only(
-        top: screen.width * 0.02,
-        left: screen.width * 0.04,
-        bottom: screen.width * 0.02,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: CustomColors.white,
-        ),
-        child: IconButton(
-          icon: const ImageIcon(
-            CustomIconsImg.arrowLeftCircle,
-            color: CustomColors.black,
-          ),
-          onPressed: () {
-            selectionsBloc.changeSelectionService.readOnly = true;
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    ),
-    title: title,
-  );
 }
 
 class _Action extends StatelessWidget {
