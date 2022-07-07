@@ -9,9 +9,11 @@ class SelectionsState {
     this.heightDescriptionInput = 0.15,
     this.maxLinesDescriptionInput = 3,
     this.readOnly = true,
+    this.isProgress = false,
   });
   String? searchValue;
   double heightDescriptionInput;
   int maxLinesDescriptionInput;
   bool readOnly;
+  bool isProgress;
 }

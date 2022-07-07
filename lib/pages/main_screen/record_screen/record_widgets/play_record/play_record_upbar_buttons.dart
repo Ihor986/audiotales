@@ -22,14 +22,14 @@ class PlayRecordUpbarButtons extends StatelessWidget {
             .getTalesListRepository();
     final LocalUser _localUser =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.all(screen.width * 0.04),
+          padding: EdgeInsets.all(_screen.width * 0.04),
           child: SizedBox(
-            width: screen.width * 0.5,
+            width: _screen.width * 0.5,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -68,7 +68,7 @@ class PlayRecordUpbarButtons extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     DeleteUnsavedConfirm.instance.deletedConfirm(
-                      screen: screen,
+                      screen: _screen,
                       context: context,
                     );
                   },
@@ -85,16 +85,17 @@ class PlayRecordUpbarButtons extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: TextButton(
-              onPressed: () {
-                context.read<SoundBloc>().add(
-                      SaveRecordEvent(
-                        talesListRep: _fullTalesList,
-                        localUser: _localUser,
-                        isAutosaveLocal: false,
-                      ),
-                    );
-              },
-              child: const PlayRecordText()),
+            onPressed: () {
+              context.read<SoundBloc>().add(
+                    SaveRecordEvent(
+                      talesListRep: _fullTalesList,
+                      localUser: _localUser,
+                      isAutosaveLocal: false,
+                    ),
+                  );
+            },
+            child: const PlayRecordText(),
+          ),
         )
       ],
     );

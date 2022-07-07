@@ -16,7 +16,7 @@ class RecordScreen extends StatelessWidget {
     final Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: _RecordScreenAppBar(
         onAction: () {
           Scaffold.of(context).openDrawer();

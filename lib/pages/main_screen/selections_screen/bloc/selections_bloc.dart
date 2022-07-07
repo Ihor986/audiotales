@@ -39,9 +39,9 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     );
 
     on<CheckEvent>((event, emit) {
-      String? searchValue = state.searchValue;
+      // String? searchValue = state.searchValue;
       changeSelectionService.checkEvent(event.isChecked, event.id);
-      emit(SelectionsState(searchValue: searchValue));
+      // emit(SelectionsState(searchValue: searchValue));
     });
 
     on<UncheckAll>((event, emit) {
@@ -67,6 +67,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<SaveCreatedSelectionEvent>(
       (event, emit) async {
+        emit(SelectionsState(isProgress: true));
         await changeSelectionService.saveCreatedSelectionEvent(
             talesList: event.talesList, selectionsList: event.selectionsList);
         changeSelectionService.readOnly = false;
@@ -77,6 +78,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<SaveChangedSelectionEvent>(
       (event, emit) async {
+        emit(SelectionsState(isProgress: true));
         final Selection _selection = event.selection;
         _selection.updateDate =
             DateTime.now().millisecondsSinceEpoch.toString();
@@ -133,6 +135,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<SaveAudioWithSelectionsListEvent>(
       (event, emit) async {
+        emit(SelectionsState(isProgress: true));
         await selectSelectionsService.addSelections(
           fullTalesList: event.talesList,
         );
@@ -142,6 +145,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<RemoveFromSelectionEvent>(
       (event, emit) async {
+        emit(SelectionsState(isProgress: true));
         final TalesList _talesList = event.talesList;
         final List<String>? _audioList = event.audio == null
             ? changeSelectionService.checkedList
@@ -156,6 +160,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<DeleteSelectionEvent>(
       (event, emit) async {
+        emit(SelectionsState(isProgress: true));
         final SelectionsList selectionsList = event.selectionsList;
         final TalesList talesList = event.talesList;
         talesList.deleteSelectionFromAudio(event.selection);

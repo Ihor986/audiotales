@@ -6,6 +6,7 @@ import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons_img.dart';
 import '../../../../repositorys/tales_list_repository.dart';
+import '../../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
@@ -41,9 +42,14 @@ class SelectionScreen extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           extendBody: true,
           appBar: _appBar(context, _selectionsBloc, selection),
-          body: BodySelectionScreen(
-            selection: selection,
-            readOnly: _selectionsBloc.changeSelectionService.readOnly,
+          body: Stack(
+            children: [
+              BodySelectionScreen(
+                selection: selection,
+                readOnly: _selectionsBloc.changeSelectionService.readOnly,
+              ),
+              if (state.isProgress) const ProgresWidget(),
+            ],
           ),
         );
       },

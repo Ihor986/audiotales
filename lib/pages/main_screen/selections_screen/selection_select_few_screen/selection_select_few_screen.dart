@@ -482,13 +482,20 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
   }
 }
 
-class _AudiolistSelectAudioWidget extends StatelessWidget {
+class _AudiolistSelectAudioWidget extends StatefulWidget {
   const _AudiolistSelectAudioWidget({
     Key? key,
     required this.selection,
   }) : super(key: key);
   final Selection selection;
 
+  @override
+  State<_AudiolistSelectAudioWidget> createState() =>
+      _AudiolistSelectAudioWidgetState();
+}
+
+class _AudiolistSelectAudioWidgetState
+    extends State<_AudiolistSelectAudioWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SelectionsBloc, SelectionsState>(
@@ -501,7 +508,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
         final List<AudioTale> _talesList =
             RepositoryProvider.of<TalesListRepository>(context)
                 .getTalesListRepository()
-                .getCompilation(id: selection.id);
+                .getCompilation(id: widget.selection.id);
         List<String> checkedList =
             _selectionsBloc.changeSelectionService.checkedList;
         return SizedBox(
@@ -548,6 +555,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                               id: _talesList.elementAt(i).id,
                             ),
                           );
+                          setState(() {});
                         },
                         icon: isChecked
                             ? SvgPicture.asset(

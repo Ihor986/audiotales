@@ -22,6 +22,7 @@ class SaveRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
     return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
         final AudioTale _audio =
@@ -40,55 +41,60 @@ class SaveRecord extends StatelessWidget {
                 maxChildSize: 1,
                 minChildSize: 1,
                 builder: (context, scrollController) {
-                  return Container(
-                      decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: CustomColors.boxShadow,
-                                spreadRadius: 3,
-                                blurRadius: 10)
-                          ],
-                          color: CustomColors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: Stack(
-                        children: [
-                          Align(
-                              alignment: const Alignment(-1, -1),
-                              child: _SaveRecordUpbarButtons(
-                                readOnly: state.readOnly,
-                                audio: _audio,
-                              )),
-                          Align(
-                            alignment: const Alignment(0, -0.7),
-                            child: _SaveRecordPhotoWidget(
-                                readOnly: state.readOnly,
-                                selection: _selectionsRep
-                                    .getSelectionByAudioId(_audio)),
-                          ),
-                          Align(
-                            alignment: const Alignment(0, 0.05),
-                            child: _SelectionName(
-                                readOnly: state.readOnly,
-                                selection: _selectionsRep
-                                    .getSelectionByAudioId(_audio)),
-                          ),
-                          Align(
-                            alignment: const Alignment(0, 0.15),
-                            child: _AudioName(
-                              audio: _audio,
-                              readOnly: state.readOnly,
+                  return SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    reverse: true,
+                    child: Container(
+                        height: _screen.height * 0.85,
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: CustomColors.boxShadow,
+                                  spreadRadius: 3,
+                                  blurRadius: 10)
+                            ],
+                            color: CustomColors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20))),
+                        child: Stack(
+                          children: [
+                            Align(
+                                alignment: const Alignment(-1, -1),
+                                child: _SaveRecordUpbarButtons(
+                                  readOnly: state.readOnly,
+                                  audio: _audio,
+                                )),
+                            Align(
+                              alignment: const Alignment(0, -0.7),
+                              child: _SaveRecordPhotoWidget(
+                                  readOnly: state.readOnly,
+                                  selection: _selectionsRep
+                                      .getSelectionByAudioId(_audio)),
                             ),
-                          ),
-                          const Align(
-                              alignment: Alignment(0, 0.4),
-                              child: PlayRecordProgres()),
-                          const Align(
-                              alignment: Alignment(0, 1),
-                              child: _SavePagePlayRecordButtons()),
-                        ],
-                      ));
+                            Align(
+                              alignment: const Alignment(0, 0.05),
+                              child: _SelectionName(
+                                  readOnly: state.readOnly,
+                                  selection: _selectionsRep
+                                      .getSelectionByAudioId(_audio)),
+                            ),
+                            Align(
+                              alignment: const Alignment(0, 0.15),
+                              child: _AudioName(
+                                audio: _audio,
+                                readOnly: state.readOnly,
+                              ),
+                            ),
+                            const Align(
+                                alignment: Alignment(0, 0.4),
+                                child: PlayRecordProgres()),
+                            const Align(
+                                alignment: Alignment(0, 1),
+                                child: _SavePagePlayRecordButtons()),
+                          ],
+                        )),
+                  );
                 }),
           ),
         );
@@ -205,7 +211,13 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                       fullTalesList: _talesListRep,
                     ));
                   },
-                  child: const Text('Ready'),
+                  child: const Text(
+                    'Готово',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
         )
       ],

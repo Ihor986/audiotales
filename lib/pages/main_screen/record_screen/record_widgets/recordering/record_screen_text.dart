@@ -22,11 +22,13 @@ class PlayRecordText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(TextsConst.save,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-        ));
+    return const Text(
+      TextsConst.save,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 14,
+      ),
+    );
   }
 }
 
