@@ -247,9 +247,7 @@ class _DeletedTalesListWidget extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {
-                                // _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
-                              },
+                              onPressed: () {},
                               icon: SvgPicture.asset(
                                 CustomIconsImg.playSVG,
                                 height: screen.height * 0.04,

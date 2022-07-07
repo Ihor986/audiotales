@@ -114,9 +114,9 @@ class AudioTale {
     path = nPath ?? path;
     compilationsId = nCompilationsId ?? compilationsId;
     isDeleted = nIsDeleted ?? isDeleted;
-    // deletedDate = nIsDeleted == true
-    //     ? DateTime.now().millisecondsSinceEpoch.toString()
-    //     : deletedDate;
+    deletedDate = nIsDeleted == true
+        ? DateTime.now().millisecondsSinceEpoch.toString()
+        : deletedDate;
     updateDate = DateTime.now().millisecondsSinceEpoch.toString();
     if (addCompilationsId == null) return;
     for (var item in addCompilationsId) {
