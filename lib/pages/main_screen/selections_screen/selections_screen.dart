@@ -129,26 +129,15 @@ class _SelectionsScreenAppBar extends StatelessWidget
           ),
         ],
       ),
-      leading: Padding(
-        padding: EdgeInsets.only(
-          left: screen.width * 0.04,
+      leading: IconButton(
+        padding: const EdgeInsets.only(left: 16, bottom: 10),
+        icon: SvgPicture.asset(
+          CustomIconsImg.plusPlus,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            IconButton(
-              icon: ImageIcon(
-                CustomIconsImg.plusPlus,
-                color: CustomColors.white,
-                size: screen.width * 0.06,
-              ),
-              onPressed: () {
-                _selectionsBloc.add(CreateNewSelectonEvent());
-                Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
-              },
-            ),
-          ],
-        ),
+        onPressed: () {
+          _selectionsBloc.add(CreateNewSelectonEvent());
+          Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
+        },
       ),
     );
   }
