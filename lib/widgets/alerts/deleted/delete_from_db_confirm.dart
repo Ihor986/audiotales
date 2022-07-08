@@ -10,13 +10,11 @@ class DeleteFromDBConfirm {
   const DeleteFromDBConfirm._();
 
   static const DeleteFromDBConfirm instance = DeleteFromDBConfirm._();
-// DeleteAudioEvent
-  deletedConfirm({
+
+  void deletedConfirm({
     required Size screen,
     required BuildContext context,
     required String id,
-
-    // required TalesList talesList,
   }) {
     showDialog(
       barrierDismissible: false,

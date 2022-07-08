@@ -8,8 +8,7 @@ class MicrophonePermissionConfirmAlert {
   static const MicrophonePermissionConfirmAlert instance =
       MicrophonePermissionConfirmAlert._();
 
-  confirm({
-    // required Size screen,
+  void confirm({
     required BuildContext context,
     bool? isClosePage,
   }) {

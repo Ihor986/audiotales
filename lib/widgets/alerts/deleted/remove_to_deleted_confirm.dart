@@ -12,7 +12,7 @@ class RemoveToDeletedConfirm {
 
   static const RemoveToDeletedConfirm instance = RemoveToDeletedConfirm._();
 
-  deletedConfirm({
+  void deletedConfirm({
     required Size screen,
     required BuildContext context,
     required List<String> idList,

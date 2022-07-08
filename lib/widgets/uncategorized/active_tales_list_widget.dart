@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../models/audio.dart';
 import '../../models/tales_list.dart';
+import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../services/minuts_text_convert_service.dart';
 import '../../utils/consts/custom_icons.dart';
-import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'custom_popup_menu_active_playlist.dart';
 
 class ActiveTalesListWidget extends StatelessWidget {

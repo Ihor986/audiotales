@@ -10,7 +10,7 @@ class DeleteUserConfirm {
 
   static const DeleteUserConfirm instance = DeleteUserConfirm._();
 
-  deletedConfirm({
+  void deletedConfirm({
     required Size screen,
     required BuildContext context,
     bool? isClosePage,
