@@ -6,7 +6,6 @@ import '../../../../repositorys/auth.dart';
 import '../../../../repositorys/user_reposytory.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/texts_consts.dart';
-import '../../../../widgets/texts/registration_text.dart';
 import '../../../main_screen/main_screen.dart';
 
 class ContinueButtonCode extends StatelessWidget {
@@ -14,12 +13,11 @@ class ContinueButtonCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final AuthBlockBloc authBloc = context.read<AuthBlockBloc>();
     final LocalUser _user =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
     final AuthReposytory authReposytory =
         RepositoryProvider.of<AuthReposytory>(context);
-    // num screenWidth = MediaQuery.of(context).size.width;
+
     Size screen = MediaQuery.of(context).size;
     return Center(
       child: Column(
@@ -30,7 +28,6 @@ class ContinueButtonCode extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               authReposytory.sendCodeToFirebase(context);
-              // print(authBloc.authReposytory.verificationCode);
             },
             child: const Text(
               TextsConst.continueButtonText,
@@ -51,10 +48,80 @@ class ContinueButtonCode extends StatelessWidget {
                   (_) => false,
                 );
               },
-              child: const RegistrationText4()),
-          const RegistrationText2(),
+              child: const _RegistrationText4()),
+          const _RegistrationText2(),
         ],
       ),
+    );
+  }
+}
+
+class _RegistrationText2 extends StatelessWidget {
+  const _RegistrationText2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    num screenWidth = MediaQuery.of(context).size.width;
+    num screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text(
+            TextsConst.textHello1,
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+          Text(
+            TextsConst.textHello2,
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+          Text(
+            TextsConst.textHello3,
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+      height: screenHeight * 0.1,
+      width: screenWidth * 0.7,
+      decoration: BoxDecoration(
+        color: CustomColors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: CustomColors.boxShadow,
+            offset: Offset(0, 5),
+            blurRadius: 6,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
+  }
+}
+
+class _RegistrationText4 extends StatelessWidget {
+  const _RegistrationText4({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    num screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          TextsConst.later,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        SizedBox(height: screenHeight / 40),
+      ],
     );
   }
 }

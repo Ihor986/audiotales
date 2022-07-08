@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../../widgets/texts/start_new_user_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'auth_buttons/continue_button.dart';
 
@@ -29,7 +28,7 @@ class NewUserPage extends StatelessWidget {
                   child: const _MamoryBox(),
                 ),
               ),
-              const StartNewUserText(),
+              const _StartNewUserText(),
               const ContinueButtonNewUser(),
             ],
           ),
@@ -76,4 +75,58 @@ class _MamoryBox extends StatelessWidget {
       ],
     );
   }
+}
+
+class _StartNewUserText extends StatelessWidget {
+  const _StartNewUserText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    num screenHeight = MediaQuery.of(context).size.height;
+    return Column(children: [
+      SizedBox(height: screenHeight / 18),
+      const Text(
+        hello,
+        style: TextStyle(
+          fontSize: 24,
+        ),
+      ),
+      SizedBox(height: screenHeight / 30),
+      Column(
+        children: const [
+          Text(
+            textHello1,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            textHello2,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            textHello3,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            textHello4,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+      SizedBox(height: screenHeight / 18),
+    ]);
+  }
+
+  static const String hello = 'Привет!';
+  static const String textHello1 = 'Мы рады видеть тебя здесь.';
+  static const String textHello2 = 'Это приложение поможет записывать';
+  static const String textHello3 = 'сказки и держать их в удобном месте не';
+  static const String textHello4 = 'заполняя память на телефоне';
 }

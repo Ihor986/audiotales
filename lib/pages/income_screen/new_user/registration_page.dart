@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../utils/consts/custom_colors.dart';
+import '../../../utils/consts/texts_consts.dart';
 import '../auth_bloc/auth_block_bloc.dart';
 import 'registratuin_widgets/registration_code_input.dart';
 import 'registratuin_widgets/registration_phone_input.dart';
-import '../../../widgets/texts/registration_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'auth_buttons/continue_button_code.dart';
 import 'auth_buttons/continue_button_phone.dart';
@@ -20,7 +20,6 @@ class RegistrationPage extends StatelessWidget {
     return BlocBuilder<AuthBlockBloc, AuthBlockState>(
         builder: (context, state) {
       return Scaffold(
-        // resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: CustomColors.blueSoso,
           elevation: 0,
@@ -43,7 +42,7 @@ class RegistrationPage extends StatelessWidget {
                   child: Container(
                     height: screen.height / 4.5,
                     color: CustomColors.blueSoso,
-                    child: const RegistrationText(),
+                    child: const _RegistrationText(),
                   ),
                 ),
                 state.status == Status.phone
@@ -73,7 +72,7 @@ class ContinuePhone extends StatelessWidget {
           // height: double.infinity / 20,
           height: screen.height / 20,
         ),
-        const RegistrationText1(),
+        const _RegistrationText1(),
         SizedBox(
           height: screen.height / 50,
         ),
@@ -94,11 +93,79 @@ class ContinueCode extends StatelessWidget {
         SizedBox(
           height: screen.height / 40,
         ),
-        const RegistrationText3(),
+        const _RegistrationText3(),
         SizedBox(
           height: screen.height / 50,
         ),
         const RegistrationCodeInput(),
+      ],
+    );
+  }
+}
+
+class _RegistrationText extends StatelessWidget {
+  const _RegistrationText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        TextsConst.registration,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontStyle: FontStyle.normal,
+          fontSize: 48,
+        ),
+      ),
+    );
+  }
+}
+
+class _RegistrationText1 extends StatelessWidget {
+  const _RegistrationText1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+        child: Text(
+      TextsConst.enterPhoneNumber,
+      style: TextStyle(
+        color: CustomColors.black,
+        fontStyle: FontStyle.normal,
+        fontSize: 16,
+      ),
+    ));
+  }
+}
+
+class _RegistrationText3 extends StatelessWidget {
+  const _RegistrationText3({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Center(
+          child: Text(
+            TextsConst.enterTheCodeFromTheSMS,
+            style: TextStyle(
+              color: CustomColors.black,
+              fontStyle: FontStyle.normal,
+              fontSize: 16,
+            ),
+          ),
+        ),
+        Center(
+            child: Text(
+          TextsConst.enterTheCodeFromTheSMS2,
+          style: TextStyle(
+            color: CustomColors.black,
+            fontStyle: FontStyle.normal,
+            fontSize: 16,
+          ),
+        )),
       ],
     );
   }
