@@ -6,6 +6,27 @@ import 'audio.dart';
 
 class TalesList {
   TalesList({required this.fullTalesList});
+  factory TalesList.fromJson(Map<String, dynamic> json) {
+    List listJson = json['talesList'];
+    List<AudioTale> tList = listJson.map((e) => AudioTale.fromJson(e)).toList();
+
+    return TalesList(
+      fullTalesList: tList,
+    );
+  }
+
+  factory TalesList.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    List _listJson = snapshot.data()?['talesList'];
+    List<AudioTale> _fromFirestoreList =
+        _listJson.map((e) => AudioTale.fromFirestore(e)).toList();
+
+    return TalesList(
+      fullTalesList: _fromFirestoreList,
+    );
+  }
 
   final List<AudioTale> fullTalesList;
 
@@ -113,33 +134,6 @@ class TalesList {
   Map<String, dynamic> toJson() => {
         'talesList': fullTalesList.map((e) => e.toJson()).toList(),
       };
-
-  factory TalesList.fromJson(Map<String, dynamic> json) {
-    List listJson = json['talesList'];
-    List<AudioTale> tList = listJson.map((e) => AudioTale.fromJson(e)).toList();
-
-    return TalesList(
-      fullTalesList: tList,
-    );
-  }
-
-  // TalesList.fromFirestore(
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
-  //   SnapshotOptions? options,
-  // ) : fullTalesList = snapshot.data()?['talesList'];
-
-  factory TalesList.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    List _listJson = snapshot.data()?['talesList'];
-    List<AudioTale> _fromFirestoreList =
-        _listJson.map((e) => AudioTale.fromFirestore(e)).toList();
-
-    return TalesList(
-      fullTalesList: _fromFirestoreList,
-    );
-  }
 
   Map<String, dynamic> toFirestore() {
     final List<AudioTale> _tList =

@@ -8,7 +8,6 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
-  final CangeProfileService cangeProfileService = CangeProfileService();
   ProfileBloc() : super(ProfileInitialState()) {
     on<ProfileEditingEvent>((event, emit) {
       cangeProfileService.dispouse();
@@ -69,4 +68,5 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileInitialState> {
       cangeProfileService.smsCode = event.code;
     });
   }
+  final CangeProfileService cangeProfileService = CangeProfileService();
 }

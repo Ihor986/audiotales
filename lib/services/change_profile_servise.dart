@@ -53,9 +53,7 @@ class CangeProfileService {
     DataBase.instance.saveUser(localUser);
   }
 
-///////////////////////////
-
-  void changePhoneNumber() async {
+  Future<void> changePhoneNumber() async {
     if (phone == null) {
       return;
     }
@@ -64,14 +62,10 @@ class CangeProfileService {
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.currentUser
             ?.updatePhoneNumber(credential)
-            .then((value) async {
-          // if (value.user != null) {}
-        });
+            .then((value) async {});
       },
       verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          // throw Exception(e.code);
-        }
+        if (e.code == 'invalid-phone-number') {}
       },
       codeSent: (String verificationId, int? resendToken) async {
         verificationCode = verificationId;
@@ -83,7 +77,7 @@ class CangeProfileService {
     );
   }
 
-  void sendCodeToFirebaseChangeNumber() async {
+  Future<void> sendCodeToFirebaseChangeNumber() async {
     try {
       if (verificationCode != '' && smsCode.length == 6) {
         var credential = PhoneAuthProvider.credential(
@@ -92,7 +86,7 @@ class CangeProfileService {
         await auth.currentUser?.updatePhoneNumber(credential).then((value) {});
       }
     } catch (_) {
-      e = "wrong pass";
+      e = 'wrong pass';
       throw Exception('wrong pass');
     }
   }

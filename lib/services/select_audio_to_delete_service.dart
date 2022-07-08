@@ -31,7 +31,7 @@ class SelectAudioToDeleteService {
     dispouse();
   }
 
-  restoreSelectedAudioEvent({
+  void restoreSelectedAudioEvent({
     required TalesList talesList,
   }) {
     TalesList _talesList = talesList;

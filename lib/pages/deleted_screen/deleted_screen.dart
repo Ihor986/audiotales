@@ -6,10 +6,10 @@ import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/minuts_text_convert_service.dart';
 import '../../../utils/consts/custom_colors.dart';
-import '../../utils/consts/custom_icons.dart';
-import '../../models/tales_list.dart';
-import '../../widgets/alerts/deleted/delete_from_db_confirm.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../models/tales_list.dart';
+import '../../utils/consts/custom_icons.dart';
+import '../../widgets/alerts/deleted/delete_from_db_confirm.dart';
 import '../main_screen/main_screen_block/main_screen_bloc.dart';
 import 'widgets/deleted_screen_text.dart';
 

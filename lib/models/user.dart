@@ -13,16 +13,6 @@ class LocalUser {
     this.isUserRegistered,
   });
 
-  User? currentUser = FirebaseAuth.instance.currentUser;
-  // String? photo;
-  String? photoUrl;
-  String? name;
-  String? subscribe;
-  String? id;
-  int? updateDate;
-  bool? isNewUser;
-  bool? isUserRegistered;
-
   factory LocalUser.fromJson(Map<String, dynamic> json) {
     return LocalUser(
       // photo: json['photo'],
@@ -49,6 +39,16 @@ class LocalUser {
         isNewUser = snapshot.data()?['isNewUser'],
         isUserRegistered = snapshot.data()?['isUserRegistered'];
 
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  // String? photo;
+  String? photoUrl;
+  String? name;
+  String? subscribe;
+  String? id;
+  int? updateDate;
+  bool? isNewUser;
+  bool? isUserRegistered;
+
   Map<String, dynamic> toJson() => {
         // 'photo': photo,
         'photoUrl': photoUrl,
@@ -73,7 +73,7 @@ class LocalUser {
     };
   }
 
-  updateUser({required LocalUser newUser}) {
+  void updateUser({required LocalUser newUser}) {
     if (newUser.updateDate == null || updateDate == null) return;
     if (updateDate! > newUser.updateDate!) return;
     photoUrl = newUser.photoUrl;
@@ -85,7 +85,7 @@ class LocalUser {
     isUserRegistered = newUser.isUserRegistered;
   }
 
-  changeUserFields({
+  void changeUserFields({
     String? nName,
     String? nSubscribe,
   }) {

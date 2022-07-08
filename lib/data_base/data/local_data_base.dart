@@ -40,13 +40,13 @@ class LocalDB {
     );
   }
 
-  saveUserToLocalDB(LocalUser _user) async {
+  Future<void> saveUserToLocalDB(LocalUser _user) async {
     // _user.updateDate = DateTime.now().millisecondsSinceEpoch;
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(_user.toJson()));
   }
 
-  saveAudioTalesToLocalDB(TalesList _talesList) async {
+  Future<void> saveAudioTalesToLocalDB(TalesList _talesList) async {
     if (_talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
@@ -54,7 +54,8 @@ class LocalDB {
     }
   }
 
-  saveSelectionsListToLocalDB(SelectionsList _selectionsList) async {
+  Future<void> saveSelectionsListToLocalDB(
+      SelectionsList _selectionsList) async {
     if (_selectionsList.selectionsList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('selectionsList', jsonEncode(_selectionsList.toJson()));
@@ -62,7 +63,7 @@ class LocalDB {
     }
   }
 
-  void deleteUser() async {
+  Future<void> deleteUser() async {
     final TalesList _talesList = getAudioTales();
     final SelectionsList _selectionsList = getSelectionsList();
     final Box<String> userBox = Hive.box(_userBox);

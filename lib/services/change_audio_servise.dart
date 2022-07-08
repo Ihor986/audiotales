@@ -9,7 +9,7 @@ class ChangeAudioServise {
   // static final ChangeAudioServise instance = ChangeAudioServise._();
   String? name;
 
-  saveChangedAudioName({
+  Future<void> saveChangedAudioName({
     required AudioTale audio,
     required TalesList fullTalesList,
   }) async {
@@ -21,7 +21,7 @@ class ChangeAudioServise {
     dispose();
   }
 
-  dispose() {
+  void dispose() {
     name = null;
   }
 }

@@ -10,10 +10,6 @@ part 'selections_event.dart';
 part 'selections_state.dart';
 
 class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
-  final ChangeSelectionService changeSelectionService =
-      ChangeSelectionService();
-  final SelectSelectionsService selectSelectionsService =
-      SelectSelectionsService();
   SelectionsBloc() : super(SelectionsState()) {
     on<DisposeEvent>((event, emit) {
       selectSelectionsService.dispose();
@@ -165,4 +161,8 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       },
     );
   }
+  final ChangeSelectionService changeSelectionService =
+      ChangeSelectionService();
+  final SelectSelectionsService selectSelectionsService =
+      SelectSelectionsService();
 }

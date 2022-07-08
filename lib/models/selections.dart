@@ -3,13 +3,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SelectionsList {
   SelectionsList({required this.selectionsList});
+  factory SelectionsList.fromJson(Map<String, dynamic> json) {
+    List listJson = json['selectionsList'];
+    List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
+
+    return SelectionsList(selectionsList: sList);
+  }
+
+  factory SelectionsList.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    List listJson = snapshot.data()?['selectionsList'];
+    List<Selection> sList =
+        listJson.map((e) => Selection.fromFirestore(e)).toList();
+
+    return SelectionsList(selectionsList: sList);
+  }
   List<Selection> selectionsList;
 
-  addNewSelection(Selection selection) {
+  void addNewSelection(Selection selection) {
     selectionsList.insert(0, selection);
   }
 
-  replaceSelection({
+  void replaceSelection({
     required Selection selection,
   }) {
     for (var sel in selectionsList) {
@@ -19,9 +36,8 @@ class SelectionsList {
     }
   }
 
-  deleteSelection({
+  void deleteSelection({
     required Selection selection,
-    //  required TalesList talesList,
   }) {
     int index =
         selectionsList.indexWhere((element) => element.id == selection.id);
@@ -40,24 +56,6 @@ class SelectionsList {
   Map<String, dynamic> toJson() => {
         'selectionsList': selectionsList.map((e) => e.toJson()).toList(),
       };
-
-  factory SelectionsList.fromJson(Map<String, dynamic> json) {
-    List listJson = json['selectionsList'];
-    List<Selection> sList = listJson.map((e) => Selection.fromJson(e)).toList();
-
-    return SelectionsList(selectionsList: sList);
-  }
-
-  factory SelectionsList.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    List listJson = snapshot.data()?['selectionsList'];
-    List<Selection> sList =
-        listJson.map((e) => Selection.fromFirestore(e)).toList();
-
-    return SelectionsList(selectionsList: sList);
-  }
 
   Map<String, dynamic> toFirestore() {
     return {
@@ -93,6 +91,30 @@ class Selection {
       this.description,
       this.updateDate});
 
+  factory Selection.fromJson(Map<String, dynamic> json) {
+    return Selection(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      date: json['date'] as String,
+      photo: json['photo'],
+      photoUrl: json['photoUrl'],
+      description: json['description'],
+      updateDate: json['updateDate'],
+    );
+  }
+
+  factory Selection.fromFirestore(Map<String, dynamic> json) {
+    return Selection(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      date: json['date'] as String,
+      photo: null,
+      photoUrl: json['photoUrl'],
+      description: json['description'],
+      updateDate: json['updateDate'],
+    );
+  }
+
   String id;
   String name;
   String date;
@@ -121,18 +143,6 @@ class Selection {
     updateDate = selection.updateDate;
   }
 
-  factory Selection.fromJson(Map<String, dynamic> json) {
-    return Selection(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      date: json['date'] as String,
-      photo: json['photo'],
-      photoUrl: json['photoUrl'],
-      description: json['description'],
-      updateDate: json['updateDate'],
-    );
-  }
-
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
@@ -142,18 +152,6 @@ class Selection {
         'description': description,
         'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
       };
-
-  factory Selection.fromFirestore(Map<String, dynamic> json) {
-    return Selection(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      date: json['date'] as String,
-      photo: null,
-      photoUrl: json['photoUrl'],
-      description: json['description'],
-      updateDate: json['updateDate'],
-    );
-  }
 
   Map<String, dynamic> toFirestore() => {
         'id': id,

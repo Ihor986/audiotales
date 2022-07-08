@@ -9,8 +9,6 @@ part 'subscribe_event.dart';
 part 'subscribe_state.dart';
 
 class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
-  final TimeTextConvertService timeTextConvertService =
-      TimeTextConvertService.instance;
   SubscribeBloc() : super(SubscribeState()) {
     on<ChangeCheckEvent>(
       (event, emit) {
@@ -34,4 +32,6 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       },
     );
   }
+  final TimeTextConvertService timeTextConvertService =
+      TimeTextConvertService.instance;
 }

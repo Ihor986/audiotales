@@ -16,7 +16,7 @@ class RegistrationPhoneInput extends StatefulWidget {
 class _RegistrationPhoneInputState extends State<RegistrationPhoneInput> {
   final maskFormatter = MaskTextInputFormatter(
       mask: '+38 (0##) ### ## ##',
-      filter: {"#": RegExp(r'[0-9]')},
+      filter: {'#': RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {

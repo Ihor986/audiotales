@@ -5,7 +5,7 @@ class MailToService {
 
   static const instance = MailToService._();
 
-  forwardToEMail() async {
+  Future<void> forwardToEMail() async {
     String? encodeQueryParameters(Map<String, String> params) {
       return params.entries
           .map((e) =>

@@ -1,16 +1,18 @@
 import 'dart:io';
+
 import 'package:audiotales/models/tales_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../../../../models/selections.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../services/minuts_text_convert_service.dart';
-import '../../../../utils/consts/custom_icons.dart';
 import '../../../../models/audio.dart';
 import '../../../../repositorys/tales_list_repository.dart';
+import '../../../../services/minuts_text_convert_service.dart';
+import '../../../../utils/consts/custom_icons.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/play_all_button.dart';
 import '../../main_screen_block/main_screen_bloc.dart';

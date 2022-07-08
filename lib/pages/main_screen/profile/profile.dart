@@ -518,7 +518,7 @@ class _ProfilePhoneInputState extends State<_ProfilePhoneInput> {
   final maskFormatter = MaskTextInputFormatter(
       initialText: '+38(0',
       mask: '+38 (###) ### ## ##',
-      filter: {"#": RegExp(r'[0-9]')},
+      filter: {'#': RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
@@ -579,12 +579,10 @@ class _CodeInput extends StatefulWidget {
 class _CodeInputState extends State<_CodeInput> {
   final maskFormatter = MaskTextInputFormatter(
       mask: '######',
-      filter: {"#": RegExp(r'[0-9]')},
+      filter: {'#': RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
-    // final AuthReposytory authReposytory =
-    //     RepositoryProvider.of<AuthReposytory>(context);
     return Container(
         decoration: BoxDecoration(
           color: CustomColors.white,

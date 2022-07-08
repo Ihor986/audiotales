@@ -11,11 +11,6 @@ part 'main_screen_event.dart';
 part 'main_screen_state.dart';
 
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
-  final SoundService sound = SoundService.instance;
-  final ChangeAudioServise changeAudioServise = ChangeAudioServise();
-  final ShareAudioService shareAudioService = ShareAudioService.instance;
-  final DownloadAudioService downloadAudioService =
-      DownloadAudioService.instance;
   MainScreenBloc() : super(MainScreenState()) {
     on<ClickPlayEvent>(
       (event, emit) {
@@ -131,4 +126,9 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       },
     );
   }
+  final SoundService sound = SoundService.instance;
+  final ChangeAudioServise changeAudioServise = ChangeAudioServise();
+  final ShareAudioService shareAudioService = ShareAudioService.instance;
+  final DownloadAudioService downloadAudioService =
+      DownloadAudioService.instance;
 }

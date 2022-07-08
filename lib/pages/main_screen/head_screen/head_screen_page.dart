@@ -1,8 +1,10 @@
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/audio.dart';
 import '../../../models/selections.dart';
@@ -10,15 +12,15 @@ import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/consts/custom_colors.dart';
 import '../../../utils/consts/custom_icons.dart';
-import '../main_screen_text.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
+import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
+import '../main_screen_text.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../selections_screen/bloc/selections_bloc.dart';
 import '../selections_screen/selection_screen/selection_screen.dart';
 import '../selections_screen/selections_text.dart';
 import 'head_screen_widgets/head_screen_text.dart';
-import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 
 class HeadScreen extends StatelessWidget {
   const HeadScreen({Key? key}) : super(key: key);

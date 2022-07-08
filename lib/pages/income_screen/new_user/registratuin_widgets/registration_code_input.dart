@@ -15,7 +15,7 @@ class RegistrationCodeInput extends StatefulWidget {
 class _RegistrationCodeInputState extends State<RegistrationCodeInput> {
   final maskFormatter = MaskTextInputFormatter(
       mask: '######',
-      filter: {"#": RegExp(r'[0-9]')},
+      filter: {'#': RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {

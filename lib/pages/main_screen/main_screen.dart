@@ -72,7 +72,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  void _onTap({
+  Future<void> _onTap({
     required int index,
     required FirebaseAuth auth,
     required BuildContext context,

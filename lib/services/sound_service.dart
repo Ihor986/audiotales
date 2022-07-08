@@ -5,13 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
-import '../utils/consts/custom_icons.dart';
 import '../utils/consts/custom_img.dart';
 
 class SoundService extends ChangeNotifier {
@@ -251,14 +249,14 @@ class SoundService extends ChangeNotifier {
     recorderTime = '00:00:00';
   }
 
-  deleteUnsavedAudio() {
+  Future<void> deleteUnsavedAudio() async {
     if (path == null) {
       return;
     }
     if (audioPlayer.isPlaying) {
-      audioPlayer.closePlayer();
+      await audioPlayer.closePlayer();
     }
-    File(path!).delete();
+    await File(path!).delete();
     url = null;
     path = null;
   }

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../sound_bloc/sound_bloc.dart';
-import 'play_record_buttons.dart';
-import 'play_record_upbar_buttons.dart';
 import '../recordering/record_screen_text.dart';
+import 'play_record_buttons.dart';
 import 'play_record_progress.dart';
+import 'play_record_upbar_buttons.dart';
 
 class PlayRecord extends StatelessWidget {
   const PlayRecord({Key? key}) : super(key: key);
-  // static const String routeName = '/play';
 
   @override
   Widget build(BuildContext context) {
-    // Size screen = MediaQuery.of(context).size;
     return BlocBuilder<SoundBloc, SoundInitial>(
       builder: (context, state) {
         return Center(

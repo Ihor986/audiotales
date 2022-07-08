@@ -59,7 +59,7 @@ class SelectSelectionsService {
     dispose();
   }
 
-  dispose() {
+  void dispose() {
     audio = null;
     readOnly = true;
     selectionsIdList.clear();

@@ -14,7 +14,7 @@ class AuthReposytory {
   // User? firebaseUser;
   // LocalUser? localUser;
 
-  void verifyPhoneNumber() async {
+  Future<void> verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumberForVerification,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -38,7 +38,7 @@ class AuthReposytory {
     );
   }
 
-  void sendCodeToFirebase(context) async {
+  Future<void> sendCodeToFirebase(context) async {
     try {
       if (verificationCode != '' && smsCode.length == 6) {
         var credential = PhoneAuthProvider.credential(
@@ -67,6 +67,4 @@ class AuthReposytory {
     //   });
     // });
   }
-
-  getUser() {}
 }

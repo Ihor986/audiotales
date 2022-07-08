@@ -25,7 +25,7 @@ class ChangeSelectionService {
     }
   }
 
-  saveCreatedSelectionEvent(
+  Future<void> saveCreatedSelectionEvent(
       {required TalesList talesList,
       required SelectionsList selectionsList}) async {
     String _selectionId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -75,7 +75,7 @@ class ChangeSelectionService {
     dispouse();
   }
 
-  saveChangedSelectionEvent({
+  Future<void> saveChangedSelectionEvent({
     // required TalesList talesList,
     required SelectionsList selectionsList,
     required Selection selection,

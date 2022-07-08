@@ -12,18 +12,6 @@ class AudioTale {
     this.updateDate,
   });
 
-  final String id;
-  String name;
-
-  String? path;
-  String? pathUrl;
-  final num time;
-  final num size;
-  List compilationsId;
-  bool isDeleted;
-  String? deletedDate;
-  String? updateDate;
-
   factory AudioTale.fromJson(Map<String, dynamic> json) {
     return AudioTale(
       id: json['id'],
@@ -53,6 +41,17 @@ class AudioTale {
       updateDate: json['updateDate'],
     );
   }
+
+  final String id;
+  String name;
+  String? path;
+  String? pathUrl;
+  final num time;
+  final num size;
+  List compilationsId;
+  bool isDeleted;
+  String? deletedDate;
+  String? updateDate;
 
   Map<String, dynamic> toJson() {
     return {
@@ -106,9 +105,6 @@ class AudioTale {
     String? nUpdateDate,
     List? addCompilationsId,
     String? nPath,
-    // String? nPathUrl,
-    // num? nTime,
-    // num? nSize,
   }) {
     name = nName ?? name;
     path = nPath ?? path;
@@ -125,15 +121,5 @@ class AudioTale {
         compilationsId.add(item);
       }
     }
-    // final String? path;
-    // pathUrl = nPathUrl ?? pathUrl;
-    // final num time;
-    // final num size;
   }
-
-  // removeAudioToDeleted() {
-  //   isDeleted = true;
-  //   deletedDate = DateTime.now().millisecondsSinceEpoch.toString();
-  // }
-
 }

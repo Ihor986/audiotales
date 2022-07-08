@@ -10,12 +10,10 @@ class DeleteUnsavedConfirm {
   const DeleteUnsavedConfirm._();
 
   static const DeleteUnsavedConfirm instance = DeleteUnsavedConfirm._();
-// DeleteAudioEvent
-  deletedConfirm({
+
+  void deletedConfirm({
     required Size screen,
     required BuildContext context,
-
-    // required TalesList talesList,
   }) {
     showDialog(
       barrierDismissible: false,

@@ -71,7 +71,7 @@ class FirestoreDB {
     }
   }
 
-  saveUserToFirebase(LocalUser _user) async {
+  Future<void> saveUserToFirebase(LocalUser _user) async {
     if (_user.isUserRegistered == true) {
       try {
         await FirebaseFirestore.instance
