@@ -10,12 +10,11 @@ import '../../../../models/selections.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
+import '../../../../services/minuts_text_convert_service.dart';
 import '../../../../services/sound_service.dart';
 import '../../../../utils/consts/custom_colors.dart';
 import '../../../../utils/consts/custom_icons.dart';
 import '../../../../utils/consts/texts_consts.dart';
-import '../../../../widgets/texts/audio_list_text/audio_list_text.dart';
-import '../../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/player_widget.dart';
 import '../../audios_screen/bloc/audio_screen_bloc.dart';
@@ -97,9 +96,6 @@ class BodySelectionScreen extends StatelessWidget {
                 : Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      // child: ActiveTalesListWidget(
-                      //   color: CustomColors.oliveSoso,
-                      // ),
                       child: _TalesListWidget(
                         selection: selection,
                         isDisactive: !readOnly,
@@ -351,7 +347,6 @@ class _SelectionDescriptionInputState
         padding: const EdgeInsets.all(8.0),
         child: _FullTextForm(
           description: widget.selection?.description ?? '',
-          // description: text.substring(0, 700),
         ),
       );
     }
@@ -367,7 +362,15 @@ class _SelectionDescriptionInputState
                     left: screen.width * 0.04, right: screen.width * 0.04),
                 child: textField(),
               ),
-              isTextToLength ? const Text('Detales') : const SizedBox(),
+              isTextToLength
+                  ? const Text(
+                      'Подробнее',
+                      style: TextStyle(
+                        color: CustomColors.noTalesText,
+                        fontSize: 13,
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
           onTap: () {
@@ -382,28 +385,24 @@ class _SelectionDescriptionInputState
             setState(() {});
           },
         ),
-        isNewSelection
-            ? Align(
-                alignment: const Alignment(1, 0),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      // readOnly = !readOnly;
-                    });
-                  },
-                  child: Text(
-                    TextsConst.addNewSelectionsTextReady,
-                    style: TextStyle(
-                        color: CustomColors.black,
-                        fontSize: screen.width * 0.03),
-                  ),
-                ),
-              )
-            : const SizedBox(),
+        // isNewSelection
+        //     ? Align(
+        //         alignment: const Alignment(1, 0),
+        //         child: TextButton(
+        //           onPressed: () {
+        //             FocusScope.of(context).unfocus();
+        //           },
+        //           child: Text(
+        //             TextsConst.addNewSelectionsTextReady,
+        //             style: TextStyle(
+        //                 color: CustomColors.black,
+        //                 fontSize: screen.width * 0.03),
+        //           ),
+        //         ),
+        //       )
+        //     : const SizedBox(),
       ],
     );
-    //   },
-    // );
   }
 }
 
@@ -474,7 +473,6 @@ class _TextInput extends StatelessWidget {
         hintText: TextsConst.addNewSelectionsTextEnterDescription,
         hintStyle: TextStyle(
             color: CustomColors.black, fontSize: screen.width * 0.033),
-        // isDense: false,
       ),
       readOnly: readOnly,
       onChanged: (value) {
@@ -523,12 +521,11 @@ class _TalesListWidget extends StatelessWidget {
     required this.selection,
     required this.color,
     required this.icon,
-    // required this.onTap,
     this.isDisactive,
   }) : super(key: key);
   final Selection? selection;
   final bool? isDisactive;
-  // final void Function() onTap;
+
   final String icon;
   final Color color;
   @override
@@ -570,10 +567,10 @@ class _TalesListWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AudioListNameText(
+                              _AudioListNameText(
                                 audio: talesList.elementAt(i),
                               ),
-                              AudioListText(
+                              _AudioListText(
                                 audio: talesList.elementAt(i),
                               ),
                             ],
@@ -672,6 +669,40 @@ class _TalesListWidget extends StatelessWidget {
             );
           },
         );
+      },
+    );
+  }
+}
+
+class _AudioListText extends StatelessWidget {
+  const _AudioListText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        String text = TimeTextConvertService.instance
+            .getConvertedMinutesText(timeInMinutes: audio.time);
+
+        return audio.id != state.chahgedAudioId
+            ? Text(
+                '${audio.time.round()} $text',
+                style: const TextStyle(
+                  color: CustomColors.noTalesText,
+                  fontFamily: 'TT Norms',
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14,
+                ),
+              )
+            : const SizedBox();
       },
     );
   }
@@ -820,5 +851,62 @@ class _AudioScreenPlayAllTextF extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(TextsConst.audioScreenPlayAllF, style: TextStyle(color: color));
+  }
+}
+
+class _AudioListNameText extends StatelessWidget {
+  const _AudioListNameText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        final TalesList _talesListRep =
+            context.read<TalesListRepository>().getTalesListRepository();
+        Size screen = MediaQuery.of(context).size;
+        final bool _readOnly =
+            audio.id == state.chahgedAudioId ? state.readOnly : true;
+        return _readOnly
+            ? Text(audio.name)
+            : SizedBox(
+                height: screen.height * 0.03,
+                width: 0.5 * screen.width,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: _readOnly ? InputBorder.none : null,
+                  ),
+                  initialValue: audio.name,
+                  onChanged: (value) {
+                    context.read<MainScreenBloc>().add(
+                          EditingAudioNameEvent(value: value),
+                        );
+                  },
+                  onEditingComplete: () {
+                    context
+                        .read<MainScreenBloc>()
+                        .add(SaveChangedAudioNameEvent(
+                          audio: audio,
+                          fullTalesList: _talesListRep,
+                        ));
+                  },
+                  readOnly: _readOnly,
+                  style: const TextStyle(
+                    color: CustomColors.black,
+                    fontFamily: 'TT Norms',
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14,
+                  ),
+                ),
+              );
+      },
+    );
   }
 }

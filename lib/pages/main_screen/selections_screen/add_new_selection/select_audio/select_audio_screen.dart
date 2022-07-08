@@ -4,11 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../models/audio.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
+import '../../../../../services/minuts_text_convert_service.dart';
 import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../../utils/consts/custom_icons.dart';
 import '../../../../../utils/consts/texts_consts.dart';
-import '../../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../bloc/selections_bloc.dart';
 import 'select_audio_text.dart';
 
@@ -120,10 +121,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {
-                              // print('11111111111111');
-                              // _mainScreenBloc.add(ClickPlayEvent(talesList[i]));
-                            },
+                            onPressed: () {},
                             icon: SvgPicture.asset(
                               CustomIconsImg.playSVG,
                               color: CustomColors.oliveSoso,
@@ -137,7 +135,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(_talesList[i].name),
-                              AudioListText(audio: _talesList.elementAt(i)),
+                              _AudioListText(audio: _talesList.elementAt(i)),
                             ],
                           ),
                         ],
@@ -171,6 +169,40 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
             },
           ),
         );
+      },
+    );
+  }
+}
+
+class _AudioListText extends StatelessWidget {
+  const _AudioListText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        String text = TimeTextConvertService.instance
+            .getConvertedMinutesText(timeInMinutes: audio.time);
+
+        return audio.id != state.chahgedAudioId
+            ? Text(
+                '${audio.time.round()} $text',
+                style: const TextStyle(
+                  color: CustomColors.noTalesText,
+                  fontFamily: 'TT Norms',
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14,
+                ),
+              )
+            : const SizedBox();
       },
     );
   }
@@ -220,12 +252,10 @@ class _SelectAudioSearchWidget extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: SvgPicture.asset(
                 CustomIconsImg.search,
-                // size: 1,
                 color: CustomColors.black,
               ),
             ),
             suffixIconColor: CustomColors.black,
-            // suffixStyle:
           ),
         ));
   }

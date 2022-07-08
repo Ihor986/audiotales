@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../models/audio.dart';
 import '../../models/tales_list.dart';
 import '../../repositorys/tales_list_repository.dart';
+import '../../services/minuts_text_convert_service.dart';
 import '../../utils/consts/custom_icons.dart';
-import '../texts/audio_list_text/audio_list_text.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'custom_popup_menu_active_playlist.dart';
 
@@ -52,10 +52,10 @@ class ActiveTalesListWidget extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  AudioListNameText(
+                                  _AudioListNameText(
                                     audio: _talesList.elementAt(i),
                                   ),
-                                  AudioListText(
+                                  _AudioListText(
                                     audio: _talesList.elementAt(i),
                                   ),
                                 ],
@@ -127,6 +127,97 @@ class _PlayButton extends StatelessWidget {
                 ),
           iconSize: screen.height * 0.05,
         );
+      },
+    );
+  }
+}
+
+class _AudioListText extends StatelessWidget {
+  const _AudioListText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        String text = TimeTextConvertService.instance
+            .getConvertedMinutesText(timeInMinutes: audio.time);
+
+        return audio.id != state.chahgedAudioId
+            ? Text(
+                '${audio.time.round()} $text',
+                style: const TextStyle(
+                  color: CustomColors.noTalesText,
+                  fontFamily: 'TT Norms',
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14,
+                ),
+              )
+            : const SizedBox();
+      },
+    );
+  }
+}
+
+class _AudioListNameText extends StatelessWidget {
+  const _AudioListNameText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        final TalesList _talesListRep =
+            context.read<TalesListRepository>().getTalesListRepository();
+        Size screen = MediaQuery.of(context).size;
+        final bool _readOnly =
+            audio.id == state.chahgedAudioId ? state.readOnly : true;
+        return _readOnly
+            ? Text(audio.name)
+            : SizedBox(
+                height: screen.height * 0.03,
+                width: 0.5 * screen.width,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: _readOnly ? InputBorder.none : null,
+                  ),
+                  initialValue: audio.name,
+                  onChanged: (value) {
+                    context.read<MainScreenBloc>().add(
+                          EditingAudioNameEvent(value: value),
+                        );
+                  },
+                  onEditingComplete: () {
+                    context
+                        .read<MainScreenBloc>()
+                        .add(SaveChangedAudioNameEvent(
+                          audio: audio,
+                          fullTalesList: _talesListRep,
+                        ));
+                  },
+                  readOnly: _readOnly,
+                  style: const TextStyle(
+                    color: CustomColors.black,
+                    fontFamily: 'TT Norms',
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14,
+                  ),
+                ),
+              );
       },
     );
   }

@@ -2,15 +2,13 @@ import 'package:audiotales/pages/search_screen/widgets/search_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../../models/audio.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/consts/custom_colors.dart';
+import '../../services/minuts_text_convert_service.dart';
 import '../../utils/consts/custom_icons.dart';
 import '../../../../../utils/consts/texts_consts.dart';
-import '../../../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
-
 import '../../widgets/uncategorized/custom_popup_menu_active_playlist.dart';
 import '../main_screen/main_screen_block/main_screen_bloc.dart';
 
@@ -24,11 +22,6 @@ class SearchScreen extends StatelessWidget {
 
     return Scaffold(
       extendBody: true,
-      // appBar: _SearchScreenAppBar(
-      //   onAction: () {
-      //     Scaffold.of(context).openDrawer();
-      //   },
-      // ),
       body: Stack(
         children: [
           Column(
@@ -69,13 +62,8 @@ class _SearchScreenAppBar extends StatelessWidget {
   const _SearchScreenAppBar({
     Key? key,
     required this.onAction,
-    // required this.isChosen,
   }) : super(key: key);
   final void Function() onAction;
-  // final bool isChosen;
-
-  // @override
-  // Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
 
   @override
   Widget build(BuildContext context) {
@@ -93,14 +81,11 @@ class _SearchScreenAppBar extends StatelessWidget {
             child: Stack(
               children: [
                 const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: SearchAppBarText(),
-                )),
-                // const Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: DeletedScreenTitleText(),
-                // ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: SearchAppBarText(),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -123,92 +108,6 @@ class _SearchScreenAppBar extends StatelessWidget {
     );
   }
 }
-
-// class _SearchScreenAppBar extends StatelessWidget
-//     implements PreferredSizeWidget {
-//   const _SearchScreenAppBar({
-//     Key? key,
-//     this.onAction,
-//   }) : super(key: key);
-//   final void Function()? onAction;
-
-//   @override
-//   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-//   @override
-//   Widget build(BuildContext context) {
-//     Size screen = MediaQuery.of(context).size;
-//     return AppBar(
-//       // actions: <Widget>[
-//       //   Padding(
-//       //     padding: EdgeInsets.only(right: screen.width * 0.04),
-//       //     child: Column(
-//       //       children: [
-//       //         PopupMenuButton(
-//       //           shape: const RoundedRectangleBorder(
-//       //             borderRadius: BorderRadius.all(Radius.circular(15)),
-//       //           ),
-//       //           icon: SvgPicture.asset(
-//       //             CustomIconsImg.moreHorizontRounded,
-//       //           ),
-//       //           itemBuilder: (context) => [
-//       //             PopupMenuItem(
-//       //               child: const Text(
-//       //                 '',
-//       //                 style: TextStyle(
-//       //                   color: CustomColors.black,
-//       //                 ),
-//       //               ),
-//       //               value: () {},
-//       //             ),
-//       //             PopupMenuItem(
-//       //               child: const Text(
-//       //                 '',
-//       //                 style: TextStyle(
-//       //                   color: CustomColors.black,
-//       //                 ),
-//       //               ),
-//       //               value: () {},
-//       //             ),
-//       //           ],
-//       //           onSelected: (Function value) {
-//       //             value();
-//       //           },
-//       //         ),
-//       //       ],
-//       //     ),
-//       //   ),
-//       // ],
-//       backgroundColor: CustomColors.audiotalesHeadColorBlue,
-//       elevation: 0,
-//       flexibleSpace: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: const [
-//           SizedBox(),
-//           SearchAppBarText(),
-//         ],
-//       ),
-//       leading: Padding(
-//         padding: EdgeInsets.only(
-//           left: screen.width * 0.04,
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             IconButton(
-//               icon: SvgPicture.asset(
-//                 CustomIconsImg.drawer,
-//                 height: 25,
-//                 color: CustomColors.white,
-//               ),
-//               onPressed: onAction,
-//             ),
-//             const SizedBox(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class _AudiolistSelectAudioWidget extends StatelessWidget {
   const _AudiolistSelectAudioWidget({Key? key}) : super(key: key);
@@ -263,7 +162,7 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(_talesList[i].name),
-                              AudioListText(audio: _talesList.elementAt(i)),
+                              _AudioListText(audio: _talesList.elementAt(i)),
                             ],
                           ),
                         ],
@@ -293,8 +192,6 @@ class _SelectAudioSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocBuilder<MainScreenBloc, MainScreenState>(
-    //   builder: (context, state) {
     final MainScreenBloc _mainScreenBloc =
         BlocProvider.of<MainScreenBloc>(context);
     return Container(
@@ -341,7 +238,39 @@ class _SelectAudioSearchWidget extends StatelessWidget {
         ),
       ),
     );
-    //   },
-    // );
+  }
+}
+
+class _AudioListText extends StatelessWidget {
+  const _AudioListText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        String text = TimeTextConvertService.instance
+            .getConvertedMinutesText(timeInMinutes: audio.time);
+
+        return audio.id != state.chahgedAudioId
+            ? Text(
+                '${audio.time.round()} $text',
+                style: const TextStyle(
+                  color: CustomColors.noTalesText,
+                  fontFamily: 'TT Norms',
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14,
+                ),
+              )
+            : const SizedBox();
+      },
+    );
   }
 }

@@ -11,7 +11,6 @@ class SelectionText1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: selections(),
@@ -24,7 +23,6 @@ class SelectionText2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return openAll();
   }
 }
@@ -34,7 +32,6 @@ class SelectionText3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: talesGroup(),
@@ -47,7 +44,6 @@ class SelectionText4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: talesGroup1(),
@@ -60,7 +56,6 @@ class SelectionText5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: talesGroup2(),
@@ -73,7 +68,6 @@ class SelectionText6 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: talesGroup3(),
@@ -86,7 +80,6 @@ class SelectionText7 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: selectionsAudio(),
@@ -99,7 +92,6 @@ class SelectionText8 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // num screenHeight = MediaQuery.of(context).size.height;
     return openAllAudio();
   }
 }

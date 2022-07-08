@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../utils/consts/custom_colors.dart';
-import '../../widgets/texts/memory_box_text.dart';
 import '../../widgets/texts/start_regular_user_text.dart';
 import '../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../main_screen/main_screen.dart';
@@ -47,7 +46,7 @@ class _RegularUserPageState extends State<RegularUserPage> {
             child: Container(
               height: screenHeight / 4.5,
               color: CustomColors.blueSoso,
-              child: const MamoryBox(),
+              child: const _MamoryBox(),
             ),
           ),
           const StartRegularUserText1(),
@@ -56,5 +55,44 @@ class _RegularUserPageState extends State<RegularUserPage> {
       ),
     );
     // : Test();
+  }
+}
+
+class _MamoryBox extends StatelessWidget {
+  const _MamoryBox({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Center(
+          child: Text(
+            'MemoryBox',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontStyle: FontStyle.normal,
+              fontSize: 48,
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            SizedBox(),
+            Text(
+              'твой голос всегда рядом',
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                color: Colors.white,
+                fontStyle: FontStyle.normal,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        )
+      ],
+    );
   }
 }

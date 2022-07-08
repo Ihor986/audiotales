@@ -9,8 +9,8 @@ import '../../../utils/consts/custom_colors.dart';
 import '../../utils/consts/custom_icons.dart';
 import '../../models/tales_list.dart';
 import '../../widgets/alerts/deleted/delete_from_db_confirm.dart';
-import '../../../widgets/texts/audio_list_text/audio_list_text.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
+import '../main_screen/main_screen_block/main_screen_bloc.dart';
 import 'widgets/deleted_screen_text.dart';
 
 class DeletedScreen extends StatefulWidget {
@@ -262,7 +262,7 @@ class _DeletedTalesListWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(talesList[i].name),
-                                AudioListText(audio: talesList.elementAt(i)),
+                                _AudioListText(audio: talesList.elementAt(i)),
                               ],
                             ),
                           ],
@@ -281,6 +281,40 @@ class _DeletedTalesListWidget extends StatelessWidget {
             );
           },
         );
+      },
+    );
+  }
+}
+
+class _AudioListText extends StatelessWidget {
+  const _AudioListText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        String text = TimeTextConvertService.instance
+            .getConvertedMinutesText(timeInMinutes: audio.time);
+
+        return audio.id != state.chahgedAudioId
+            ? Text(
+                '${audio.time.round()} $text',
+                style: const TextStyle(
+                  color: CustomColors.noTalesText,
+                  fontFamily: 'TT Norms',
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14,
+                ),
+              )
+            : const SizedBox();
       },
     );
   }
