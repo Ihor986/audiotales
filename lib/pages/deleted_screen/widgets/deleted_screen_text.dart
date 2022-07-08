@@ -59,9 +59,7 @@ class DeletedDateText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          color: CustomColors.noTalesText,
-          // fontWeight: FontWeight.bold,
-          fontSize: screen.width * 0.035),
+          color: CustomColors.noTalesText, fontSize: screen.width * 0.035),
     );
   }
 }

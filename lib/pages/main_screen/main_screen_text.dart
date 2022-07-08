@@ -1,9 +1,7 @@
-// import 'package:audiotales/utils/consts/colors.dart';
 import 'package:audiotales/utils/consts/custom_icons.dart';
 import 'package:audiotales/utils/consts/texts_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../utils/consts/custom_colors.dart';
 
 class SelectionText1 extends StatelessWidget {
@@ -175,7 +173,6 @@ Widget talesGroup3() => Center(
         children: const [
           Text(
             'Добавить',
-            // style: TextStyle(),
             style: TextStyle(
               color: CustomColors.white,
               decoration: TextDecoration.underline,

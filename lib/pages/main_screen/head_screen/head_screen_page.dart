@@ -15,7 +15,6 @@ import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../selections_screen/bloc/selections_bloc.dart';
-// import '../selections_screen/selection_screen.dart/selection_screen.dart';
 import '../selections_screen/selection_screen/selection_screen.dart';
 import '../selections_screen/selections_text.dart';
 import 'head_screen_widgets/head_screen_text.dart';
@@ -144,7 +143,7 @@ class _TalesSelectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
-        Size screen = MediaQuery.of(context).size;
+        final Size _screen = MediaQuery.of(context).size;
         final List<Selection> _selectionsList =
             RepositoryProvider.of<SelectionsListRepository>(context)
                 .getSelectionsListRepository()
@@ -176,13 +175,15 @@ class _TalesSelectionWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: 47),
           child: SizedBox(
-            width: screen.width,
-            height: screen.height * 0.25,
+            width: _screen.width,
+            height: _screen.height * 0.25,
             child: Row(
               children: [
                 _isMoreThenTwo
                     ? _Selection(
-                        selection: _selectionsList[_selectionNumber(1)],
+                        selection: _selectionsList.elementAt(
+                          _selectionNumber(1),
+                        ),
                         width: 0.45,
                         height: 0.27,
                       )
@@ -191,8 +192,8 @@ class _TalesSelectionWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           color: CustomColors.oliveSosoOp,
                         ),
-                        width: screen.width * 0.45,
-                        height: screen.height * 0.27,
+                        width: _screen.width * 0.45,
+                        height: _screen.height * 0.27,
                         child: Column(
                           children: const [
                             SelectionText3(),
@@ -205,31 +206,35 @@ class _TalesSelectionWidget extends StatelessWidget {
                   children: [
                     _isMoreThenOne
                         ? _Selection(
-                            selection: _selectionsList[_selectionNumber(2)],
+                            selection: _selectionsList.elementAt(
+                              _selectionNumber(2),
+                            ),
                             width: 0.45,
                             height: 0.115,
                           )
                         : Container(
-                            width: screen.width * 0.45,
-                            height: screen.height * 0.115,
+                            width: _screen.width * 0.45,
+                            height: _screen.height * 0.115,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromRGBO(241, 180, 136, 0.85),
+                              color: CustomColors.roseOp,
                             ),
                             child: const SelectionText4(),
                           ),
                     _isNotEmpty
                         ? _Selection(
-                            selection: _selectionsList[_selectionNumber(3)],
+                            selection: _selectionsList.elementAt(
+                              _selectionNumber(3),
+                            ),
                             width: 0.45,
                             height: 0.115,
                           )
                         : Container(
-                            width: screen.width * 0.45,
-                            height: screen.height * 0.115,
+                            width: _screen.width * 0.45,
+                            height: _screen.height * 0.115,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromRGBO(103, 139, 210, 0.85),
+                              color: CustomColors.audiotalesBlue,
                             ),
                             child: const SelectionText5(),
                           ),
@@ -406,9 +411,7 @@ class _SelectionButtonsAudio extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // TextButton(onPressed: () {}, child:
             const SelectionText7(),
-            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

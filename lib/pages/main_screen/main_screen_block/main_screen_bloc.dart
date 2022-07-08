@@ -57,7 +57,6 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     on<DeleteUnsavedAudioEvent>(
       (event, emit) async {
         await sound.deleteUnsavedAudio();
-        // emit(SoundInitial(indexPage: 0));
       },
     );
 

@@ -8,11 +8,7 @@ class ClickPlayEvent extends MainScreenEvent {
   int indexAudio;
 }
 
-class NextTreckEvent extends MainScreenEvent {
-  // NextTreckEvent({required this.audioList, required this.indexAudio});
-  // List<AudioTale> audioList;
-  // int indexAudio;
-}
+class NextTreckEvent extends MainScreenEvent {}
 
 class Rewind15Event extends MainScreenEvent {
   Rewind15Event(this.time);
@@ -82,9 +78,3 @@ class EditingAudioNameEvent extends MainScreenEvent {
   EditingAudioNameEvent({required this.value});
   final String value;
 }
-
-// class DeleteAudioEvent extends MainScreenEvent {
-//   DeleteAudioEvent({required this.id, required this.talesList});
-//   final String id;
-//   final TalesList talesList;
-// }

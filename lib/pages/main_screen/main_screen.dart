@@ -70,34 +70,33 @@ class MainScreen extends StatelessWidget {
         );
       },
     );
-    // ),
   }
-}
 
-void _onTap({
-  required int index,
-  required FirebaseAuth auth,
-  required BuildContext context,
-}) async {
-  if (index == 2) {
-    final status = await Permission.microphone.request();
-    if (status != PermissionStatus.granted) {
+  void _onTap({
+    required int index,
+    required FirebaseAuth auth,
+    required BuildContext context,
+  }) async {
+    if (index == 2) {
+      final status = await Permission.microphone.request();
+      if (status != PermissionStatus.granted) {
+        context
+            .read<NavigationBloc>()
+            .add(ChangeCurrentIndexEvent(currentIndex: 0));
+        MicrophonePermissionConfirmAlert.instance.confirm(context: context);
+        return;
+      }
+    }
+    if (auth.currentUser == null && index == 4) {
+      index = 0;
+      Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+        RegistrationPage.routeName,
+        (_) => false,
+      );
+    } else {
       context
           .read<NavigationBloc>()
-          .add(ChangeCurrentIndexEvent(currentIndex: 0));
-      MicrophonePermissionConfirmAlert.instance.confirm(context: context);
-      return;
+          .add(ChangeCurrentIndexEvent(currentIndex: index));
     }
-  }
-  if (auth.currentUser == null && index == 4) {
-    index = 0;
-    Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-      RegistrationPage.routeName,
-      (_) => false,
-    );
-  } else {
-    context
-        .read<NavigationBloc>()
-        .add(ChangeCurrentIndexEvent(currentIndex: index));
   }
 }

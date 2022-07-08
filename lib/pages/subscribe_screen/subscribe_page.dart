@@ -18,14 +18,8 @@ class SubscribeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    // print(DateTime.now().add(const Duration(days: 30)));
+    final Size _screen = MediaQuery.of(context).size;
     return Scaffold(
-      // appBar: _SubscribeScreenAppBar(
-      //   onAction: () {
-      //     Scaffold.of(context).openDrawer();
-      //   },
-      // ),
       body: Stack(
         children: [
           Column(
@@ -34,7 +28,7 @@ class SubscribeScreen extends StatelessWidget {
                 clipper: OvalBC(),
                 child: Container(
                   alignment: const Alignment(0, -0.8),
-                  height: screen.height * 0.3,
+                  height: _screen.height * 0.3,
                   color: CustomColors.blueSoso,
                   child: _SubscribeScreenAppBar(
                     onAction: () {
@@ -47,7 +41,7 @@ class SubscribeScreen extends StatelessWidget {
           ),
           const Align(
             alignment: Alignment(0, 0.2),
-            child: CardWidget(),
+            child: _CardWidget(),
           ),
         ],
       ),
@@ -62,40 +56,34 @@ class _SubscribeScreenAppBar extends StatelessWidget {
   }) : super(key: key);
   final void Function() onAction;
 
-  // @override
-  // Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.3);
-
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Container(
-      height: 0.18 * screen.height,
+      height: 0.18 * _screen.height,
       color: CustomColors.blueSoso,
       child: Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 16,
-              vertical: 0.04 * screen.height,
+              vertical: 0.04 * _screen.height,
             ),
             child: Stack(
               children: [
                 const Center(
-                    child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: SubscribeScreenTitleText(),
-                )),
-                // const Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: DeletedScreenTitleText(),
-                // ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: SubscribeScreenTitleText(),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       icon: SvgPicture.asset(
                         CustomIconsImg.drawer,
-                        height: 0.02 * screen.height,
+                        height: 0.02 * _screen.height,
                         color: CustomColors.white,
                       ),
                       padding: const EdgeInsets.all(0),
@@ -112,62 +100,16 @@ class _SubscribeScreenAppBar extends StatelessWidget {
   }
 }
 
-// class _SubscribeScreenAppBar extends StatelessWidget
-//     implements PreferredSizeWidget {
-//   const _SubscribeScreenAppBar({
-//     Key? key,
-//     this.onAction,
-//   }) : super(key: key);
-//   final void Function()? onAction;
-
-//   @override
-//   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-//   @override
-//   Widget build(BuildContext context) {
-//     Size screen = MediaQuery.of(context).size;
-//     return AppBar(
-//       backgroundColor: CustomColors.blueSoso,
-//       elevation: 0,
-//       flexibleSpace: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: const [
-//           SizedBox(),
-//           SubscribeScreenTitleText(),
-//         ],
-//       ),
-//       leading: Padding(
-//         padding: EdgeInsets.only(
-//           left: screen.width * 0.04,
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             IconButton(
-//               icon: SvgPicture.asset(
-//                 CustomIconsImg.drawer,
-//                 height: 25,
-//                 color: CustomColors.white,
-//               ),
-//               onPressed: onAction,
-//             ),
-//             const SizedBox(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class CardWidget extends StatelessWidget {
-  const CardWidget({Key? key}) : super(key: key);
+class _CardWidget extends StatelessWidget {
+  const _CardWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final LocalUser _user =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
-    final Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Container(
-      height: screen.height * 0.7,
-      width: screen.width * 0.97,
+      height: _screen.height * 0.7,
+      width: _screen.width * 0.97,
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
@@ -248,7 +190,7 @@ class _SelectSubscribe extends StatelessWidget {
         return previous.checkIndex != current.checkIndex;
       },
       builder: (context, state) {
-        Size screen = MediaQuery.of(context).size;
+        final Size _screen = MediaQuery.of(context).size;
 
         return GestureDetector(
           onTap: () {
@@ -268,10 +210,10 @@ class _SelectSubscribe extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               color: CustomColors.white,
             ),
-            width: screen.width * 0.44,
-            height: screen.height * 0.27,
+            width: _screen.width * 0.44,
+            height: _screen.height * 0.27,
             child: Padding(
-              padding: EdgeInsets.all(screen.width * 0.04),
+              padding: EdgeInsets.all(_screen.width * 0.04),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -281,12 +223,12 @@ class _SelectSubscribe extends StatelessWidget {
                   state.checkIndex == index
                       ? SvgPicture.asset(
                           CustomIconsImg.check,
-                          height: screen.height * 0.055,
+                          height: _screen.height * 0.055,
                           color: CustomColors.black,
                         )
                       : SvgPicture.asset(
                           CustomIconsImg.uncheck,
-                          height: screen.height * 0.055,
+                          height: _screen.height * 0.055,
                           color: CustomColors.black,
                         ),
                   const Spacer(flex: 1),
@@ -305,23 +247,23 @@ class _MonthCoast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Column(
       children: [
         Text(
           TextsConst.monthCoast,
           style: TextStyle(
-            fontSize: screen.height * 0.024,
+            fontSize: _screen.height * 0.024,
             color: CustomColors.black,
           ),
         ),
         SizedBox(
-          height: screen.height * 0.009,
+          height: _screen.height * 0.009,
         ),
         Text(
           TextsConst.monthCoast2,
           style: TextStyle(
-            fontSize: screen.height * 0.018,
+            fontSize: _screen.height * 0.018,
             color: CustomColors.black,
           ),
         ),
@@ -335,23 +277,23 @@ class _YearCoast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Column(
       children: [
         Text(
           TextsConst.yearCoast,
           style: TextStyle(
-            fontSize: screen.height * 0.024,
+            fontSize: _screen.height * 0.024,
             color: CustomColors.black,
           ),
         ),
         SizedBox(
-          height: screen.height * 0.009,
+          height: _screen.height * 0.009,
         ),
         Text(
           TextsConst.yearCoast2,
           style: TextStyle(
-            fontSize: screen.height * 0.018,
+            fontSize: _screen.height * 0.018,
             color: CustomColors.black,
           ),
         ),
@@ -365,14 +307,14 @@ class _SubscribeTextHeadre extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return SizedBox(
-      height: screen.height * 0.1,
+      height: _screen.height * 0.1,
       child: Center(
         child: Text(
           TextsConst.selectNotyfi,
           style: TextStyle(
-            fontSize: screen.height * 0.027,
+            fontSize: _screen.height * 0.027,
             color: CustomColors.black,
           ),
         ),
@@ -386,10 +328,10 @@ class _SubscribeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.only(
-        left: screen.width * 0.1,
+        left: _screen.width * 0.1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,73 +341,73 @@ class _SubscribeText extends StatelessWidget {
               Text(
                 TextsConst.whatDoesTheSubscriptionGive,
                 style: TextStyle(
-                  fontSize: screen.height * 0.022,
+                  fontSize: _screen.height * 0.022,
                   color: CustomColors.black,
                 ),
               ),
             ],
           ),
           SizedBox(
-            height: screen.height * 0.02,
+            height: _screen.height * 0.02,
           ),
           Row(
             children: [
               SvgPicture.asset(
                 CustomIconsImg.vector,
-                height: screen.height * 0.015,
+                height: _screen.height * 0.015,
                 color: CustomColors.black,
               ),
               SizedBox(
-                width: screen.width * 0.025,
+                width: _screen.width * 0.025,
               ),
               Text(
                 TextsConst.unlimitedMemory,
                 style: TextStyle(
-                  fontSize: screen.height * 0.015,
+                  fontSize: _screen.height * 0.015,
                   color: CustomColors.black,
                 ),
               ),
             ],
           ),
           SizedBox(
-            height: screen.height * 0.01,
+            height: _screen.height * 0.01,
           ),
           Row(
             children: [
               SvgPicture.asset(
                 CustomIconsImg.cloud,
-                height: screen.height * 0.015,
+                height: _screen.height * 0.015,
                 color: CustomColors.black,
               ),
               SizedBox(
-                width: screen.width * 0.025,
+                width: _screen.width * 0.025,
               ),
               Text(
                 TextsConst.allFilesAreStoredInTheCloud,
                 style: TextStyle(
-                  fontSize: screen.height * 0.015,
+                  fontSize: _screen.height * 0.015,
                   color: CustomColors.black,
                 ),
               ),
             ],
           ),
           SizedBox(
-            height: screen.height * 0.01,
+            height: _screen.height * 0.01,
           ),
           Row(
             children: [
               SvgPicture.asset(
                 CustomIconsImg.downloadIcon,
-                height: screen.height * 0.015,
+                height: _screen.height * 0.015,
                 color: CustomColors.black,
               ),
               SizedBox(
-                width: screen.width * 0.025,
+                width: _screen.width * 0.025,
               ),
               Text(
                 TextsConst.abilityToDownloadWithoutRestrictions,
                 style: TextStyle(
-                  fontSize: screen.height * 0.015,
+                  fontSize: _screen.height * 0.015,
                   color: CustomColors.black,
                 ),
               ),
@@ -482,7 +424,7 @@ class _SubscribeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     final LocalUser _user =
         RepositoryProvider.of<UserRepository>(context).getLocalUser();
 
@@ -490,7 +432,7 @@ class _SubscribeButton extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: screen.height * 0.05,
+            height: _screen.height * 0.05,
           ),
           ElevatedButton(
             onPressed: () {

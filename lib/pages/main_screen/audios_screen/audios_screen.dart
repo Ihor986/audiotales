@@ -26,11 +26,11 @@ class AudiosScreen extends StatefulWidget {
 class _AudiosScreen extends State<AudiosScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<AudioTale> talesList =
+    final List<AudioTale> _talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository()
             .getActiveTalesList();
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: _AudioScreenAppBar(
@@ -43,21 +43,21 @@ class _AudiosScreen extends State<AudiosScreen> {
           ClipPath(
             clipper: OvalBC(),
             child: Container(
-              height: screen.height / 5,
+              height: _screen.height / 5,
               color: CustomColors.audiotalesHeadColorBlue,
             ),
           ),
           Align(
             alignment: const Alignment(1, -0.8),
             child: SizedBox(
-              height: screen.height * 0.05,
+              height: _screen.height * 0.05,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   const AudiosScreenListTextData(),
-                  talesList.isNotEmpty
+                  _talesList.isNotEmpty
                       ? _PlayAllTalesButtonWidget(
-                          talesList: talesList,
+                          talesList: _talesList,
                         )
                       : const SizedBox(),
                 ],
@@ -67,7 +67,7 @@ class _AudiosScreen extends State<AudiosScreen> {
           Align(
             alignment: const Alignment(0, 1),
             child: SizedBox(
-              height: screen.height * 0.65,
+              height: _screen.height * 0.65,
               child: const ActiveTalesListWidget(
                 color: CustomColors.audiotalesHeadColorBlue,
               ),
@@ -81,23 +81,25 @@ class _AudiosScreen extends State<AudiosScreen> {
 }
 
 class _PlayAllTalesButtonWidget extends StatelessWidget {
-  const _PlayAllTalesButtonWidget({Key? key, required this.talesList})
-      : super(key: key);
+  const _PlayAllTalesButtonWidget({
+    Key? key,
+    required this.talesList,
+  }) : super(key: key);
   final List<AudioTale> talesList;
   @override
   Widget build(BuildContext context) {
     final SoundService _soundService =
         BlocProvider.of<MainScreenBloc>(context).sound;
 
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
 
     return BlocBuilder<AudioScreenBloc, AudioScreenState>(
       builder: (context, state) {
         return Stack(
           children: [
             Container(
-              height: screen.height * 0.05,
-              width: screen.width * 0.54,
+              height: _screen.height * 0.05,
+              width: _screen.width * 0.54,
               decoration: BoxDecoration(
                 color: _soundService.isRepeatAllList
                     ? CustomColors.playAllButtonActiveRepeat
@@ -141,7 +143,7 @@ class _AudioScreenAppBar extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return AppBar(
       backgroundColor: CustomColors.audiotalesHeadColorBlue,
       elevation: 0,
@@ -154,7 +156,7 @@ class _AudioScreenAppBar extends StatelessWidget
       ),
       leading: Padding(
         padding: EdgeInsets.only(
-          left: screen.width * 0.04,
+          left: _screen.width * 0.04,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

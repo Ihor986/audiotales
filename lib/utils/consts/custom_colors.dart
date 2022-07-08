@@ -7,6 +7,7 @@ class CustomColors {
   static const Color oliveSoso = Color.fromRGBO(113, 165, 159, 1);
   static const Color oliveSosoOp = Color.fromRGBO(113, 165, 159, 0.85);
   static const Color rose = Color.fromRGBO(241, 180, 136, 1);
+  static const Color roseOp = Color.fromRGBO(241, 180, 136, 0.85);
   static const Color white = Color.fromRGBO(246, 246, 246, 1);
   static const Color whiteOp = Color.fromRGBO(246, 246, 246, 0.9);
   static const Color whiteOp08 = Color.fromRGBO(255, 255, 255, 0.8);
@@ -22,6 +23,7 @@ class CustomColors {
   static const Color red = Color.fromRGBO(226, 119, 119, 1);
   static const Color iconsColorPlayRecUpbar = Color.fromRGBO(95, 95, 117, 1);
   static const Color audiotalesHeadColorBlue = Color.fromRGBO(94, 119, 206, 1);
+  static const Color audiotalesBlue = Color.fromRGBO(103, 139, 210, 0.85);
   static const Color playAllButtonActiveRepeat =
       Color.fromRGBO(246, 246, 246, 0.2);
   static const Color playAllButtonDisactiveRepeat =
