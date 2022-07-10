@@ -2,21 +2,22 @@ import 'package:audiotales/pages/deleted_screen/bloc/delete_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../models/audio.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../services/minuts_text_convert_service.dart';
-import '../../../utils/consts/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../models/tales_list.dart';
-import '../../utils/consts/custom_icons.dart';
+import '../../utils/custom_colors.dart';
+import '../../utils/custom_icons.dart';
+import '../../utils/texts_consts.dart';
 import '../../widgets/alerts/deleted/delete_from_db_confirm.dart';
 import '../main_screen/main_screen_block/main_screen_bloc.dart';
-import 'widgets/deleted_screen_text.dart';
 
 class DeletedScreen extends StatefulWidget {
   const DeletedScreen({Key? key}) : super(key: key);
   static const routeName = '/deleted_screen.dart';
-  static const DeletedScreenTitleText title = DeletedScreenTitleText();
+  static const _DeletedScreenTitleText title = _DeletedScreenTitleText();
 
   @override
   State<DeletedScreen> createState() => _DeletedScreenState();
@@ -123,7 +124,7 @@ class _DeletedScreenAppBar extends StatelessWidget {
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(8),
-                    child: DeletedScreenTitleText(),
+                    child: _DeletedScreenTitleText(),
                   ),
                 ),
                 Row(
@@ -238,7 +239,7 @@ class _DeletedTalesListWidget extends StatelessWidget {
                       ? const SizedBox()
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
-                          child: DeletedDateText(text: text),
+                          child: _DeletedDateText(text: text),
                         ),
                   Container(
                     child: Row(
@@ -363,5 +364,50 @@ class _IconButton extends StatelessWidget {
               color: CustomColors.black,
             ),
           );
+  }
+}
+
+class _DeletedScreenTitleText extends StatelessWidget {
+  const _DeletedScreenTitleText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Text(
+          TextsConst.deletedTitleFirst,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+        Text(
+          TextsConst.deletedTitleSecond,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+      ],
+    );
+  }
+}
+
+class _DeletedDateText extends StatelessWidget {
+  const _DeletedDateText({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Text(
+      text,
+      style: TextStyle(
+          color: CustomColors.noTalesText, fontSize: screen.width * 0.035),
+    );
   }
 }

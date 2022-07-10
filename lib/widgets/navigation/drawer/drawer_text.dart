@@ -1,5 +1,5 @@
-import 'package:audiotales/utils/consts/custom_colors.dart';
-import 'package:audiotales/utils/consts/texts_consts.dart';
+import 'package:audiotales/utils/custom_colors.dart';
+import 'package:audiotales/utils/texts_consts.dart';
 import 'package:flutter/material.dart';
 
 class HeaderText extends StatelessWidget {

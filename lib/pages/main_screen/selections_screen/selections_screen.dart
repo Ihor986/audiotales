@@ -6,18 +6,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../models/selections.dart';
+import '../../../models/selection.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/custom_icons.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
 // import 'selection_screen.dart/selection_screen.dart';
-import 'selections_text.dart';
+import 'widgets/selections_text.dart';
 
 class SelectionsScreen extends StatefulWidget {
   const SelectionsScreen({Key? key}) : super(key: key);

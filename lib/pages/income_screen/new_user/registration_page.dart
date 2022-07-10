@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/texts_consts.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../auth_bloc/auth_block_bloc.dart';
 import 'auth_buttons/continue_button_code.dart';

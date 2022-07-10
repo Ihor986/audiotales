@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/texts_consts.dart';
+import '../../../../../utils/custom_colors.dart';
+import '../../../../../utils/texts_consts.dart';
 
 class SelectAudioText extends StatelessWidget {
   const SelectAudioText({Key? key}) : super(key: key);

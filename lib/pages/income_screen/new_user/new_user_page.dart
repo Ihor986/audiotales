@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../utils/consts/custom_colors.dart';
+import '../../../utils/custom_colors.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import 'auth_buttons/continue_button.dart';
 

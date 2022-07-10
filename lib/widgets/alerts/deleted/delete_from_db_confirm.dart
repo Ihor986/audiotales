@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../models/tales_list.dart';
 import '../../../pages/deleted_screen/bloc/delete_bloc.dart';
 import '../../../repositorys/tales_list_repository.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/texts_consts.dart';
 
 class DeleteFromDBConfirm {
   const DeleteFromDBConfirm._();

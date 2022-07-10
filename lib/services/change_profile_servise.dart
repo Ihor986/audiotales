@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -47,7 +48,7 @@ class CangeProfileService {
       await storageRef.putFile(imageFile!);
       localUser.photoUrl = await storageRef.getDownloadURL();
     } catch (e) {
-      print(e);
+      BotToast.showText(text: e.toString());
     }
 
     DataBase.instance.saveUser(localUser);

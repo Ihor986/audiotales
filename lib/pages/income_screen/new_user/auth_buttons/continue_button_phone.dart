@@ -1,11 +1,11 @@
-import 'package:audiotales/utils/consts/texts_consts.dart';
+import 'package:audiotales/utils/texts_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data_base/data_base.dart';
 import '../../../../models/user.dart';
 import '../../../../repositorys/auth.dart';
 import '../../../../repositorys/user_reposytory.dart';
-import '../../../../utils/consts/custom_colors.dart';
+import '../../../../utils/custom_colors.dart';
 import '../../../main_screen/main_screen.dart';
 import '../../auth_bloc/auth_block_bloc.dart';
 

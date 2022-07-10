@@ -1,12 +1,14 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
+import '../models/selection.dart';
 import '../models/selections.dart';
 import '../models/tales_list.dart';
-import '../utils/consts/texts_consts.dart';
+import '../utils/texts_consts.dart';
 
 class ChangeSelectionService {
   ChangeSelectionService();
@@ -55,7 +57,7 @@ class ChangeSelectionService {
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
       } catch (e) {
-        print(e);
+        BotToast.showText(text: e.toString());
       }
     }
 
@@ -94,7 +96,7 @@ class ChangeSelectionService {
         await storageRef.putFile(imageFile);
         photoUrl = await storageRef.getDownloadURL();
       } catch (e) {
-        print(e);
+        BotToast.showText(text: e.toString());
       }
     }
 

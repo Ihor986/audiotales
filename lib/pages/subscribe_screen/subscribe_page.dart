@@ -1,20 +1,19 @@
 import 'package:audiotales/models/user.dart';
-import 'package:audiotales/pages/subscribe_screen/widgets/subscribe_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../utils/consts/custom_colors.dart';
+
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../repositorys/user_reposytory.dart';
-import '../../utils/consts/custom_icons.dart';
-import '../../utils/consts/texts_consts.dart';
+import '../../utils/custom_colors.dart';
+import '../../utils/custom_icons.dart';
+import '../../utils/texts_consts.dart';
 import 'bloc/subscribe_bloc.dart';
 
 class SubscribeScreen extends StatelessWidget {
   const SubscribeScreen({Key? key}) : super(key: key);
   static const routeName = '/subscribe_screen.dart';
-  static const SubscribeScreenTitleText title = SubscribeScreenTitleText();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,7 @@ class _SubscribeScreenAppBar extends StatelessWidget {
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(8),
-                    child: SubscribeScreenTitleText(),
+                    child: _SubscribeScreenTitleText(),
                   ),
                 ),
                 Row(
@@ -455,6 +454,31 @@ class _SubscribeButton extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SubscribeScreenTitleText extends StatelessWidget {
+  const _SubscribeScreenTitleText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Text(
+          TextsConst.subscribe,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+        Text(
+          TextsConst.subscribe2,
+          style: TextStyle(
+              color: CustomColors.white, fontSize: screen.width * 0.03),
+        )
+      ],
     );
   }
 }

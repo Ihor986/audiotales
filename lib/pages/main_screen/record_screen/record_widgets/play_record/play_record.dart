@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../utils/consts/custom_colors.dart';
+import '../../../../../utils/custom_colors.dart';
 import '../../../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../sound_bloc/sound_bloc.dart';
 import '../recordering/record_screen_text.dart';

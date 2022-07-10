@@ -8,19 +8,19 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../models/selections.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
-import '../../../../../utils/consts/custom_colors.dart';
 import '../../../../models/audio.dart';
+import '../../../../models/selection.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/minuts_text_convert_service.dart';
-import '../../../../utils/consts/custom_icons.dart';
+import '../../../../utils/custom_colors.dart';
+import '../../../../utils/custom_icons.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/play_all_button.dart';
 import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selections_screen.dart';
-import '../selections_text.dart';
-import 'selection_select_few_widgets/text_select_few_screen.dart';
+import '../widgets/selections_text.dart';
 
 class SelectionSelectFewScreen extends StatelessWidget {
   const SelectionSelectFewScreen({
@@ -59,7 +59,7 @@ class SelectionSelectFewScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            title: const TitleSelectionScreen(),
+            title: const _TitleSelectionScreen(),
           ),
           body: _BodySelectionScreen(
             selection: selection,
@@ -378,7 +378,7 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DateSelectionScreen(selection: widget.selection!),
+                    _DateSelectionScreen(selection: widget.selection!),
                     const SizedBox(),
                   ],
                 ),
@@ -540,6 +540,37 @@ class _AudioListText extends StatelessWidget {
               )
             : const SizedBox();
       },
+    );
+  }
+}
+
+class _TitleSelectionScreen extends StatelessWidget {
+  const _TitleSelectionScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('');
+  }
+}
+
+class _DateSelectionScreen extends StatelessWidget {
+  const _DateSelectionScreen({
+    Key? key,
+    required this.selection,
+  }) : super(key: key);
+
+  final Selection selection;
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    String text = TimeTextConvertService.instance.dayMonthYear(selection.date);
+    return Text(
+      text,
+      style: TextStyle(
+          color: CustomColors.white,
+          fontSize: screen.height * 0.01,
+          fontWeight: FontWeight.bold),
     );
   }
 }

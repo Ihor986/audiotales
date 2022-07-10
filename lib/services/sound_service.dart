@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:audiotales/models/user.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
 import '../models/audio.dart';
 import '../models/tales_list.dart';
-import '../utils/consts/custom_img.dart';
+import '../utils/custom_img.dart';
 
 class SoundService extends ChangeNotifier {
   SoundService._();
@@ -67,7 +68,7 @@ class SoundService extends ChangeNotifier {
           path = null;
         }
       } on FirebaseException catch (e) {
-        print(e);
+        BotToast.showText(text: e.toString());
       }
     }
 
@@ -313,8 +314,8 @@ class SoundService extends ChangeNotifier {
         );
       }
     } catch (e) {
+      BotToast.showText(text: e.toString());
       playNextTreck();
-      print(e);
     }
     idPlaying = audio.id;
     notifyListeners();
@@ -329,7 +330,7 @@ class SoundService extends ChangeNotifier {
         codec: Codec.defaultCodec,
       );
     } catch (e) {
-      print(e);
+      BotToast.showText(text: e.toString());
     }
   }
 
@@ -417,9 +418,9 @@ class SoundService extends ChangeNotifier {
             });
       }
     } catch (e) {
+      BotToast.showText(text: e.toString());
       listIndex++;
       _startAllAudioPlayer(audioList, listIndex);
-      print(audio.name); // alert
     }
     idPlaying = audio.id;
     notifyListeners();

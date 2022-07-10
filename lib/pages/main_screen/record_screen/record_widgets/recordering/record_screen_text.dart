@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
-import '../../../../../utils/consts/texts_consts.dart';
+import '../../../../../utils/texts_consts.dart';
 import '../../sound_bloc/sound_bloc.dart';
 
 class RecordText extends StatelessWidget {

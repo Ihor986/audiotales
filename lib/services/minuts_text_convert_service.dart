@@ -1,4 +1,4 @@
-import '../utils/consts/texts_consts.dart';
+import '../utils/texts_consts.dart';
 
 enum Period {
   year,

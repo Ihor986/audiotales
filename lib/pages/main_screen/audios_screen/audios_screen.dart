@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../models/audio.dart';
+import '../../../models/tales_list.dart';
 import '../../../repositorys/tales_list_repository.dart';
+import '../../../services/minuts_text_convert_service.dart';
 import '../../../services/sound_service.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/custom_icons.dart';
+import '../../../utils/texts_consts.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/play_all_button.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
 import '../main_screen_block/main_screen_bloc.dart';
 import 'bloc/audio_screen_bloc.dart';
-import 'widgets/audios_screen_text.dart';
 
 class AudiosScreen extends StatefulWidget {
   const AudiosScreen({Key? key}) : super(key: key);
   static const routeName = '/audios_screen.dart';
-  static const AudiosScreenText title = AudiosScreenText();
+  // static const _AudiosScreenText title = _AudiosScreenText();
 
   @override
   State<AudiosScreen> createState() => _AudiosScreen();
@@ -54,7 +56,7 @@ class _AudiosScreen extends State<AudiosScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const AudiosScreenListTextData(),
+                  const _AudiosScreenListTextData(),
                   _talesList.isNotEmpty
                       ? _PlayAllTalesButtonWidget(
                           talesList: _talesList,
@@ -151,7 +153,7 @@ class _AudioScreenAppBar extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           SizedBox(),
-          AudiosScreen.title,
+          _AudiosScreenText(),
         ],
       ),
       leading: Padding(
@@ -173,6 +175,79 @@ class _AudioScreenAppBar extends StatelessWidget
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AudiosScreenText extends StatelessWidget {
+  const _AudiosScreenText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Text(
+          TextsConst.audiofiles,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+        Text(
+          TextsConst.selectionsTextAllInOnePlace,
+          style: TextStyle(
+              color: CustomColors.white, fontSize: screen.width * 0.03),
+        )
+      ],
+    );
+  }
+}
+
+class _AudiosScreenListTextData extends StatelessWidget {
+  const _AudiosScreenListTextData({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    final TalesList _talesList =
+        RepositoryProvider.of<TalesListRepository>(context)
+            .getTalesListRepository();
+    num _millisecondsListTime = _talesList.getActiveTalesFullTime() * 60000;
+    String _selectionFullTime = DateTime.fromMillisecondsSinceEpoch(
+            _millisecondsListTime.toInt(),
+            isUtc: true)
+        .toString()
+        .substring(11, 16);
+
+    String textAudio = _talesList.getActiveTalesList().length.toString() +
+        TextsConst.selectionAudioText;
+
+    String textTime = _selectionFullTime +
+        TimeTextConvertService.instance.getConvertedHouresText(
+            timeInHoures: _millisecondsListTime / 3600000);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Text(
+            textAudio,
+            style: TextStyle(
+              color: CustomColors.white,
+              fontSize: screen.height * 0.015,
+            ),
+          ),
+        ),
+        Flexible(
+          child: Text(
+            textTime,
+            style: TextStyle(
+              color: CustomColors.white,
+              fontSize: screen.height * 0.015,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

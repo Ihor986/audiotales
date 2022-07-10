@@ -1,12 +1,12 @@
-import 'package:audiotales/utils/consts/custom_colors.dart';
+import 'package:audiotales/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../models/selections.dart';
-import '../../../models/tales_list.dart';
-import '../../../repositorys/tales_list_repository.dart';
-import '../../../services/minuts_text_convert_service.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../../models/selection.dart';
+import '../../../../models/tales_list.dart';
+import '../../../../repositorys/tales_list_repository.dart';
+import '../../../../services/minuts_text_convert_service.dart';
+import '../../../../utils/texts_consts.dart';
 
 class SelectionsText extends StatelessWidget {
   const SelectionsText({

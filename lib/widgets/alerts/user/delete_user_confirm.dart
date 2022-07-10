@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../data_base/data_base.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/texts_consts.dart';
 
 class DeleteUserConfirm {
   const DeleteUserConfirm._();

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/texts_consts.dart';
 
 class DeleteUnsavedConfirm {
   const DeleteUnsavedConfirm._();

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:audiotales/utils/consts/custom_colors.dart';
+import 'package:audiotales/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../../utils/consts/custom_icons.dart';
+import '../../../../../utils/custom_icons.dart';
 import '../../sound_bloc/sound_bloc.dart';
 
 class RecorderingAnimation extends StatefulWidget {

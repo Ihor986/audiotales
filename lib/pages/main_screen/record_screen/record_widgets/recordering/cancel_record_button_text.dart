@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../utils/consts/texts_consts.dart';
+import '../../../../../utils/texts_consts.dart';
 
 class CancelRecordButtonText extends StatelessWidget {
   const CancelRecordButtonText({Key? key}) : super(key: key);

@@ -6,24 +6,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../models/audio.dart';
-import '../../../../models/selections.dart';
+import '../../../../models/selection.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
 import '../../../../services/minuts_text_convert_service.dart';
 import '../../../../services/sound_service.dart';
-import '../../../../utils/consts/custom_colors.dart';
-import '../../../../utils/consts/custom_icons.dart';
-import '../../../../utils/consts/texts_consts.dart';
+import '../../../../utils/custom_colors.dart';
+import '../../../../utils/custom_icons.dart';
+import '../../../../utils/texts_consts.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/player_widget.dart';
 import '../../audios_screen/bloc/audio_screen_bloc.dart';
 import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
-import '../selection_screen/selection_screen_widgets/text_selection_screen.dart';
 import '../selections_screen.dart';
-import '../selections_text.dart';
+import 'selections_text.dart';
 
 class BodySelectionScreen extends StatelessWidget {
   const BodySelectionScreen({
@@ -246,7 +245,7 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DateSelectionScreen(selection: widget.selection!),
+                        _DateSelectionScreen(selection: widget.selection!),
                         const SizedBox(),
                       ],
                     ),
@@ -907,6 +906,37 @@ class _AudioListNameText extends StatelessWidget {
                 ),
               );
       },
+    );
+  }
+}
+
+class TitleSelectionScreen extends StatelessWidget {
+  const TitleSelectionScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('');
+  }
+}
+
+class _DateSelectionScreen extends StatelessWidget {
+  const _DateSelectionScreen({
+    Key? key,
+    required this.selection,
+  }) : super(key: key);
+
+  final Selection selection;
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    String text = TimeTextConvertService.instance.dayMonthYear(selection.date);
+    return Text(
+      text,
+      style: TextStyle(
+          color: CustomColors.white,
+          fontSize: screen.height * 0.01,
+          fontWeight: FontWeight.bold),
     );
   }
 }

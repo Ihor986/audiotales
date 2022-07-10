@@ -1,7 +1,7 @@
-import 'package:audiotales/utils/consts/custom_colors.dart';
+import 'package:audiotales/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/consts/texts_consts.dart';
+import '../../../../utils/texts_consts.dart';
 import 'select_audio/select_audio_screen.dart';
 
 class AddNewSelectionsText extends StatelessWidget {

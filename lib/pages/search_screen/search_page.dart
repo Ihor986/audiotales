@@ -1,15 +1,14 @@
-import 'package:audiotales/pages/search_screen/widgets/search_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../models/audio.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
-import '../../../../../utils/consts/custom_colors.dart';
-import '../../../../../utils/consts/texts_consts.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../services/minuts_text_convert_service.dart';
-import '../../utils/consts/custom_icons.dart';
+import '../../utils/custom_colors.dart';
+import '../../utils/custom_icons.dart';
+import '../../utils/texts_consts.dart';
 import '../../widgets/uncategorized/custom_popup_menu_active_playlist.dart';
 import '../main_screen/main_screen_block/main_screen_bloc.dart';
 
@@ -84,7 +83,7 @@ class _SearchScreenAppBar extends StatelessWidget {
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(8),
-                    child: SearchAppBarText(),
+                    child: _SearchAppBarText(),
                   ),
                 ),
                 Row(
@@ -272,6 +271,31 @@ class _AudioListText extends StatelessWidget {
               )
             : const SizedBox();
       },
+    );
+  }
+}
+
+class _SearchAppBarText extends StatelessWidget {
+  const _SearchAppBarText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Text(
+          TextsConst.searchTittle,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+        Text(
+          TextsConst.searchTittle2,
+          style: TextStyle(
+              color: CustomColors.white, fontSize: screen.width * 0.03),
+        )
+      ],
     );
   }
 }

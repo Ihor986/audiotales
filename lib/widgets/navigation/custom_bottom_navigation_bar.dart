@@ -4,10 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../services/sound_service.dart';
-import '../../utils/consts/custom_colors.dart';
-import '../../utils/consts/custom_icons.dart';
-import '../../utils/consts/custom_img.dart';
-import '../../utils/consts/texts_consts.dart';
+import '../../utils/custom_colors.dart';
+import '../../utils/custom_icons.dart';
+import '../../utils/custom_img.dart';
+import '../../utils/texts_consts.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({

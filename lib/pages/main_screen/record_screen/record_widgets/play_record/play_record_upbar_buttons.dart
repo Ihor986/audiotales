@@ -1,12 +1,12 @@
 import 'package:audiotales/models/tales_list.dart';
 import 'package:audiotales/models/user.dart';
-import 'package:audiotales/utils/consts/custom_colors.dart';
+import 'package:audiotales/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../repositorys/user_reposytory.dart';
-import '../../../../../utils/consts/custom_icons.dart';
+import '../../../../../utils/custom_icons.dart';
 import '../../../../../widgets/alerts/deleted/delete_unsaved_audio.dart';
 import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../sound_bloc/sound_bloc.dart';

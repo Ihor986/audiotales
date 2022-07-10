@@ -1,13 +1,13 @@
-import 'package:audiotales/models/selections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../models/audio.dart';
+import '../../models/selection.dart';
 import '../../pages/main_screen/audios_screen/bloc/audio_screen_bloc.dart';
 import '../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../services/sound_service.dart';
-import '../../utils/consts/custom_icons.dart';
-import '../../utils/consts/texts_consts.dart';
+import '../../utils/custom_icons.dart';
+import '../../utils/texts_consts.dart';
 
 class PlayAllTalesButtonWidget extends StatelessWidget {
   const PlayAllTalesButtonWidget({

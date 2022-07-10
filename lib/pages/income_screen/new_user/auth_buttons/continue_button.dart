@@ -1,7 +1,7 @@
-import 'package:audiotales/utils/consts/texts_consts.dart';
+import 'package:audiotales/utils/texts_consts.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/consts/custom_colors.dart';
+import '../../../../utils/custom_colors.dart';
 import '../registration_page.dart';
 
 class ContinueButtonNewUser extends StatelessWidget {

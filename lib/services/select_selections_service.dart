@@ -22,12 +22,10 @@ class SelectSelectionsService {
     required TalesList fullTalesList,
   }) async {
     if (audio != null) {
-      print(audio?.name);
       await _addSelectionsToAudio(fullTalesList: fullTalesList);
     }
     if (audioList != null) {
       await _addSelectionsToAudios(fullTalesList: fullTalesList);
-      print('audioList!.');
     }
   }
 

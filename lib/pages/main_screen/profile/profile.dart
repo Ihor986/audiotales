@@ -12,20 +12,19 @@ import '../../../repositorys/tales_list_repository.dart';
 import '../../../repositorys/user_reposytory.dart';
 import '../../../services/change_profile_servise.dart';
 import '../../../services/image_service.dart';
-import '../../../utils/consts/custom_colors.dart';
-import '../../../utils/consts/custom_icons.dart';
-import '../../../utils/consts/texts_consts.dart';
+import '../../../utils/custom_colors.dart';
+import '../../../utils/custom_icons.dart';
+import '../../../utils/texts_consts.dart';
 import '../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../../widgets/alerts/user/delete_user_confirm.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../income_screen/new_user/registration_page.dart';
 import 'bloc/profile_bloc.dart';
-import 'profile_widgets/profile_text.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
   static const routeName = '/profile.dart';
-  static const ProfileText title = ProfileText();
+  static const _ProfileText title = _ProfileText();
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -116,8 +115,8 @@ class _ProfileState extends State<Profile> {
                                 : const Alignment(0, 0.3),
                             child: TextButton(
                               child: _cangeProfileService.readOnly
-                                  ? const EditeText()
-                                  : const SaveText(),
+                                  ? const _EditeText()
+                                  : const _SaveText(),
                               onPressed: () {
                                 _pressEditing(
                                   cangeProfileService: _cangeProfileService,
@@ -133,7 +132,7 @@ class _ProfileState extends State<Profile> {
                               ? Align(
                                   alignment: const Alignment(0, 0.3),
                                   child: TextButton(
-                                    child: const SubscribeText(),
+                                    child: const _SubscribeText(),
                                     onPressed: () {
                                       context.read<NavigationBloc>().add(
                                           ChangeCurrentIndexEvent(
@@ -165,7 +164,7 @@ class _ProfileState extends State<Profile> {
                                                       currentIndex: 0),
                                                 );
                                           },
-                                          child: const LogoutText()),
+                                          child: const _LogoutText()),
                                       TextButton(
                                           onPressed: () async {
                                             _pressDelete(
@@ -173,7 +172,7 @@ class _ProfileState extends State<Profile> {
                                               user: _user,
                                             );
                                           },
-                                          child: const DeleteAccountText()),
+                                          child: const _DeleteAccountText()),
                                     ],
                                   ),
                                 )
@@ -631,69 +630,80 @@ class _CodeInputState extends State<_CodeInput> {
   }
 }
 
-// // void _pressDelete({
-//   required BuildContext context,
-//   required LocalUser user,
-// }) {
-//   Size screen = MediaQuery.of(context).size;
-//   int now = DateTime.now().millisecondsSinceEpoch.toInt();
-//   int loginTime = user
-//           .currentUser?.metadata.lastSignInTime?.millisecondsSinceEpoch
-//           .toInt() ??
-//       0;
-//   bool isNeedSignIn = now - 300000 > loginTime;
-//   if (isNeedSignIn) {
-//     Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
-//       RegistrationPage.routeName,
-//       (_) => false,
-//     );
-//   } else {
-//     DeleteUserConfirm.instance.deletedConfirm(
-//       screen: screen,
-//       context: context,
-//     );
-//   }
-// }
+class _ProfileText extends StatelessWidget {
+  const _ProfileText({Key? key}) : super(key: key);
 
-// void _pressEditing({
-//   required CangeProfileService cangeProfileService,
-//   required BuildContext context,
-//   required LocalUser user,
-//   required String name,
-// }) {
-//   bool _isProfileEditingEvent = cangeProfileService.readOnly;
-//   bool _isSaveEditingEvent =
-//       !cangeProfileService.isChangeNumber && !cangeProfileService.readOnly;
-//   bool _isSaveChangedPhoneEvent = !cangeProfileService.readOnly &&
-//       cangeProfileService.isChangeNumber &&
-//       cangeProfileService.smsCode.length < 6;
-//   bool _isSaveEditingWithPhoneEvent = !cangeProfileService.readOnly &&
-//       cangeProfileService.isChangeNumber &&
-//       cangeProfileService.smsCode.length == 6;
-//   if (_isProfileEditingEvent) {
-//     context.read<ProfileBloc>().add(
-//           ProfileEditingEvent(newName: name, user: user),
-//         );
-//   }
-//   if (cangeProfileService.phone == null) {
-//     return;
-//   }
-//   if (cangeProfileService.phone!.length < 13) {
-//     return;
-//   }
-//   if (_isSaveEditingEvent) {
-//     context.read<ProfileBloc>().add(
-//           SaveEditingEvent(user: user),
-//         );
-//   }
-//   if (_isSaveChangedPhoneEvent) {
-//     context.read<ProfileBloc>().add(
-//           SaveChangedPhoneEvent(),
-//         );
-//   }
-//   if (_isSaveEditingWithPhoneEvent) {
-//     context.read<ProfileBloc>().add(
-//           SaveEditingWithPhoneEvent(user: user),
-//         );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Text(
+          TextsConst.profile,
+          style: TextStyle(
+              color: CustomColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: screen.width * 0.07),
+        ),
+        Text(
+          TextsConst.profileTextPeace,
+          style: TextStyle(
+              color: CustomColors.white, fontSize: screen.width * 0.03),
+        )
+      ],
+    );
+  }
+}
+
+class _EditeText extends StatelessWidget {
+  const _EditeText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(TextsConst.profileTextEdite,
+        style: TextStyle(color: CustomColors.black));
+  }
+}
+
+class _SaveText extends StatelessWidget {
+  const _SaveText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(TextsConst.save,
+        style: TextStyle(color: CustomColors.black));
+  }
+}
+
+class _SubscribeText extends StatelessWidget {
+  const _SubscribeText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      TextsConst.profileTextSubscribe,
+      style: TextStyle(
+          decoration: TextDecoration.underline, color: CustomColors.black),
+    );
+  }
+}
+
+class _LogoutText extends StatelessWidget {
+  const _LogoutText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(TextsConst.profileTextLogout,
+        style: TextStyle(color: CustomColors.black));
+  }
+}
+
+class _DeleteAccountText extends StatelessWidget {
+  const _DeleteAccountText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(TextsConst.profileTextDeleteAccount,
+        style: TextStyle(color: CustomColors.red));
+  }
+}

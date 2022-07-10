@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data_base/data_base.dart';
 import '../../../../repositorys/auth.dart';
 import '../../../../repositorys/user_reposytory.dart';
-import '../../../../utils/consts/custom_colors.dart';
-import '../../../../utils/consts/texts_consts.dart';
+import '../../../../utils/custom_colors.dart';
+import '../../../../utils/texts_consts.dart';
 import '../../../main_screen/main_screen.dart';
 
 class ContinueButtonCode extends StatelessWidget {

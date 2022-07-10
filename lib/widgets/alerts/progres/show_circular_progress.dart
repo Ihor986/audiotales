@@ -1,4 +1,4 @@
-import 'package:audiotales/utils/consts/custom_colors.dart';
+import 'package:audiotales/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProgresWidget extends StatelessWidget {

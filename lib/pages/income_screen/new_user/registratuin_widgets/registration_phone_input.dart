@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../repositorys/auth.dart';
-import '../../../../utils/consts/custom_colors.dart';
+import '../../../../utils/custom_colors.dart';
 
 class RegistrationPhoneInput extends StatefulWidget {
   const RegistrationPhoneInput({Key? key}) : super(key: key);

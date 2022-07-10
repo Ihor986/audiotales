@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../utils/consts/custom_colors.dart';
-import '../../utils/consts/texts_consts.dart';
+import '../../utils/custom_colors.dart';
+import '../../utils/texts_consts.dart';
 import '../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../main_screen/main_screen.dart';
 
