@@ -9,7 +9,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data_base/data/local_data_base.dart';
 import '../data_base/data_base.dart';
-import '../models/audio.dart';
+import '../models/tale.dart';
 import '../models/tales_list.dart';
 import '../utils/custom_img.dart';
 
@@ -348,7 +348,6 @@ class SoundService extends ChangeNotifier {
           final audiofile = File(audio.path!);
           url = audiofile.readAsBytesSync();
           await audioPlayer.startPlayer(
-              // sampleRate: 160000,
               fromDataBuffer: url,
               codec: Codec.defaultCodec,
               whenFinished: () {
@@ -371,7 +370,6 @@ class SoundService extends ChangeNotifier {
         try {
           if (audio.pathUrl != null && _isAuth) {
             await audioPlayer.startPlayer(
-                // sampleRate: 160000,
                 fromURI: audio.pathUrl,
                 codec: Codec.defaultCodec,
                 whenFinished: () {
@@ -398,7 +396,6 @@ class SoundService extends ChangeNotifier {
 
       if (audio.pathUrl != null && audio.path == null && _isAuth) {
         await audioPlayer.startPlayer(
-            // sampleRate: 160000,
             fromURI: audio.pathUrl,
             codec: Codec.defaultCodec,
             whenFinished: () {
