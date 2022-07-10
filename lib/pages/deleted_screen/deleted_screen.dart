@@ -110,7 +110,7 @@ class _DeletedScreenAppBar extends StatelessWidget {
             .getTalesListRepository();
     final Size _screen = MediaQuery.of(context).size;
     return Container(
-      height: 0.18 * _screen.height,
+      height: 0.2 * _screen.height,
       color: CustomColors.audiotalesHeadColorBlue,
       child: Column(
         children: [
