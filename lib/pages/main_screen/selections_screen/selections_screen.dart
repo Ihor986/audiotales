@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../models/selection.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/selections_repositiry.dart';
@@ -16,7 +17,6 @@ import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
-// import 'selection_screen.dart/selection_screen.dart';
 import 'widgets/selections_text.dart';
 
 class SelectionsScreen extends StatefulWidget {
@@ -37,9 +37,9 @@ class _SelectionsScreenState extends State<SelectionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
-        Size screen = MediaQuery.of(context).size;
         return Scaffold(
           extendBody: true,
           appBar: _SelectionsScreenAppBar(
@@ -52,7 +52,7 @@ class _SelectionsScreenState extends State<SelectionsScreen> {
                   ClipPath(
                     clipper: OvalBC(),
                     child: Container(
-                      height: screen.height / 5,
+                      height: _screen.height / 5,
                       color: CustomColors.oliveSoso,
                     ),
                   ),
@@ -93,11 +93,11 @@ class _SelectionsScreenAppBar extends StatelessWidget
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return AppBar(
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: screen.width * 0.04),
+          padding: EdgeInsets.only(right: _screen.width * 0.04),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -148,13 +148,13 @@ class _WrapSelectionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
     return BlocBuilder<SelectionsBloc, SelectionsState>(
       builder: (context, state) {
-        Size screen = MediaQuery.of(context).size;
-        final List<Selection> _selectionsList =
-            RepositoryProvider.of<SelectionsListRepository>(context)
-                .getSelectionsListRepository()
-                .selectionsList;
+        final List<Selection> _selectionsList = context
+            .read<SelectionsListRepository>()
+            .getSelectionsListRepository()
+            .selectionsList;
 
         List<Widget> selections = [
           ...List.generate(
@@ -167,7 +167,7 @@ class _WrapSelectionsList extends StatelessWidget {
         ];
 
         return SizedBox(
-          height: screen.height * 0.75,
+          height: _screen.height * 0.75,
           child: SingleChildScrollView(
             child: Wrap(
               direction: Axis.horizontal,
@@ -180,7 +180,7 @@ class _WrapSelectionsList extends StatelessWidget {
   }
 }
 
-class _Selection extends StatelessWidget {
+class _Selection extends StatefulWidget {
   const _Selection({
     Key? key,
     required this.selection,
@@ -188,25 +188,34 @@ class _Selection extends StatelessWidget {
   }) : super(key: key);
   final bool readOnly;
   final Selection selection;
+
+  @override
+  State<_Selection> createState() => _SelectionState();
+}
+
+class _SelectionState extends State<_Selection> {
   @override
   Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
     final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
-    bool _isCheked = _selectionsBloc.selectSelectionsService.selectionsIdList
-        .contains(selection.id);
-    Size screen = MediaQuery.of(context).size;
+    final bool _isCheked = _selectionsBloc
+        .selectSelectionsService.selectionsIdList
+        .contains(widget.selection.id);
+
     DecorationImage? decorationImage() {
-      if (selection.photo != null) {
+      if (widget.selection.photo != null) {
         try {
           return DecorationImage(
-              image: MemoryImage(File(selection.photo ?? '').readAsBytesSync()),
+              image: MemoryImage(
+                  File(widget.selection.photo ?? '').readAsBytesSync()),
               fit: BoxFit.cover);
         } catch (_) {}
       }
 
-      if (selection.photoUrl != null) {
+      if (widget.selection.photoUrl != null) {
         try {
           return DecorationImage(
-            image: CachedNetworkImageProvider(selection.photoUrl!),
+            image: CachedNetworkImageProvider(widget.selection.photoUrl!),
             fit: BoxFit.cover,
           );
         } catch (_) {
@@ -218,19 +227,20 @@ class _Selection extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (readOnly) {
+        if (widget.readOnly) {
           _selectionsBloc.changeSelectionService.readOnly = true;
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => SelectionScreen(
-                selection: selection,
+                selection: widget.selection,
               ),
             ),
             (_) => true,
           );
         } else {
-          _selectionsBloc.add(CheckSelectionEvent(id: selection.id));
+          _selectionsBloc.add(CheckSelectionEvent(id: widget.selection.id));
+          setState(() {});
         }
       },
       child: Padding(
@@ -243,33 +253,33 @@ class _Selection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: CustomColors.iconsColorBNB,
               ),
-              width: screen.width * 0.45,
-              height: screen.height * 0.27,
+              width: _screen.width * 0.45,
+              height: _screen.height * 0.27,
               child: Padding(
-                padding: EdgeInsets.all(screen.width * 0.04),
+                padding: EdgeInsets.all(_screen.width * 0.04),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    WrapSelectionsListTextName(selection: selection),
-                    WrapSelectionsListTextData(selection: selection),
+                    WrapSelectionsListTextName(selection: widget.selection),
+                    WrapSelectionsListTextData(selection: widget.selection),
                   ],
                 ),
               ),
             ),
-            readOnly
+            widget.readOnly
                 ? const SizedBox()
                 : Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: CustomColors.disactive,
                     ),
-                    width: screen.width * 0.45,
-                    height: screen.height * 0.27,
+                    width: _screen.width * 0.45,
+                    height: _screen.height * 0.27,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: screen.width * 0.15,
-                        right: screen.width * 0.15,
+                        left: _screen.width * 0.15,
+                        right: _screen.width * 0.15,
                       ),
                       child: _isCheked
                           ? SvgPicture.asset(

@@ -40,7 +40,7 @@ class ChangeSelectionService {
       _talesList.fullTalesList.map(
         (element) {
           if (element.id == id) {
-            element.compilationsId.add(_selectionId);
+            element.selectionsId.add(_selectionId);
           }
           return element;
         },

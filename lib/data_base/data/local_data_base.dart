@@ -14,7 +14,6 @@ class LocalDB {
 
   LocalUser getUser() {
     final Box<String> userBox = Hive.box(_userBox);
-    // userBox.delete('authUser');
     return LocalUser.fromJson(
       jsonDecode(userBox.get('authUser',
           defaultValue: jsonEncode(LocalUser().toJson()))!),
@@ -23,7 +22,6 @@ class LocalDB {
 
   TalesList getAudioTales() {
     final Box<String> userBox = Hive.box(_userBox);
-    // userBox.delete('audiolist');
     return TalesList.fromJson(
       jsonDecode(userBox.get('audiolist',
           defaultValue: jsonEncode(TalesList(fullTalesList: []).toJson()))!),
@@ -32,7 +30,6 @@ class LocalDB {
 
   SelectionsList getSelectionsList() {
     final Box<String> userBox = Hive.box(_userBox);
-    // userBox.delete('selectionsList');
     return SelectionsList.fromJson(
       jsonDecode(userBox.get('selectionsList',
           defaultValue:
@@ -41,7 +38,6 @@ class LocalDB {
   }
 
   Future<void> saveUserToLocalDB(LocalUser _user) async {
-    // _user.updateDate = DateTime.now().millisecondsSinceEpoch;
     final Box<String> userBox = Hive.box(_userBox);
     await userBox.put('authUser', jsonEncode(_user.toJson()));
   }
@@ -50,7 +46,6 @@ class LocalDB {
     if (_talesList.fullTalesList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('audiolist', jsonEncode(_talesList.toJson()));
-      // print(_talesList.toJson());
     }
   }
 
@@ -59,7 +54,6 @@ class LocalDB {
     if (_selectionsList.selectionsList != []) {
       final Box<String> userBox = Hive.box(_userBox);
       await userBox.put('selectionsList', jsonEncode(_selectionsList.toJson()));
-      // print(_talesList.toJson());
     }
   }
 

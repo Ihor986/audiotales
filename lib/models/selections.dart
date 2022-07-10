@@ -46,8 +46,8 @@ class SelectionsList {
   }
 
   Selection? getSelectionByAudioId(AudioTale audio) {
-    var isAudioHaveCompilations = audio.compilationsId.isNotEmpty;
-    final String id = isAudioHaveCompilations ? audio.compilationsId.last : '';
+    var isAudioHaveCompilations = audio.selectionsId.isNotEmpty;
+    final String id = isAudioHaveCompilations ? audio.selectionsId.last : '';
     List<Selection> _selectionsList =
         selectionsList.where((element) => element.id == id).toList();
 

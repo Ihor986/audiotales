@@ -38,7 +38,6 @@ class SelectionScreen extends StatelessWidget {
       builder: (context, state) {
         final SelectionsBloc _selectionsBloc =
             BlocProvider.of<SelectionsBloc>(context);
-        // Size screen = MediaQuery.of(context).size;
 
         return Scaffold(
           resizeToAvoidBottomInset: false,

@@ -79,7 +79,7 @@ class SoundService extends ChangeNotifier {
         time: endOfSliderPosition / 60000,
         size: size ?? 0,
         name: '$audioname ${fullTalesList.fullTalesList.length + 1}',
-        compilationsId: []);
+        selectionsId: []);
     fullTalesList.addNewAudio(audioTale!);
     await DataBase.instance.saveAudioTales(fullTalesList);
   }

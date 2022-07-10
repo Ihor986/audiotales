@@ -73,7 +73,7 @@ class TalesList {
       List<AudioTale> _compilationTalesList = fullTalesList.where((element) {
         bool isPath = element.path != null || element.pathUrl != null;
         bool isNotDeleted = !element.isDeleted;
-        bool isFromCompilation = element.compilationsId.contains(id);
+        bool isFromCompilation = element.selectionsId.contains(id);
         return isPath && isNotDeleted && isFromCompilation;
       }).toList();
       return _compilationTalesList;
@@ -81,7 +81,7 @@ class TalesList {
       List<AudioTale> _compilationTalesList = fullTalesList.where((element) {
         bool isPath = element.path != null;
         bool isNotDeleted = !element.isDeleted;
-        bool isFromCompilation = element.compilationsId.contains(id);
+        bool isFromCompilation = element.selectionsId.contains(id);
         return isPath && isNotDeleted && isFromCompilation;
       }).toList();
       return _compilationTalesList;
@@ -98,8 +98,7 @@ class TalesList {
   num getCompilationTime(String value) {
     return fullTalesList
         .where((element) =>
-            element.compilationsId.contains(value) &&
-            element.isDeleted == false)
+            element.selectionsId.contains(value) && element.isDeleted == false)
         .map((e) => e.time)
         .fold(0, (num previousValue, element) => previousValue + element);
   }
@@ -124,10 +123,10 @@ class TalesList {
 
   void deleteSelectionFromAudio(Selection selection) {
     var l = fullTalesList
-        .where((element) => element.compilationsId.contains(selection.id))
+        .where((element) => element.selectionsId.contains(selection.id))
         .toList();
     for (var item in l) {
-      item.compilationsId.remove(selection.id);
+      item.selectionsId.remove(selection.id);
     }
   }
 
@@ -192,7 +191,7 @@ class TalesList {
   }) {
     for (var audio in fullTalesList) {
       if (!idList.contains(audio.id)) continue;
-      audio.compilationsId.remove(selectionId);
+      audio.selectionsId.remove(selectionId);
     }
   }
 
@@ -224,7 +223,7 @@ class TalesList {
   }) {
     for (var audio in fullTalesList) {
       if (audio.id == id) {
-        audio.updateAudio(nCompilationsId: selectionsId);
+        audio.updateAudio(nSelectionsId: selectionsId);
       }
     }
   }
@@ -235,7 +234,7 @@ class TalesList {
   }) {
     for (var audio in fullTalesList) {
       if (audio.id == id) {
-        audio.updateAudio(addCompilationsId: selectionsId);
+        audio.updateAudio(addSelectionsId: selectionsId);
       }
     }
   }

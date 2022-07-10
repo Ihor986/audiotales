@@ -263,7 +263,7 @@ class _Selection extends StatelessWidget {
   final double width;
   final double height;
 
-  DecorationImage? decorationImage() {
+  DecorationImage? _decorationImage() {
     if (selection.photo != null) {
       try {
         return DecorationImage(
@@ -307,7 +307,7 @@ class _Selection extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          image: decorationImage(),
+          image: _decorationImage(),
           borderRadius: BorderRadius.circular(15),
           color: CustomColors.iconsColorBNB,
         ),

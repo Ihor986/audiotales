@@ -32,7 +32,7 @@ class _DeletedScreenState extends State<DeletedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     final DeleteBloc _deleteBloc = context.read<DeleteBloc>();
     return BlocBuilder<DeleteBloc, DeleteState>(
       builder: (context, state) {
@@ -46,7 +46,7 @@ class _DeletedScreenState extends State<DeletedScreen> {
                     clipper: OvalBC(),
                     child: Container(
                       alignment: const Alignment(0, -0.8),
-                      height: screen.height * 0.3,
+                      height: _screen.height * 0.3,
                       color: CustomColors.audiotalesHeadColorBlue,
                       child: _DeletedScreenAppBar(
                         isChosen:
@@ -67,7 +67,7 @@ class _DeletedScreenState extends State<DeletedScreen> {
                           _deleteBloc.add(SelectDeletedAudioEvent());
                         },
                         child: const Text(
-                          'Cansel',
+                          'Отменить',
                           style: TextStyle(
                             color: CustomColors.white,
                           ),
@@ -78,7 +78,7 @@ class _DeletedScreenState extends State<DeletedScreen> {
               Column(
                 children: [
                   SizedBox(
-                    height: screen.height * 0.3,
+                    height: _screen.height * 0.3,
                   ),
                   const Expanded(
                     child: _DeletedTalesListWidget(),
@@ -108,16 +108,16 @@ class _DeletedScreenAppBar extends StatelessWidget {
     final TalesList _talesList =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Container(
-      height: 0.18 * screen.height,
+      height: 0.18 * _screen.height,
       color: CustomColors.audiotalesHeadColorBlue,
       child: Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 16,
-              vertical: 0.04 * screen.height,
+              vertical: 0.04 * _screen.height,
             ),
             child: Stack(
               children: [
@@ -135,7 +135,7 @@ class _DeletedScreenAppBar extends StatelessWidget {
                         : IconButton(
                             icon: SvgPicture.asset(
                               CustomIconsImg.drawer,
-                              height: 0.02 * screen.height,
+                              height: 0.02 * _screen.height,
                               color: CustomColors.white,
                             ),
                             padding: const EdgeInsets.all(0),
@@ -148,7 +148,7 @@ class _DeletedScreenAppBar extends StatelessWidget {
                       ),
                       icon: SvgPicture.asset(
                         CustomIconsImg.moreHorizontRounded,
-                        width: 0.07 * screen.width,
+                        width: 0.07 * _screen.width,
                       ),
                       itemBuilder: (context) => [
                         PopupMenuItem(
@@ -213,26 +213,29 @@ class _DeletedTalesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
     return BlocBuilder<DeleteBloc, DeleteState>(
       builder: (context, state) {
-        final TalesList talesListRep =
-            RepositoryProvider.of<TalesListRepository>(context)
-                .getTalesListRepository();
-        final List<AudioTale> talesList = talesListRep.getDelitedTalesList();
-        Size screen = MediaQuery.of(context).size;
+        final List<AudioTale> _talesList = context
+            .read<TalesListRepository>()
+            .getTalesListRepository()
+            .getDelitedTalesList();
 
         return ListView.builder(
-          itemCount: talesList.length,
+          itemCount: _talesList.length,
           itemBuilder: (_, i) {
-            String lastText = TimeTextConvertService.instance.dayMonthYear(i > 0
-                ? talesList[i - 1].getDeleteDate()
-                : talesList[i].getDeleteDate());
+            String lastText = TimeTextConvertService.instance.dayMonthYear(
+              i > 0
+                  ? _talesList.elementAt(i - 1).getDeleteDate()
+                  : _talesList.elementAt(i).getDeleteDate(),
+            );
 
-            String text = TimeTextConvertService.instance
-                .dayMonthYear(talesList[i].getDeleteDate());
+            String text = TimeTextConvertService.instance.dayMonthYear(
+              _talesList.elementAt(i).getDeleteDate(),
+            );
             bool isSameDate = text == lastText && i != 0;
             return Padding(
-              padding: EdgeInsets.all(screen.height * 0.005),
+              padding: EdgeInsets.all(_screen.height * 0.005),
               child: Column(
                 children: [
                   isSameDate
@@ -251,24 +254,24 @@ class _DeletedTalesListWidget extends StatelessWidget {
                               onPressed: () {},
                               icon: SvgPicture.asset(
                                 CustomIconsImg.playSVG,
-                                height: screen.height * 0.04,
+                                height: _screen.height * 0.04,
                                 color: CustomColors.audiotalesHeadColorBlue,
                               ),
-                              iconSize: screen.height * 0.05,
+                              iconSize: _screen.height * 0.05,
                             ),
                             SizedBox(
-                              width: screen.width * 0.05,
+                              width: _screen.width * 0.05,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(talesList[i].name),
-                                _AudioListText(audio: talesList.elementAt(i)),
+                                Text(_talesList.elementAt(i).name),
+                                _AudioListText(audio: _talesList.elementAt(i)),
                               ],
                             ),
                           ],
                         ),
-                        _IconButton(id: talesList[i].id),
+                        _IconButton(id: _talesList.elementAt(i).id),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -301,12 +304,12 @@ class _AudioListText extends StatelessWidget {
         return previous.readOnly != current.readOnly;
       },
       builder: (context, state) {
-        String text = TimeTextConvertService.instance
+        final String _text = TimeTextConvertService.instance
             .getConvertedMinutesText(timeInMinutes: audio.time);
 
         return audio.id != state.chahgedAudioId
             ? Text(
-                '${audio.time.round()} $text',
+                '${audio.time.round()} $_text',
                 style: const TextStyle(
                   color: CustomColors.noTalesText,
                   fontFamily: 'TT Norms',
@@ -331,10 +334,10 @@ class _IconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DeleteBloc _deleteBloc = BlocProvider.of<DeleteBloc>(context);
-    Size screen = MediaQuery.of(context).size;
-    List<String> _checkedList =
+    final Size _screen = MediaQuery.of(context).size;
+    final List<String> _checkedList =
         _deleteBloc.selectAudioToDeleteService.checkedList;
-    bool isChecked = _checkedList.contains(id);
+    final bool isChecked = _checkedList.contains(id);
 
     final bool isChosen = _deleteBloc.selectAudioToDeleteService.isChosen;
     return isChosen
@@ -345,19 +348,19 @@ class _IconButton extends StatelessWidget {
             icon: isChecked
                 ? SvgPicture.asset(
                     CustomIconsImg.check,
-                    height: screen.height * 0.055,
+                    height: _screen.height * 0.055,
                     color: CustomColors.black,
                   )
                 : SvgPicture.asset(
                     CustomIconsImg.uncheck,
-                    height: screen.height * 0.055,
+                    height: _screen.height * 0.055,
                     color: CustomColors.black,
                   ),
           )
         : IconButton(
             onPressed: () {
               DeleteFromDBConfirm.instance
-                  .deletedConfirm(screen: screen, context: context, id: id);
+                  .deletedConfirm(screen: _screen, context: context, id: id);
             },
             icon: SvgPicture.asset(
               CustomIconsImg.delete,
@@ -372,7 +375,7 @@ class _DeletedScreenTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Column(
       children: [
         Text(
@@ -380,14 +383,14 @@ class _DeletedScreenTitleText extends StatelessWidget {
           style: TextStyle(
               color: CustomColors.white,
               fontWeight: FontWeight.bold,
-              fontSize: screen.width * 0.07),
+              fontSize: _screen.width * 0.07),
         ),
         Text(
           TextsConst.deletedTitleSecond,
           style: TextStyle(
               color: CustomColors.white,
               fontWeight: FontWeight.bold,
-              fontSize: screen.width * 0.07),
+              fontSize: _screen.width * 0.07),
         ),
       ],
     );
@@ -403,11 +406,13 @@ class _DeletedDateText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return Text(
       text,
       style: TextStyle(
-          color: CustomColors.noTalesText, fontSize: screen.width * 0.035),
+        color: CustomColors.noTalesText,
+        fontSize: _screen.width * 0.035,
+      ),
     );
   }
 }

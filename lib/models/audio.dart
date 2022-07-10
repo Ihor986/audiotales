@@ -6,7 +6,7 @@ class AudioTale {
     required this.name,
     required this.time,
     required this.size,
-    required this.compilationsId,
+    required this.selectionsId,
     this.isDeleted = false,
     this.deletedDate,
     this.updateDate,
@@ -20,7 +20,7 @@ class AudioTale {
       pathUrl: json['pathUrl'],
       time: json['time'],
       size: json['size'],
-      compilationsId: json['compilationsId'],
+      selectionsId: json['compilationsId'],
       isDeleted: json['isDeleted'],
       deletedDate: json['deletedDate'],
       updateDate: json['updateDate'],
@@ -35,7 +35,7 @@ class AudioTale {
       pathUrl: json['pathUrl'],
       time: json['time'],
       size: json['size'],
-      compilationsId: json['compilationsId'],
+      selectionsId: json['compilationsId'],
       isDeleted: json['isDeleted'],
       deletedDate: json['deletedDate'],
       updateDate: json['updateDate'],
@@ -48,7 +48,7 @@ class AudioTale {
   String? pathUrl;
   final num time;
   final num size;
-  List compilationsId;
+  List selectionsId;
   bool isDeleted;
   String? deletedDate;
   String? updateDate;
@@ -61,7 +61,7 @@ class AudioTale {
       'pathUrl': pathUrl,
       'time': time,
       'size': size,
-      'compilationsId': compilationsId.map((e) => e).toList(),
+      'compilationsId': selectionsId.map((e) => e).toList(),
       'isDeleted': isDeleted,
       'deletedDate': deletedDate,
       'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
@@ -75,7 +75,7 @@ class AudioTale {
         'pathUrl': pathUrl,
         'time': time,
         'size': size,
-        'compilationsId': compilationsId,
+        'compilationsId': selectionsId,
         'isDeleted': isDeleted,
         'deletedDate': deletedDate,
         'updateDate': DateTime.now().millisecondsSinceEpoch.toString(),
@@ -91,7 +91,7 @@ class AudioTale {
     pathUrl = newAudio.pathUrl;
     if (newUpdate <= oldUpdate) return;
     name = newAudio.name;
-    compilationsId = newAudio.compilationsId;
+    selectionsId = newAudio.selectionsId;
     isDeleted = newAudio.isDeleted;
     deletedDate = newAudio.deletedDate;
     updateDate = newAudio.updateDate;
@@ -99,26 +99,26 @@ class AudioTale {
 
   void updateAudio({
     String? nName,
-    List? nCompilationsId,
+    List? nSelectionsId,
     bool? nIsDeleted,
     String? nDeletedDate,
     String? nUpdateDate,
-    List? addCompilationsId,
+    List? addSelectionsId,
     String? nPath,
   }) {
     name = nName ?? name;
     path = nPath ?? path;
-    compilationsId = nCompilationsId ?? compilationsId;
+    selectionsId = nSelectionsId ?? selectionsId;
     isDeleted = nIsDeleted ?? isDeleted;
     deletedDate = nIsDeleted == true
         ? DateTime.now().millisecondsSinceEpoch.toString()
         : deletedDate;
     updateDate = DateTime.now().millisecondsSinceEpoch.toString();
-    if (addCompilationsId == null) return;
-    for (var item in addCompilationsId) {
-      final bool isNoContain = !compilationsId.contains(item);
+    if (addSelectionsId == null) return;
+    for (var item in addSelectionsId) {
+      final bool isNoContain = !selectionsId.contains(item);
       if (isNoContain) {
-        compilationsId.add(item);
+        selectionsId.add(item);
       }
     }
   }
