@@ -13,8 +13,8 @@ import '../../../../widgets/alerts/progres/show_circular_progress.dart';
 import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
-import '../widgets/selection_screen_body.dart';
 import '../selection_select_few_screen/selection_select_few_screen.dart';
+import '../widgets/selection_screen_body.dart';
 
 class SelectionScreenPageArguments {
   SelectionScreenPageArguments({
