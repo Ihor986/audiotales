@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../models/tale.dart';
+import '../../models/tales_list.dart';
 import '../../services/minuts_text_convert_service.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/custom_icons.dart';
@@ -70,7 +72,7 @@ class _SearchScreenAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return Container(
-      height: 0.16 * screen.height,
+      height: 0.2 * screen.height,
       color: CustomColors.audiotalesHeadColorBlue,
       child: Column(
         children: [
@@ -144,20 +146,9 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              _mainScreenBloc.add(
-                                ClickPlayEvent(
-                                  audioList: _tales,
-                                  indexAudio: i,
-                                ),
-                              );
-                            },
-                            icon: SvgPicture.asset(
-                              CustomIconsImg.playSVG,
-                              color: CustomColors.audiotalesHeadColorBlue,
-                            ),
-                            iconSize: 0.05 * _screen.height,
+                          _PlayButton(
+                            color: CustomColors.audiotalesHeadColorBlue,
+                            i: i,
                           ),
                           SizedBox(
                             width: _screen.width * 0.05,
@@ -165,8 +156,12 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(_talesList[i].name),
-                              _AudioListText(audio: _talesList.elementAt(i)),
+                              _AudioListNameText(
+                                audio: _talesList.elementAt(i),
+                              ),
+                              _AudioListText(
+                                audio: _talesList.elementAt(i),
+                              ),
                             ],
                           ),
                         ],
@@ -185,6 +180,53 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
               );
             },
           ),
+        );
+      },
+    );
+  }
+}
+
+class _PlayButton extends StatelessWidget {
+  const _PlayButton({
+    Key? key,
+    required this.i,
+    required this.color,
+  }) : super(key: key);
+
+  final Color color;
+  final int i;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screen = MediaQuery.of(context).size;
+    final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
+    final TalesList _talesListRep =
+        context.read<TalesListRepository>().getTalesListRepository();
+    final List<AudioTale> _talesList = _talesListRep.getActiveTalesList();
+    final String _id = _talesList.elementAt(i).id;
+    final FlutterSoundPlayer _player = _mainScreenBloc.sound.audioPlayer;
+    return AnimatedBuilder(
+      animation: _mainScreenBloc.sound,
+      builder: (context, child) {
+        return IconButton(
+          onPressed: () {
+            _mainScreenBloc.add(
+              ClickPlayEvent(
+                audioList: _talesList,
+                indexAudio: i,
+              ),
+            );
+          },
+          icon: _player.isPlaying && _id == _mainScreenBloc.sound.idPlaying
+              ? SvgPicture.asset(
+                  CustomIconsImg.pauseAll,
+                  color: color,
+                )
+              : SvgPicture.asset(
+                  CustomIconsImg.playSVG,
+                  color: color,
+                ),
+          iconSize: screen.height * 0.05,
         );
       },
     );
@@ -272,6 +314,63 @@ class _AudioListText extends StatelessWidget {
                 ),
               )
             : const SizedBox();
+      },
+    );
+  }
+}
+
+class _AudioListNameText extends StatelessWidget {
+  const _AudioListNameText({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+  final AudioTale audio;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
+      buildWhen: (previous, current) {
+        return previous.readOnly != current.readOnly;
+      },
+      builder: (context, state) {
+        final TalesList _talesListRep =
+            context.read<TalesListRepository>().getTalesListRepository();
+        Size screen = MediaQuery.of(context).size;
+        final bool _readOnly =
+            audio.id == state.chahgedAudioId ? state.readOnly : true;
+        return _readOnly
+            ? Text(audio.name)
+            : SizedBox(
+                height: screen.height * 0.03,
+                width: 0.5 * screen.width,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: _readOnly ? InputBorder.none : null,
+                  ),
+                  initialValue: audio.name,
+                  onChanged: (value) {
+                    context.read<MainScreenBloc>().add(
+                          EditingAudioNameEvent(value: value),
+                        );
+                  },
+                  onEditingComplete: () {
+                    context
+                        .read<MainScreenBloc>()
+                        .add(SaveChangedAudioNameEvent(
+                          audio: audio,
+                          fullTalesList: _talesListRep,
+                        ));
+                  },
+                  readOnly: _readOnly,
+                  style: const TextStyle(
+                    color: CustomColors.black,
+                    fontFamily: 'TT Norms',
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14,
+                  ),
+                ),
+              );
       },
     );
   }
