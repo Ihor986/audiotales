@@ -8,15 +8,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../../../../models/audio.dart';
 import '../../../../../models/selection.dart';
+import '../../../../../models/tale.dart';
 import '../../../../../models/tales_list.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/custom_colors.dart';
 import '../../../../../utils/custom_icons.dart';
 import '../../../../../utils/custom_img.dart';
-import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
+import '../../../../../widgets/toasts/deleted/remove_to_deleted_confirm.dart';
 import '../../../selections_screen/bloc/selections_bloc.dart';
 import '../../../selections_screen/selections_screen.dart';
 import '../play_record/play_record_progress.dart';

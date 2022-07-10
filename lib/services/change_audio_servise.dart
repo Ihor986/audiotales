@@ -1,12 +1,12 @@
-import 'package:audiotales/models/audio.dart';
+import 'package:audiotales/models/tale.dart';
 
 import '../data_base/data_base.dart';
 import '../models/tales_list.dart';
 
 class ChangeAudioServise {
-  // ChangeAudioServise._();
+  ChangeAudioServise._();
 
-  // static final ChangeAudioServise instance = ChangeAudioServise._();
+  static final ChangeAudioServise instance = ChangeAudioServise._();
   String? name;
 
   Future<void> saveChangedAudioName({

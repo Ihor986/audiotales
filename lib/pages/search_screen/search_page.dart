@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../models/audio.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../bloc/main_screen_block/main_screen_bloc.dart';
+import '../../models/tale.dart';
 import '../../services/minuts_text_convert_service.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/custom_icons.dart';

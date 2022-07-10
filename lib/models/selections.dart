@@ -1,5 +1,5 @@
-import 'package:audiotales/models/audio.dart';
 import 'package:audiotales/models/selection.dart';
+import 'package:audiotales/models/tale.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SelectionsList {

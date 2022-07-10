@@ -1,4 +1,4 @@
-import 'package:audiotales/models/audio.dart';
+import 'package:audiotales/models/tale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +10,7 @@ import '../../pages/main_screen/selections_screen/selections_screen.dart';
 import '../../repositorys/tales_list_repository.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/custom_icons.dart';
-import '../alerts/deleted/remove_to_deleted_confirm.dart';
+import '../toasts/deleted/remove_to_deleted_confirm.dart';
 
 class CustomPopUpMenu extends StatelessWidget {
   const CustomPopUpMenu({

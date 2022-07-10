@@ -6,16 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../../models/audio.dart';
 import '../../../models/selection.dart';
+import '../../../models/tale.dart';
 import '../../../repositorys/selections_repositiry.dart';
 import '../../../repositorys/tales_list_repository.dart';
 import '../../../utils/custom_colors.dart';
 import '../../../utils/custom_icons.dart';
+import '../../../utils/texts_consts.dart';
 import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
-import '../main_screen_text.dart';
 import '../selections_screen/add_new_selection/add_new_selection_screen.dart';
 import '../selections_screen/bloc/selections_bloc.dart';
 import '../selections_screen/selection_screen/selection_screen.dart';
@@ -115,7 +115,7 @@ class _SelectionButtons extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SelectionText1(),
+            const _SelectionText1(),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -126,7 +126,7 @@ class _SelectionButtons extends StatelessWidget {
                           .read<NavigationBloc>()
                           .add(ChangeCurrentIndexEvent(currentIndex: 1));
                     },
-                    child: const SelectionText2()),
+                    child: const _SelectionText2()),
               ],
             ),
           ],
@@ -196,7 +196,7 @@ class _TalesSelectionWidget extends StatelessWidget {
                         height: _screen.height * 0.27,
                         child: Column(
                           children: const [
-                            SelectionText3(),
+                            _SelectionText3(),
                             _AddSelectionButton(),
                           ],
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +219,7 @@ class _TalesSelectionWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                               color: CustomColors.roseOp,
                             ),
-                            child: const SelectionText4(),
+                            child: const _SelectionText4(),
                           ),
                     _isNotEmpty
                         ? _Selection(
@@ -236,7 +236,7 @@ class _TalesSelectionWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                               color: CustomColors.audiotalesBlue,
                             ),
-                            child: const SelectionText5(),
+                            child: const _SelectionText5(),
                           ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -344,7 +344,7 @@ class _AddSelectionButton extends StatelessWidget {
           _selectionsBloc.add(CreateNewSelectonEvent());
           Navigator.pushNamed(context, AddNewSelectionScreen.routeName);
         },
-        child: const SelectionText6());
+        child: const _SelectionText6());
   }
 }
 
@@ -387,7 +387,7 @@ class _AudioDraggableWidget extends StatelessWidget {
                         ? const ActiveTalesListWidget(
                             color: CustomColors.blueSoso,
                           )
-                        : const SelectionText9(),
+                        : const _SelectionText9(),
                   )
                 ],
               ),
@@ -411,7 +411,7 @@ class _SelectionButtonsAudio extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SelectionText7(),
+            const _SelectionText7(),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -422,8 +422,228 @@ class _SelectionButtonsAudio extends StatelessWidget {
                           .read<NavigationBloc>()
                           .add(ChangeCurrentIndexEvent(currentIndex: 3));
                     },
-                    child: const SelectionText8()),
+                    child: const _SelectionText8()),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionText1 extends StatelessWidget {
+  const _SelectionText1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(left: 8.0),
+      child: Text(
+        'Подборки',
+        style: TextStyle(
+          color: Colors.white,
+          fontStyle: FontStyle.normal,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionText2 extends StatelessWidget {
+  const _SelectionText2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Открыть все',
+      style: TextStyle(
+        color: Colors.white,
+        fontStyle: FontStyle.normal,
+        fontSize: 10,
+      ),
+    );
+  }
+}
+
+class _SelectionText3 extends StatelessWidget {
+  const _SelectionText3({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: const [
+          Text(
+            'Здесь будет',
+            style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.normal,
+              fontSize: 17,
+            ),
+          ),
+          Text(
+            'твой набор',
+            style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.normal,
+              fontSize: 17,
+            ),
+          ),
+          Text(
+            'сказок',
+            style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.normal,
+              fontSize: 17,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SelectionText4 extends StatelessWidget {
+  const _SelectionText4({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          'Tут',
+          style: TextStyle(
+            color: Colors.white,
+            fontStyle: FontStyle.normal,
+            fontSize: 17,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionText5 extends StatelessWidget {
+  const _SelectionText5({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          'И тут',
+          style: TextStyle(
+            color: Colors.white,
+            fontStyle: FontStyle.normal,
+            fontSize: 17,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionText6 extends StatelessWidget {
+  const _SelectionText6({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Stack(
+          children: const [
+            Text(
+              'Добавить',
+              style: TextStyle(
+                color: CustomColors.white,
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionText7 extends StatelessWidget {
+  const _SelectionText7({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(left: 8.0),
+      child: Text(
+        TextsConst.selectionsAudio,
+        style: TextStyle(
+          color: CustomColors.openAllAudio,
+          fontWeight: FontWeight.w400,
+          fontStyle: FontStyle.normal,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionText8 extends StatelessWidget {
+  const _SelectionText8({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      TextsConst.openAllAudio,
+      style: TextStyle(
+        color: CustomColors.openAllAudio,
+        fontStyle: FontStyle.normal,
+        fontSize: 10,
+      ),
+    );
+  }
+}
+
+class _SelectionText9 extends StatelessWidget {
+  const _SelectionText9({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(top: _screen.height * 0.1),
+        child: Column(
+          children: [
+            const Text(
+              TextsConst.noTales,
+              style: TextStyle(
+                color: CustomColors.noTalesText,
+                fontStyle: FontStyle.normal,
+                fontSize: 17,
+              ),
+            ),
+            const Text(
+              TextsConst.noTales1,
+              style: TextStyle(
+                color: CustomColors.noTalesText,
+                fontStyle: FontStyle.normal,
+                fontSize: 17,
+              ),
+            ),
+            SizedBox(
+              height: _screen.height * 0.1,
+            ),
+            SvgPicture.asset(
+              CustomIconsImg.arrowDown,
+              height: 37,
+              color: CustomColors.noTalesText,
             ),
           ],
         ),

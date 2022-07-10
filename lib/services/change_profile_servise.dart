@@ -17,12 +17,10 @@ class CangeProfileService {
   String? phone;
   File? imageFile;
 
-  // String phoneNumber = '';
   String verificationCode = '';
   String smsCode = '';
   FirebaseAuth auth = FirebaseAuth.instance;
   String? e;
-  // bool? isNewUser;
 
   void dispouse() {
     readOnly = true;
@@ -36,9 +34,8 @@ class CangeProfileService {
     smsCode = '';
   }
 
-  Future saveImage(LocalUser localUser) async {
+  Future<void> saveImage(LocalUser localUser) async {
     if (photo == null) return;
-    // localUser.photo = photo;
     imageFile = File(photo!);
     try {
       final storageRef = FirebaseStorage.instance

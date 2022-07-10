@@ -2,7 +2,7 @@ import 'package:audiotales/models/selection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'audio.dart';
+import 'tale.dart';
 
 class TalesList {
   TalesList({required this.fullTalesList});

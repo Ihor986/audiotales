@@ -24,16 +24,12 @@ class SelectAudioToDeleteService {
     }
     if (checkedList.isEmpty) return;
     await DataBase.instance.deleteAudioTaleFromDB(checkedList, _talesList);
-    // for (String id in checkedList) {
-    //   _talesList.fullTalesList.removeWhere((element) => element.id == id);
-    // }
-    // DataBase.instance.saveAudioTales(_talesList);
     dispouse();
   }
 
-  void restoreSelectedAudioEvent({
+  Future<void> restoreSelectedAudioEvent({
     required TalesList talesList,
-  }) {
+  }) async {
     TalesList _talesList = talesList;
     bool isAllDelete = checkedList.isEmpty && isChosen == false;
     if (isAllDelete) {
@@ -50,7 +46,7 @@ class SelectAudioToDeleteService {
         },
       ).toList();
     }
-    DataBase.instance.saveAudioTales(_talesList);
+    await DataBase.instance.saveAudioTales(_talesList);
     dispouse();
   }
 

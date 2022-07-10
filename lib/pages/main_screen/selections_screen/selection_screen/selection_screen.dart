@@ -10,7 +10,7 @@ import '../../../../models/selection.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../utils/custom_colors.dart';
 import '../../../../utils/custom_icons.dart';
-import '../../../../widgets/alerts/progres/show_circular_progress.dart';
+import '../../../../widgets/toasts/progres/show_circular_progress.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selection_select_few_screen/selection_select_few_screen.dart';

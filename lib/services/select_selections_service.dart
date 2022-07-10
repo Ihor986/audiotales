@@ -1,4 +1,4 @@
-import 'package:audiotales/models/audio.dart';
+import 'package:audiotales/models/tale.dart';
 
 import '../data_base/data_base.dart';
 import '../models/tales_list.dart';

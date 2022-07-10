@@ -1,4 +1,4 @@
-import 'package:audiotales/models/audio.dart';
+import 'package:audiotales/models/tale.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 

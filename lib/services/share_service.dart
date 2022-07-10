@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:audiotales/models/audio.dart';
+import 'package:audiotales/models/tale.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';

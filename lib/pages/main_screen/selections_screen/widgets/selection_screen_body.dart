@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../../bloc/main_screen_block/main_screen_bloc.dart';
-import '../../../../models/audio.dart';
 import '../../../../models/selection.dart';
+import '../../../../models/tale.dart';
 import '../../../../models/tales_list.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
@@ -19,7 +20,6 @@ import '../../../../utils/texts_consts.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/player_widget.dart';
 import '../../audios_screen/bloc/audio_screen_bloc.dart';
-
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selections_screen.dart';

@@ -9,7 +9,7 @@ import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../repositorys/user_reposytory.dart';
 import '../../../../../utils/custom_icons.dart';
-import '../../../../../widgets/alerts/deleted/delete_unsaved_audio.dart';
+import '../../../../../widgets/toasts/deleted/delete_unsaved_audio.dart';
 import '../../record_bloc/record_bloc.dart';
 import '../recordering/record_screen_text.dart';
 

@@ -1,9 +1,10 @@
 import 'package:audiotales/data_base/data_base.dart';
 import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
-import '../../../../models/audio.dart';
+
 import '../../../../models/selection.dart';
 import '../../../../models/selections.dart';
+import '../../../../models/tale.dart';
 import '../../../../services/change_selection_service.dart';
 import '../../../../services/select_selections_service.dart';
 

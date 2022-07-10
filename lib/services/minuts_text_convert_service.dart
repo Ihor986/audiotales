@@ -31,11 +31,6 @@ class TimeTextConvertService {
     num time = timeInHoures.round();
 
     String text = '';
-    // if (time > 4 && time < 21) {
-    //   text = TextsConst.selectionAudioLengthText2;
-    // } else if ('$time'.substring('$time'.length - 1).contains('1')) {
-    //   text = TextsConst.selectionAudioLengthText2;
-    // } else
     if ('$time'.substring('$time'.length - 1).contains('2') ||
         '$time'.substring('$time'.length - 1).contains('3') ||
         '$time'.substring('$time'.length - 1).contains('4')) {

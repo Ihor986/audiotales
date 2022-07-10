@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
+
 import '../../../data_base/data_base.dart';
-import '../../../models/audio.dart';
 import '../../../models/tales_list.dart';
 import '../../../services/change_audio_servise.dart';
 import '../../../services/download_audio_service.dart';
 import '../../../services/share_service.dart';
 import '../../../services/sound_service.dart';
+import '../../models/tale.dart';
 
 part 'main_screen_event.dart';
 part 'main_screen_state.dart';
@@ -127,7 +128,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     );
   }
   final SoundService sound = SoundService.instance;
-  final ChangeAudioServise changeAudioServise = ChangeAudioServise();
+  final ChangeAudioServise changeAudioServise = ChangeAudioServise.instance;
   final ShareAudioService shareAudioService = ShareAudioService.instance;
   final DownloadAudioService downloadAudioService =
       DownloadAudioService.instance;

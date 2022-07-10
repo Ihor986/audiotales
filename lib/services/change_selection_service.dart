@@ -78,11 +78,9 @@ class ChangeSelectionService {
   }
 
   Future<void> saveChangedSelectionEvent({
-    // required TalesList talesList,
     required SelectionsList selectionsList,
     required Selection selection,
   }) async {
-    // TalesList _talesList = talesList;
     SelectionsList _selectionsList = selectionsList;
     Selection _selection = selection;
 
@@ -107,7 +105,6 @@ class ChangeSelectionService {
 
     _selectionsList.replaceSelection(selection: _selection);
 
-    // DataBase.instance.saveAudioTales(_talesList);
     DataBase.instance.saveSelectionsList(_selectionsList);
     dispouse();
   }
