@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../models/audio.dart';
 import '../../../../../models/selection.dart';
@@ -15,7 +17,6 @@ import '../../../../../utils/custom_colors.dart';
 import '../../../../../utils/custom_icons.dart';
 import '../../../../../utils/custom_img.dart';
 import '../../../../../widgets/alerts/deleted/remove_to_deleted_confirm.dart';
-import '../../../main_screen_block/main_screen_bloc.dart';
 import '../../../selections_screen/bloc/selections_bloc.dart';
 import '../../../selections_screen/selections_screen.dart';
 import '../play_record/play_record_progress.dart';
@@ -28,77 +29,79 @@ class SaveRecord extends StatelessWidget {
     final Size _screen = MediaQuery.of(context).size;
     return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
-        final AudioTale _audio =
-            RepositoryProvider.of<TalesListRepository>(context)
-                .getTalesListRepository()
-                .getActiveTalesList()
-                .first;
-        final SelectionsList _selectionsRep =
-            RepositoryProvider.of<SelectionsListRepository>(context)
-                .getSelectionsListRepository();
+        final AudioTale _audio = context
+            .read<TalesListRepository>()
+            .getTalesListRepository()
+            .getActiveTalesList()
+            .first;
+        final SelectionsList _selectionsRep = context
+            .read<SelectionsListRepository>()
+            .getSelectionsListRepository();
         return Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: DraggableScrollableSheet(
-                initialChildSize: 1,
-                maxChildSize: 1,
-                minChildSize: 1,
-                builder: (context, scrollController) {
-                  return SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    reverse: true,
-                    child: Container(
-                        height: _screen.height * 0.85,
-                        decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: CustomColors.boxShadow,
-                                  spreadRadius: 3,
-                                  blurRadius: 10)
-                            ],
-                            color: CustomColors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20))),
-                        child: Stack(
-                          children: [
-                            Align(
-                                alignment: const Alignment(-1, -1),
-                                child: _SaveRecordUpbarButtons(
-                                  readOnly: state.readOnly,
-                                  audio: _audio,
-                                )),
-                            Align(
-                              alignment: const Alignment(0, -0.7),
-                              child: _SaveRecordPhotoWidget(
-                                  readOnly: state.readOnly,
-                                  selection: _selectionsRep
-                                      .getSelectionByAudioId(_audio)),
-                            ),
-                            Align(
-                              alignment: const Alignment(0, 0.05),
-                              child: _SelectionName(
-                                  readOnly: state.readOnly,
-                                  selection: _selectionsRep
-                                      .getSelectionByAudioId(_audio)),
-                            ),
-                            Align(
-                              alignment: const Alignment(0, 0.15),
-                              child: _AudioName(
-                                audio: _audio,
-                                readOnly: state.readOnly,
-                              ),
-                            ),
-                            const Align(
-                                alignment: Alignment(0, 0.4),
-                                child: PlayRecordProgres()),
-                            const Align(
-                                alignment: Alignment(0, 1),
-                                child: _SavePagePlayRecordButtons()),
-                          ],
-                        )),
-                  );
-                }),
+              initialChildSize: 1,
+              maxChildSize: 1,
+              minChildSize: 1,
+              builder: (context, scrollController) {
+                return SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  reverse: true,
+                  child: Container(
+                    height: _screen.height * 0.85,
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: CustomColors.boxShadow,
+                              spreadRadius: 3,
+                              blurRadius: 10)
+                        ],
+                        color: CustomColors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: Stack(
+                      children: [
+                        Align(
+                            alignment: const Alignment(-1, -1),
+                            child: _SaveRecordUpbarButtons(
+                              readOnly: state.readOnly,
+                              audio: _audio,
+                            )),
+                        Align(
+                          alignment: const Alignment(0, -0.7),
+                          child: _SaveRecordPhotoWidget(
+                              readOnly: state.readOnly,
+                              selection:
+                                  _selectionsRep.getSelectionByAudioId(_audio)),
+                        ),
+                        Align(
+                          alignment: const Alignment(0, 0.05),
+                          child: _SelectionName(
+                              readOnly: state.readOnly,
+                              selection:
+                                  _selectionsRep.getSelectionByAudioId(_audio)),
+                        ),
+                        Align(
+                          alignment: const Alignment(0, 0.15),
+                          child: _AudioName(
+                            audio: _audio,
+                            readOnly: state.readOnly,
+                          ),
+                        ),
+                        const Align(
+                            alignment: Alignment(0, 0.4),
+                            child: PlayRecordProgres()),
+                        const Align(
+                            alignment: Alignment(0, 1),
+                            child: _SavePagePlayRecordButtons()),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
@@ -118,18 +121,17 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
     final NavigationBloc _navdBloc = context.read<NavigationBloc>();
-    // final SoundBloc _soundBloc = context.read<SoundBloc>();
     final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
     final TalesList _talesListRep =
-        RepositoryProvider.of<TalesListRepository>(context)
-            .getTalesListRepository();
-    Size screen = MediaQuery.of(context).size;
+        context.read<TalesListRepository>().getTalesListRepository();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.all(screen.width * 0.04),
+          padding: EdgeInsets.all(_screen.width * 0.04),
           child: IconButton(
             onPressed: () {
               _navdBloc.add(ChangeCurrentIndexEvent(currentIndex: 0));
@@ -137,12 +139,12 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
             icon: SvgPicture.asset(
               CustomIconsImg.arrowDownCircle,
               color: CustomColors.black,
-              height: screen.height * 0.04,
+              height: _screen.height * 0.04,
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(screen.width * 0.04),
+          padding: EdgeInsets.all(_screen.width * 0.04),
           child: readOnly
               ? PopupMenuButton(
                   shape: const RoundedRectangleBorder(
@@ -193,7 +195,7 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
                       child: const Text('Удалить'),
                       value: () {
                         RemoveToDeletedConfirm.instance.deletedConfirm(
-                          screen: screen,
+                          screen: _screen,
                           context: context,
                           idList: [_talesListRep.fullTalesList.first.id],
                           talesList: _talesListRep,
@@ -232,7 +234,6 @@ class _SaveRecordUpbarButtons extends StatelessWidget {
 class _SaveRecordPhotoWidget extends StatelessWidget {
   const _SaveRecordPhotoWidget({
     Key? key,
-    // required this.audio,
     required this.readOnly,
     required this.selection,
   }) : super(key: key);
@@ -242,7 +243,7 @@ class _SaveRecordPhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _image =
+    final DecorationImage? _image =
         selection == null ? null : _decorationImageReadOnly(selection!);
     Size screen = MediaQuery.of(context).size;
     return Container(
@@ -250,7 +251,6 @@ class _SaveRecordPhotoWidget extends StatelessWidget {
       height: screen.height * 0.34,
       decoration: BoxDecoration(
         image: _image,
-        // image: _decorationImageReadOnly(selection!),
         boxShadow: const [
           BoxShadow(
               color: CustomColors.boxShadow, spreadRadius: 3, blurRadius: 10)
@@ -292,15 +292,14 @@ class _SaveRecordPhotoWidget extends StatelessWidget {
 
 class _SavePagePlayRecordButtons extends StatelessWidget {
   const _SavePagePlayRecordButtons({Key? key}) : super(key: key);
-//  final AudioTale path;
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     final TalesListRepository _talesListRep =
-        RepositoryProvider.of<TalesListRepository>(context);
-    final MainScreenBloc _player = BlocProvider.of<MainScreenBloc>(context);
+        context.read<TalesListRepository>();
+    final MainScreenBloc _mainScreenBloc = context.read<MainScreenBloc>();
     return Container(
-      width: screen.width * 1,
+      width: _screen.width * 1,
       foregroundDecoration: const BoxDecoration(
         image: DecorationImage(
           alignment: Alignment.center,
@@ -315,16 +314,15 @@ class _SavePagePlayRecordButtons extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                _player.add(Rewind15Event(-15));
+                _mainScreenBloc.add(Rewind15Event(-15));
               },
               icon: SvgPicture.asset(
                 CustomIconsImg.minus15,
-                // color: CustomColors.black,
               ),
             ),
             IconButton(
               onPressed: () async {
-                _player.add(ClickPlayEvent(
+                _mainScreenBloc.add(ClickPlayEvent(
                     audioList:
                         _talesListRep.getTalesListRepository().fullTalesList,
                     indexAudio: 0));
@@ -333,18 +331,16 @@ class _SavePagePlayRecordButtons extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                _player.add(Rewind15Event(15));
+                _mainScreenBloc.add(Rewind15Event(15));
               },
               icon: SvgPicture.asset(
                 CustomIconsImg.plus15,
-                // height: 250,
-                // color: CustomColors.black,
               ),
             ),
           ],
         ),
       ),
-      height: screen.height * 0.25,
+      height: _screen.height * 0.25,
     );
   }
 }
@@ -361,7 +357,7 @@ class _AudioName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     return TextFormField(
       decoration: const InputDecoration(
         border: InputBorder.none,
@@ -375,7 +371,7 @@ class _AudioName extends StatelessWidget {
       readOnly: readOnly,
       style: TextStyle(
         color: CustomColors.black,
-        fontSize: screen.height * 0.015,
+        fontSize: _screen.height * 0.015,
       ),
       textAlign: TextAlign.center,
     );
@@ -394,13 +390,13 @@ class _SelectionName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size screen = MediaQuery.of(context).size;
-    final String text = selection?.name ?? 'Название подборки';
+    final Size _screen = MediaQuery.of(context).size;
+    final String _text = selection?.name ?? 'Название подборки';
     return Text(
-      text,
+      _text,
       style: TextStyle(
         color: readOnly ? CustomColors.black : CustomColors.noTalesText,
-        fontSize: screen.height * 0.027,
+        fontSize: _screen.height * 0.027,
       ),
     );
   }

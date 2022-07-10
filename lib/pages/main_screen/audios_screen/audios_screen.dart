@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../models/audio.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/tales_list_repository.dart';
@@ -13,13 +15,11 @@ import '../../../widgets/uncategorized/active_tales_list_widget.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/play_all_button.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
-import '../main_screen_block/main_screen_bloc.dart';
 import 'bloc/audio_screen_bloc.dart';
 
 class AudiosScreen extends StatefulWidget {
   const AudiosScreen({Key? key}) : super(key: key);
   static const routeName = '/audios_screen.dart';
-  // static const _AudiosScreenText title = _AudiosScreenText();
 
   @override
   State<AudiosScreen> createState() => _AudiosScreen();
@@ -208,21 +208,22 @@ class _AudiosScreenListTextData extends StatelessWidget {
   const _AudiosScreenListTextData({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     final TalesList _talesList =
-        RepositoryProvider.of<TalesListRepository>(context)
-            .getTalesListRepository();
-    num _millisecondsListTime = _talesList.getActiveTalesFullTime() * 60000;
-    String _selectionFullTime = DateTime.fromMillisecondsSinceEpoch(
+        context.read<TalesListRepository>().getTalesListRepository();
+    final num _millisecondsListTime =
+        _talesList.getActiveTalesFullTime() * 60000;
+    final String _selectionFullTime = DateTime.fromMillisecondsSinceEpoch(
             _millisecondsListTime.toInt(),
             isUtc: true)
         .toString()
         .substring(11, 16);
 
-    String textAudio = _talesList.getActiveTalesList().length.toString() +
-        TextsConst.selectionAudioText;
+    final String _textAudio =
+        _talesList.getActiveTalesList().length.toString() +
+            TextsConst.selectionAudioText;
 
-    String textTime = _selectionFullTime +
+    final String _textTime = _selectionFullTime +
         TimeTextConvertService.instance.getConvertedHouresText(
             timeInHoures: _millisecondsListTime / 3600000);
 
@@ -231,19 +232,19 @@ class _AudiosScreenListTextData extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
-            textAudio,
+            _textAudio,
             style: TextStyle(
               color: CustomColors.white,
-              fontSize: screen.height * 0.015,
+              fontSize: _screen.height * 0.015,
             ),
           ),
         ),
         Flexible(
           child: Text(
-            textTime,
+            _textTime,
             style: TextStyle(
               color: CustomColors.white,
-              fontSize: screen.height * 0.015,
+              fontSize: _screen.height * 0.015,
             ),
           ),
         ),

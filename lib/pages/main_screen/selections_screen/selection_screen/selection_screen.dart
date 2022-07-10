@@ -5,12 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../models/selections.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
+import '../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../models/selection.dart';
 import '../../../../repositorys/tales_list_repository.dart';
 import '../../../../utils/custom_colors.dart';
 import '../../../../utils/custom_icons.dart';
 import '../../../../widgets/alerts/progres/show_circular_progress.dart';
-import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selection_select_few_screen/selection_select_few_screen.dart';

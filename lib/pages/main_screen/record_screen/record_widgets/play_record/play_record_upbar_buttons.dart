@@ -4,12 +4,13 @@ import 'package:audiotales/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../repositorys/user_reposytory.dart';
 import '../../../../../utils/custom_icons.dart';
 import '../../../../../widgets/alerts/deleted/delete_unsaved_audio.dart';
-import '../../../main_screen_block/main_screen_bloc.dart';
-import '../../sound_bloc/sound_bloc.dart';
+import '../../record_bloc/record_bloc.dart';
 import '../recordering/record_screen_text.dart';
 
 class PlayRecordUpbarButtons extends StatelessWidget {
@@ -35,7 +36,7 @@ class PlayRecordUpbarButtons extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    final String? _path = context.read<SoundBloc>().sound.path;
+                    final String? _path = context.read<RecordBloc>().sound.path;
                     if (_path == null) return;
                     context.read<MainScreenBloc>().add(
                           ShareUnsavedAudioEvent(
@@ -51,7 +52,7 @@ class PlayRecordUpbarButtons extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () async {
-                    context.read<SoundBloc>().add(
+                    context.read<RecordBloc>().add(
                           SaveRecordEvent(
                             talesListRep: _fullTalesList,
                             localUser: _localUser,
@@ -86,7 +87,7 @@ class PlayRecordUpbarButtons extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: TextButton(
             onPressed: () {
-              context.read<SoundBloc>().add(
+              context.read<RecordBloc>().add(
                     SaveRecordEvent(
                       talesListRep: _fullTalesList,
                       localUser: _localUser,

@@ -1,10 +1,7 @@
-part of 'sound_bloc.dart';
+part of 'record_bloc.dart';
 
-// @immutable
-// abstract class SoundState {}
-
-class SoundInitial {
-  SoundInitial({
+class RecordState {
+  RecordState({
     this.isProgress = false,
     this.readOnly = true,
     this.chahgedAudioId,

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../../../utils/custom_colors.dart';
 import '../../../../../utils/custom_img.dart';
-import '../../sound_bloc/sound_bloc.dart';
+import '../../record_bloc/record_bloc.dart';
 import 'cancel_button.dart';
 import 'record_animation.dart';
 import 'record_screen_text.dart';
@@ -21,17 +21,17 @@ class Recordering extends StatefulWidget {
 }
 
 class _RecorderingState extends State<Recordering> {
-  SoundBloc? soundBloc;
+  RecordBloc? soundBloc;
   @override
   void initState() {
-    soundBloc = context.read<SoundBloc>();
+    soundBloc = context.read<RecordBloc>();
     soundBloc!.sound.initRecorder();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
     final NavigationBloc _navigationBloc = context.read<NavigationBloc>();
 
     return Center(
@@ -69,7 +69,7 @@ class _RecorderingState extends State<Recordering> {
                   Align(
                     alignment: const Alignment(0, 1),
                     child: Container(
-                      width: screen.width * 1,
+                      width: _screen.width * 1,
                       foregroundDecoration: const BoxDecoration(
                         image: DecorationImage(
                           alignment: Alignment.center,
@@ -85,7 +85,7 @@ class _RecorderingState extends State<Recordering> {
                         icon: const Icon(Icons.pause,
                             color: CustomColors.invisible),
                       ),
-                      height: screen.height * 0.25,
+                      height: _screen.height * 0.25,
                     ),
                   ),
                 ],

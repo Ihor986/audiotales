@@ -2,32 +2,32 @@ import 'package:audiotales/models/tales_list.dart';
 import 'package:bloc/bloc.dart';
 import '../../../../models/user.dart';
 import '../../../../services/sound_service.dart';
-part 'sound_event.dart';
-part 'sound_state.dart';
+part 'record_event.dart';
+part 'record_state.dart';
 
-class SoundBloc extends Bloc<SoundEvent, SoundInitial> {
-  SoundBloc() : super(SoundInitial()) {
+class RecordBloc extends Bloc<RecordEvent, RecordState> {
+  RecordBloc() : super(RecordState()) {
     on<StartRecordEvent>(
       (event, emit) async {
         await sound.clickRecorder();
-        emit(SoundInitial());
+        emit(RecordState());
       },
     );
     on<SaveRecordEvent>(
       (event, emit) async {
-        emit(SoundInitial(isProgress: true));
+        emit(RecordState(isProgress: true));
         await sound.saveAudioTale(
           fullTalesList: event.talesListRep,
           localUser: event.localUser,
           isAutosaveLocal: event.isAutosaveLocal,
         );
         sound.soundIndex = 2;
-        emit(SoundInitial());
+        emit(RecordState());
       },
     );
     on<SetStateEvent>(
       (event, emit) async {
-        emit(SoundInitial());
+        emit(RecordState());
       },
     );
   }

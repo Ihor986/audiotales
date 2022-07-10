@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:audiotales/pages/main_screen/main_screen_block/main_screen_bloc.dart';
-import 'package:audiotales/pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
+
 import 'package:audiotales/pages/main_screen/selections_screen/selection_screen/selection_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../models/selection.dart';
 import '../../../models/tales_list.dart';
 import '../../../repositorys/selections_repositiry.dart';
@@ -15,6 +15,7 @@ import '../../../utils/custom_colors.dart';
 import '../../../utils/custom_icons.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../widgets/uncategorized/player_widget.dart';
+import '../record_screen/record_bloc/record_bloc.dart';
 import 'add_new_selection/add_new_selection_screen.dart';
 import 'bloc/selections_bloc.dart';
 import 'widgets/selections_text.dart';
@@ -89,7 +90,7 @@ class _SelectionsScreenAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
-    final SoundBloc _soundbloc = context.read<SoundBloc>();
+    final RecordBloc _soundbloc = context.read<RecordBloc>();
     final TalesList _talesListRep =
         RepositoryProvider.of<TalesListRepository>(context)
             .getTalesListRepository();

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../utils/custom_colors.dart';
 import '../../../utils/custom_icons.dart';
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
-import 'record_widgets/record_draggable_widget.dart';
+import 'record_bloc/record_bloc.dart';
+import 'record_widgets/play_record/play_record.dart';
+import 'record_widgets/recordering/recordering.dart';
+import 'record_widgets/save_record/save_record.dart';
 
 class RecordScreen extends StatelessWidget {
   const RecordScreen({Key? key}) : super(key: key);
@@ -11,10 +16,9 @@ class RecordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size screen = MediaQuery.of(context).size;
+    final Size _screen = MediaQuery.of(context).size;
 
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       appBar: _RecordScreenAppBar(
         onAction: () {
           Scaffold.of(context).openDrawer();
@@ -27,13 +31,13 @@ class RecordScreen extends StatelessWidget {
               ClipPath(
                 clipper: OvalBC(),
                 child: Container(
-                  height: screen.height / 4.5,
+                  height: _screen.height / 4.5,
                   color: CustomColors.blueSoso,
                 ),
               ),
             ],
           ),
-          const RecordDraggableWidget(),
+          const _RecordDraggableWidget(),
         ],
       ),
     );
@@ -81,6 +85,25 @@ class _RecordScreenAppBar extends StatelessWidget
           ],
         ),
       ),
+    );
+  }
+}
+
+class _RecordDraggableWidget extends StatelessWidget {
+  const _RecordDraggableWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final RecordBloc _soundBloc = BlocProvider.of<RecordBloc>(context);
+    final List<Widget> pages = [
+      const Recordering(),
+      const PlayRecord(),
+      const SaveRecord(),
+    ];
+    return BlocBuilder<RecordBloc, RecordState>(
+      builder: (context, state) {
+        return pages.elementAt(_soundBloc.sound.soundIndex);
+      },
     );
   }
 }

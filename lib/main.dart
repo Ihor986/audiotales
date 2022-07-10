@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'bloc/main_screen_block/main_screen_bloc.dart';
 import 'bloc/navigation_bloc/navigation_bloc.dart';
 import 'data_base/data/local_data_base.dart';
 import 'data_base/data_base.dart';
@@ -12,9 +13,8 @@ import 'firebase_options.dart';
 import 'pages/deleted_screen/bloc/delete_bloc.dart';
 import 'pages/income_screen/auth_bloc/auth_block_bloc.dart';
 import 'pages/main_screen/audios_screen/bloc/audio_screen_bloc.dart';
-import 'pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import 'pages/main_screen/profile/bloc/profile_bloc.dart';
-import 'pages/main_screen/record_screen/sound_bloc/sound_bloc.dart';
+import 'pages/main_screen/record_screen/record_bloc/record_bloc.dart';
 import 'pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import 'pages/subscribe_screen/bloc/subscribe_bloc.dart';
 import 'repositorys/auth.dart';
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
           BlocProvider<DeleteBloc>(create: (context) => DeleteBloc()),
           BlocProvider<SubscribeBloc>(create: (context) => SubscribeBloc()),
-          BlocProvider<SoundBloc>(create: (context) => SoundBloc()),
+          BlocProvider<RecordBloc>(create: (context) => RecordBloc()),
           BlocProvider<AudioScreenBloc>(create: (context) => AudioScreenBloc()),
         ],
         child: MaterialApp(

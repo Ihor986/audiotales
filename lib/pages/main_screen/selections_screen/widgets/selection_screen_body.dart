@@ -1,10 +1,11 @@
 import 'dart:io';
-// import 'package:audiotales/pages/main_screen/selections_screen/selection_screen.dart/selection_screen_widgets/text_selection_screen.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../models/audio.dart';
 import '../../../../models/selection.dart';
 import '../../../../models/tales_list.dart';
@@ -18,7 +19,7 @@ import '../../../../utils/texts_consts.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/player_widget.dart';
 import '../../audios_screen/bloc/audio_screen_bloc.dart';
-import '../../main_screen_block/main_screen_bloc.dart';
+
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selections_screen.dart';
@@ -139,7 +140,6 @@ class _NameInput extends StatelessWidget {
         }
         _selectionsBloc.add(ChangeSelectionNameEvent(
           value: value,
-          // readOnly:readOnly,
         ));
       },
       style: TextStyle(
@@ -384,22 +384,6 @@ class _SelectionDescriptionInputState
             setState(() {});
           },
         ),
-        // isNewSelection
-        //     ? Align(
-        //         alignment: const Alignment(1, 0),
-        //         child: TextButton(
-        //           onPressed: () {
-        //             FocusScope.of(context).unfocus();
-        //           },
-        //           child: Text(
-        //             TextsConst.addNewSelectionsTextReady,
-        //             style: TextStyle(
-        //                 color: CustomColors.black,
-        //                 fontSize: screen.width * 0.03),
-        //           ),
-        //         ),
-        //       )
-        //     : const SizedBox(),
       ],
     );
   }

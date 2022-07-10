@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../repositorys/tales_list_repository.dart';
 import '../../../../../utils/texts_consts.dart';
-import '../../sound_bloc/sound_bloc.dart';
+import '../../record_bloc/record_bloc.dart';
 
 class RecordText extends StatelessWidget {
   const RecordText({Key? key}) : super(key: key);
@@ -37,13 +37,13 @@ class AudioNameText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int length = RepositoryProvider.of<TalesListRepository>(context)
+    final int _length = context
+        .read<TalesListRepository>()
         .getTalesListRepository()
         .fullTalesList
         .length;
-    // .getActiveTalesList()
-    final SoundBloc _soundBloc = BlocProvider.of<SoundBloc>(context);
-    return Text(_soundBloc.sound.audioname + ' ${length + 1}',
+    final RecordBloc _soundBloc = BlocProvider.of<RecordBloc>(context);
+    return Text(_soundBloc.sound.audioname + ' ${_length + 1}',
         style: const TextStyle(
           color: Colors.black,
           fontSize: 20,

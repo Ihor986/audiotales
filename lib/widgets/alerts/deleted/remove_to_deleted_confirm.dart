@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../bloc/navigation_bloc/navigation_bloc.dart';
 import '../../../models/tales_list.dart';
-import '../../../pages/main_screen/main_screen_block/main_screen_bloc.dart';
 import '../../../utils/custom_colors.dart';
 import '../../../utils/texts_consts.dart';
 

@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../models/selections.dart';
 import '../../../../../repositorys/selections_repositiry.dart';
+import '../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../models/audio.dart';
 import '../../../../models/selection.dart';
 import '../../../../repositorys/tales_list_repository.dart';
@@ -16,7 +17,6 @@ import '../../../../utils/custom_colors.dart';
 import '../../../../utils/custom_icons.dart';
 import '../../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../../../widgets/uncategorized/play_all_button.dart';
-import '../../main_screen_block/main_screen_bloc.dart';
 import '../add_new_selection/add_new_selections_text.dart';
 import '../bloc/selections_bloc.dart';
 import '../selections_screen.dart';
