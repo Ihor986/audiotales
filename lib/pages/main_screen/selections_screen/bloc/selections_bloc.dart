@@ -119,9 +119,6 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       (event, emit) {
         selectSelectionsService.changeIDList(event.id);
         selectSelectionsService.readOnly = false;
-        // emit(SelectionsState(
-        //   readOnly: selectSelectionsService.readOnly,
-        // ));
       },
     );
 
@@ -137,7 +134,6 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
     on<RemoveFromSelectionEvent>(
       (event, emit) async {
-        emit(SelectionsState(isProgress: true));
         final TalesList _talesList = event.talesList;
         final List<String>? _audioList = event.audio == null
             ? changeSelectionService.checkedList

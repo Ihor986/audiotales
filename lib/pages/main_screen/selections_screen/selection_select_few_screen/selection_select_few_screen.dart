@@ -408,104 +408,113 @@ class _SelectionPhotoWidgetState extends State<_SelectionPhotoWidget> {
   }
 }
 
-class _AudiolistSelectAudioWidget extends StatefulWidget {
+class _AudiolistSelectAudioWidget extends StatelessWidget {
   const _AudiolistSelectAudioWidget({
     Key? key,
     required this.selection,
   }) : super(key: key);
   final Selection selection;
-
-  @override
-  State<_AudiolistSelectAudioWidget> createState() =>
-      _AudiolistSelectAudioWidgetState();
-}
-
-class _AudiolistSelectAudioWidgetState
-    extends State<_AudiolistSelectAudioWidget> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SelectionsBloc, SelectionsState>(
-      builder: (context, state) {
-        final Size screen = MediaQuery.of(context).size;
-        final SelectionsBloc _selectionsBloc =
-            BlocProvider.of<SelectionsBloc>(context);
-        final List<AudioTale> _talesList =
-            RepositoryProvider.of<TalesListRepository>(context)
-                .getTalesListRepository()
-                .getCompilation(id: widget.selection.id);
-        List<String> checkedList =
-            _selectionsBloc.changeSelectionService.checkedList;
-        return SizedBox(
-          height: screen.height * 0.7,
-          child: ListView.builder(
-            itemCount: _talesList.length,
-            itemBuilder: (_, i) {
-              bool isChecked = checkedList.contains(_talesList.elementAt(i).id);
-              return Padding(
-                padding: EdgeInsets.all(screen.height * 0.005),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              CustomIconsImg.playSVG,
-                              color: CustomColors.oliveSoso,
-                            ),
-                            iconSize: screen.height * 0.05,
-                          ),
-                          SizedBox(
-                            width: screen.width * 0.05,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(_talesList.elementAt(i).name),
-                              _AudioListText(audio: _talesList.elementAt(i)),
-                            ],
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          _selectionsBloc.add(
-                            CheckEvent(
-                              isChecked: isChecked,
-                              id: _talesList.elementAt(i).id,
-                            ),
-                          );
-                          setState(() {});
-                        },
-                        icon: isChecked
-                            ? SvgPicture.asset(
-                                CustomIconsImg.check,
-                                height: screen.height * 0.055,
-                                color: CustomColors.black,
-                              )
-                            : SvgPicture.asset(
-                                CustomIconsImg.uncheck,
-                                height: screen.height * 0.055,
-                                color: CustomColors.black,
-                              ),
-                      ),
-                    ],
+    final Size _screen = MediaQuery.of(context).size;
+    final List<AudioTale> _talesList = context
+        .read<TalesListRepository>()
+        .getTalesListRepository()
+        .getCompilation(id: selection.id);
+    return SizedBox(
+      height: _screen.height * 0.7,
+      child: ListView.builder(
+        itemCount: _talesList.length,
+        itemBuilder: (_, i) {
+          return _ItemAudio(
+            audio: _talesList.elementAt(i),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ItemAudio extends StatefulWidget {
+  const _ItemAudio({
+    Key? key,
+    required this.audio,
+  }) : super(key: key);
+
+  final AudioTale audio;
+
+  @override
+  State<_ItemAudio> createState() => __ItemAudioState();
+}
+
+class __ItemAudioState extends State<_ItemAudio> {
+  @override
+  Widget build(BuildContext context) {
+    final Size _screen = MediaQuery.of(context).size;
+    final SelectionsBloc _selectionsBloc = context.read<SelectionsBloc>();
+    List<String> checkedList =
+        _selectionsBloc.changeSelectionService.checkedList;
+    bool isChecked = checkedList.contains(widget.audio.id);
+    return Padding(
+      padding: EdgeInsets.all(_screen.height * 0.005),
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    CustomIconsImg.playSVG,
+                    color: CustomColors.oliveSoso,
                   ),
-                  decoration: BoxDecoration(
-                    color: CustomColors.white,
-                    border: Border.all(color: CustomColors.audioBorder),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(41),
-                    ),
-                  ),
+                  iconSize: _screen.height * 0.05,
                 ),
-              );
-            },
+                SizedBox(
+                  width: _screen.width * 0.05,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.audio.name),
+                    _AudioListText(audio: widget.audio),
+                  ],
+                ),
+              ],
+            ),
+            IconButton(
+              onPressed: () {
+                _selectionsBloc.add(
+                  CheckEvent(
+                    isChecked: isChecked,
+                    id: widget.audio.id,
+                  ),
+                );
+                setState(() {});
+              },
+              icon: isChecked
+                  ? SvgPicture.asset(
+                      CustomIconsImg.check,
+                      height: _screen.height * 0.055,
+                      color: CustomColors.black,
+                    )
+                  : SvgPicture.asset(
+                      CustomIconsImg.uncheck,
+                      height: _screen.height * 0.055,
+                      color: CustomColors.black,
+                    ),
+            ),
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: CustomColors.white,
+          border: Border.all(color: CustomColors.audioBorder),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(41),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

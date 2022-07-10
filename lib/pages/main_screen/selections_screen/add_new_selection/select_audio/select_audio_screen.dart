@@ -98,8 +98,9 @@ class _AudiolistSelectAudioWidget extends StatelessWidget {
         List<AudioTale> _talesList = _tales;
         if (state.searchValue != null) {
           _talesList = _tales
-              .where(
-                  (element) => element.name.contains(state.searchValue ?? ''))
+              .where((element) => element.name
+                  .toLowerCase()
+                  .contains(state.searchValue?.toLowerCase() ?? ''))
               .toList();
         }
 
