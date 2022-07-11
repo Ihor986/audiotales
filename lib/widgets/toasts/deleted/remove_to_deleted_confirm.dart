@@ -116,7 +116,7 @@ class _ConfirmButtonNo extends StatelessWidget {
         ),
         child: const Center(
             child: Text(
-          'No',
+          'Нет',
           style: TextStyle(color: CustomColors.blueSoso),
         )),
       ),
@@ -159,7 +159,7 @@ class _ConfirmButtonYes extends StatelessWidget {
         ),
         child: const Center(
             child: Text(
-          'Yes',
+          'Да',
           style: TextStyle(color: CustomColors.white),
         )),
       ),

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MailToService {
@@ -18,10 +19,9 @@ class MailToService {
       path: 'support@audiotale.com',
       query: encodeQueryParameters(<String, String>{'subject': 'Need Support'}),
     );
-    if (!await launchUrl(emailLaunchUri)) {
-      throw 'Could not launch $emailLaunchUri';
-    }
 
-    launchUrl(emailLaunchUri);
+    if (!await launchUrl(emailLaunchUri)) {
+      BotToast.showText(text: 'Could not launch $emailLaunchUri');
+    }
   }
 }
