@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../../../repositorys/auth.dart';
+import '../../../../repositories/auth.dart';
 import '../../../../utils/custom_colors.dart';
 
 class RegistrationPhoneInput extends StatefulWidget {

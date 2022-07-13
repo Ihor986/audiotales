@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../bloc/main_screen_block/main_screen_bloc.dart';
-import '../../../../../repositorys/tales_list_repository.dart';
-import '../../../../../repositorys/user_reposytory.dart';
+import '../../../../../repositories/tales_list_repository.dart';
+import '../../../../../repositories/user_reposytory.dart';
 import '../../../../../utils/custom_icons.dart';
 import '../../../../../widgets/toasts/deleted/delete_unsaved_audio.dart';
 import '../../record_bloc/record_bloc.dart';

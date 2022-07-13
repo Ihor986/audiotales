@@ -10,7 +10,7 @@ import '../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../models/selection.dart';
 import '../../../../models/tale.dart';
 import '../../../../models/tales_list.dart';
-import '../../../../repositorys/tales_list_repository.dart';
+import '../../../../repositories/tales_list_repository.dart';
 import '../../../../services/image_service.dart';
 import '../../../../services/minuts_text_convert_service.dart';
 import '../../../../services/sound_service.dart';

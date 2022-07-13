@@ -17,10 +17,10 @@ import 'pages/main_screen/profile/bloc/profile_bloc.dart';
 import 'pages/main_screen/record_screen/record_bloc/record_bloc.dart';
 import 'pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import 'pages/subscribe_screen/bloc/subscribe_bloc.dart';
-import 'repositorys/auth.dart';
-import 'repositorys/selections_repositiry.dart';
-import 'repositorys/tales_list_repository.dart';
-import 'repositorys/user_reposytory.dart';
+import 'repositories/auth.dart';
+import 'repositories/selections_repositiry.dart';
+import 'repositories/tales_list_repository.dart';
+import 'repositories/user_reposytory.dart';
 import 'routes/app_router.dart';
 
 Future<void> main() async {

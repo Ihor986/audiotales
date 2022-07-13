@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../widgets/uncategorized/custom_clipper_widget.dart';
 import '../../bloc/navigation_bloc/navigation_bloc.dart';
-import '../../repositorys/user_reposytory.dart';
+import '../../repositories/user_reposytory.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/custom_icons.dart';
 import '../../utils/texts_consts.dart';

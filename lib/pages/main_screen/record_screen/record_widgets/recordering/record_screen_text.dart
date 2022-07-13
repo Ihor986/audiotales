@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../repositorys/tales_list_repository.dart';
+import '../../../../../repositories/tales_list_repository.dart';
 import '../../../../../utils/texts_consts.dart';
 import '../../record_bloc/record_bloc.dart';
 

@@ -7,7 +7,7 @@ import '../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../models/tales_list.dart';
 import '../../pages/main_screen/selections_screen/bloc/selections_bloc.dart';
 import '../../pages/main_screen/selections_screen/selections_screen.dart';
-import '../../repositorys/tales_list_repository.dart';
+import '../../repositories/tales_list_repository.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/custom_icons.dart';
 import '../toasts/deleted/remove_to_deleted_confirm.dart';

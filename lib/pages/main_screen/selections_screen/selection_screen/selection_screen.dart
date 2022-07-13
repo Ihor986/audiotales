@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../models/selections.dart';
-import '../../../../../repositorys/selections_repositiry.dart';
+import '../../../../../repositories/selections_repositiry.dart';
 import '../../../../bloc/main_screen_block/main_screen_bloc.dart';
 import '../../../../models/selection.dart';
-import '../../../../repositorys/tales_list_repository.dart';
+import '../../../../repositories/tales_list_repository.dart';
 import '../../../../utils/custom_colors.dart';
 import '../../../../utils/custom_icons.dart';
 import '../../../../widgets/toasts/progres/show_circular_progress.dart';
